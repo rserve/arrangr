@@ -1,3 +1,5 @@
-# rserve
+# rserve - Booking made easy
 
-Booking made easy
+## Running tests
+
+``/index.jasmine.html``
