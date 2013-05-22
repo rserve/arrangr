@@ -22,14 +22,15 @@ require.config({
 //make sure all dependencies are loaded
 require([
 	'angular',
+	'config',
 	'jquery',
 	'app',
 	'controllers',
 	'routes'
-], function (angular, jquery) {
+], function (angular, config) {
 
 	//kick off!
 	angular.element(document).ready(function () {
-		angular.bootstrap(document, ['rserve']);
+		angular.bootstrap(document, [config.appName]);
 	});
 });

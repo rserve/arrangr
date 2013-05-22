@@ -1,5 +1,5 @@
 'use strict';
 
-define(['angular'], function (angular) {
-	return angular.module('rserve', []);
+define(['angular', 'config'], function (angular, config) {
+	return angular.module(config.appName, []);
 });
