@@ -3,11 +3,13 @@
 define([
 	'app',
 	'controllers',
-	'partials'
-], function (app, controllers, partials) {
+	'partials',
+	'tools/logger'
+], function (app, controllers, partials, logger) {
 
 	var routes = app.
 		config(['$routeProvider', function ($routeProvider) {
+
 			$routeProvider.
 
 				//view group
@@ -18,6 +20,14 @@ define([
 
 				//default to group listing
 				otherwise({redirectTo: '/groups'});
+		}]);
+
+	app
+		.run(['$rootScope','$location', '$routeParams', function($rootScope, $location, $routeParams) {
+			$rootScope.$on('$routeChangeSuccess', function(scope, current, pre) {
+				logger.log('Getting route', $location.path(),$routeParams);
+
+			});
 		}]);
 
 	return routes;
