@@ -1,10 +1,12 @@
-'use strict';
-
 define([], function () {
 
+	'use strict';
+
 	var partials = {
-		group: 'partials/group.html'
+		group: 'partials/group.html',
+		groups: 'partials/groups.html'
 	};
 
+	//export
 	return partials;
 });

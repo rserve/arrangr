@@ -1,4 +1,5 @@
 require.config({
+
 	paths: {
 		jquery: 'http://code.jquery.com/jquery-1.8.2',
 		bootstrap: '../lib/bootstrap/js/bootstrap',
@@ -29,6 +30,8 @@ require([
 	'controllers',
 	'routes'
 ], function (angular, config, logger) {
+
+	'use strict';
 
 	logger.log('Dependencies loaded');
 	//kick off!

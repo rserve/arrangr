@@ -1,5 +1,3 @@
-'use strict';
-
 define([
 	'app',
 	'controllers',
@@ -7,7 +5,11 @@ define([
 	'tools/logger'
 ], function (app, controllers, partials, logger) {
 
-	var routes = app.
+	'use strict';
+
+	app.
+
+		//configure routes
 		config(['$routeProvider', function ($routeProvider) {
 
 			$routeProvider.
@@ -18,17 +20,22 @@ define([
 					controller: 'GroupView'
 				}).
 
+				//view group
+				when('/groups', {
+					templateUrl: partials.groups,
+					controller: 'GroupsView'
+				}).
+
 				//default to group listing
 				otherwise({redirectTo: '/groups'});
-		}]);
+		}]).
 
-	app
-		.run(['$rootScope','$location', '$routeParams', function($rootScope, $location, $routeParams) {
-			$rootScope.$on('$routeChangeSuccess', function(scope, current, pre) {
-				logger.log('Getting route', $location.path(),$routeParams);
+		//listen to route changes
+		run(['$rootScope', '$location', '$routeParams', function ($rootScope, $location, $routeParams) {
+			$rootScope.$on('$routeChangeSuccess', function (scope, current, pre) {
+				logger.log('Route changed', $location.path(), $routeParams);
 
 			});
 		}]);
 
-	return routes;
 });

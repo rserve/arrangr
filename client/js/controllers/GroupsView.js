@@ -4,12 +4,11 @@ define(['tools/logger'], function (logger) {
 
 	var Controller = function ($scope, $http) {
 
-		$http.get('data/group.json').success(function (data) {
-			logger.log('GroupView - data received', data);
-			$scope.group = data;
+		$http.get('data/groups.json').success(function (data) {
+			logger.log('GroupsView - data received', data);
+			$scope.groups = data;
 		});
 	};
-
 
 	//export
 	return Controller;

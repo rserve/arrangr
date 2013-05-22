@@ -2,13 +2,14 @@
 * Register controllers
 * */
 
- 'use strict';
-
 define([ 'app',
-	'controllers/GroupView'
-], function (app, GroupView) {
+	'controllers/GroupView',
+	'controllers/GroupsView'
+], function (app, GroupView, GroupsView) {
+
+	'use strict';
 
 	app.controller('GroupView', GroupView);
+	app.controller('GroupsView', GroupsView);
 
-	return app;
 });

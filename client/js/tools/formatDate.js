@@ -1,8 +1,8 @@
-'use strict';
-
 define([], function () {
 
-	function formatDate(date, fmt) {
+	'use strict';
+
+	var formatDate = function (date, fmt) {
 		function pad(value) {
 			return (value.toString().length < 2) ? '0' + value : value;
 		}
@@ -21,11 +21,14 @@ define([], function () {
 				return pad(date.getUTCMinutes());
 			case 's':
 				return pad(date.getUTCSeconds());
+			case 'S':
+				return pad(date.getUTCMilliseconds());
 			default:
 				throw new Error('Unsupported format code: ' + fmtCode);
 			}
 		});
-	}
+	};
+
 	return formatDate;
 
 });

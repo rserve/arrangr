@@ -1,13 +1,15 @@
-'use strict';
-
 define(['./formatDate'], function (formatDate) {
 
-	//simple logger, append timestamp
+	'use strict';
+
+	/*
+	 * simple logger, append timestamp and add some formatting
+	 * */
 	var logger = {
 		log: function () {
 			var slice = Array.prototype.slice,
 				args = slice.call(arguments),
-				stamp = formatDate(new Date(), '%H:%m:%s');
+				stamp = formatDate(new Date(), '%H:%m:%s.%S');
 
 			args.unshift(stamp); //add timestamp first
 
@@ -20,11 +22,13 @@ define(['./formatDate'], function (formatDate) {
 			args = [].concat.apply([], args);
 
 			//remove last pipe char
-			args = args.slice(0,args.length-1);
+			args = args.slice(0, args.length - 1);
 
 			//console log with new args
 			Function.apply.call(console.log, console, args);
 		}
 	};
+
+	//export
 	return logger;
 });
