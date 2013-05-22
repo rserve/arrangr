@@ -1,12 +1,16 @@
 require.config({
 	paths: {
 		jquery: 'http://code.jquery.com/jquery-1.8.2',
+		bootstrap: '../lib/bootstrap/js/bootstrap',
 		angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular'
 	},
 	shim: {
 		angular: {
-			deps:['jquery'], // for angular.element
+			deps: ['jquery'], // for angular.element
 			exports: 'angular'
+		},
+		'bootstrap': {
+			deps: ['jquery']
 		}
 	},
 	priority: [
