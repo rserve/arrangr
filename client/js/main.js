@@ -23,14 +23,17 @@ require.config({
 require([
 	'angular',
 	'config',
+	'tools/logger',
 	'jquery',
 	'app',
 	'controllers',
 	'routes'
-], function (angular, config) {
+], function (angular, config, logger) {
 
+	logger.log('Dependencies loaded');
 	//kick off!
 	angular.element(document).ready(function () {
-		angular.bootstrap(document, [config.appName]);
+		logger.log('Document ready, starting app');
+			angular.bootstrap(document, [config.appName]);
 	});
 });
