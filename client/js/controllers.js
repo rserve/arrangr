@@ -1,6 +1,14 @@
-function GroupViewController($scope, $http) {
+/*
+* Register controllers
+* */
 
-	$http.get('data/group.json').success(function (data) {
-		$scope.group = data;
-	});
-}
+ 'use strict';
+
+define([ 'app',
+	'controllers/GroupView'
+], function (app, GroupView) {
+
+	app.controller('GroupView', GroupView);
+
+	return app;
+});
