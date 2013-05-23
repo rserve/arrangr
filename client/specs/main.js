@@ -1,4 +1,4 @@
-/*global require, jasmine */
+/*global jasmine */
 requirejs.config({
 	baseUrl: 'js',
 	paths: {
@@ -42,7 +42,8 @@ requirejs(['jasmine', 'jasmine-html'],
 
 		//run our specs
 		require([
-			'specs/sample.spec'
+			'specs/sample.spec',
+			'specs/formatDate.spec'
 		], function () {
 
 			execJasmine();

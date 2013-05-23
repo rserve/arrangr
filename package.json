@@ -1,13 +1,18 @@
 {
 	"name": "rserve",
 	"version": "0.0.1",
-	"description":"Making booking easy",
-	"devDependencies": {
-		"grunt": "~0.4.1",
-		"grunt-contrib-jshint": "~0.1.1",
-		"grunt-contrib-nodeunit": "~0.1.2"
+	"description": "Making booking easy",
+	"scripts": {
+		"test": "grunt test"
 	},
-    "dependencies": {
-        "express": "3.x"
-    }
+	"devDependencies": {
+		"grunt-contrib-jasmine": "~0.4.0",
+		"grunt": "~0.4.1",
+		"grunt-contrib-jshint": "~0.2.0",
+		"grunt-template-jasmine-requirejs": "~0.1.2"
+	},
+	"dependencies": {
+		"express": "3.x"
+	}
+	
 }

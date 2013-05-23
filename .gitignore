@@ -2,4 +2,5 @@
 *.ipr
 *.exe
 .idea
+.grunt
 node_modules

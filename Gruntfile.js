@@ -42,6 +42,7 @@ module.exports = function (grunt) {
 				// Environment
 				browser: true, // define globals exposed by modern browsers
 				devel: true,    // define globals that are usually used for logging
+
 				// Global variables, the boolean value determines if the variable is assignable
 				globals: {
 
@@ -55,17 +56,33 @@ module.exports = function (grunt) {
 			}
 
 		},
-		watch: {
-			files: ['<%= jshint.files %>'],
-			tasks: ['jshint']
+		jasmine : {
+			src : 'client/js/**/*.js',
+			options : {
+				specs : 'client/specs/**/*.js',
+				template: require('grunt-template-jasmine-requirejs'),
+				templateOptions: {
+					requireConfigFile: 'client/js/main.js',
+					requireConfig: {
+						baseUrl:'client/js/',
+						paths:{
+							'client/js':'./'
+						}
+					}
+				}
+			}
 		}
+
 	});
 
 
+
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-jasmine');
 
-	grunt.registerTask('lint', ['jshint']);
+	grunt.registerTask('test', ['jshint', 'jasmine']);
 
-	grunt.registerTask('default', ['jshint']);
+	grunt.registerTask('default', ['test']);
+
 
 };

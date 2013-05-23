@@ -10,8 +10,19 @@
 
 ## Running tests
 
+Browser runner:
+
 ``/index.jasmine.html``
 
-## Validating code (jshint)
+Phantom runner:
 
-``grunt lint``
+``grunt``
+
+
+## Installing node modules
+
+``npm install``
+
+## Running test and validating code (jshint)
+
+``grunt``

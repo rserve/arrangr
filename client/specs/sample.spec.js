@@ -1,6 +1,6 @@
 /*global describe, it, expect */
+define([], function () {
 
-define(function (require, exports, module) {
 
 	'use strict';
 
