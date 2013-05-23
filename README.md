@@ -4,4 +4,6 @@
 
 ``/index.jasmine.html``
 
-# fling was here zup
+## Validating code (jshint)
+
+´´grunt´´

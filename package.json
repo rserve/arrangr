@@ -1,0 +1,10 @@
+{
+	"name": "rserve",
+	"version": "0.0.1",
+	"description":"Making booking easy",
+	"devDependencies": {
+		"grunt": "~0.4.1",
+		"grunt-contrib-jshint": "~0.1.1",
+		"grunt-contrib-nodeunit": "~0.1.2"
+	}
+}

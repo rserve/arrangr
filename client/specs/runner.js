@@ -1,3 +1,4 @@
+/*global require, jasmine */
 requirejs.config({
 	baseUrl: 'js',
 	paths: {
