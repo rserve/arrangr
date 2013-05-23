@@ -4,7 +4,9 @@ requirejs.config({
 	paths: {
 		'specs': "../specs",
 		'jasmine': "../lib/jasmine-1.3.1/jasmine",
-		'jasmine-html': "../lib/jasmine-1.3.1/jasmine-html"
+		'jasmine-html': "../lib/jasmine-1.3.1/jasmine-html",
+		underscore: '../lib/underscore',
+		util: 'framework/util'
 	},
 	shim: {
 		'jasmine': {
@@ -13,8 +15,12 @@ requirejs.config({
 		'jasmine-html': {
 			deps: ['jasmine'],
 			exports: 'jasmine-html'
+		},
+		'underscore': {
+			exports: '_'
 		}
 	}
+
 });
 
 // Start the main app logic.
@@ -43,7 +49,7 @@ requirejs(['jasmine', 'jasmine-html'],
 		//run our specs
 		require([
 			'specs/sample.spec',
-			'specs/formatDate.spec'
+			'specs/util.spec'
 		], function () {
 
 			execJasmine();

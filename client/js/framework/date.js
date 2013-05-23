@@ -29,6 +29,8 @@ define([], function () {
 		});
 	};
 
-	return formatDate;
+	return {
+		formatDate: formatDate
+	};
 
 });

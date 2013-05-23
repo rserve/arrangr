@@ -2,9 +2,9 @@
 * Register controllers
 * */
 
-define([ 'app',
-	'controllers/GroupView',
-	'controllers/GroupsView'
+define([ 'app/app',
+	'app/controllers/GroupView',
+	'app/controllers/GroupsView'
 ], function (app, GroupView, GroupsView) {
 
 	'use strict';

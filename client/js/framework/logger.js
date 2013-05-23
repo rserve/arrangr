@@ -1,4 +1,4 @@
-define(['./formatDate'], function (formatDate) {
+define(['util'], function (util) {
 
 	'use strict';
 
@@ -9,7 +9,8 @@ define(['./formatDate'], function (formatDate) {
 		log: function () {
 			var slice = Array.prototype.slice,
 				args = slice.call(arguments),
-				stamp = formatDate(new Date(), '%H:%m:%s.%S');
+				stamp = util.date.formatDate(new Date(), '%H:%m:%s.%S');
+
 
 			args.unshift(stamp); //add timestamp first
 

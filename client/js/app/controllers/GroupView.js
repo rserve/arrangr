@@ -1,4 +1,4 @@
-define(['tools/logger'], function (logger) {
+define(['framework/logger'], function (logger) {
 
 	'use strict';
 

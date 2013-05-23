@@ -1,8 +1,8 @@
 define([
-	'app',
-	'controllers',
-	'partials',
-	'tools/logger'
+	'app/app',
+	'app/controllers',
+	'app/partials',
+	'framework/logger'
 ], function (app, controllers, partials, logger) {
 
 	'use strict';

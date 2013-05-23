@@ -3,7 +3,11 @@ require.config({
 	paths: {
 		jquery: 'http://code.jquery.com/jquery-1.8.2',
 		bootstrap: '../lib/bootstrap/js/bootstrap',
-		angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular'
+		underscore: '../lib/underscore',
+		angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular',
+
+		util: 'framework/util'
+
 	},
 	shim: {
 		angular: {
@@ -12,7 +16,11 @@ require.config({
 		},
 		'bootstrap': {
 			deps: ['jquery']
+		},
+		'underscore': {
+			exports: '_'
 		}
+
 	},
 	priority: [
 		"angular"
@@ -23,12 +31,12 @@ require.config({
 //make sure all dependencies are loaded
 require([
 	'angular',
-	'config',
-	'tools/logger',
+	'app/config',
+	'framework/logger',
 	'jquery',
-	'app',
-	'controllers',
-	'routes'
+	'app/app',
+	'app/controllers',
+	'app/routes'
 ], function (angular, config, logger) {
 
 	'use strict';
@@ -37,6 +45,6 @@ require([
 	//kick off!
 	angular.element(document).ready(function () {
 		logger.log('Document ready, starting app');
-			angular.bootstrap(document, [config.appName]);
+		angular.bootstrap(document, [config.appName]);
 	});
 });
