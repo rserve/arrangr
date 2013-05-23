@@ -6,8 +6,8 @@
 
 ## Installing node modules
 
-´´npm install``
+``npm install``
 
 ## Validating code (jshint)
 
-´´grunt lint´´
+``grunt lint``
