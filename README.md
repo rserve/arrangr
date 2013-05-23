@@ -4,6 +4,10 @@
 
 ``/index.jasmine.html``
 
+## Installing node modules
+
+´´npm install``
+
 ## Validating code (jshint)
 
-´´grunt´´
+´´grunt lint´´
