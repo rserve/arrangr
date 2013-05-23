@@ -1,12 +1,16 @@
 # rserve - Booking made easy
 
-## Running tests
-
-``/index.jasmine.html``
-
 ## Installing node modules
 
 ``npm install``
+
+## Start server
+
+``node server/server``
+
+## Running tests
+
+``/index.jasmine.html``
 
 ## Validating code (jshint)
 
