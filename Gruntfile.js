@@ -12,7 +12,7 @@ module.exports = function (grunt) {
 		 * */
 
 		jshint: {
-			files: ['gruntfile.js', 'client/js/**/*.js', 'client/specs/**/*.js'],
+
 			options: {
 
 				// Enforcing
@@ -43,6 +43,7 @@ module.exports = function (grunt) {
 				browser: true, // define globals exposed by modern browsers
 				devel: true,    // define globals that are usually used for logging
 
+
 				// Global variables, the boolean value determines if the variable is assignable
 				globals: {
 
@@ -52,6 +53,20 @@ module.exports = function (grunt) {
 					requirejs: false,
 					exports: false,
 					module: false
+				}
+			},
+			client: ['gruntfile.js', 'client/js/**/*.js'],
+			node: {
+				options: {
+					curly: false,
+					undef: true,
+					node:true,
+					browser:false,
+					strict:false,
+					immed:false
+				},
+				files: {
+					src: ['server/**/*.js']
 				}
 			}
 
@@ -71,6 +86,21 @@ module.exports = function (grunt) {
 					}
 				}
 			}
+		},
+		/* jshint camelcase: false */
+		jasmine_node: {
+			specNameMatcher: '.spec',
+			projectRoot: "server",
+			requirejs: false,
+			forceExit: true,
+			jUnit: {
+				report: false,
+				savePath : "./build/reports/jasmine/",
+				useDotNotation: true,
+				consolidate: true
+			},
+
+			all: ['server/']
 		}
 
 	});
@@ -79,10 +109,18 @@ module.exports = function (grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
+	grunt.loadNpmTasks('grunt-jasmine-node');
 
-	grunt.registerTask('test', ['jshint', 'jasmine']);
+	grunt.registerTask('lint', ['jshint:client', 'jshint:node']);
+	grunt.registerTask('lint_browser', ['jshint:client']);
+	grunt.registerTask('lint_node', ['jshint:node']);
+	grunt.registerTask('spec', ['jasmine', 'jasmine_node']);
+	grunt.registerTask('spec_browser', ['jasmine']);
+	grunt.registerTask('spec_node', ['jasmine_node']);
 
-	grunt.registerTask('default', ['test']);
+	grunt.registerTask('all', ['jshint:client', 'jshint:node','jasmine', 'jasmine_node']);
+
+	grunt.registerTask('default', ['all']);
 
 
 };

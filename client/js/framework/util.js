@@ -1,13 +1,13 @@
 define(['underscore', 'framework/date'],
 	function (underscore, date) {
 
-	/*
-	 * Put all utility libs/methods in underscore
-	 * */
-	'use strict';
+		/*
+		 * Put all utility libs/methods in underscore
+		 * */
+		'use strict';
 
-	underscore.date = date;
+		underscore.date = date;
 
-	return underscore;
+		return underscore;
 
-});
+	});

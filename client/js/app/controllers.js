@@ -1,6 +1,6 @@
 /*
-* Register controllers
-* */
+ * Register controllers
+ * */
 
 define([ 'app/app',
 	'app/controllers/GroupView',

@@ -10,7 +10,6 @@ define(['framework/logger'], function (logger) {
 		});
 	};
 
-
 	//export
 	return Controller;
 

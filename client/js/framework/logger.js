@@ -1,3 +1,4 @@
+
 define(['util'], function (util) {
 
 	'use strict';

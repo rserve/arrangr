@@ -1,28 +1,45 @@
 # rserve - Booking made easy
 
-## Installing node modules
+## Installing
 
-``npm install``
+### Node modules
 
-## Start server
+Install all node modules and dependencies with ``npm install``
+
+More information [https://npmjs.org/]
+
+### Grunt
+
+Install grunt with ``npm install -g grunt-cli``
+
+More information [http://gruntjs.com/getting-started]
+
+
+## Starting server
 
 ``node server/server``
 
-## Running tests
 
-Browser runner:
+## Grunt tasks
 
-``/index.jasmine.html``
+Run all tasks with ``grunt``, this will
 
-Phantom runner:
+ * run jshint on browser and node js-files.
+ * run jasmine spec runner for browser through phantomjs
+ * run jasmine spec runner for node
 
-``grunt``
+## Jshint
 
+Run jshint for:
 
-## Installing node modules
+* ``grunt lint`` - browser and node
+* ``grunt lint_browser`` - browser only
+* ``grunt lint_node`` - node only
 
-``npm install``
+## Spec runner
 
-## Running test and validating code (jshint)
+Run spec runner for:
+* ``grunt spec`` - browser and node
+* ``grunt spec_browser`` - browser only
+* ``grunt spec_node`` - node only
 
-``grunt``

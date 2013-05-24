@@ -5,31 +5,34 @@
  * Time: 21:31
  * To change this template use File | Settings | File Templates.
  */
-var express = require('express');
-var app = express();
 
-var groups = [
-    {
-        "id": 1,
-        "name": "innebandy!",
-        "count": 2
-    },
-    {
-        "id": 2,
-        "name": "ostprovning",
-        "count": 200
-    }
-];
+module.exports = function () {
+	var express = require('express');
+	var app = express();
 
-app.get('/groups', function(req, res){
-    res.json(groups);
-});
+	var groups = [
+		{
+			"id": 1,
+			"name": "innebandy!",
+			"count": 2
+		},
+		{
+			"id": 2,
+			"name": "ostprovning",
+			"count": 200
+		}
+	];
 
-app.get('/groups/:id', function(req, res){
-    res.json(groups[1]);
-});
+	app.get('/groups', function (req, res) {
+		res.json(groups);
+	});
 
-app.use(express.static('client'));
+	app.get('/groups/:id', function (req, res) {
+		res.json(groups[1]);
+	});
 
-app.listen(3000);
-console.log('Listening on port 3000');
+	app.use(express.static('client'));
+
+	app.listen(3000);
+	console.log('Listening on port 3000');
+}();
