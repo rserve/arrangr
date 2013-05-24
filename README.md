@@ -17,6 +17,8 @@ More information [http://gruntjs.com/getting-started]
 
 ## Starting server
 
+Run server on default port 3000:
+
 ``node server/server``
 
 
