@@ -1,4 +1,4 @@
-/* jshint strict: false */
+
 module.exports = (function Calculator() {
 
 	return {

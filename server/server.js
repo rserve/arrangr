@@ -7,6 +7,7 @@
  */
 
 module.exports = function () {
+
 	var express = require('express');
 	var app = express();
 
@@ -35,4 +36,5 @@ module.exports = function () {
 
 	app.listen(3000);
 	console.log('Listening on port 3000');
+
 }();
