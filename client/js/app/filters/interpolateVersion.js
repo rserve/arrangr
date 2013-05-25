@@ -2,9 +2,12 @@ define([], function () {
 
 	'use strict';
 
-	return ['version', function (version) {
+	var factory = ['version', function (version) {
 		return function (text) {
 			return String(text).replace(/\%VERSION\%/mg, version);
 		};
 	}];
+
+	//export
+	return  factory;
 });

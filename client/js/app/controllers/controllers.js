@@ -10,8 +10,10 @@ define([ 'app/app',
 
 	'use strict';
 
-	app.controller('GroupView', GroupView);
-	app.controller('GroupsView', GroupsView);
-	app.controller('VersionController', VersionController);
+	//add all controllers
+	app.controller('GroupView', GroupView).
+		controller('GroupsView', GroupsView).
+		controller('VersionController', VersionController);
 
+	//no export
 });

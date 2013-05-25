@@ -1,7 +1,10 @@
-define([ 'app/app', './appVersion'], function (app, appVersion) {
+define([ 'app/app', './appVersion', './helloWorld'], function (app, appVersion, helloWorld) {
 
 	'use strict';
 
-	app.directive('appVersion', appVersion);
+	//add all directives
+	app.directive('appVersion', appVersion).
+		directive('helloWorld', helloWorld);
 
+	//no export
 });

@@ -2,13 +2,13 @@ define([], function () {
 
 	'use strict';
 
-	var factory = ['version', function (version) {
+	var factory = function () {
 		return function (scope, elm, attrs) {
-			elm.text(version);
+			elm.text('Hello world from directive!');
 		};
-	}];
-
+	};
 
 	//export
-	return  factory;
+	return factory
+
 });

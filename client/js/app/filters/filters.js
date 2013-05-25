@@ -2,5 +2,8 @@ define(['app/app', './interpolateVersion'], function (app, interpolateVersion) {
 
 	'use strict';
 
-	return app.filter('interpolateVersion', interpolateVersion);
+	//add all filters
+	app.filter('interpolateVersion', interpolateVersion);
+
+	//no export
 });
