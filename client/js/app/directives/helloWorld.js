@@ -9,6 +9,6 @@ define([], function () {
 	};
 
 	//export
-	return factory
+	return factory;
 
 });
