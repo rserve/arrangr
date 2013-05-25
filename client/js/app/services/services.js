@@ -1,6 +1,6 @@
 /* Services */
 
-define(['app/app', 'app/config'], function (app, config) {
+define(['app/app'], function (app) {
 
 	'use strict';
 

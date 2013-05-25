@@ -5,7 +5,8 @@ require.config({
 		bootstrap: '../lib/bootstrap/js/bootstrap',
 		underscore: '../lib/underscore',
 		angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular',
-
+		json: '../lib/require/json',
+		text: '../lib/require/text',
 		util: 'framework/util'
 
 	},
@@ -31,7 +32,7 @@ require.config({
 //make sure all dependencies are loaded
 require([
 	'angular',
-	'app/config',
+	'json!app/config.json',
 	'framework/logger',
 	'jquery',
 	'app/app',
