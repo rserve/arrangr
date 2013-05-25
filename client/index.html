@@ -11,12 +11,15 @@
 <div class="container">
 
     <h1>Rserve - Booking made easy</h1>
-
     <div ng-view ng-cloak></div>
-
 </div>
 
+<div ng-controller="VersionController">
+    <div ng-bind-template="{{text}}"></div>
+    <div ng-include src="template.url"></div>
+</div>
 
 <script data-main="js/main" src="lib/require.js"></script>
+
 </body>
 </html>

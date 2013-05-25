@@ -1,6 +1,6 @@
 define([
 	'app/app',
-	'app/controllers',
+	'app/controllers/controllers',
 	'app/partials',
 	'framework/logger'
 ], function (app, controllers, partials, logger) {

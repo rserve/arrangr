@@ -4,7 +4,8 @@ define([], function () {
 
 	var partials = {
 		group: 'partials/group.html',
-		groups: 'partials/groups.html'
+		groups: 'partials/groups.html',
+		version: 'partials/version.html'
 	};
 
 	//export

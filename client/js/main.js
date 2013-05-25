@@ -35,7 +35,10 @@ require([
 	'framework/logger',
 	'jquery',
 	'app/app',
-	'app/controllers',
+	'app/services/services',
+	'app/controllers/controllers',
+	'app/filters/filters',
+	'app/directives/directives',
 	'app/routes'
 ], function (angular, config, logger) {
 
