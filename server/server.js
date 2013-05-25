@@ -21,15 +21,38 @@ module.exports = function () {
 			"id": 2,
 			"name": "ostprovning",
 			"count": 200
+		},
+		{
+			"id": 3,
+			"name": "coding jam",
+			"count": 1337
+		},
+		{
+			"id": 4,
+			"name": "spelkväll",
+			"count": 66
 		}
 	];
+
+	//grab group data dirty style
+	function getGroupData(groupId) {
+
+		var filtered = groups.filter(function (group) {
+			return group.id == groupId; //automatic type conversion
+		});
+
+		return filtered.length > 0 && filtered[0]; //if match only one element in array
+	}
 
 	app.get('/groups', function (req, res) {
 		res.json(groups);
 	});
 
 	app.get('/groups/:id', function (req, res) {
-		res.json(groups[1]);
+		var id = req.params.id,
+			data = getGroupData(id);
+
+		res.json(data);
 	});
 
 	app.use(express.static('client'));
