@@ -46,7 +46,6 @@ module.exports = function (grunt) {
 
 				// Global variables, the boolean value determines if the variable is assignable
 				globals: {
-
 					self: false,
 					define: false,
 					require: false,
@@ -59,7 +58,6 @@ module.exports = function (grunt) {
 			node: {
 				options: {
 					curly: false,
-					undef: true,
 					node:true,
 					browser:false,
 					strict:false,
@@ -87,6 +85,7 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		// squelch jhint warning
 		/* jshint camelcase: false */
 		jasmine_node: {
 			specNameMatcher: '.spec',
@@ -98,26 +97,28 @@ module.exports = function (grunt) {
 				savePath : "./build/reports/jasmine/",
 				useDotNotation: true,
 				consolidate: true
-			},
-
-			all: ['server/']
+			}
 		}
 
 	});
 
 
-
+	//Deps tasks
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-jasmine-node');
 
+	//lint tasks
 	grunt.registerTask('lint', ['jshint:client', 'jshint:node']);
 	grunt.registerTask('lint_browser', ['jshint:client']);
 	grunt.registerTask('lint_node', ['jshint:node']);
+
+	//spec tastks
 	grunt.registerTask('spec', ['jasmine', 'jasmine_node']);
 	grunt.registerTask('spec_browser', ['jasmine']);
 	grunt.registerTask('spec_node', ['jasmine_node']);
 
+	// default tasks
 	grunt.registerTask('all', ['jshint:client', 'jshint:node','jasmine', 'jasmine_node']);
 
 	grunt.registerTask('default', ['all']);

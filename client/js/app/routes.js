@@ -20,7 +20,7 @@ define([
 					controller: 'GroupView'
 				}).
 
-				//view group
+				//view groups
 				when('/groups', {
 					templateUrl: partials.groups,
 					controller: 'GroupsView'
