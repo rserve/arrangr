@@ -1,4 +1,4 @@
-(function () {
+(function () { //do you need to scope like this in to prevent global leakage in node?
 
 	var groups = [
 		{
@@ -33,8 +33,6 @@
 		return filtered.length > 0 && filtered[0]; //if match only one element in array
 	}
 
-
-	//grab group data dirty style
 	function increaseGroupCount(groupId) {
 
 		var group = getGroupData(groupId);
@@ -43,6 +41,7 @@
 		}
 	}
 
+	//public interface
 	module.exports = {
 		getGroup: getGroupData,
 		getGroups: function () {
