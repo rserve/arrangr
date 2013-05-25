@@ -1,4 +1,4 @@
-define(['angular', 'json!app/config.json'], function (angular, config) {
+define(['angular', 'json!config.json',], function (angular, config) {
 
 	'use strict';
 

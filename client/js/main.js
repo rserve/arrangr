@@ -7,7 +7,9 @@ require.config({
 		angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular',
 		json: '../lib/require/json',
 		text: '../lib/require/text',
-		util: 'framework/util'
+		util: 'framework/util',
+		config: '../data/config'
+
 
 	},
 	shim: {
@@ -32,7 +34,7 @@ require.config({
 //make sure all dependencies are loaded
 require([
 	'angular',
-	'json!app/config.json',
+	'json!config.json',
 	'framework/logger',
 	'jquery',
 	'app/app',
