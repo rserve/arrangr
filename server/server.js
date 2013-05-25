@@ -10,47 +10,17 @@ module.exports = function () {
 
 	var express = require('express');
 	var app = express();
-
-	var groups = [
-		{
-			"id": 1,
-			"name": "innebandy!",
-			"count": 2
-		},
-		{
-			"id": 2,
-			"name": "ostprovning",
-			"count": 200
-		},
-		{
-			"id": 3,
-			"name": "coding jam",
-			"count": 1337
-		},
-		{
-			"id": 4,
-			"name": "spelkväll",
-			"count": 66
-		}
-	];
-
-	//grab group data dirty style
-	function getGroupData(groupId) {
-
-		var filtered = groups.filter(function (group) {
-			return group.id == groupId; //automatic type conversion
-		});
-
-		return filtered.length > 0 && filtered[0]; //if match only one element in array
-	}
+	var db = require('./fakeDB');
 
 	app.get('/groups', function (req, res) {
-		res.json(groups);
+		res.json(db.getGroups());
 	});
 
 	app.get('/groups/:id', function (req, res) {
 		var id = req.params.id,
-			data = getGroupData(id);
+			data = db.getGroup(id);
+
+		db.increaseGroupCount(id);
 
 		res.json(data);
 	});
