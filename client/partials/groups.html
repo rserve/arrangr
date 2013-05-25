@@ -1,8 +1,8 @@
-<div class="hero-unit">
+<div class="page-header">
     <h2>Available groups</h2>
-
-    <ul ng-repeat="group in groups">
-        <li><a href="#/groups/{{group.id}}">{{group.name}}</a></li>
-    </ul>
-
 </div>
+
+<ul class="nav nav-list" ng-repeat="group in groups">
+    <li><a href="#/groups/{{group.id}}">{{group.name}}</a></li>
+</ul>
+

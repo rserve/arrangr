@@ -4,24 +4,50 @@
     <meta charset="utf-8">
     <title>rserve - Booking made easy</title>
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
-</head>
-<body>
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
 
+</head>
+
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse"
+                    data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">rserve - Booking made easy</a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
 
 <div class="container">
 
-    <h1>Rserve - Booking made easy</h1>
     <div ng-view ng-cloak></div>
+
+    <div class="muted credit" ng-controller="VersionController">
+        <div ng-bind-template="{{text}}"></div>
+        <div ng-include src="template.url"></div>
+    </div>
+
+    <div class="muted credit" hello-world></div>
+
 </div>
-
-<div hello-world></div>
-
-<div ng-controller="VersionController">
-    <div ng-bind-template="{{text}}"></div>
-    <div ng-include src="template.url"></div>
-</div>
-
-
 
 <script data-main="js/main" src="lib/require.js"></script>
 
