@@ -7,29 +7,6 @@ var Group = resourceful.define('group', function () {
     this.number('count');
 });
 
-
-exports.all = function(req, res) {
-    Group.all(function(err, result){
-        res.send(result);
-    });
-};
-
-exports.get = function(req, res) {
-    Group.get(req.params.id, function(err, group) {
-        if(!err) {
-            group.update({ count: group.count+1}, function(err, result){
-                res.send(result);
-            });
-        }
-    });
-};
-
-exports.populate = function() {
-    for(var i in groups) {
-        Group.create(groups[i]);
-    }
-};
-
 var groups = [
     {
         id: "1",
@@ -53,4 +30,27 @@ var groups = [
     }
 ];
 
-exports.data = groups;
+var api = {
+    findAll: function(req, res) {
+        Group.all(function(err, result){
+            res.send(result);
+        });
+    },
+    findById: function(req, res) {
+        Group.get(req.params.id, function(err, group) {
+            if(!err) {
+                group.update({ count: group.count+1}, function(err, result){
+                    res.send(result);
+                });
+            }
+        });
+    },
+    populate: function() {
+        for(var i in groups) {
+            Group.create(groups[i]);
+        }
+    },
+    data: groups
+};
+
+module.exports = api;

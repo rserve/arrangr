@@ -1,3 +1,4 @@
+/*global describe, it, expect */
 // Set different port for testing
 process.env.port = 8000;
 
@@ -6,7 +7,7 @@ var server = require('../server');
 var groups = require('../api/groups.js');
 
 describe('Groups', function () {
-     describe('all', function () {
+     describe('findAll', function () {
         it('should return all groups', function (done) {
             request('http://localhost:'+process.env.port+'/groups', function(error, response, body){
                 expect(error).toBeFalsy();
@@ -17,7 +18,7 @@ describe('Groups', function () {
         });
     });
 
-    describe('get', function() {
+    describe('findById', function() {
         it('should return correct group', function (done) {
             var expectedGroup = groups.data[0];
             request('http://localhost:'+process.env.port+'/groups/'+expectedGroup.id, function(error, response, body){

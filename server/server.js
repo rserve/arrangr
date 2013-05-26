@@ -9,8 +9,8 @@ module.exports = function () {
 
     // API
     // Groups
-	app.get('/groups', groups.all);
-	app.get('/groups/:id', groups.get);
+	app.get('/groups', groups.findAll);
+	app.get('/groups/:id', groups.findById);
 
     // Serve client files
 	app.use(express.static('client'));
