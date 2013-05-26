@@ -1,29 +1,16 @@
-/**
- * Created with JetBrains PhpStorm.
- * User: Calle
- * Date: 2013-05-23
- * Time: 21:31
- * To change this template use File | Settings | File Templates.
- */
-
 module.exports = function () {
 
 	var express = require('express');
-	var app = express();
-	var db = require('./fakeDB');
+    var groups = require('./api/groups');
 
-	app.get('/groups', function (req, res) {
-		res.json(db.getGroups());
-	});
+    groups.populate();
 
-	app.get('/groups/:id', function (req, res) {
-		var id = req.params.id,
-			data = db.getGroup(id);
+    var app = express();
 
-		db.increaseGroupCount(id);
-
-		res.json(data);
-	});
+    // API
+    // Groups
+	app.get('/groups', groups.find);
+	app.get('/groups/:id', groups.get);
 
 	app.use(express.static('client'));
 
