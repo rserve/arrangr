@@ -15,8 +15,6 @@ module.exports = function () {
     // Serve client files
 	app.use(express.static('client'));
 
-	app.listen(3000);
-
-	console.log('Listening on port 3000');
+	app.listen(process.env.port || 3000);
 
 }();
