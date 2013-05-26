@@ -1,5 +1,9 @@
 <div class="page-header">
     <h2>Available groups</h2>
+    <form method="POST" action="/api/groups" class="form-inline">
+        <input type="text" name="name"  class="input-small" placeholder="Add group…">
+        <button type="submit" class="btn">Submit</button>
+    </form>
 </div>
 
 <ul class="nav nav-list" ng-repeat="group in groups">

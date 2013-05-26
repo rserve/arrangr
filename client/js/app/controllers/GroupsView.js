@@ -4,7 +4,7 @@ define(['framework/logger'], function (logger) {
 
 	var Controller = function ($scope, $http) {
 
-		$http.get('groups').success(function (data) {
+		$http.get('api/groups').success(function (data) {
 			logger.log('GroupsView - data received', data);
 			$scope.groups = data;
 		});

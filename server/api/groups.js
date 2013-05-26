@@ -45,6 +45,23 @@ var api = {
             }
         });
     },
+    create: function(req, res) {
+        var p = req.body;
+        p.count = 0;
+        Group.create(p, function(err, group) {
+            res.send(group);
+        });
+    },
+    update: function(req, res) {
+        Group.update(req.params.id, req.body, function(err, group) {
+            res.send(group);
+        });
+    },
+    delete: function(req, res) {
+        Group.destroy(req.params.id, function(err, group) {
+
+        });
+    },
     populate: function() {
         for(var i in groups) {
             Group.create(groups[i]);
