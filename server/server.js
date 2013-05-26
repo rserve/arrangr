@@ -9,9 +9,10 @@ module.exports = function () {
 
     // API
     // Groups
-	app.get('/groups', groups.find);
+	app.get('/groups', groups.all);
 	app.get('/groups/:id', groups.get);
 
+    // Serve client files
 	app.use(express.static('client'));
 
 	app.listen(3000);
