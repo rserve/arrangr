@@ -1,8 +1,8 @@
 <div class="page-header">
     <h2>Available groups</h2>
-    <form method="POST" action="/api/groups" class="form-inline">
-        <input type="text" name="name"  class="input-small" placeholder="Add group…">
-        <button type="submit" class="btn">Submit</button>
+    <form novalidate class="form-inline">
+        <input type="text" ng-model="group.name"  class="input-small" placeholder="Add group…">
+        <button ng-click="create(group)" class="btn">Submit</button>
     </form>
 </div>
 
