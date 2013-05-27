@@ -3,8 +3,6 @@ module.exports = function () {
 	var express = require('express');
     var groups = require('./api/groups');
 
-    groups.populate();
-
     var app = express();
     app.use(express.bodyParser());
     app.use(express.compress());
