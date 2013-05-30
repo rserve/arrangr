@@ -1,10 +1,10 @@
 /* Services */
 
-define(['app/app'], function (app) {
+define(['app/app', './groups'], function (app, groups) {
 
 	'use strict';
 
-	//todo add services here
+	app.factory('groupsService', groups);
 
 	//no export
 });

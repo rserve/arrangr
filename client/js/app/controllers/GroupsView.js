@@ -2,20 +2,30 @@ define(['framework/logger'], function (logger) {
 
 	'use strict';
 
-	var Controller = function ($scope, $http) {
+	var Controller = function ($scope, $http, groupsService) {
 
-        $scope.create = function(group) {
-            $http.post('api/groups', group).success(function(data) {
-                $scope.groups.push(data);
-                group.name = '';
-            });
-        };
+		$scope.create = function (group) {
 
-		$http.get('api/groups').success(function (data) {
+			var cb = function (data) {
+				$scope.groups.push(data);
+				group.name = '';
+			};
+
+			groupsService.create().data(group).success(cb).execute();
+
+		};
+
+		var cb = function (data) {
 			logger.log('GroupsView - data received', data);
 			$scope.groups = data;
-		});
+		};
+
+		groupsService.findAll().success(cb).execute();
+
 	};
+
+	//inject dependencies
+	Controller.$inject = ['$scope', '$http', 'groupsService'];
 
 	//export
 	return Controller;
