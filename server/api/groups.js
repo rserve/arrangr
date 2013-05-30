@@ -1,109 +1,67 @@
-var mongo = require('mongodb');
-
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
-
-var server = new Server(process.env.DB_HOST || 'localhost', process.env.DB_PORT || 27017, {auto_reconnect: true});
-var db = new Db(process.env.DB_NAME || 'rserve', server, {safe: true});
-
-db.open(function(err, db) {
-    if(err) {
-        console.log("Error connecting to database: " + err);
-    } else {
-        console.log("Connected to database");
-        db.collection('groups', {strict:true}, function(err, collection) {
-            if (err) {
-                console.log("The 'groups' collection doesn't exist. Creating it with sample data...");
-                dao.populate();
-            }
-        });
-    }
+var mongoose = require('mongoose');
+var schema = new mongoose.Schema({
+    name: String,
+    count: Number
 });
 
-var groups = [
-    {
-        name: "innebandy!",
-        count: 2
-    },
-    {
-        name: "ostprovning",
-        count: 200
-    },
-    {
-        name: "coding jam",
-        count: 1337
-    },
-    {
-        name: "spelkväll",
-        count: 66
-    }
-];
+var Group = mongoose.model('Group', schema);
+
 
 //Data Access Interface
 var dao = {
     findAll: function(req, res) {
-        db.collection('groups', function(err, collection) {
-            collection.find().toArray(function(err, items) {
-                res.send(items);
-            });
+        Group.find(function(e, groups){
+            if(e){
+                console.log('Error finding groups: ' + e);
+                res.send({'error':'An error has occurred'});
+            }else{
+                res.send(groups);
+            }
         });
     },
     findById: function(req, res) {
         var id = req.params.id;
-        db.collection('groups', function(err, collection) {
-            collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
-                res.send(item);
-            });
+        Group.findOne({_id:id}, function(e, group){
+            if(e){
+                console.log('Error finding group: ' + e);
+                res.send({'error':'An error has occurred'});
+            }else{
+                res.send(group);
+            }
         });
      },
     create: function(req, res) {
         var group = req.body;
         group.count = 0;
-        db.collection('groups', function(err, collection) {
-            collection.insert(group, {safe:true}, function(err, result) {
-                if (err) {
-                    console.log('Error creating group: ' + err);
-                    res.send({'error':'An error has occurred'});
-                } else {
-                    res.send(result[0]);
-                }
-            });
+        Group.create(group, function(err, group) {
+            if (err) {
+                console.log('Error creating group: ' + err);
+                res.send({'error':'An error has occurred'});
+            } else {
+                res.send(group);
+            }
         });
     },
     update: function(req, res) {
         var id = req.params.id;
         var group = req.body;
-        db.collection('groups', function(err, collection) {
-            collection.update({'_id':new BSON.ObjectID(id)}, group, {safe:true}, function(err, result) {
-                if (err) {
-                    console.log('Error updating group: ' + err);
-                    res.send({'error':'An error has occurred'});
-                } else {
-                    res.send(group);
-                }
-            });
+        Group.update({_id: id}, group, function(err) {
+            if (err) {
+                console.log('Error updating group: ' + err);
+                res.send({'error':'An error has occurred'});
+            }
         });
     },
     delete: function(req, res) {
         var id = req.params.id;
-        db.collection('groups', function(err, collection) {
-            collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
-                if (err) {
-                    console.log('Error deleting group: ' + err);
-                    res.send({'error':'An error has occurred - ' + err});
-                } else {
-                    res.send(req.body);
-                }
-            });
+        Group.remove({_id: id}, function(err) {
+            if (err) {
+                console.log('Error deleting group: ' + err);
+                res.send({'error':'An error has occurred - ' + err});
+            }
         });
     },
-    populate: function() {
-        db.collection('groups', function(err, collection) {
-            collection.insert(groups, {safe:true}, function(err, result) {});
-        });
-    },
-    data: groups
+    model: Group
 };
 
 module.exports = dao;
