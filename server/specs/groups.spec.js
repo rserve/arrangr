@@ -5,7 +5,7 @@ process.env.DB_NAME = 'rserve_test';
 
 var request = require('request');
 var server = require('../server');
-var groups = require('../api/groups.js');
+var Group = require('../models/group.js');
 
 var testData = [
     {
@@ -32,7 +32,7 @@ describe('Groups', function () {
         var done = false;
 
         runs(function(){
-            groups.model.create(testData, function (err) {
+            Group.create(testData, function (err) {
                 if (err) {
                     console.log(err);
                 }
@@ -50,7 +50,7 @@ describe('Groups', function () {
         var done = false;
 
         runs(function(){
-            groups.model.remove({}, function (err) {
+            Group.remove({}, function (err) {
                 if (err) {
                     console.log(err);
                 }

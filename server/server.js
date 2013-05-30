@@ -1,17 +1,18 @@
 module.exports = function () {
 
 	var express = require('express');
-    var groups = require('./api/groups');
     var mongoose = require('mongoose');
+    var groups = require('./routes/groups');
 
+    // Connect to DB
     mongoose.connect('mongodb://localhost/' + (process.env.DB_NAME || 'rserve'));
 
+    // Setup express
     var app = express();
     app.use(express.bodyParser());
     app.use(express.compress());
 
-    // API
-    // Groups
+    // Routes
 	app.get('/api/groups', groups.findAll);
 	app.get('/api/groups/:id', groups.findById);
     app.post('/api/groups', groups.create);
