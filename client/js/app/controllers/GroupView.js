@@ -4,13 +4,31 @@ define(['framework/logger'], function (logger) {
 
 	var Controller = function ($scope, $http, $location, $routeParams, groupsService) {
 
+		var id = $routeParams.groupId,
+			action = $routeParams.action,
+			service = groupsService;
+
 		//success
-		var cb = function (data) {
+		function cb(data) {
 			logger.log('GroupView - data received', data);
 			$scope.group = data;
+		}
+
+		var actions = {
+			show: function () {
+				service.findById(id).success(cb).execute();
+			},
+			join: function () {
+				var group = service.findById(id).success(cb).execute();
+				service.update(id).data(group).success(cb).execute();
+			},
+			delete: function () {
+				service.delete(id).success(cb).execute();
+			}
 		};
 
-		groupsService.findById($routeParams.groupId).success(cb).execute();
+		//run action
+		actions[action]();
 
 	};
 

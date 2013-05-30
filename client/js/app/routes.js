@@ -15,7 +15,7 @@ define([
 			$routeProvider.
 
 				//view group
-				when('/groups/:groupId', {
+				when('/groups/:groupId/:action', {
 					templateUrl: partials.group,
 					controller: 'GroupView'
 				}).

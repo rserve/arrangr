@@ -64,7 +64,8 @@ define([], function () {
 					url = this.url,
 					method = this._method,
 					data = this._data,
-					args = [];
+					args = [],
+					errors;
 
 				//add paths to url if available
 				//TODO use regexp and store url as '/api/groups/:id' instead
@@ -72,18 +73,17 @@ define([], function () {
 					url += '/' + path.join('/');
 				}
 
-				//add args for $http
-				args.push(url);
-				if (data) {
-					args.push(data);
-				}
 
-
-				var errors = this.validate();
+				errors = this.validate();
 				if (errors) {
 					this._error(errors);
 				} else {
 
+					//add args for $http
+					args.push(url);
+					if (data) {
+						args.push(data);
+					}
 					//proxy through http
 					$http[method].apply($http, args).success(function (data) {
 
@@ -107,15 +107,23 @@ define([], function () {
 		var groups = {};
 
 		groups.findAll = function () {
-			return  Object.create(request).method('get');
+			return Object.create(request).method('get');
 		};
 
 		groups.findById = function (id) {
-			return  Object.create(request).method('get').path(id);
+			return Object.create(request).method('get').path(id);
 		};
 
 		groups.create = function () {
 			return Object.create(request).method('post');
+		};
+
+		groups.delete = function (id) {
+			throw new Error('delete not implemented yet');
+		};
+
+		groups.update = function (id) {
+			throw new Error('update not implemented yet');
 		};
 
 		return groups;
