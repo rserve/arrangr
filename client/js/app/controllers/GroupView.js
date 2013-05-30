@@ -8,25 +8,47 @@ define(['framework/logger'], function (logger) {
 			action = $routeParams.action,
 			service = groupsService;
 
-		//success
-		function cb(data) {
-			logger.log('GroupView - data received', data);
-			$scope.group = data;
-		}
 
 		var actions = {
 			show: function () {
-				service.findById(id).success(cb).execute();
+				//success
+				service.findById(id).success(function (data) {
+					$scope.group = data;
+					$scope.status = 'info';
+					$scope.action = $routeParams.action;
+				}).execute();
 			},
 			join: function () {
 
+				//get group
 				service.findById(id).success(function (group) {
-					service.update(id).data(group).success(cb).execute();
+
+					//update group
+					group.count = group.count + 1;
+					delete group._id;
+
+					service.update(id).data(group).execute();
+
+					$scope.group = group;
+					$scope.status = 'success';
+					$scope.action = $routeParams.action;
 				}).execute();
 
 			},
 			delete: function () {
-				service.delete(id).success(cb).execute();
+
+				//get group
+				service.findById(id).success(function (group) {
+
+					//delete
+					service.delete(id).execute();
+
+					$scope.group = group;
+					$scope.status = 'error';
+					$scope.action = $routeParams.action;
+
+				}).execute();
+
 			}
 		};
 

@@ -119,11 +119,11 @@ define([], function () {
 		};
 
 		groups.delete = function (id) {
-			throw new Error('delete not implemented yet');
+			return Object.create(request).method('delete').path(id);
 		};
 
 		groups.update = function (id) {
-			throw new Error('update not implemented yet');
+			return Object.create(request).method('put').path(id);
 		};
 
 		return groups;
