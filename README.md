@@ -1,5 +1,7 @@
 # rserve - Booking made easy
 
+Requires mongodb server.
+
 ## Installing
 
 ### Node modules
@@ -19,7 +21,9 @@ More information [http://gruntjs.com/getting-started]
 
 ``node server/server``
 
-Note: Default port 3000
+Note: Default port 3000, to change:
+
+``PORT=3000 node server/server``
 
 
 ## Grunt tasks
