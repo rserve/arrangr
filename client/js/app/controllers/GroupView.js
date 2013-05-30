@@ -19,8 +19,11 @@ define(['framework/logger'], function (logger) {
 				service.findById(id).success(cb).execute();
 			},
 			join: function () {
-				var group = service.findById(id).success(cb).execute();
-				service.update(id).data(group).success(cb).execute();
+
+				service.findById(id).success(function (group) {
+					service.update(id).data(group).success(cb).execute();
+				}).execute();
+
 			},
 			delete: function () {
 				service.delete(id).success(cb).execute();
