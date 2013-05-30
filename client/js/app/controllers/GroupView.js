@@ -11,7 +11,7 @@ define(['framework/logger'], function (logger) {
 
 		var actions = {
 			show: function () {
-				//success
+
 				service.findById(id).success(function (data) {
 					$scope.group = data;
 					$scope.status = 'info';
@@ -32,21 +32,6 @@ define(['framework/logger'], function (logger) {
 					$scope.group = group;
 					$scope.status = 'success';
 					$scope.action = $routeParams.action;
-				}).execute();
-
-			},
-			delete: function () {
-
-				//get group
-				service.findById(id).success(function (group) {
-
-					//delete
-					service.delete(id).execute();
-
-					$scope.group = group;
-					$scope.status = 'error';
-					$scope.action = $routeParams.action;
-
 				}).execute();
 
 			}

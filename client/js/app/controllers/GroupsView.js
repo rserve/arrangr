@@ -20,6 +20,13 @@ define(['framework/logger'], function (logger) {
 			$scope.groups = data;
 		};
 
+		$scope.delete = function (group) {
+
+			groupsService.delete(group._id).execute();
+			groupsService.findAll().success(cb).execute();
+		};
+
+
 		groupsService.findAll().success(cb).execute();
 
 	};
