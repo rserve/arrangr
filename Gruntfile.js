@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 			options: {
 
 				// Enforcing
-				camelcase: true,    // allow camelCase and UPPER_CASE only
+				camelcase: false,    // allow camelCase and UPPER_CASE only
 				curly: true,        // always put curly braces around blocks in loops and conditionals
 				immed: true,        // prohibit the use of immediate function invocations without wrapping them in parentheses
 				maxdepth: 10,       // maximum level of nested blocks

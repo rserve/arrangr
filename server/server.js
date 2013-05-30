@@ -1,34 +1,23 @@
-/**
- * Created with JetBrains PhpStorm.
- * User: Calle
- * Date: 2013-05-23
- * Time: 21:31
- * To change this template use File | Settings | File Templates.
- */
-
 module.exports = function () {
 
 	var express = require('express');
-	var app = express();
-	var db = require('./fakeDB');
+    var groups = require('./api/groups');
 
-	app.get('/groups', function (req, res) {
-		res.json(db.getGroups());
-	});
+    var app = express();
+    app.use(express.bodyParser());
+    app.use(express.compress());
 
-	app.get('/groups/:id', function (req, res) {
-		var id = req.params.id,
-			data = db.getGroup(id);
+    // API
+    // Groups
+	app.get('/api/groups', groups.findAll);
+	app.get('/api/groups/:id', groups.findById);
+    app.post('/api/groups', groups.create);
+    app.put('/api/groups/:id', groups.update);
+    app.delete('/api/groups/:id', groups.delete);
 
-		db.increaseGroupCount(id);
-
-		res.json(data);
-	});
-
+    // Serve client files
 	app.use(express.static('client'));
 
-	app.listen(3000);
-
-	console.log('Listening on port 3000');
+	app.listen(process.env.PORT || 3000);
 
 }();
