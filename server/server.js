@@ -19,6 +19,14 @@ module.exports = function () {
     app.put('/api/groups/:id', groups.update);
     app.delete('/api/groups/:id', groups.delete);
 
+    // Rout all request thats not for static files (ending with .*) to the index page and let angular do the client routing
+    app.use(function(req, res, next) {
+        if (!req.url.match(/.*\..*/)) {
+            req.url = '/';
+        }
+        next();
+    });
+
     // Serve client files
 	app.use(express.static('client'));
 

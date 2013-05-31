@@ -14,7 +14,7 @@ define([], function () {
 			 * attributes
 			 * */
 
-			url: 'api/groups',
+			url: '/api/groups',
 
 			/*
 			 * builder methods
