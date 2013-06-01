@@ -8,11 +8,16 @@ define(['framework/logger'], function (logger) {
 			service = groupsService;
 
 		function getGroup() {
-			service.findById(id).success(function (data) {
-				$scope.group = data;
-				$scope.status = 'info';
-				//$scope.message = false;
-			}).execute();
+			service.findById(id).
+				success(function (data) {
+					$scope.group = data;
+					$scope.status = 'info';
+				}).
+				error(function (data) {
+					$scope.message = "Server says '" + data.error + "'";
+					$scope.status = 'error';
+				}).
+				execute();
 		}
 
 
