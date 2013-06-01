@@ -2,7 +2,12 @@
     <h2>{{group.name}}</h2>
 </div>
 
-<p class="alert alert-{{status}}"> Add phrase for group_{{action}}</p>
+<p ng-show="message" class="alert alert-{{status}}">{{message}}</p>
+
+<p>
+    <button ng-click="join(group)" class="btn btn-primary" type="button">Join group</button>
+    <button ng-click="leave(group)" class="btn btn-warning" type="button">Leave</button>
+</p>
 
 <p>Currently {{group.count}} people signed.</p>
 

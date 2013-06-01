@@ -14,13 +14,15 @@ define([
             $locationProvider.html5Mode(true);
 			$routeProvider.
 
-				//view group
+				when('/groups/:groupId', {
+					templateUrl: partials.group,
+					controller: 'GroupView'
+				}).
 				when('/groups/:groupId/:action', {
 					templateUrl: partials.group,
 					controller: 'GroupView'
 				}).
 
-				//view groups
 				when('/groups', {
 					templateUrl: partials.groups,
 					controller: 'GroupsView'

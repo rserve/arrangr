@@ -1,19 +1,25 @@
 <div class="page-header">
-    <h2>Available groups</h2>
-
-    <form novalidate class="form-inline">
-        <input type="text" ng-model="group.name" class="input-small" placeholder="Add group…">
-        <button ng-click="create(group)" class="btn">Submit</button>
-    </form>
+    <h2>Groups</h2>
 </div>
+<form novalidate class="form-inline input-append">
+
+
+    <input type="text" ng-model="group.name" class="span2" placeholder="Name of group...">
+    <button ng-click="create(group)" class="btn">Create</button>
+
+</form>
+
+<p ng-show="message">{{message}}</p>
+
 
 <ul class="nav nav-list" ng-repeat="group in groups">
     <li>
         <div>
-            <span>{{group.name}}</span>
-            <a href="/groups/{{group._id}}/show">show</a>
-            <a href="/groups/{{group._id}}/join">join</a>
-            <button ng-click="delete(group)">delete</button>
+            <a href="/groups/{{group._id}}">{{group.name}}</a>
+            <span>{{group.count}}</span>
+            <button class="btn btn-mini"><i ng-click="delete(group)" class="icon-remove"></i>
+            </button>
         </div>
 </ul>
+
 

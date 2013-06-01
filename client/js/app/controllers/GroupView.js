@@ -5,42 +5,62 @@ define(['framework/logger'], function (logger) {
 	var Controller = function ($scope, $http, $location, $routeParams, groupsService) {
 
 		var id = $routeParams.groupId,
-			action = $routeParams.action,
 			service = groupsService;
 
+		function getGroup() {
+			service.findById(id).success(function (data) {
+				$scope.group = data;
+				$scope.status = 'info';
+				//$scope.message = false;
+			}).execute();
+		}
 
-		var actions = {
-			show: function () {
 
-				service.findById(id).success(function (data) {
-					$scope.group = data;
-					$scope.status = 'info';
-					$scope.action = $routeParams.action;
-				}).execute();
-			},
-			join: function () {
+		function joinGroup() {
 
-				//get group
-				service.findById(id).success(function (group) {
+			//get group
+			service.findById(id).success(function (group) {
 
-					//update group
-					group.count = group.count + 1;
-					delete group._id;
+				//update count
+				group.count = group.count + 1;
+				delete group._id; //else update fails
 
-					service.update(id).data(group).execute();
+				service.update(id).data(group).execute();
 
-					$scope.group = group;
-					$scope.status = 'success';
-					$scope.action = $routeParams.action;
-				}).execute();
+				$scope.group = group;
+				$scope.status = 'success';
+				$scope.message = 'joined group';
 
-			}
-		};
+			}).execute();
 
-		//run action
-		actions[action]();
+		}
 
+
+		function leaveGroup() {
+			//get group
+			service.findById(id).success(function (group) {
+
+				//update group
+				group.count = group.count - 1;
+				if (group.count < 0) {
+					group.count = 0;
+				}
+				delete group._id;
+
+				service.update(id).data(group).execute();
+
+				$scope.group = group;
+				$scope.status = 'success';
+				$scope.message = 'leaved group';
+			}).execute();
+		}
+
+		$scope.leave = leaveGroup;
+		$scope.join = joinGroup;
+
+		getGroup();
 	};
+
 
 	//inject dependencies
 	Controller.$inject = ['$scope', '$http', '$location', '$routeParams', 'groupsService'];

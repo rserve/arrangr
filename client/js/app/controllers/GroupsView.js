@@ -4,31 +4,42 @@ define(['framework/logger'], function (logger) {
 
 	var Controller = function ($scope, $http, groupsService) {
 
-		$scope.create = function (group) {
+		function createGroup(group) {
+			if (!group || !group.name) {
+				$scope.message = 'Name cannot be empty.';
+			} else {
+				$scope.message = '';
 
-			var cb = function (data) {
-				$scope.groups.push(data);
-				group.name = '';
-			};
+				groupsService.create().data(group).success(function (data) {
 
-			groupsService.create().data(group).success(cb).execute();
+					group.name = '';
+					$scope.groups.push(data);
+				}).execute();
+			}
+		}
 
-		};
-
-		var cb = function (data) {
-			logger.log('GroupsView - data received', data);
-			$scope.groups = data;
-		};
-
-		$scope.delete = function (group) {
-
+		function deleteGroup(group) {
 			groupsService.delete(group._id).execute();
-			groupsService.findAll().success(cb).execute();
-		};
 
+			getGroups();
+		}
 
-		groupsService.findAll().success(cb).execute();
+		function getGroups() {
+			groupsService.findAll().success(function (data) {
 
+				logger.log('GroupsView.getGroups()', data);
+				$scope.groups = data;
+
+			}).execute();
+		}
+
+		//expose methods to view
+		$scope.create = createGroup;
+		$scope.delete = deleteGroup;
+		$scope.refresh = getGroups;
+
+		//default action
+		getGroups();
 	};
 
 	//inject dependencies
