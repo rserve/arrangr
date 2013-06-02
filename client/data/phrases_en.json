@@ -8,5 +8,6 @@
 	"PLACEHOLDER_GROUP_NAME": "Name of group...",
 	"BUTTON_JOIN": "Join",
 	"BUTTON_LEAVE": "Leave",
-	"PEOPLE_SIGNED": "People signed:"
+	"PEOPLE_SIGNED": "Currently {0} people have signed!",
+	"ARGUMENTS": "arg1: {0}, arg2: {1}, arg3: {2}..."
 }
