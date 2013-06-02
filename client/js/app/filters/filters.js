@@ -1,9 +1,10 @@
-define(['app/app', './interpolateVersion'], function (app, interpolateVersion) {
+define(['app/app', './config', './phrase'], function (app, config, phrase) {
 
 	'use strict';
 
 	//add all filters
-	app.filter('interpolateVersion', interpolateVersion);
+	app.filter('config', config).
+		filter('phrase', phrase);
 
 	//no export
 });

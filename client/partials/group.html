@@ -5,12 +5,12 @@
 <p ng-show="message" class="alert alert-{{status}}">{{message}}</p>
 
 <p>
-    <button ng-click="join(group)" class="btn btn-primary" type="button">Join group</button>
-    <button ng-click="leave(group)" class="btn btn-warning" type="button">Leave</button>
+    <button ng-click="join(group)" class="btn btn-primary" type="button">{{'%BUTTON_JOIN%' | phrase}}</button>
+    <button ng-click="leave(group)" class="btn btn-warning" type="button">{{'%BUTTON_LEAVE%' | phrase}}</button>
 </p>
 
-<p>Currently {{group.count}} people signed.</p>
+<p>{{'%PEOPLE_SIGNED%' | phrase}}{{group.count}}</p>
 
-<a href="/">Back to group listing.</a>
+<a href="/">{{'%BACK_TO_GROUPS%' | phrase}}</a>
 
 

@@ -8,7 +8,8 @@ require.config({
 		json: '../lib/require/json',
 		text: '../lib/require/text',
 		util: 'framework/util',
-		config: '../data/config'
+		config: '../data/config',
+		data: '../data'
 
 
 	},
