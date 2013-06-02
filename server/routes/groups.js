@@ -23,6 +23,18 @@ exports.findById = function(req, res) {
     });
 };
 
+exports.findByKey = function(req, res) {
+    var key = req.params.key;
+    Group.findOne({key:key}, function(e, group){
+        if(e){
+            console.log('Error finding group: ' + e);
+            res.send({'error':'An error has occurred'});
+        }else{
+            res.send(group);
+        }
+    });
+};
+
 exports.create = function(req, res) {
     var group = req.body;
     group.count = 0;
@@ -37,9 +49,9 @@ exports.create = function(req, res) {
 };
 
 exports.update = function(req, res) {
-    var id = req.params.id;
+    var key = req.params.key;
     var group = req.body;
-    Group.update({_id: id}, group, function(err) {
+    Group.update({key:key}, group, function(err) {
         if (err) {
             console.log('Error updating group: ' + err);
             res.send({'error':'An error has occurred'});
@@ -49,11 +61,12 @@ exports.update = function(req, res) {
 };
 
 exports.delete = function(req, res) {
-    var id = req.params.id;
-    Group.remove({_id: id}, function(err) {
+    var key = req.params.key;
+    Group.remove({key:key}, function(err) {
         if (err) {
             console.log('Error deleting group: ' + err);
             res.send({'error':'An error has occurred - ' + err});
         }
+        res.send();
     });
 };

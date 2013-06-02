@@ -74,13 +74,13 @@ describe('Groups', function () {
         });
     });
 
-    describe('findById', function () {
+    describe('findByKey', function () {
         it('should return correct group', function (done) {
             var testGroup = testGroups[0];
-            request('http://localhost:' + process.env.PORT + '/api/groups/' + testGroup._id, function (error, response, body) {
+            request('http://localhost:' + process.env.PORT + '/api/groups/' + testGroup.key, function (error, response, body) {
                 expect(error).toBeFalsy();
                 var actualGroup = JSON.parse(body);
-                expect(actualGroup._id).toBe(testGroup._id.toString());
+                expect(actualGroup.key).toBe(testGroup.key);
                 done();
             });
         });

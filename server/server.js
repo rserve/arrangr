@@ -17,10 +17,10 @@ module.exports = function () {
 
     // Routes
 	app.get('/api/groups', groups.findAll);
-	app.get('/api/groups/:id', groups.findById);
+	app.get('/api/groups/:key', groups.findByKey);
     app.post('/api/groups', groups.create);
-    app.put('/api/groups/:id', groups.update);
-    app.delete('/api/groups/:id', groups.delete);
+    app.put('/api/groups/:key', groups.update);
+    app.delete('/api/groups/:key', groups.delete);
 
     // Route all requests that's not for static files (ending with .*) to the index page and let angular do the client routing
     app.use(function(req, res, next) {

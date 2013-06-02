@@ -4,11 +4,11 @@ define(['framework/logger'], function (logger) {
 
 	var Controller = function ($scope, $filter, $location, $routeParams, groupsService) {
 
-		var id = $routeParams.groupId,
+		var key = $routeParams.groupId,
 			service = groupsService;
 
 		function getGroup() {
-			service.findById(id).
+			service.findByKey(key).
 				success(function (data) {
 					$scope.group = data;
 					$scope.status = 'info';
@@ -25,13 +25,13 @@ define(['framework/logger'], function (logger) {
 		function joinGroup() {
 
 			//get group
-			service.findById(id).success(function (group) {
+			service.findByKey(key).success(function (group) {
 
 				//update count
 				group.count = group.count + 1;
 				delete group._id; //else update fails
 
-				service.update(id).data(group).execute();
+				service.update(key).data(group).execute();
 
 				$scope.group = group;
 				$scope.status = 'success';
@@ -44,7 +44,7 @@ define(['framework/logger'], function (logger) {
 
 		function leaveGroup() {
 			//get group
-			service.findById(id).success(function (group) {
+			service.findByKey(key).success(function (group) {
 
 				//update group
 				group.count = group.count - 1;
@@ -53,7 +53,7 @@ define(['framework/logger'], function (logger) {
 				}
 				delete group._id;
 
-				service.update(id).data(group).execute();
+				service.update(key).data(group).execute();
 
 				$scope.group = group;
 				$scope.status = 'success';

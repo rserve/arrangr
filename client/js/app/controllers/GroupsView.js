@@ -19,7 +19,7 @@ define(['framework/logger'], function (logger) {
 		}
 
 		function deleteGroup(group) {
-			groupsService.delete(group._id).execute();
+			groupsService.delete(group.key).execute();
 
 			getGroups();
 		}

@@ -114,20 +114,20 @@ define([], function () {
 			return Object.create(request).method('get');
 		};
 
-		groups.findById = function (id) {
-			return Object.create(request).method('get').path(id);
+		groups.findByKey = function (key) {
+			return Object.create(request).method('get').path(key);
 		};
 
 		groups.create = function () {
 			return Object.create(request).method('post');
 		};
 
-		groups.delete = function (id) {
-			return Object.create(request).method('delete').path(id);
+		groups.delete = function (key) {
+			return Object.create(request).method('delete').path(key);
 		};
 
-		groups.update = function (id) {
-			return Object.create(request).method('put').path(id);
+		groups.update = function (key) {
+			return Object.create(request).method('put').path(key);
 		};
 
 		return groups;

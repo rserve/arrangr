@@ -15,7 +15,7 @@
 <ul class="nav nav-list" ng-repeat="group in groups">
     <li>
         <div>
-            <a href="/groups/{{group._id}}">{{group.name}}</a>
+            <a href="/groups/{{group.key}}">{{group.name}}</a>
             <span>{{group.count}}</span>
             <button class="btn btn-mini"><i ng-click="delete(group)" class="icon-remove"></i>
             </button>
