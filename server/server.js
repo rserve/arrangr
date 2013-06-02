@@ -9,8 +9,11 @@ module.exports = function () {
 
     // Setup express
     var app = express();
-    app.use(express.bodyParser());
-    app.use(express.compress());
+    app.configure(function(){
+        app.use(express.bodyParser());
+        app.use(express.methodOverride());
+        app.use(express.compress());
+    });
 
     // Routes
 	app.get('/api/groups', groups.findAll);
@@ -19,7 +22,7 @@ module.exports = function () {
     app.put('/api/groups/:id', groups.update);
     app.delete('/api/groups/:id', groups.delete);
 
-    // Rout all request thats not for static files (ending with .*) to the index page and let angular do the client routing
+    // Route all requests that's not for static files (ending with .*) to the index page and let angular do the client routing
     app.use(function(req, res, next) {
         if (!req.url.match(/.*\..*/)) {
             req.url = '/';

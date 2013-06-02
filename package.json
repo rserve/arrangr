@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "express": "3.x",
-        "mongoose": "3.x"
+        "mongoose": "3.x",
+        "mongoose-shortid": "*"
     }
 }

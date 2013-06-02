@@ -44,6 +44,7 @@ exports.update = function(req, res) {
             console.log('Error updating group: ' + err);
             res.send({'error':'An error has occurred'});
         }
+        res.send(group);
     });
 };
 
