@@ -91,14 +91,16 @@ define([], function () {
 							//if server return error, throw error
 							if (data.error && _this._error) {
 								_this._error(data);
-							} else {
+							} else if (_this._success) {
 								_this._success(data);
 							}
 
 						}).
 						error(function (data, status) {
 							var message = status + ' ' + data || "Request failed";
-							_this._error({error: message});
+							if (_this._error) {
+								_this._error({error: message});
+							}
 						});
 				}
 			}
