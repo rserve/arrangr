@@ -5,7 +5,7 @@ define(['json!data/phrases_en.json'], function (phrases) {
 	var factory = ['localization', function (localization) {
 		return function (text, args) {
 
-			var matches = text.match(/\%([a-zA-Z_]*)\%/mg),
+			var matches = text.match(/\%([A-Z_]*)\%/mg),
 				key;
 
 			matches.forEach(function (match) {
