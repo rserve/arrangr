@@ -9,7 +9,7 @@ define(['json!data/phrases_en.json'], function (phrases) {
 			language: 'en', //just english for now
 
 			getPhrase: function (key) {
-				return phrases[key] || key
+				return phrases[key] || key;
 			}
 		};
 
