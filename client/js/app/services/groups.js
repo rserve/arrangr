@@ -85,17 +85,21 @@ define([], function () {
 						args.push(data);
 					}
 					//proxy through http
-					$http[method].apply($http, args).success(function (data) {
+					$http[method].apply($http, args).
+						success(function (data) {
 
-						//if server return error, throw error
-						//TODO handle http errors
-						if (data.error && _this._error) {
-							_this._error(data);
-						} else {
-							_this._success(data);
-						}
+							//if server return error, throw error
+							if (data.error && _this._error) {
+								_this._error(data);
+							} else {
+								_this._success(data);
+							}
 
-					});
+						}).
+						error(function (data, status) {
+							var message = status + ' ' + data || "Request failed";
+							_this._error({error: message});
+						});
 				}
 			}
 		};
