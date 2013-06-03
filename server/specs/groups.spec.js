@@ -1,7 +1,7 @@
-/*global describe, it, expect, beforeEach, afterEach, runs, waitsFor */
+/*global describe, it, expect, before, beforeEach, afterEach, runs, waitsFor */
 // Set different port for testing
 process.env.PORT = 8000;
-process.env.DB_NAME = 'rserve_test';
+process.env.NODE_ENV = 'test';
 
 var request = require('request');
 var server = require('../server');
@@ -26,18 +26,24 @@ var testData = [
     }
 ];
 
-describe('Groups', function () {
+describe('api', function () {
     var testGroups = null;
+
     beforeEach(function () {
         var done = false;
 
         runs(function(){
-            Group.create(testData, function (err) {
+            Group.remove({}, function(err) {
                 if (err) {
                     console.log(err);
                 }
-                testGroups = Array.prototype.slice.call(arguments, 1);
-                done = true;
+                Group.create(testData, function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    testGroups = Array.prototype.slice.call(arguments, 1);
+                    done = true;
+                });
             });
         });
 
@@ -46,24 +52,7 @@ describe('Groups', function () {
         });
     });
 
-    afterEach(function () {
-        var done = false;
-
-        runs(function(){
-            Group.remove({}, function (err) {
-                if (err) {
-                    console.log(err);
-                }
-                done = true;
-            });
-        });
-
-        waitsFor(function(){
-            return done;
-        });
-    });
-
-    describe('findAll', function () {
+    describe('get /groups', function () {
         it('should return all groups', function (done) {
             request('http://localhost:' + process.env.PORT + '/api/groups', function (error, response, body) {
                 expect(error).toBeFalsy();
@@ -74,7 +63,7 @@ describe('Groups', function () {
         });
     });
 
-    describe('findByKey', function () {
+    describe('get /groups/:key', function () {
         it('should return correct group', function (done) {
             var testGroup = testGroups[0];
             request('http://localhost:' + process.env.PORT + '/api/groups/' + testGroup.key, function (error, response, body) {

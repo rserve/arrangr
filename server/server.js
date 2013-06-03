@@ -1,38 +1,34 @@
-module.exports = function () {
+// Module dependencies
+var express = require('express');
+var fs = require('fs');
 
-	var express = require('express');
-    var mongoose = require('mongoose');
-    var groups = require('./routes/groups');
+// Load configurations
+// if test env, load example file
+var env = process.env.NODE_ENV || 'development';
+var config = require('./config/config')[env];
+var mongoose = require('mongoose');
 
-    // Connect to DB
-    mongoose.connect('mongodb://localhost/' + (process.env.DB_NAME || 'rserve'));
+// Connect to DB
+mongoose.connect(config.db);
 
-    // Setup express
-    var app = express();
-    app.configure(function(){
-        app.use(express.bodyParser());
-        app.use(express.methodOverride());
-        app.use(express.compress());
-    });
+// Bootstrap models
+var modelsPath = __dirname + '/models';
+fs.readdirSync(modelsPath).forEach(function (file) {
+    require(modelsPath + '/' + file);
+});
 
-    // Routes
-	app.get('/api/groups', groups.findAll);
-	app.get('/api/groups/:key', groups.findByKey);
-    app.post('/api/groups', groups.create);
-    app.put('/api/groups/:key', groups.update);
-    app.delete('/api/groups/:key', groups.delete);
+// Setup express
+var app = express();
 
-    // Route all requests that's not for static files (ending with .*) to the index page and let angular do the client routing
-    app.use(function(req, res, next) {
-        if (!req.url.match(/.*\..*/)) {
-            req.url = '/';
-        }
-        next();
-    });
+// express settings
+require('./config/express')(app, config);
 
-    // Serve client files
-	app.use(express.static('client'));
+// Bootstrap routes
+require('./config/routes')(app);
 
-	app.listen(process.env.PORT || 3000);
+var port = process.env.PORT || 3000;
+app.listen(port);
+console.log('Express app started on port ' + port);
 
-}();
+/*global exports:true*/
+exports = module.exports = app;

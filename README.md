@@ -19,11 +19,11 @@ More information [http://gruntjs.com/getting-started]
 
 ## Starting server
 
-``node server/server``
+``npm start``
 
 Note: Default port 3000, to change:
 
-``PORT=3000 node server/server``
+``PORT=3000 npm start``
 
 
 ## Grunt tasks

@@ -1,4 +1,5 @@
-var Group = require('../models/group.js');
+var mongoose = require('mongoose');
+var Group = mongoose.model('Group');
 
 exports.findAll = function(req, res) {
     Group.find(function(e, groups){

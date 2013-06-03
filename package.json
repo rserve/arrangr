@@ -7,7 +7,8 @@
         "url": "https://github.com/rserve/rserve.git"
     },
     "scripts": {
-        "test": "grunt test"
+        "start": "./node_modules/.bin/nodemon server/server.js",
+        "test": "grunt"
     },
     "devDependencies": {
         "grunt-contrib-jasmine": "~0.4.0",
@@ -16,10 +17,12 @@
         "grunt-template-jasmine-requirejs": "~0.1.2",
         "grunt-jasmine-node": "~0.1.0",
         "jasmine-node": "~1.7.1",
-        "request": "2.x"
+        "request": "2.x",
+        "nodemon": "latest"
     },
     "dependencies": {
-        "express": "3.x",
-        "mongoose": "3.x"
+        "express": "latest",
+        "mongoose": "latest",
+        "connect-mongo": "latest"
     }
 }
