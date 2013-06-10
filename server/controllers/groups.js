@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 var Group = mongoose.model('Group');
 
 exports.findAll = function(req, res) {
-    Group.find(function(e, groups){
-        if(e){
-            console.log('Error finding groups: ' + e);
-            res.send({'error':'An error has occurred'});
+    Group.find(function(err, groups){
+        if(err){
+            console.log('Error finding groups: ' + err);
+            res.send({'error': err});
         }else{
             res.send(groups);
         }
@@ -14,10 +14,10 @@ exports.findAll = function(req, res) {
 
 exports.findById = function(req, res) {
     var id = req.params.id;
-    Group.findOne({_id:id}, function(e, group){
-        if(e){
-            console.log('Error finding group: ' + e);
-            res.send({'error':'An error has occurred'});
+    Group.findOne({_id:id}, function(err, group){
+        if(err){
+            console.log('Error finding group: ' + err);
+            res.send({'error': err});
         }else{
             res.send(group);
         }
@@ -26,12 +26,16 @@ exports.findById = function(req, res) {
 
 exports.findByKey = function(req, res) {
     var key = req.params.key;
-    Group.findOne({key:key}, function(e, group){
-        if(e){
-            console.log('Error finding group: ' + e);
-            res.send({'error':'An error has occurred'});
+    Group.findOne({key:key}, function(err, group){
+        if(err){
+            console.log('Error finding group: ' + err);
+            res.status(500).send({'error': err});
         }else{
-            res.send(group);
+            if(!group) {
+                res.status(404).send({error: 'Group not found'});
+            } else {
+                res.send(group);
+            }
         }
     });
 };
@@ -42,7 +46,7 @@ exports.create = function(req, res) {
     Group.create(group, function(err, group) {
         if (err) {
             console.log('Error creating group: ' + err);
-            res.send({'error':'An error has occurred'});
+            res.send({'error': err});
         } else {
             res.send(group);
         }
@@ -55,7 +59,7 @@ exports.update = function(req, res) {
     Group.update({key:key}, group, function(err) {
         if (err) {
             console.log('Error updating group: ' + err);
-            res.send({'error':'An error has occurred'});
+            res.send({'error': err});
         }
         res.send(group);
     });
@@ -66,7 +70,7 @@ exports.delete = function(req, res) {
     Group.remove({key:key}, function(err) {
         if (err) {
             console.log('Error deleting group: ' + err);
-            res.send({'error':'An error has occurred - ' + err});
+            res.send({'error': err});
         }
         res.send();
     });
