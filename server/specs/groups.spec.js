@@ -26,6 +26,8 @@ var testData = [
     }
 ];
 
+var testEndpoint = 'http://localhost:' + process.env.PORT + '/api/';
+
 describe('api', function () {
     var testGroups = null;
 
@@ -54,8 +56,9 @@ describe('api', function () {
 
     describe('get /groups', function () {
         it('should return all groups', function (done) {
-            request('http://localhost:' + process.env.PORT + '/api/groups', function (error, response, body) {
-                expect(error).toBeFalsy();
+            request(testEndpoint + 'groups', function (err, resp, body) {
+                expect(err).toBeFalsy();
+                expect(resp.statusCode).toEqual(200);
                 var actualGroups = JSON.parse(body);
                 expect(actualGroups.length).toEqual(testGroups.length);
                 done();
@@ -66,11 +69,66 @@ describe('api', function () {
     describe('get /groups/:key', function () {
         it('should return correct group', function (done) {
             var testGroup = testGroups[0];
-            request('http://localhost:' + process.env.PORT + '/api/groups/' + testGroup.key, function (error, response, body) {
-                expect(error).toBeFalsy();
+            request(testEndpoint + 'groups/' + testGroup.key, function (err, resp, body) {
+                expect(err).toBeFalsy();
+                expect(resp.statusCode).toEqual(200);
                 var actualGroup = JSON.parse(body);
                 expect(actualGroup.key).toBe(testGroup.key);
                 done();
+            });
+        });
+        it('should return 404 when not found', function (done) {
+            var nonExistingKey = 'idonotexist';
+            request(testEndpoint + 'groups/' + nonExistingKey, function (err, resp, body) {
+                expect(err).toBeFalsy();
+                expect(resp.statusCode).toEqual(404);
+                done();
+            });
+        });
+    });
+
+    describe('post /groups', function() {
+        it('should create group', function(done) {
+            var testGroup = testData[0];
+            request.post(testEndpoint + 'groups', {form: testGroup}, function(err, resp, body) {
+                expect(err).toBeFalsy();
+                expect(resp.statusCode).toEqual(200);
+                Group.find(function(err, groups){
+                    expect(err).toBeFalsy();
+                    expect(groups.length).toEqual(testData.length+1);
+                    done();
+                });
+            });
+        });
+    });
+
+    describe('put /groups/:key', function() {
+        it('should update count', function(done) {
+            var testGroup = testGroups[0];
+            var expectedCount = 666;
+            request.put(testEndpoint + 'groups/' + testGroup.key, {form: {count: expectedCount }}, function(err, resp, body) {
+                expect(err).toBeFalsy();
+                expect(resp.statusCode).toEqual(200);
+                Group.findOne({_id:testGroup.id}, function(err, group){
+                    expect(err).toBeFalsy();
+                    expect(group.count).toEqual(expectedCount);
+                    done();
+                });
+            });
+        });
+    });
+
+    describe('delete /groups/:key', function() {
+        it('should remove group', function(done) {
+            var testGroup = testGroups[0];
+            request.del(testEndpoint + 'groups/' + testGroup.key, function(err, resp, body) {
+                expect(err).toBeFalsy();
+                expect(resp.statusCode).toEqual(200);
+                Group.find(function(err, groups){
+                    expect(err).toBeFalsy();
+                    expect(groups.length).toEqual(testData.length-1);
+                    done();
+                });
             });
         });
     });
