@@ -33,6 +33,16 @@ define([
                     controller: 'Home'
                 }).
 
+                when('/login', {
+                    templateUrl: partials.home,
+                    controller: 'Home'
+                }).
+
+                when('/logout', {
+                    templateUrl: partials.home,
+                    controller: 'Home'
+                }).
+
 				//default to group listing
 				otherwise({redirectTo: '/'});
 		}]).

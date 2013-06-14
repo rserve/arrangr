@@ -32,6 +32,9 @@ define(['framework/logger'], function (logger) {
 
 			}).execute();
 		}
+        function getUserDetail(){
+            $scope.email = JSON.parse(sessionStorage.getItem("user")).email;
+        }
 
 		//expose methods to view
 		$scope.create = createGroup;
@@ -41,6 +44,7 @@ define(['framework/logger'], function (logger) {
 
 		//default action
 		getGroups();
+        getUserDetail();
 	};
 
 	//inject dependencies

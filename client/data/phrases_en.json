@@ -6,6 +6,7 @@
 	"TITLE_GROUPS": "Groups",
 	"BUTTON_CREATE": "Create",
 	"BUTTON_SIGNUP": "Come join us!",
+	"BUTTON_LOGIN": "Sign in!",
 	"PLACEHOLDER_GROUP_NAME": "Name of group...",
 	"PLACEHOLDER_EMAIL": "Email",
 	"PLACEHOLDER_PASSWORD": "Password",

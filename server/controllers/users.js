@@ -12,7 +12,7 @@ var mongoose = require('mongoose')
 
 exports.logout = function (req, res) {
     req.logout();
-    req.send();
+    res.send();
 };
 
 /**

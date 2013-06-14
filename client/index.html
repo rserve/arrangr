@@ -8,7 +8,7 @@
     <style>
         body {
             height: 100%;
-            background-image: url('/images/bg.jpg');
+            background-image: url('/images/bg2.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-color: black;
@@ -27,6 +27,7 @@
             top: 10%;
             left: 10%;
         }
+
         .title {
             font-family: 'Oleo Script', cursive;
             font-size: 6em;
@@ -38,18 +39,33 @@
             font-family: monospace;
             text-shadow: 1px 1px 1px #000;
         }
+
+        .user-detail {
+            position: fixed;
+            top: 5%;
+            right: 5%;
+        }
     </style>
+
+
 
 </head>
 
 <body>
+<script>
+    var images = ['/images/bg.jpg', '/images/bg2.jpg'];
+    var image = images[Math.floor(Math.random() * images.length)];
+    document.body.style.backgroundImage = 'url(IMG)'.replace('IMG', image);
+
+</script>
 <div class="heading">
     <h1 class="title">arran.gr</h1>
+
     <h2 class="subtitle">Arrange your meetups!</h2>
 </div>
-<div class="container">
-    <!--<div ng-view ng-cloak></div>-->
 
+<div class="container">
+    <div ng-view ng-cloak></div>
 </div>
 
 <script data-main="/js/main" src="/lib/require.js"></script>

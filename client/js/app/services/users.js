@@ -120,6 +120,10 @@ define([], function () {
 			return Object.create(request).method('post');
 		};
 
+        users.logout = function () {
+            return Object.create(request).method('get').path('logout');
+        };
+
 
 		return users;
 	};
