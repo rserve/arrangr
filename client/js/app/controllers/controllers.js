@@ -2,18 +2,19 @@
  * Register controllers
  * */
 
-define([ 'app/app',
-	'./GroupView',
-	'./GroupsView',
-	'./VersionController'
-], function (app, GroupView, GroupsView, VersionController) {
+define(function (require, exports, module) {
 
-	'use strict';
+    'use strict';
 
-	//add all controllers
-	app.controller('GroupView', GroupView).
-		controller('GroupsView', GroupsView).
-		controller('VersionController', VersionController);
+    var app = require('app/app'),
+        GroupView = require('./GroupView'),
+        GroupsView = require('./GroupsView'),
+        Home = require('./Home');
 
-	//no export
+    //add all controllers
+    app.controller('GroupView', GroupView).
+        controller('GroupsView', GroupsView).
+        controller('Home', Home);
+
+    //no export
 });

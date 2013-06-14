@@ -38,12 +38,13 @@ define(['framework/logger'], function (logger) {
 		$scope.delete = deleteGroup;
 		$scope.refresh = getGroups;
 
+
 		//default action
 		getGroups();
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$http', 'groupsService'];
+	Controller.$inject = ['$scope', '$http', 'groupsService', 'users'];
 
 	//export
 	return Controller;

@@ -1,13 +1,18 @@
 define([], function () {
 
-	'use strict';
+    'use strict';
 
-	var partials = {
-		group: '/partials/group.html',
-		groups: '/partials/groups.html',
-		version: '/partials/version.html'
-	};
+    var base = '/partials/';
+    var partials = {
+        group: 'group.html',
+        groups: 'groups.html',
+        home: 'home.html'
+    };
 
-	//export
-	return partials;
+    for (var key in partials) {
+        partials[key] = base + partials[key];
+    }
+
+    //export
+    return partials;
 });

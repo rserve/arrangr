@@ -2,50 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>rserve - Booking made easy</title>
+    <title>arrangr - Arrange your meet ups!</title>
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
     <style>
         body {
-            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+            height: 100%;
+            background-image: url('http://nice-cool-pics.com/data/media/22/random_hd_wallpaper_nice-cool-pics.com__5884_.jpg');
+            background-size: cover;
+            color: white;
+        }
+
+        .container {
+            position: absolute;
+            left: 10%;
+            bottom: 10%;
         }
     </style>
 
 </head>
 
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <button type="button" class="btn btn-navbar" data-toggle="collapse"
-                    data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="brand" href="/">rserve - Booking made easy</a>
-
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li class="active"><a href="/">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-    </div>
-</div>
-
 <div class="container">
 
     <div ng-view ng-cloak></div>
-
-    <div class="muted credit" ng-controller="VersionController">
-        <div ng-bind-template="{{text}}"></div>
-        <div ng-include src="template.url"></div>
-    </div>
-
-    <div class="muted credit" hello-world></div>
 
 </div>
 

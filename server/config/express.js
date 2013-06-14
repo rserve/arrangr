@@ -5,7 +5,7 @@
 var express = require('express');
 var mongoStore = require('connect-mongo')(express);
 
-module.exports = function (app, config) {
+module.exports = function (app, config, passport) {
     app.set('showStackError', true);
 
     // should be placed before express.static
@@ -49,6 +49,10 @@ module.exports = function (app, config) {
             })
         }));
 
+        // use passport session
+        app.use(passport.initialize());
+        app.use(passport.session());
+
         // routes should be at the last
         app.use(app.router);
 
@@ -64,7 +68,7 @@ module.exports = function (app, config) {
             console.error(err.stack);
 
             // error page
-            res.status(500).render('500', { error: err.stack });
+            res.status(500).send({ error: err.stack });
         });
 
         // assume 404 since no middleware responded

@@ -1,11 +1,12 @@
 /* Services */
 
-define(['app/app', './groups', './localization'], function (app, groups, localization) {
+define(['app/app', './groups', './localization', './users'], function (app, groups, localization, users) {
 
-	'use strict';
+    'use strict';
 
-	app.factory('groupsService', groups).
-		factory('localization', localization);
+    app.factory('groupsService', groups).
+        factory('users', users).
+        factory('localization', localization);
 
-	//no export
+    //no export
 });

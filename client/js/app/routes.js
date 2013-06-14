@@ -28,8 +28,13 @@ define([
 					controller: 'GroupsView'
 				}).
 
+                when('/', {
+                    templateUrl: partials.home,
+                    controller: 'Home'
+                }).
+
 				//default to group listing
-				otherwise({redirectTo: '/groups'});
+				otherwise({redirectTo: '/'});
 		}]).
 
 		//listen to route changes

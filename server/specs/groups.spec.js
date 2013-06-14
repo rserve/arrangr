@@ -5,7 +5,8 @@ process.env.NODE_ENV = 'test';
 
 var request = require('request');
 var server = require('../server');
-var Group = require('../models/group.js');
+var mongoose = require('mongoose');
+var Group = mongoose.model('Group');
 
 var testData = [
     {
