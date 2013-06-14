@@ -4,26 +4,48 @@
     <meta charset="utf-8">
     <title>arrangr - Arrange your meet ups!</title>
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700' rel='stylesheet' type='text/css'>
     <style>
         body {
             height: 100%;
             background-image: url('http://nice-cool-pics.com/data/media/22/random_hd_wallpaper_nice-cool-pics.com__5884_.jpg');
             background-size: cover;
             color: white;
+            font-size: 18px;
         }
 
         .container {
             position: absolute;
             left: 10%;
-            bottom: 10%;
+            bottom: 20%;
+        }
+
+        .heading {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+        }
+        .title {
+            font-family: 'Oleo Script', cursive;
+            font-size: 6em;
+            text-shadow: 1px 1px 1px #000;
+        }
+
+        .subtitle {
+            margin-top: 1.5em;
+            font-family: monospace;
+            text-shadow: 1px 1px 1px #000;
         }
     </style>
 
 </head>
 
 <body>
+<div class="heading">
+    <h1 class="title">arrangr</h1>
+    <h2 class="subtitle">Arrange your meet ups!</h2>
+</div>
 <div class="container">
-
     <div ng-view ng-cloak></div>
 
 </div>
