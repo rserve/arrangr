@@ -30,18 +30,23 @@ exports.create = function (req, res) {
 };
 
 exports.findById = function (req, res) {
-    if(req.profile) {
-        res.send(req.profile);
-    } else {
-        res.status(500).send();
-    }
+    res.send(req.profile);
 };
 
-exports.user = function (req, res, next, id) {
-    User.findOne({ _id : id }, function (err, user) {
-        if(!e(err, res, 'Error finding user by id')) {
-            req.profile = user;
-            next();
+// param parsing
+var fromParam = function(req, res, next, q) {
+    Group.findOne(q, function (err, user) {
+        if(!e(err, res, 'Error finding user')) {
+            if(!user) {
+                res.status(404).send({error: 'User not found'});
+            } else {
+                req.profile = user;
+                next();
+            }
         }
     });
+}
+
+exports.fromId = function (req, res, next, id) {
+    fromParam(req, res, next, { _id: id });
 };
