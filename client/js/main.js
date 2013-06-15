@@ -5,6 +5,7 @@ require.config({
 		bootstrap: '../lib/bootstrap/js/bootstrap',
 		underscore: '../lib/underscore',
 		angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular',
+		angularcookie: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-cookies',
 		json: '../lib/require/json',
 		text: '../lib/require/text',
 		util: 'framework/util',
@@ -17,6 +18,9 @@ require.config({
 		angular: {
 			deps: ['jquery'], // for angular.element
 			exports: 'angular'
+		},
+		angularcookie:{
+			deps: ['angular']
 		},
 		'bootstrap': {
 			deps: ['jquery']
@@ -35,15 +39,17 @@ require.config({
 //make sure all dependencies are loaded
 require([
 	'angular',
+
 	'json!config.json',
 	'framework/logger',
+	'angularcookie',
 	'jquery',
 	'app/app',
 	'app/services/services',
 	'app/controllers/controllers',
 	'app/filters/filters',
 	'app/directives/directives',
-	'app/routes'
+	'app/routes/routes'
 ], function (angular, config, logger) {
 
 	'use strict';

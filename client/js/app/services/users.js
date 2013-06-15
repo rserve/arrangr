@@ -2,7 +2,8 @@ define([], function () {
 
 	'use strict';
 
-	var service = function ($http) {
+	var service = ['$http', '$rootScope', '$cookieStore', function ($http, $rootScope, $cookieStore) {
+
 
 		/*
 		 * users request implemented as builder
@@ -120,13 +121,28 @@ define([], function () {
 			return Object.create(request).method('post');
 		};
 
-        users.logout = function () {
-            return Object.create(request).method('get').path('logout');
-        };
+		users.logout = function () {
+			return Object.create(request).method('get').path('logout');
+		};
+
+
+		users.isLoggedIn = function (fn) {
+			var user = JSON.parse(sessionStorage.getItem("user"));
+			if (!user) {
+				this.session().success(function () {
+					fn(true);
+				}).error(function () {
+						fn(false);
+					}).execute();
+			} else {
+				fn(true);
+			}
+
+		};
 
 
 		return users;
-	};
+	}];
 
 	//export
 	return service;

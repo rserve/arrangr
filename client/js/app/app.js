@@ -2,7 +2,7 @@ define(['angular', 'json!config.json'], function (angular, config) {
 
 	'use strict';
 
-	var app = angular.module(config.appName, []).
+	var app = angular.module(config.appName, ['ngCookies']).
 
 		//add config values
 		value('version', config.version).
