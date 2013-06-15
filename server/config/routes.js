@@ -6,7 +6,7 @@ module.exports = function (app, passport, auth) {
     app.post('/api/users/login', function(req, res, next) {
         passport.authenticate('local', function(err, user, info) {
             if (err) { return next(err); }
-            if (!user) { return res.status(401).send({error: 'Authentication error'}); }
+            if (!user) { return res.status(404).send({error: 'User not found'}); }
             req.logIn(user, function(err) {
                 if (err) { return next(err); }
                 return res.send(user);

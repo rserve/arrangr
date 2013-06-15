@@ -28,7 +28,7 @@ define([
 				when('/groups/:groupId/:email', {
 					templateUrl: partials.empty,
 					controller: 'JoinGroup',
-					access: access.auth
+					access: access.anon
 				}).
 
 

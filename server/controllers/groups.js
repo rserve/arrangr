@@ -48,11 +48,11 @@ exports.join = function (req, res) {
 
     Group.find({ _id: group.id, 'members.user': user}, function (err, groups) {
         if (!e(err, res, 'Error joining group')) {
-            if (groups) {
+            if (groups.length > 0) {
                 res.status(409).send({error: 'Already a member of this group'});
             } else {
                 Group.findOneAndUpdate({_id: group.id }, { $addToSet: { members: { user: user } } },
-                    function (err) {
+                    function (err, groupt) {
                         e(err, res, 'Error joining group') || res.send(group);
                     }
                 );
@@ -73,7 +73,7 @@ var fromParam = function (req, res, next, q) {
             }
         }
     });
-}
+};
 
 exports.fromKey = function (req, res, next, key) {
     fromParam(req, res, next, { key: key });

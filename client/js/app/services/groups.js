@@ -99,7 +99,7 @@ define([], function () {
 						error(function (data, status) {
 							var message = status + ' ' + data || "Request failed";
 							if (_this._error) {
-								_this._error({error: message});
+								_this._error({data:data, status:status});
 							}
 						});
 				}
