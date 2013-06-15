@@ -11,14 +11,16 @@ define(function (require, exports, module) {
 		GroupsView = require('./GroupsView'),
 		Login = require('./Login'),
 		Logout = require('./Logout'),
-		Register = require('./Register');
+		Register = require('./Register'),
+		UserInfo = require('./UserInfo');
 
 	//add all controllers
 	app.controller('GroupView', GroupView).
 		controller('GroupsView', GroupsView).
 		controller('Register', Register).
 		controller('Login', Login).
-		controller('Logout', Logout);
+		controller('Logout', Logout).
+		controller('UserInfo', UserInfo);
 
 	//no export
 });

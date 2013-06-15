@@ -8,7 +8,7 @@ define(['framework/logger'], function (logger) {
 		users.logout().
 			success(function (res) {
 				console.log('success', res);
-				sessionStorage.removeItem("user");
+				users.removeUserState();
 				$location.path("/login");
 			}).
 			error(function (res) {

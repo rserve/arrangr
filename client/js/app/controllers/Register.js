@@ -9,7 +9,7 @@ define(['framework/logger'], function (logger) {
 			users.create().data(user).
 				success(function (res) {
 					console.log('success', res);
-					sessionStorage.setItem("user", JSON.stringify(user));
+					users.setUserState(user);
 					$location.path("/groups");
 				}).
 				error(function (res) {

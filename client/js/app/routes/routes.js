@@ -45,6 +45,7 @@ define([
 				}).
 
 				when('/logout', {
+					templateUrl: partials.empty,
 					controller: 'Logout',
 					access: access.auth
 				}).
@@ -83,12 +84,14 @@ define([
 				$rootScope.error = null;
 				logger.log('Route change start', $location.path(), $routeParams);
 
-				//Authorizatio needed
+				//If trying to access auth page not logged in, redirect to login
 				if (next.access === access.auth && !users.isLoggedIn()) {
-
-					logger.log('User not logged in');
 					$location.path('/login');
 
+				}
+				//If trying to access anon page logged in, redirect to groups
+				else if (next.access === access.anon && users.isLoggedIn()) {
+					$location.path('/groups');
 				}
 			});
 
@@ -97,8 +100,12 @@ define([
 
 			});
 
+			users.refreshUserState();
+
 			$rootScope.appInitialized = true;
 		}]);
+
+	//
 
 
 	//no export

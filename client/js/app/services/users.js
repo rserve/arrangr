@@ -126,7 +126,32 @@ define([], function () {
 		};
 
 		users.isLoggedIn = function () {
-			return JSON.parse(sessionStorage.getItem("user"));
+			return !!this.getUserState();
+		};
+
+		users.getUserState = function () {
+			var str = sessionStorage.getItem("user"),
+				user;
+			console.log(str);
+			if (str) {
+				user = JSON.parse(str);
+			}
+			return user;
+		};
+
+		users.refreshUserState = function () {
+			$rootScope.user = this.getUserState();
+		};
+
+		users.setUserState = function (user) {
+			sessionStorage.setItem("user", JSON.stringify(user));
+			$rootScope.user = user;
+
+		};
+
+		users.removeUserState = function () {
+			sessionStorage.removeItem("user");
+			$rootScope.user = null;
 		};
 
 
