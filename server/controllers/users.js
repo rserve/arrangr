@@ -3,29 +3,13 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose')
-    , User = mongoose.model('User');
-
-/**
- * Logout
- */
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 exports.logout = function (req, res) {
     req.logout();
     res.send();
 };
-
-/**
- * Session
- */
-
-exports.session = function (req, res) {
-    res.send();
-};
-
-/**
- * Create user
- */
 
 exports.create = function (req, res) {
     var user = new User(req.body);
@@ -41,29 +25,14 @@ exports.create = function (req, res) {
     })
 };
 
-/**
- *  Show profile
- */
-
-exports.show = function (req, res) {
-    var user = req.profile;
-    res.render('users/show', {
-        title: user.name,
-        user: user
-    })
-};
-
-/**
- * Find user by id
- */
-
-exports.user = function (req, res, next, id) {
-    User
-        .findOne({ _id : id })
-        .exec(function (err, user) {
-            if (err) return next(err);
-            if (!user) return next(new Error('Failed to load User ' + id));
-            req.profile = user;
-            next();
-        })
+exports.findById = function (req, res) {
+    var id = req.params.id;
+    User.findOne({_id:id}, function(err, user){
+        if(err){
+            console.log('Error finding user: ' + err);
+            res.send({'error': err});
+        }else{
+            res.send(user);
+        }
+    });
 };

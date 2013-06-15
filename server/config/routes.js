@@ -1,6 +1,6 @@
 module.exports = function (app, passport, auth) {
     var users = require('../controllers/users');
-    app.get('/api/users/logout', users.logout);
+    app.get('/api/users/logout', auth.requiresLogin, users.logout);
     app.post('/api/users', users.create);
     app.post('/api/users/login', function(req, res, next) {
         passport.authenticate('local', function(err, user, info) {
@@ -12,15 +12,13 @@ module.exports = function (app, passport, auth) {
             });
         })(req, res, next);
     });
-    app.get('/api/users/:userId', users.show);
-
-    app.param('userId', users.user);
+    app.get('/api/users/:id', auth.requiresLogin, users.findById);
 
     // user routes
     var groups = require('../controllers/groups');
-    app.get('/api/groups', groups.findAll);
-    app.get('/api/groups/:key', groups.findByKey);
-    app.post('/api/groups', groups.create);
-    app.put('/api/groups/:key', groups.update);
-    app.delete('/api/groups/:key', groups.delete);
+    app.get('/api/groups', auth.requiresLogin, groups.findAll);
+    app.get('/api/groups/:key', auth.requiresLogin, groups.findByKey);
+    app.post('/api/groups', auth.requiresLogin, groups.create);
+    app.put('/api/groups/:key', auth.requiresLogin, groups.update);
+    app.delete('/api/groups/:key', auth.requiresLogin, groups.delete);
 };
