@@ -9,7 +9,7 @@ define(['framework/logger'], function (logger) {
 			users.create().data(user).
 				success(function (res) {
 					console.log('success', res);
-					users.setUserState(user);
+					users.setUserState(res);
 					$location.path("/groups");
 				}).
 				error(function (res) {

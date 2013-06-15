@@ -132,6 +132,10 @@ define([], function () {
 			return Object.create(request).method('put').path(key);
 		};
 
+		groups.join = function (key) {
+			return Object.create(request).method('post').path(key).path('join');
+		};
+
 		return groups;
 	};
 

@@ -2,7 +2,7 @@ define(['framework/logger'], function (logger) {
 
 	'use strict';
 
-	var Controller = function ($scope, $filter, $location, $routeParams, groupsService) {
+	var Controller = function ($scope, $filter, $location, $routeParams, groupsService, $rootScope) {
 
 		var key = $routeParams.groupId,
 			service = groupsService;
@@ -81,11 +81,13 @@ define(['framework/logger'], function (logger) {
 			other: '{} persons have joined.'
 		};
 
+
+
 	};
 
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsService'];
+	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsService', '$rootScope'];
 
 	//export
 	return Controller;

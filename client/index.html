@@ -53,7 +53,7 @@
 
 <body>
 <script>
-    var images = ['/images/bg.jpg', '/images/bg2.jpg'];
+    var images = ['/images/bg.jpg', '/images/bg2.jpg', '/images/bg3.jpg'];
     var image = images[Math.floor(Math.random() * images.length)];
     document.body.style.backgroundImage = 'url(IMG)'.replace('IMG', image);
 
@@ -64,7 +64,7 @@
     <h2 class="subtitle">Arrange your meetups!</h2>
 </div>
 
-<div class="container">
+
     <div ng-view ng-cloak></div>
 </div>
 

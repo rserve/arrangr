@@ -4,7 +4,7 @@ define(['app/partials', ], function (partials) {
 
 	var Controller = function ($scope, $http, $location, $rootScope) {
 
-		$scope.template = {name: 'version', url: partials.userInfo};
+		$scope.template = {name: 'userInfo', url: partials.userInfo};
 
 	};
 

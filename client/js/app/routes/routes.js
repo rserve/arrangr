@@ -20,15 +20,21 @@ define([
 					controller: 'GroupView',
 					access: access.auth
 				}).
-				when('/groups/:groupId/:action', {
+				when('/groups/:groupId', {
 					templateUrl: partials.group,
-					controller: 'GroupView',
+					controller: 'Group',
+					access: access.auth
+				}).
+				when('/groups/:groupId/:email', {
+					templateUrl: partials.empty,
+					controller: 'JoinGroup',
 					access: access.auth
 				}).
 
+
 				when('/groups', {
 					templateUrl: partials.groups,
-					controller: 'GroupsView',
+					controller: 'Groups',
 					access: access.auth
 				}).
 
@@ -50,11 +56,14 @@ define([
 					access: access.auth
 				}).
 
-				//default to group listing
-				//TODO add 404
-				otherwise({redirectTo: '/'});
+				when('/404',
+				{
+					templateUrl: partials.notFound,
+					access: access.public
+				});
+			$routeProvider.otherwise({redirectTo: '/404'});
 
-			var interceptor = ['$location', '$q', function ($location, $q) {
+			var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
 				function success(response) {
 					return response;
 				}
@@ -62,6 +71,11 @@ define([
 				function error(response) {
 
 					if (response.status === 401) {
+
+						//TODO hard coded, could not use users service because of circlular dependency.
+						sessionStorage.removeItem("user");
+						$rootScope.user = null;
+
 						$location.path('/login');
 						return $q.reject(response);
 					}
@@ -104,8 +118,6 @@ define([
 
 			$rootScope.appInitialized = true;
 		}]);
-
-	//
 
 
 	//no export

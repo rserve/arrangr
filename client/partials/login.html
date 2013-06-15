@@ -1,16 +1,18 @@
-<form novalidate class="form-inline input-append">
-    <input ng-model="user.email" type="text" class="span2"
-           placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
-           name="email">
-    <input ng-model="user.password" type="password" class="span2"
-           placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
-           name="password">
-    <button ng-click="login(user)" class="btn">{{'%BUTTON_LOGIN%' | phrase}}
-    </button>
+<div class="container">
+    <form novalidate class="form-inline input-append">
+        <input ng-model="user.email" type="text" class="span2"
+               placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
+               name="email">
+        <input ng-model="user.password" type="password" class="span2"
+               placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
+               name="password">
+        <button ng-click="login(user)" class="btn">{{'%BUTTON_LOGIN%' | phrase}}
+        </button>
 
-</form>
-<div >
-    Not a user? <a href="/">Sign up!</a>
+    </form>
+    <div>
+        Not a user? <a href="/">Sign up!</a>
+    </div>
+
+
 </div>
-
-

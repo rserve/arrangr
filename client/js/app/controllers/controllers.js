@@ -7,16 +7,18 @@ define(function (require, exports, module) {
 	'use strict';
 
 	var app = require('app/app'),
-		GroupView = require('./GroupView'),
-		GroupsView = require('./GroupsView'),
+		JoinGroup = require('./JoinGroup'),
+		Group = require('./Group'),
+		Groups = require('./Groups'),
 		Login = require('./Login'),
 		Logout = require('./Logout'),
 		Register = require('./Register'),
 		UserInfo = require('./UserInfo');
 
 	//add all controllers
-	app.controller('GroupView', GroupView).
-		controller('GroupsView', GroupsView).
+	app.controller('Group', Group).
+		controller('JoinGroup', JoinGroup).
+		controller('Groups', Groups).
 		controller('Register', Register).
 		controller('Login', Login).
 		controller('Logout', Logout).

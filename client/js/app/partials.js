@@ -10,7 +10,8 @@ define([], function () {
 		logout: 'logout.html',
 		register: 'register.html',
 		userInfo: 'user-info.html',
-		empty: 'empty.html'
+		empty: 'empty.html',
+		notFound: 'not-found.html'
 	};
 
 	for (var key in partials) {

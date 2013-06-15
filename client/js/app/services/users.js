@@ -129,10 +129,11 @@ define([], function () {
 			return !!this.getUserState();
 		};
 
+
+		//TODO move these methods somewhere else
 		users.getUserState = function () {
 			var str = sessionStorage.getItem("user"),
 				user;
-			console.log(str);
 			if (str) {
 				user = JSON.parse(str);
 			}

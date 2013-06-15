@@ -2,7 +2,7 @@ define(['framework/logger'], function (logger) {
 
 	'use strict';
 
-	var Controller = function ($scope, $http, groupsService) {
+	var Controller = function ($scope, $filter, $location, $routeParams, groupsService, $rootScope) {
 
 		function createGroup(group) {
 			if (!group || !group.name) {
@@ -32,9 +32,10 @@ define(['framework/logger'], function (logger) {
 
 			}).execute();
 		}
-        function getUserDetail(){
-            $scope.email = JSON.parse(sessionStorage.getItem("user")).email;
-        }
+
+		function getUserDetail() {
+			$scope.email = JSON.parse(sessionStorage.getItem("user")).email;
+		}
 
 		//expose methods to view
 		$scope.create = createGroup;
@@ -44,11 +45,24 @@ define(['framework/logger'], function (logger) {
 
 		//default action
 		getGroups();
-        getUserDetail();
+		getUserDetail();
+
+		$scope.isAdmin = function (group) {
+			var user = $rootScope.user;
+			for (var i = 0, len = group.members.length; i < len; i++) {
+				var member = group.members[i];
+				if (member.user === user._id && member.admin) {
+					return true;
+				}
+			}
+			return false;
+		};
+
 	};
 
+
 	//inject dependencies
-	Controller.$inject = ['$scope', '$http', 'groupsService', 'users'];
+	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsService', '$rootScope'];
 
 	//export
 	return Controller;

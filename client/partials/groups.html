@@ -1,27 +1,29 @@
+<div class="container">
 
-<div class="page-header">
-    <h2>{{'%TITLE_GROUPS%' | phrase}}</h2>
+
+    <form novalidate class="form-inline input-append">
+
+        <input type="text" ng-model="group.name" class="span2"
+               placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
+        <button ng-click="create(group)" class="btn">{{'%BUTTON_CREATE%' | phrase}}</button>
+        <p ng-show="message">{{message}}</p>
+    </form>
+
+
+    <h5>{{'%TITLE_GROUPS%' | phrase}}</h5>
+    <ul class="nav nav-list" ng-repeat="group in groups">
+        <li >
+            <div>
+                <a href="/groups/{{group.key}}">{{group.name}}</a>
+                <a href="#" ng-show="isAdmin(group)" ng-click="delete(group)">delete group</a>
+            </div>
+        </li>
+    </ul>
+
+
+
+
 </div>
-<form novalidate class="form-inline input-append">
 
-
-    <input type="text" ng-model="group.name" class="span2" placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
-    <button ng-click="create(group)" class="btn">{{'%BUTTON_CREATE%' | phrase}}</button>
-
-</form>
-
-<p ng-show="message">{{message}}</p>
-
-
-<ul class="nav nav-list" ng-repeat="group in groups">
-    <li>
-        <div>
-            <a href="/groups/{{group.key}}">{{group.name}}</a>
-            <span>{{group.count}}</span>
-            <button class="btn btn-mini"><i ng-click="delete(group)" class="icon-remove"></i>
-            </button>
-        </div>
-</ul>
-<a href="/groups/i_do_not_exist">I do not exist</a>
 
 
