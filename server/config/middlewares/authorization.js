@@ -16,7 +16,7 @@ exports.requiresLogin = function (req, res, next) {
 
 exports.user = {
     hasAuthorization : function (req, res, next) {
-        if (req.params.id != req.user.id) {
+        if (req.profile.id != req.user.id) {
             return res.status(403).send();
         }
         next();

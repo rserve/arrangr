@@ -11,6 +11,10 @@ exports.logout = function (req, res) {
     res.send();
 };
 
+exports.session = function(req, res) {
+    res.send(req.user);
+};
+
 exports.create = function (req, res) {
     var user = new User(req.body);
     user.provider = 'local';
@@ -26,13 +30,18 @@ exports.create = function (req, res) {
 };
 
 exports.findById = function (req, res) {
-    var id = req.params.id;
-    User.findOne({_id:id}, function(err, user){
-        if(err){
-            console.log('Error finding user: ' + err);
-            res.send({'error': err});
-        }else{
-            res.send(user);
-        }
+    if(req.profile) {
+        res.send(req.profile);
+    } else {
+        res.status(500).send();
+    }
+};
+
+exports.user = function (req, res, next, id) {
+    User.findOne({ _id : id }, function (err, user) {
+        if (err) return next(err);
+        if (!user) return next(new Error('Failed to load User ' + id));
+        req.profile = user;
+        next();
     });
 };
