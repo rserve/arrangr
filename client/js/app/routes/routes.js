@@ -24,7 +24,6 @@ define([
 					templateUrl: partials.group,
 					controller: 'GroupView',
 					access: access.auth
-
 				}).
 
 				when('/groups', {
@@ -34,24 +33,24 @@ define([
 				}).
 
 				when('/', {
-					templateUrl: partials.home,
-					controller: 'Home',
-					access: access.auth
+					templateUrl: partials.register,
+					controller: 'Register',
+					access: access.anon
 				}).
 
 				when('/login', {
-					templateUrl: partials.home,
-					controller: 'Home',
+					templateUrl: partials.login,
+					controller: 'Login',
 					access: access.anon
 				}).
 
 				when('/logout', {
-					templateUrl: partials.home,
-					controller: 'Home',
+					controller: 'Logout',
 					access: access.auth
 				}).
 
 				//default to group listing
+				//TODO add 404
 				otherwise({redirectTo: '/'});
 
 			var interceptor = ['$location', '$q', function ($location, $q) {
@@ -85,15 +84,10 @@ define([
 				logger.log('Route change start', $location.path(), $routeParams);
 
 				//Authorizatio needed
-				if (next.access === access.auth) {
+				if (next.access === access.auth && !users.isLoggedIn()) {
 
-					//TODO async, route could continue before login state has been synced
-					users.isLggedIn(function (loggedIn) {
-						if (!loggedIn) {
-							logger.log('User not logged in');
-							$location.path('/login');
-						}
-					});
+					logger.log('User not logged in');
+					$location.path('/login');
 
 				}
 			});

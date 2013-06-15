@@ -125,19 +125,8 @@ define([], function () {
 			return Object.create(request).method('get').path('logout');
 		};
 
-
-		users.isLoggedIn = function (fn) {
-			var user = JSON.parse(sessionStorage.getItem("user"));
-			if (!user) {
-				this.session().success(function () {
-					fn(true);
-				}).error(function () {
-						fn(false);
-					}).execute();
-			} else {
-				fn(true);
-			}
-
+		users.isLoggedIn = function () {
+			return JSON.parse(sessionStorage.getItem("user"));
 		};
 
 
