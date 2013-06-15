@@ -4,6 +4,7 @@
  */
 
 var mongoose = require('mongoose');
+var e = require('./errorhandler');
 var User = mongoose.model('User');
 
 exports.logout = function (req, res) {
@@ -19,14 +20,13 @@ exports.create = function (req, res) {
     var user = new User(req.body);
     user.provider = 'local';
     user.save(function (err) {
-        if (err) {
-            res.status(500).send({'error': err});
+        if(!e(err, res, 'Error creating user')) {
+            req.logIn(user, function(err) {
+                if (err) return next(err);
+                res.send(user);
+            });
         }
-        req.logIn(user, function(err) {
-            if (err) return next(err);
-            res.send(user);
-        })
-    })
+    });
 };
 
 exports.findById = function (req, res) {
@@ -39,9 +39,9 @@ exports.findById = function (req, res) {
 
 exports.user = function (req, res, next, id) {
     User.findOne({ _id : id }, function (err, user) {
-        if (err) return next(err);
-        if (!user) return next(new Error('Failed to load User ' + id));
-        req.profile = user;
-        next();
+        if(!e(err, res, 'Error finding user by id')) {
+            req.profile = user;
+            next();
+        }
     });
 };

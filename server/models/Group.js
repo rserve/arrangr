@@ -7,7 +7,13 @@ var schema = new mongoose.Schema({
         unique: true
     },
     name: String,
-    count: Number
+    createdAt  : {type : Date, default : Date.now},
+    members: [{
+        user: { type: mongoose.Schema.ObjectId, ref: 'User' },
+        status: {type: String, enum: ['Yes', 'No', 'Maybe'], default: 'No'},
+        admin: { type: Boolean, default: false },
+        createdAt  : {type : Date, default: Date.now}
+    }]
 });
 
 schema.pre('save', true, function (next, done) {

@@ -18,7 +18,7 @@ module.exports = function (app, passport, auth) {
 
     // user routes
     var groups = require('../controllers/groups');
-    app.get('/api/groups', auth.requiresLogin, groups.findAll);
+    app.get('/api/groups', auth.requiresLogin, groups.findByUser);
     app.get('/api/groups/:key', auth.requiresLogin, groups.findByKey);
     app.post('/api/groups', auth.requiresLogin, groups.create);
     app.put('/api/groups/:key', auth.requiresLogin, groups.update);
