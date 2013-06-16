@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 				// Relaxing
 				boss: true,      // allow the use of assignments in cases where comparisons are expected
 				eqnull: true,    // allow == null comparisons
-				es5: true,       // allow ECMAScript 5 specific features
+				//es5: true,       // allow ECMAScript 5 specific features
 				evil: true,      // allow the use of eval
 				expr: true,      // allow expressions where normally you would expect to see assignments or function calls
 				smarttabs: true, // allow mixed tabs and spaces when the latter are used for alignmnent only
@@ -90,7 +90,6 @@ module.exports = function (grunt) {
 		jasmine_node: {
 			specNameMatcher: '.spec',
 			projectRoot: "server",
-			requirejs: false,
 			forceExit: true,
 			jUnit: {
 				report: false,
