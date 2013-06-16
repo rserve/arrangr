@@ -11,13 +11,13 @@
         "test": "grunt"
     },
     "devDependencies": {
-        "grunt-contrib-jasmine": "~0.4.0",
-        "grunt": "~0.4.1",
-        "grunt-contrib-jshint": "~0.2.0",
-        "grunt-template-jasmine-requirejs": "~0.1.2",
-        "grunt-jasmine-node": "~0.1.0",
-        "jasmine-node": "~1.7.1",
-        "request": "2.x",
+        "grunt": "latest",
+        "grunt-contrib-jasmine": "latest",
+        "grunt-contrib-jshint": "latest",
+        "grunt-template-jasmine-requirejs": "latest",
+        "grunt-jasmine-node": "latest",
+        "jasmine-node": "latest",
+        "request": "latest",
         "nodemon": "latest"
     },
     "dependencies": {

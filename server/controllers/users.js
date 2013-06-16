@@ -22,8 +22,7 @@ exports.create = function (req, res) {
     user.save(function (err) {
         if(!e(err, res, 'Error creating user')) {
             req.logIn(user, function(err) {
-                if (err) return next(err);
-                res.send(user);
+                e(err, res,'Error when logging in') || res.send(user);
             });
         }
     });
@@ -35,7 +34,7 @@ exports.findById = function (req, res) {
 
 // param parsing
 var fromParam = function(req, res, next, q) {
-    Group.findOne(q, function (err, user) {
+    User.findOne(q, function (err, user) {
         if(!e(err, res, 'Error finding user')) {
             if(!user) {
                 res.status(404).send({error: 'User not found'});
@@ -45,7 +44,7 @@ var fromParam = function(req, res, next, q) {
             }
         }
     });
-}
+};
 
 exports.fromId = function (req, res, next, id) {
     fromParam(req, res, next, { _id: id });

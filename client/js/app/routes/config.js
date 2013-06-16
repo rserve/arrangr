@@ -9,7 +9,7 @@ define([
 			anon: 2,
 			auth: 3
 		}
-	}
+	};
 
 
 });
