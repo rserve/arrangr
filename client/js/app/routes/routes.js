@@ -92,19 +92,19 @@ define([
 			$httpProvider.responseInterceptors.push(interceptor);
 		}]).
 
-		run(['$rootScope', '$location', '$routeParams', 'users', function ($rootScope, $location, $routeParams, users) {
+		run(['$rootScope', '$location', '$routeParams', 'authState', function ($rootScope, $location, $routeParams, authState) {
 
 			$rootScope.$on("$routeChangeStart", function (event, next, current) {
 				$rootScope.error = null;
 				logger.log('Route change start', $location.path(), $routeParams);
 
 				//If trying to access auth page not logged in, redirect to login
-				if (next.access === access.auth && !users.isLoggedIn()) {
+				if (next.access === access.auth && !authState.isAuth()) {
 					$location.path('/login');
 
 				}
 				//If trying to access anon page logged in, redirect to groups
-				else if (next.access === access.anon && users.isLoggedIn()) {
+				else if (next.access === access.anon && authState.isAuth()) {
 					$location.path('/groups');
 				}
 			});
@@ -114,7 +114,7 @@ define([
 
 			});
 
-			users.refreshUserState();
+			authState.refreshUserState();
 
 			$rootScope.appInitialized = true;
 		}]);

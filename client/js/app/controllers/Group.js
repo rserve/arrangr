@@ -2,49 +2,48 @@ define(['framework/logger'], function (logger) {
 
 	'use strict';
 
-	var Controller = function ($scope, $filter, $location, $routeParams, groupsService, $rootScope) {
+	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, $rootScope) {
 
 		var key = $routeParams.groupId,
-			service = groupsService;
+			client = groupsClient;
 
 		function getGroup() {
-			service.findByKey(key).
-				success(function (data) {
+			client.findByKey(key,
+				function (data) {
 					$scope.group = data;
 					$scope.status = 'info';
-
-				}).
-				error(function (data) {
+				},
+				function (data) {
 					$scope.message = "Server says '" + data.error + "'";
 					$scope.status = 'error';
-				}).
-				execute();
+				});
 		}
 
 
 		function joinGroup() {
 
 			//get group
-			service.findByKey(key).success(function (group) {
+			client.findByKey(key,
+				function (group) {
 
-				//update count
-				group.count = group.count + 1;
-				delete group._id; //else update fails
+					//update count
+					group.count = group.count + 1;
+					delete group._id; //else update fails
 
-				service.update(key).data(group).execute();
+					client.update(key).data(group).execute();
 
-				$scope.group = group;
-				$scope.status = 'success';
-				$scope.message = 'joined group';
+					$scope.group = group;
+					$scope.status = 'success';
+					$scope.message = 'joined group';
 
-			}).execute();
+				});
 
 		}
 
 
 		function leaveGroup() {
 			//get group
-			service.findByKey(key).success(function (group) {
+			client.findByKey(key, function (group) {
 
 				//update group
 				group.count = group.count - 1;
@@ -53,12 +52,12 @@ define(['framework/logger'], function (logger) {
 				}
 				delete group._id;
 
-				service.update(key).data(group).execute();
+				client.update(key,group);
 
 				$scope.group = group;
 				$scope.status = 'success';
 				$scope.message = 'leaved group';
-			}).execute();
+			});
 		}
 
 		$scope.leave = leaveGroup;
@@ -82,12 +81,11 @@ define(['framework/logger'], function (logger) {
 		};
 
 
-
 	};
 
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsService', '$rootScope'];
+	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', '$rootScope'];
 
 	//export
 	return Controller;

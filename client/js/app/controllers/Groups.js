@@ -2,7 +2,7 @@ define(['framework/logger'], function (logger) {
 
 	'use strict';
 
-	var Controller = function ($scope, $filter, $location, $routeParams, groupsService, $rootScope) {
+	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, $rootScope) {
 
 		function createGroup(group) {
 			if (!group || !group.name) {
@@ -10,59 +10,46 @@ define(['framework/logger'], function (logger) {
 			} else {
 				$scope.message = '';
 
-				groupsService.create().data(group).success(function (data) {
-
+				groupsClient.create(group,function (data) {
 					group.name = '';
 					$scope.groups.push(data);
-				}).execute();
+				});
 			}
 		}
 
 		function deleteGroup(group) {
-			groupsService.delete(group.key).execute();
+			groupsClient.delete(group.key);
 
 			getGroups();
 		}
 
 		function getGroups() {
-			groupsService.findAll().success(function (data) {
+			groupsClient.findAll(function (data) {
 
 				logger.log('GroupsView.getGroups()', data);
 				$scope.groups = data;
 
-			}).execute();
+			});
 		}
 
-		function getUserDetail() {
-			$scope.email = JSON.parse(sessionStorage.getItem("user")).email;
-		}
 
 		//expose methods to view
 		$scope.create = createGroup;
 		$scope.delete = deleteGroup;
 		$scope.refresh = getGroups;
 
+		$scope.isAdmin = function (group) {
+			return group.isAdmin($rootScope.user);
+		};
 
 		//default action
 		getGroups();
-		getUserDetail();
-
-		$scope.isAdmin = function (group) {
-			var user = $rootScope.user;
-			for (var i = 0, len = group.members.length; i < len; i++) {
-				var member = group.members[i];
-				if (member.user === user._id && member.admin) {
-					return true;
-				}
-			}
-			return false;
-		};
 
 	};
 
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsService', '$rootScope'];
+	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', '$rootScope'];
 
 	//export
 	return Controller;

@@ -1,12 +1,13 @@
 /* Services */
 
-define(['app/app', './groups', './localization', './users'], function (app, groups, localization, users) {
+define(['app/app', './api/groupsClient', './api/usersClient', './localization', './authState'], function (app, groupsClient, usersClient, localization, authState) {
 
-    'use strict';
+	'use strict';
 
-    app.factory('groupsService', groups).
-        factory('users', users).
-        factory('localization', localization);
+	app.factory('groupsClient', groupsClient).
+		factory('usersClient', usersClient).
+		factory('localization', localization).
+		factory('authState', authState);
 
-    //no export
+	//no export
 });

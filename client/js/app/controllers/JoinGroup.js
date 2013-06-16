@@ -1,68 +1,66 @@
 define(['framework/logger'], function (logger) {
 
-    'use strict';
+	'use strict';
 
-    var Controller = function ($scope, $filter, $location, $routeParams, groupsService, users) {
-
-
-        var group = $routeParams.groupId,
-            email = $routeParams.email;
+	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, usersClient) {
 
 
-        function joinGroup() {
-            groupsService.join(group).
-                success(function () {
-                    $location.path("/groups/" + group);
-                }).
-                error(function (res) {
-                    console.log('error', res);
-                    if (res.status === 409) {
-                        $location.path("/groups/" + group);
-                    } else {
-                        alert('fuck off');
-
-                    }
-                }).
-                execute();
-        }
-
-        var form = {email: email, password: 'bajs'};
-
-        var saveUserAndJoinGroup = function (user) {
-            users.setUserState(user);
-
-            joinGroup();
-
-        };
-        users.login().data(form).
-            success(saveUserAndJoinGroup).
-            error(function (res) {
-                console.log('error', res);
-                if (res.status === 404) {
-                    register();
-                } else {
-
-                    alert('fuck off');
-                }
-
-            }).execute();
-
-        function register() {
-            users.create().data(form).
-                success(saveUserAndJoinGroup).
-                error(function (res) {
-                    console.log('error', res);
-                    alert('registration failed, fuck off');
-                }).execute();
-        }
-
-    };
+		var group = $routeParams.groupId,
+			email = $routeParams.email;
 
 
-    //inject dependencies
-    Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsService', 'users'];
+		function joinGroup() {
+			groupsClient.join(group,
+				function () {
+					$location.path("/groups/" + group);
+				},
+				function (res) {
+					console.log('error', res);
+					if (res.status === 409) {
+						$location.path("/groups/" + group);
+					} else {
+						alert('fuck off');
 
-    //export
-    return Controller;
+					}
+				});
+		}
+
+		var form = {email: email, password: 'bajs'};
+
+		var saveUserAndJoinGroup = function (user) {
+			usersClient.setUserState(user);
+
+			joinGroup();
+
+		};
+		usersClient.login(form,
+			saveUserAndJoinGroup,
+			function (res) {
+				console.log('error', res);
+				if (res.status === 404) {
+					register();
+				} else {
+
+					alert('fuck off');
+				}
+
+			});
+
+		function register() {
+			usersClient.create(form,saveUserAndJoinGroup,
+				function (res) {
+					console.log('error', res);
+					alert('registration failed, fuck off');
+				});
+		}
+
+	};
+
+
+	//inject dependencies
+	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', 'usersClient'];
+
+	//export
+	return Controller;
 
 });

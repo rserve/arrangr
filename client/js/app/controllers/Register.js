@@ -2,26 +2,26 @@ define(['framework/logger'], function (logger) {
 
 	'use strict';
 
-	var Controller = function ($scope, $http, $location, users) {
+	var Controller = function ($scope, $http, $location, usersClient, authState) {
 
 
 		$scope.signUp = function (user) {
-			users.create().data(user).
-				success(function (res) {
+			usersClient.create(user,
+				function (res) {
 					console.log('success', res);
-					users.setUserState(res);
+					authState.setUserState(res);
 					$location.path("/groups");
-				}).
-				error(function (res) {
+				},
+				function (res) {
 					console.log('error', res);
 					alert('registration failed, fuck off');
-				}).execute();
+				});
 
 		};
 
 	};
 
-	Controller.$inject = ['$scope', '$http', '$location', 'users'];
+	Controller.$inject = ['$scope', '$http', '$location', 'usersClient', 'authState'];
 //export
 	return Controller;
 

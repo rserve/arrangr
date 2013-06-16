@@ -2,22 +2,21 @@ define(['framework/logger'], function (logger) {
 
 	'use strict';
 
-	var Controller = function ($scope, $http, $location, users) {
+	var Controller = function ($scope, $http, $location, usersClient, authState) {
 
 
-		users.logout().
-			success(function (res) {
+		usersClient.logout(function (res) {
 				console.log('success', res);
-				users.removeUserState();
+				authState.removeUserState();
 				$location.path("/login");
-			}).
-			error(function (res) {
+			},
+			function (res) {
 				console.log('error', res);
 				alert('logout failed, fuck off');
-			}).execute();
+			});
 	};
 
-	Controller.$inject = ['$scope', '$http', '$location', 'users'];
+	Controller.$inject = ['$scope', '$http', '$location', 'usersClient','authState'];
 //export
 	return Controller;
 
