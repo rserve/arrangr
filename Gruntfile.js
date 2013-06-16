@@ -90,7 +90,6 @@ module.exports = function (grunt) {
 		jasmine_node: {
 			specNameMatcher: '.spec',
 			projectRoot: "server",
-			requirejs: false,
 			forceExit: true,
 			jUnit: {
 				report: false,
