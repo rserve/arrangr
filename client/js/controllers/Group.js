@@ -1,4 +1,4 @@
-define(['framework/logger'], function (logger) {
+define(function (require, module, exports) {
 
 	'use strict';
 
@@ -52,7 +52,7 @@ define(['framework/logger'], function (logger) {
 				}
 				delete group._id;
 
-				client.update(key,group);
+				client.update(key, group);
 
 				$scope.group = group;
 				$scope.status = 'success';
@@ -87,7 +87,7 @@ define(['framework/logger'], function (logger) {
 	//inject dependencies
 	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', '$rootScope'];
 
-	//export
-	return Controller;
+
+	module.exports = Controller;
 
 });

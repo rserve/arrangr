@@ -8,7 +8,6 @@ require.config({
 		angularcookie: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-cookies',
 		json: '../lib/require/json',
 		text: '../lib/require/text',
-		util: 'framework/util',
 		config: '../data/config',
 		data: '../data'
 
@@ -41,15 +40,14 @@ require([
 	'angular',
 
 	'json!config.json',
-	'framework/logger',
 	'angularcookie',
 	'jquery',
-	'app/app',
-	'app/services/services',
-	'app/controllers/controllers',
-	'app/filters/filters',
-	'app/directives/directives',
-	'app/routes/routes'
+	'app',
+	'services/services',
+	'controllers/controllers',
+	'filters/filters',
+	'directives/directives',
+	'routes/routes'
 ], function (angular, config, logger) {
 
 	'use strict';

@@ -1,9 +1,8 @@
-define([
-], function () {
+define(function (require, exports, module) {
 
 	'use strict';
 
-	return {
+	module.exports = {
 		accessLevels: {
 			public: 1,
 			anon: 2,

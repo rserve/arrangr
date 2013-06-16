@@ -1,4 +1,4 @@
-define(['app/partials', ], function (partials) {
+define(function (require, exports, module) {
 
 	'use strict';
 
@@ -9,8 +9,8 @@ define(['app/partials', ], function (partials) {
 	};
 
 	Controller.$inject = ['$scope'];
-//export
-	return Controller;
 
-})
-;
+	//export
+	module.exports = Controller;
+
+});

@@ -1,4 +1,4 @@
-define(['framework/logger'], function (logger) {
+define(function (require, exports, module) {
 
 	'use strict';
 
@@ -52,6 +52,6 @@ define(['framework/logger'], function (logger) {
 	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', '$rootScope'];
 
 	//export
-	return Controller;
+	module.exports = Controller;
 
 });

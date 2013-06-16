@@ -1,13 +1,14 @@
-define([
-	'app/app',
-	'app/controllers/controllers',
-	'app/partials',
-	'framework/logger',
-	'./config'
-], function (app, controllers, partials, logger, config) {
+define(function (require, exports, module) {
 
 	'use strict';
+
+	var app = require('app'),
+		controller = require('controllers/controllers'),
+		partials = require('partaials'),
+		config = require('./config');
+
 	var access = config.accessLevels;
+
 	app.
 
 		//configure routes

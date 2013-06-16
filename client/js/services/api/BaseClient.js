@@ -1,4 +1,4 @@
-define([], function () {
+define(function (require, exports, module) {
 
 
 	var BaseClient = function ($http) {
@@ -42,6 +42,6 @@ define([], function () {
 		}
 	}
 
-	return BaseClient;
+	module.exports = BaseClient;
 
 });
