@@ -1,10 +1,10 @@
 define(function (require, exports, module) {
 
+	'use strict';
+
 	var RequestBuilder = require('./RequestBuilder'),
 		BaseClient = require('./BaseClient'),
 		User = require('./domain/User');
-
-	'use strict';
 
 	var service = ['$http', function ($http) {
 

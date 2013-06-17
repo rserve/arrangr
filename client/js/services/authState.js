@@ -35,7 +35,7 @@ define(function (require, exports, module) {
 				sessionStorage.removeItem("user");
 				$rootScope.user = null;
 			}
-		}
+		};
 	}];
 
 	module.exports = factory;

@@ -1,8 +1,8 @@
 define(function (require, exports, module) {
 
-	var _ = require('underscore');
-
 	'use strict';
+
+	var _ = require('underscore');
 
 	var RequestBuilder = function () {
 		this.path = [];
@@ -78,7 +78,7 @@ define(function (require, exports, module) {
 			success: successCb,
 			error: this.error
 
-		}
+		};
 	};
 
 	module.exports = RequestBuilder;

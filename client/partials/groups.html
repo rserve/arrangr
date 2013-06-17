@@ -15,7 +15,7 @@
         <li >
             <div>
                 <a href="/groups/{{group.key}}">{{group.name}}</a>
-                <a href="#" ng-show="isAdmin(group)" ng-click="delete(group)">delete group</a>
+                <a href="#" ng-show="group.isAdmin(user)" ng-click="delete(group)">delete group</a>
             </div>
         </li>
     </ul>

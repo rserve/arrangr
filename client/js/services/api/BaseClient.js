@@ -1,5 +1,6 @@
 define(function (require, exports, module) {
 
+	'use strict';
 
 	var BaseClient = function ($http) {
 		this.$http = $http;
