@@ -49,7 +49,7 @@ describe('groups', function () {
         });
     });
 
-    describe('unauthorized', function () {
+    describe('not authenticated', function () {
         describe('get', function () {
             it('should return unauthorized', function (done) {
                 request(groupsEndpoint, function (err, resp) {
@@ -61,7 +61,7 @@ describe('groups', function () {
         });
     });
 
-    describe('authorized', function () {
+    describe('authenticated', function () {
 
         beforeEach(function () {
             var done = false;
