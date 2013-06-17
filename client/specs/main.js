@@ -5,8 +5,7 @@ requirejs.config({
 		'specs': "../specs",
 		'jasmine': "../lib/jasmine-1.3.1/jasmine",
 		'jasmine-html': "../lib/jasmine-1.3.1/jasmine-html",
-		underscore: '../lib/underscore',
-		util: 'framework/util'
+		underscore: '../lib/underscore'
 	},
 	shim: {
 		'jasmine': {
@@ -48,8 +47,7 @@ requirejs(['jasmine', 'jasmine-html'],
 
 		//run our specs
 		require([
-			'specs/sample.spec',
-			'specs/util.spec'
+			'specs/sample.spec'
 		], function () {
 
 			execJasmine();

@@ -25,7 +25,7 @@ define(function (require, exports, module) {
 	};
 
 	Controller.$inject = ['$scope', '$http', '$location', 'usersClient', 'authState'];
-//export
+
 	module.exports = Controller;
 
 });

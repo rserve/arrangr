@@ -60,7 +60,6 @@ define(function (require, exports, module) {
 	//inject dependencies
 	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', 'usersClient'];
 
-	//export
 	module.exports = Controller;
 
 });
