@@ -52,10 +52,10 @@ require([
 
 	'use strict';
 
-	logger.log('Dependencies loaded');
+	console.log('Dependencies loaded');
 	//kick off!
 	angular.element(document).ready(function () {
-		logger.log('Document ready, starting app');
+		console.log('Document ready, starting app');
 		angular.bootstrap(document, [config.appName]);
 	});
 });

@@ -1,4 +1,6 @@
-define(['../../../.'], function (_) {
+define(function (require, exports, module) {
+
+	var _ = require('underscore');
 
 	'use strict';
 
@@ -79,8 +81,6 @@ define(['../../../.'], function (_) {
 		}
 	};
 
-
-	//export
-	return RequestBuilder;
+	module.exports = RequestBuilder;
 
 });

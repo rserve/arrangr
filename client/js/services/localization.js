@@ -1,6 +1,8 @@
-define(['json!data/phrases_en.json'], function (phrases) {
+define(function (require, exports, module) {
 
 	'use strict';
+
+	var phrases = require('json!data/phrases_en.json');
 
 	var factory = ['$window', function ($window) {
 
@@ -26,7 +28,7 @@ define(['json!data/phrases_en.json'], function (phrases) {
 		return localization;
 	}];
 
-	//export
-	return factory;
+
+	module.exports = factory;
 
 });

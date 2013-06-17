@@ -1,4 +1,8 @@
-define(['./RequestBuilder', './BaseClient', './domain/User'], function (RequestBuilder, BaseClient, User) {
+define(function (require, exports, module) {
+
+	var RequestBuilder = require('./RequestBuilder'),
+		BaseClient = require('./BaseClient'),
+		User = require('./domain/User');
 
 	'use strict';
 
@@ -60,7 +64,7 @@ define(['./RequestBuilder', './BaseClient', './domain/User'], function (RequestB
 		return client;
 	}];
 
-	//export
-	return service;
+
+	module.exports = service;
 
 });

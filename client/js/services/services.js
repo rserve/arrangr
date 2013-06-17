@@ -1,8 +1,13 @@
-/* Services */
-
-define(['app/app', './api/groupsClient', './api/usersClient', './localization', './authState'], function (app, groupsClient, usersClient, localization, authState) {
+define(function (require, exports, module) {
 
 	'use strict';
+
+	var app = require('app'),
+		groupsClient = require('./api/groupsClient'),
+		usersClient = require('./api/usersClient'),
+		localization = require('./localization'),
+		authState = require('./authState');
+
 
 	app.factory('groupsClient', groupsClient).
 		factory('usersClient', usersClient).

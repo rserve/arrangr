@@ -1,4 +1,4 @@
-define([], function () {
+define(function (require, exports, module) {
 
 	'use strict';
 
@@ -38,7 +38,6 @@ define([], function () {
 		}
 	}];
 
-	//export
-	return factory;
+	module.exports = factory;
 
 });

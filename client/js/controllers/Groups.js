@@ -25,10 +25,7 @@ define(function (require, exports, module) {
 
 		function getGroups() {
 			groupsClient.findAll(function (data) {
-
-				logger.log('GroupsView.getGroups()', data);
 				$scope.groups = data;
-
 			});
 		}
 
@@ -47,11 +44,9 @@ define(function (require, exports, module) {
 
 	};
 
-
 	//inject dependencies
 	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', '$rootScope'];
 
-	//export
 	module.exports = Controller;
 
 });

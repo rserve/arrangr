@@ -1,8 +1,9 @@
-define([], function () {
+define(function (require, exports, module) {
 
 	'use strict';
 
 	var base = '/partials/';
+
 	var partials = {
 		group: 'group.html',
 		groups: 'groups.html',
@@ -18,6 +19,5 @@ define([], function () {
 		partials[key] = base + partials[key];
 	}
 
-	//export
-	return partials;
+	module.exports = partials;
 });

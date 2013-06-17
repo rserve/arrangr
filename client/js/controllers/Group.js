@@ -1,8 +1,8 @@
-define(function (require, module, exports) {
+define(function (require, exports, module) {
 
 	'use strict';
 
-	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, $rootScope) {
+	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient) {
 
 		var key = $routeParams.groupId,
 			client = groupsClient;
@@ -65,28 +65,11 @@ define(function (require, module, exports) {
 
 		getGroup();
 
-		$scope.groupCount = {
-			0: 'No one have joined',
-			1: 'One person have joined.',
-			2: 'Two persons have joined.',
-			3: 'Three persons have joined.',
-			4: 'Four persons have joined.',
-			5: 'Five persons have joined.',
-			6: 'Six persons have joined.',
-			7: 'Seven persons have joined.',
-			8: 'Eight persons have joined.',
-			9: 'Nine persons have joined.',
-			10: 'Ten persons have joined.',
-			other: '{} persons have joined.'
-		};
-
 
 	};
 
-
 	//inject dependencies
 	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', '$rootScope'];
-
 
 	module.exports = Controller;
 

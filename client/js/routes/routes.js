@@ -4,7 +4,7 @@ define(function (require, exports, module) {
 
 	var app = require('app'),
 		controller = require('controllers/controllers'),
-		partials = require('partaials'),
+		partials = require('partials'),
 		config = require('./config');
 
 	var access = config.accessLevels;
@@ -61,8 +61,8 @@ define(function (require, exports, module) {
 				{
 					templateUrl: partials.notFound,
 					access: access.public
-				});
-			$routeProvider.otherwise({redirectTo: '/404'});
+				}).
+				otherwise({redirectTo: '/404'});
 
 			var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
 				function success(response) {
@@ -97,7 +97,6 @@ define(function (require, exports, module) {
 
 			$rootScope.$on("$routeChangeStart", function (event, next, current) {
 				$rootScope.error = null;
-				logger.log('Route change start', $location.path(), $routeParams);
 
 				//If trying to access auth page not logged in, redirect to login
 				if (next.access === access.auth && !authState.isAuth()) {
@@ -111,7 +110,7 @@ define(function (require, exports, module) {
 			});
 
 			$rootScope.$on('$routeChangeSuccess', function (scope, current, pre) {
-				logger.log('Route changed', $location.path(), $routeParams);
+				console.log('Route changed', $location.path(), $routeParams);
 
 			});
 

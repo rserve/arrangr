@@ -1,6 +1,10 @@
-define(['angular', 'json!config.json'], function (angular, config) {
+define(function (require, exports, module) {
 
 	'use strict';
+
+	var angular = require('angular'),
+		config = require('json!config.json');
+
 
 	var app = angular.module(config.appName, ['ngCookies']).
 
@@ -8,6 +12,5 @@ define(['angular', 'json!config.json'], function (angular, config) {
 		value('version', config.version).
 		value('name', config.appName);
 
-	//export
-	return  app;
+	module.exports = app;
 });
