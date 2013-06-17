@@ -22,18 +22,23 @@ define(function (require, exports, module) {
 			},
 
 			refreshUserState: function () {
-				$rootScope.user = this.getUserState();
+				var user = this.getUserState();
+				$rootScope.user = user;
+				console.log('User state refreshed:', user?user:' no user');
 			},
 
 			setUserState: function (user) {
 				sessionStorage.setItem("user", JSON.stringify(user));
 				$rootScope.user = user;
 
+				console.log('User state stored', user);
+
 			},
 
 			removeUserState: function () {
 				sessionStorage.removeItem("user");
 				$rootScope.user = null;
+				console.log('User state removed');
 			}
 		};
 	}];

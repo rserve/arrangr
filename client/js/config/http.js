@@ -33,5 +33,6 @@ define(function (require, exports, module) {
 		}];
 
 		$httpProvider.responseInterceptors.push(interceptor);
+
 	}]);
 });

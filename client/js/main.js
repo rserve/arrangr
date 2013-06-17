@@ -56,7 +56,7 @@ require([
 
 	//kick off!
 	angular.element(document).ready(function () {
-		console.log('Document ready, starting app');
+		console.log('Document ready, bootstrapping app');
 		angular.bootstrap(document, [config.appName]);
 	});
 });

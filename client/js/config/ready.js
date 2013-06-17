@@ -9,6 +9,8 @@ define(function (require, exports, module) {
 		authState.refreshUserState();
 
 		$rootScope.appInitialized = true;
+
+		console.log('App initialized');
 	}]);
 
 	module.exports = app;

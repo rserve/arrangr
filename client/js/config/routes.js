@@ -61,6 +61,9 @@ define(function (require, exports, module) {
 					access: access.public
 				}).
 				otherwise({redirectTo: '/404'});
+
+			console.log('Routes configured');
+
 		}]).
 
 		run(['$rootScope', '$location', '$routeParams', 'authState', function ($rootScope, $location, $routeParams, authState) {
@@ -71,7 +74,6 @@ define(function (require, exports, module) {
 				//If trying to access authenticated page not logged in, redirect to login
 				if (next.access === access.auth && !authState.isAuth()) {
 					$location.path('/login');
-
 				}
 				//If trying to access anonymous page logged in, redirect to groups
 				else if (next.access === access.anon && authState.isAuth()) {
@@ -84,9 +86,8 @@ define(function (require, exports, module) {
 
 			});
 
-			authState.refreshUserState();
+			console.log('Route intercepts configured');
 
-			$rootScope.appInitialized = true;
 		}]);
 
 	module.exports = app;

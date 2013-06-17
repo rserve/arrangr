@@ -13,5 +13,7 @@ define(function (require, exports, module) {
 		value('version', config.version).
 		value('name', config.appName);
 
+	console.log('Angular module created:', config.appName, config.version);
+
 	module.exports = app;
 });
