@@ -2,7 +2,7 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var factory = ['$http', '$rootScope', '$cookieStore', function ($http, $rootScope, $cookieStore) {
+	var factory = [ '$rootScope', function ($rootScope) {
 
 
 		return {

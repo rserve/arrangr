@@ -2,7 +2,7 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-    var config = require('json!config.json');
+    var config = require('json!data/config.json');
 
 	var factory =  function () {
 		return function (key) {

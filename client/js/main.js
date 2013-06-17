@@ -8,7 +8,6 @@ require.config({
 		angularcookie: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-cookies',
 		json: '../lib/require/json',
 		text: '../lib/require/text',
-		config: '../data/config',
 		data: '../data'
 
 
@@ -38,8 +37,7 @@ require.config({
 //make sure all dependencies are loaded
 require([
 	'angular',
-
-	'json!config.json',
+	'json!data/config.json',
 	'angularcookie',
 	'jquery',
 	'app',
@@ -47,12 +45,15 @@ require([
 	'controllers/controllers',
 	'filters/filters',
 	'directives/directives',
-	'routes/routes'
-], function (angular, config, logger) {
+	'config/http',
+	'config/routes',
+	'config/ready',
+], function (angular, config) {
 
 	'use strict';
 
 	console.log('Dependencies loaded');
+
 	//kick off!
 	angular.element(document).ready(function () {
 		console.log('Document ready, starting app');

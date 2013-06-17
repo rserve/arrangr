@@ -2,7 +2,7 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var partials = require('partials');
+	var partials = require('config/partials');
 
 	var Controller = function ($scope) {
 

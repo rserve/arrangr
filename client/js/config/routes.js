@@ -3,19 +3,23 @@ define(function (require, exports, module) {
 	'use strict';
 
 	var app = require('app'),
-		controller = require('controllers/controllers'),
-		partials = require('partials'),
-		config = require('./config');
+		partials = require('./partials');
 
-	var access = config.accessLevels;
+	//access levels
+	var access = {
+		public: 1,
+		anon: 2,
+		auth: 3
+	};
 
 	app.
+		config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
-		//configure routes
-		config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+			//push state
 			$locationProvider.html5Mode(true);
-			$routeProvider.
 
+			//Routes
+			$routeProvider.
 				when('/groups/:groupId', {
 					templateUrl: partials.group,
 					controller: 'GroupView',
@@ -31,66 +35,32 @@ define(function (require, exports, module) {
 					controller: 'JoinGroup',
 					access: access.anon
 				}).
-
-
 				when('/groups', {
 					templateUrl: partials.groups,
 					controller: 'Groups',
 					access: access.auth
 				}).
-
 				when('/', {
 					templateUrl: partials.register,
 					controller: 'Register',
 					access: access.anon
 				}).
-
 				when('/login', {
 					templateUrl: partials.login,
 					controller: 'Login',
 					access: access.anon
 				}).
-
 				when('/logout', {
 					templateUrl: partials.empty,
 					controller: 'Logout',
 					access: access.auth
 				}).
-
 				when('/404',
 				{
 					templateUrl: partials.notFound,
 					access: access.public
 				}).
 				otherwise({redirectTo: '/404'});
-
-			var interceptor = ['$location', '$q', '$rootScope', function ($location, $q, $rootScope) {
-				function success(response) {
-					return response;
-				}
-
-				function error(response) {
-
-					if (response.status === 401) {
-
-						//TODO hard coded, could not use users service because of circlular dependency.
-						sessionStorage.removeItem("user");
-						$rootScope.user = null;
-
-						$location.path('/login');
-						return $q.reject(response);
-					}
-					else {
-						return $q.reject(response);
-					}
-				}
-
-				return function (promise) {
-					return promise.then(success, error);
-				};
-			}];
-
-			$httpProvider.responseInterceptors.push(interceptor);
 		}]).
 
 		run(['$rootScope', '$location', '$routeParams', 'authState', function ($rootScope, $location, $routeParams, authState) {
@@ -98,12 +68,12 @@ define(function (require, exports, module) {
 			$rootScope.$on("$routeChangeStart", function (event, next, current) {
 				$rootScope.error = null;
 
-				//If trying to access auth page not logged in, redirect to login
+				//If trying to access authenticated page not logged in, redirect to login
 				if (next.access === access.auth && !authState.isAuth()) {
 					$location.path('/login');
 
 				}
-				//If trying to access anon page logged in, redirect to groups
+				//If trying to access anonymous page logged in, redirect to groups
 				else if (next.access === access.anon && authState.isAuth()) {
 					$location.path('/groups');
 				}
@@ -119,6 +89,5 @@ define(function (require, exports, module) {
 			$rootScope.appInitialized = true;
 		}]);
 
-
-	//no export
+	module.exports = app;
 });
