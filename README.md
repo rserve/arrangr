@@ -1,5 +1,7 @@
 # rserve - Booking made easy
 
+[![Build Status](https://drone.io/github.com/rserve/rserve/status.png)](https://drone.io/github.com/rserve/rserve/latest)
+
 Requires mongodb server.
 
 ## Installing

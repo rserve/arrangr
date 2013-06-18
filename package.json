@@ -8,7 +8,7 @@
     },
     "scripts": {
         "start": "./node_modules/.bin/nodemon server/server.js",
-        "test": "grunt"
+        "test": "node -e require('grunt').cli()"
     },
     "devDependencies": {
         "grunt-contrib-jasmine": "~0.4.0",
