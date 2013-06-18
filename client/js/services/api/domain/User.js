@@ -48,12 +48,12 @@ define(function (require, exports, module) {
 	proto.validate = function (type) {
 		type = type || 'login';
 
-		var data = {
+		/*var data = {
 			email: this.email,
 			password: this.password
-		};
-		console.log(data);
-		return validator.validate(data, validatorConfig[type]);
+		};*/
+
+		return validator.validate(this, validatorConfig[type]);
 	};
 
 
