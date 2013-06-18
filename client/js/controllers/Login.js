@@ -9,7 +9,7 @@ define(function (require, exports, module) {
 			return error.message;
 		});
 
-		return errors.join(', ');
+		return errs.join(', ');
 	}
 
 	var Controller = function ($scope, $http, $location, usersClient, authState) {
