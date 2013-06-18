@@ -47,7 +47,8 @@ requirejs(['jasmine', 'jasmine-html'],
 
 		//run our specs
 		require([
-			'specs/sample.spec'
+			'specs/sample.spec',
+			'specs/validator.spec'
 		], function () {
 
 			execJasmine();

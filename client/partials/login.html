@@ -8,8 +8,10 @@
                name="password">
         <button ng-click="login(user)" class="btn">{{'%BUTTON_LOGIN%' | phrase}}
         </button>
+        <span class="error" ng-show="error">{{error}} </span>
 
     </form>
+
     <div>
         Not a user? <a href="/">Sign up!</a>
     </div>

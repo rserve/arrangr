@@ -11,7 +11,7 @@ define(function (require, exports, module) {
 	proto.sendRequest = function (req) {
 		var httpArgs = [];
 
-		//add httpArgs for $http
+		//add args for $http
 		httpArgs.push(req.url);
 		if (req.data) {
 			httpArgs.push(req.data);

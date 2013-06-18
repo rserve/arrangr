@@ -47,7 +47,7 @@ require([
 	'directives/directives',
 	'config/http',
 	'config/routes',
-	'config/ready',
+	'config/finalize',
 ], function (angular, config) {
 
 	'use strict';
