@@ -76,7 +76,7 @@ describe(groupsEndpoint, function () {
         describe('post', function() {
            testUnauthorized(function(cb) {
                request.post(groupsEndpoint, cb);
-           })
+           });
         });
 
         describe('put /:key', function() {
