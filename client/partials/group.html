@@ -1,24 +1,27 @@
-<div class="container">
-    <div class="page-header">
-        <h2>{{group.name}}</h2>
+<div id="main" class="container">
+
+    <div class="hero-unit">
+        <div class="page-header">
+            <h2>{{group.name}}</h2>
+        </div>
+
+        <p>Use the following link to share with friends:</p>
+        <input type="text" value="/groups/{{group.key}}/[your_email]">
+
+        <p ng-show="message" class="alert alert-{{status}}">{{message}}</p>
+
+        <p>
+            <button ng-click="join(group)" class="btn btn-primary" type="button">{{'%BUTTON_JOIN%' |
+                phrase}}
+            </button>
+            <button ng-click="leave(group)" class="btn btn-warning" type="button">{{'%BUTTON_LEAVE%' |
+                phrase}}
+            </button>
+        </p>
+
+
+        <a href="/">{{'%BACK_TO_GROUPS%' | phrase}}</a>
     </div>
-
-    <p>Use the following link to share with friends:</p>
-    <input type="text" value="/groups/{{group.key}}/[your_email]">
-
-    <p ng-show="message" class="alert alert-{{status}}">{{message}}</p>
-
-    <p>
-        <button ng-click="join(group)" class="btn btn-primary" type="button">{{'%BUTTON_JOIN%' |
-            phrase}}
-        </button>
-        <button ng-click="leave(group)" class="btn btn-warning" type="button">{{'%BUTTON_LEAVE%' |
-            phrase}}
-        </button>
-    </p>
-
-
-    <a href="/">{{'%BACK_TO_GROUPS%' | phrase}}</a>
 </div>
 
 
