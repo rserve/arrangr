@@ -1,19 +1,51 @@
+
 <div class="logincontainer">
-    <form novalidate class="form-inline input-append">
-        <input ng-model="user.email" type="text" class="span2"
-               placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
-               name="email">
-        <input ng-model="user.password" type="password" class="span2"
-               placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
-               name="password">
-        <button ng-click="login(user)" class="btn">{{'%BUTTON_LOGIN%' | phrase}}
+
+    <form novalidate>
+
+
+            <div class="control-group {{form.fields.email.status}}">
+
+                <div class="controls">
+                    <input type="text" ng-model="form.fields.email.value" placeholder="{{form.fields.email.placeholder}}">
+                    <span class="help-inline">{{form.fields.email.message}}</span>
+                </div>
+            </div>
+
+        <div class="control-group {{form.fields.password.status}}">
+
+            <div class="controls">
+                <input type="password" ng-model="form.fields.password.value" placeholder="{{form.fields.password.placeholder}}">
+                <span class="help-inline">{{form.fields.password.message}}</span>
+            </div>
+        </div>
+
+
+        <div class="alert alert-{{form.global.status}}" ng-show="form.global.message">{{form.global.message}}
+        </div>
+
+        <button ng-click="submit()" class="btn btn-large btn-info">{{'%BUTTON_LOGIN%' |
+            phrase}}
         </button>
-        <span class="error" ng-show="error">{{error}} </span>
+
 
     </form>
 
     <div class="textshadow">
         Not a user? <a href="/">Sign up!</a>
+    </div>
+
+    <br/>
+    <div class="textshadow">
+        Press <a href="/demo-form">here</a> for a demo form!
+    </div>
+
+
+
+    <br/>
+
+    <div class="textshadow">
+        Use <a href="/old">this link</a> to see old login/register page!
     </div>
 
 

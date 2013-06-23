@@ -1,0 +1,60 @@
+<div class="logincontainer">
+
+    <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+        <div class="flipper">
+            <div class="front">
+                <form novalidate class="form-inline ">
+                    <input ng-model="user.email" type="text" class="input input-medium"
+                           placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
+                           name="email">
+                    <input ng-model="user.password" type="password" class="input input-medium"
+                           placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
+                           name="password"><br/><br/>
+                    <button ng-click="signUp(user)" class="btn btn-large btn-success">{{'%BUTTON_SIGNUP%' | phrase}}</button>
+
+
+                </form>
+
+                <div class="textshadow">
+                    Already a user? <a id="signinLink" href="#">Sign in!</a>
+                </div>
+            </div>
+            <div class="back">
+                <form novalidate class="form-inline">
+                    <input ng-model="user.email" type="text" class="input input-medium"
+                           placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
+                           name="email">
+                    <input ng-model="user.password" type="password" class="input input-medium"
+                           placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
+                           name="password"> <br/><br/>
+                    <button ng-click="login(user)" class="btn btn-large btn-info">{{'%BUTTON_LOGIN%' | phrase}}
+                    </button>
+                    <span class="error" ng-show="error">{{error}} </span>
+
+                </form>
+
+                <div class="textshadow">
+                    Not a user? <a id="registerLink" href="#">Sign up!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    <div class="textshadow">
+        New form <a href="/login">here!</a>
+    </div>
+
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#signinLink').click(function(){
+            $('.flip-container').addClass('flip-container-flip');
+        });
+        $('#registerLink').click(function(){
+            $('.flip-container').removeClass('flip-container-flip');
+        });
+    });
+</script>

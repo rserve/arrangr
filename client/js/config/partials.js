@@ -12,7 +12,9 @@ define(function (require, exports, module) {
 		register: 'register.html',
 		userInfo: 'user-info.html',
 		empty: 'empty.html',
-		notFound: 'not-found.html'
+		notFound: 'not-found.html',
+		old: 'old.html',
+		demoForm: 'demo-form.html'
 	};
 
 	for (var key in partials) {

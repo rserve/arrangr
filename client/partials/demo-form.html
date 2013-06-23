@@ -1,0 +1,116 @@
+<div class="logincontainer">
+
+    <form novalidate>
+        <label class="textshadow">Dynamic text inputs (group1)</label>
+
+        <div ng-repeat="field in form.fieldsForGroup('one')">
+            <div class="control-group {{field.status}}">
+
+                <div class="controls">
+                    <input type="text" ng-model="field.value" placeholder="{{field.placeholder}}">
+                    <span class="help-inline">{{field.message}}</span>
+                </div>
+            </div>
+        </div>
+
+        <label class="textshadow">Misc static fields (group2)</label>
+
+        <div class="control-group {{form.fields.weakPasswordInput.status}}">
+
+            <div class="controls">
+                <input type="password" name="password" ng-model="form.fields.weakPasswordInput.value"
+                       placeholder="{{form.fields.weakPasswordInput.placeholder}}">
+                <span class="help-inline">{{form.fields.weakPasswordInput.message}}</span>
+            </div>
+        </div>
+        <div class="control-group {{form.fields.checkMeCheckbox.status}}">
+            <div class="controls">
+                <label  class="checkbox">
+                    <input ng-model="form.fields.checkMeCheckbox.checked" type="checkbox"> Please check me
+                </label>
+
+            </div>
+        </div>
+
+        <div class="control-group {{form.fields.primesSelect.status}}">
+            <div class="controls">
+                <select ng-model="form.fields.primesSelect.value">
+                    <option >Choose a prime...</option>
+                    <option ng-repeat="option in form.fields.primesSelect.options">{{option}}</option>
+                </select>
+                <span class="help-inline">{{form.fields.primesSelect.message}}</span>
+            </div>
+        </div>
+
+        <!--<label class="textshadow">Composite field </label>
+
+        <div class="control-group error inline form-inline">
+            <div class="controls inline form-inline">
+                <select>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+
+                <input type="checkbox">
+
+                <input type="text" ng-model="field.value" placeholder="{{field.placeholder}}">
+                <span class="help-inline">Please enter: select=2, checkbox=true, input=demo</span>
+            </div>
+        </div>-->
+
+        <br/>
+
+        <p>
+            <button ng-click="form.reset()" class="btn btn">Reset form!
+            </button>
+            <button ng-click="showData()" class="btn btn">Show me ze data!
+            </button>
+        </p>
+
+        <div class="alert alert-{{form.global.status}}" ng-show="form.global.message">
+            {{form.global.message}}
+        </div>
+        <p>
+            <button ng-click="form.validateGroup('one')" class="btn btn-primary">Validate group 1
+            </button>
+
+            <button ng-click="form.validateGroup('two')" class="btn btn-primary">Validate group 2
+            </button>
+
+            <button ng-click="form.validateAll()" class="btn btn-primary">Validate all
+            </button>
+        </p>
+
+        <p>
+            <button ng-click="submit('error', 'Snap, this is an error!')"
+                    class="btn btn-danger">Submit with
+                error
+            </button>
+
+            <button ng-click="submit('success', 'Hello, this is success!')"
+                    class="btn btn-success">Submit with
+                success
+            </button>
+
+            <button ng-click="submit('warning', 'Warning!')" class="btn btn-warning">Submit
+                with
+                warning
+            </button>
+
+            <button ng-click="submit('info', 'Hey there, here are some information!')"
+                    class="btn btn-info">Submit with info
+            </button>
+        </p>
+
+
+    </form>
+
+    <div class="textshadow">
+        Go back to <a href="/login">Sign in!</a>
+    </div>
+
+
+</div>
