@@ -2,49 +2,72 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var User = require('services/api/domain/User');
+	var baseForm = require('./form/baseForm'),
+		fieldFactory = require('./form/fields/fieldFactory');
 
-	function createErrorMessage(errors) {
-		var errs = errors.map(function (error) {
-			return error.message;
-		});
 
-		return errs.join(', ');
-	}
+	var form = baseForm.create();
+	form.addField(fieldFactory.createInput({
+		validator: 'email',
+		name: 'email',
+		placeholder: 'Email'
+	}));
+
+	form.addField(fieldFactory.createInput({
+		validator: 'notEmpty',
+		name: 'password',
+		placeholder: 'Password.'
+	}));
+
 
 	var Controller = function ($scope, $http, $location, usersClient, authState) {
 
-		function prepareForm() {
-			$scope.user = new User();
-		}
 
-		$scope.login = function (user) {
+		//Initialize form, this will bind it to scope
+		form.initialize($scope);
 
-			var errors = user.validate('login');
+
+		//add hook to field validate
+		form.onFieldValidate = function (name, field, error) {
+
+
+			if (!error) {
+				field.setMessage('success', 'OK');
+			}
+		};
+
+		$scope.submit = function () {
+
+			var errors = form.validateAll();
 			if (errors) {
-				console.log('Errors in login form: ', errors);
-				var message = createErrorMessage(errors);
-				$scope.error = message;
-			} else {
 
-				usersClient.login(user,
+
+
+			} else {
+				var data = form.toJSON();
+
+				usersClient.login(data,
 					function (user) {
 						console.log('success', user);
 
 						authState.setUserState(user);
 
 						$location.path("/groups");
+
+						form.reset();
 					},
 					function (err) {
 						console.log('error', err);
-						$scope.error = err.data.error;
-						prepareForm();
+						//form.reset();
+
+						form.global.message = err.data.error;
+						form.global.status = 'error';
+
+
 					});
 			}
 
 		};
-
-		prepareForm();
 
 
 	};

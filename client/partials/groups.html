@@ -1,27 +1,53 @@
-<div class="container">
+<div id="main" class="container">
 
+    <div class="hero-unit" style="z-index: 1000">
 
-    <form novalidate class="form-inline input-append">
+        <h1>Welcome!</h1>
 
-        <input type="text" ng-model="group.name" class="span2"
+        <p>Create a new group and invite your friends</p>
+    <form novalidate class="form-inline">
+
+        <input type="text" ng-model="group.name" class="input input-xxlarge"
                placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
-        <button ng-click="create(group)" class="btn">{{'%BUTTON_CREATE%' | phrase}}</button>
+        <button ng-click="create(group)" class="btn btn-success">{{'%BUTTON_CREATE%' | phrase}}</button>
         <p ng-show="message">{{message}}</p>
     </form>
 
 
-    <h5>{{'%TITLE_GROUPS%' | phrase}}</h5>
-    <ul class="nav nav-list" ng-repeat="group in groups">
-        <li >
+    <h3>{{'%TITLE_GROUPS%' | phrase}}</h3>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="group in groups">
+            <td>
+                <span class="label label-info">new!</span>
+                <span>{{group.name}}</span>
+            </td>
+            <td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>
+            <td><a class="small" href="#" ng-show="group.isAdmin(user)" ng-click="delete(group)"><i class="icon-remove-circle"></i></a></td>
+        </tr>
+        <tr ng-hide="groups.length">
+            <td colspan="3">You have not created any groups yet</td>
+        </tr>
+        </tbody>
+    </table>
+    <ul class="nav" ng-repeat="group in groups">
+        <li>
             <div>
-                <a href="/groups/{{group.key}}">{{group.name}}</a>
-                <a href="#" ng-show="group.isAdmin(user)" ng-click="delete(group)">delete group</a>
+
             </div>
         </li>
     </ul>
 
 
-
+    </div>
 
 </div>
 

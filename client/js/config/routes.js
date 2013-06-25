@@ -55,6 +55,15 @@ define(function (require, exports, module) {
 					controller: 'Logout',
 					access: access.auth
 				}).
+				when('/demo-form', {
+					templateUrl: partials.demoForm,
+					controller: 'DemoForm',
+					access: access.public
+				}).
+				when('/old', {
+					templateUrl: partials.old,
+					access: access.public
+				}).
 				when('/404',
 				{
 					templateUrl: partials.notFound,

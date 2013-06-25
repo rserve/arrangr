@@ -32,35 +32,41 @@ define(function (require, exports, module) {
 			var param,
 				value,
 				type,
-				validator;
-
-			this.errors = [];
+				error,
+				errors;
 
 			for (param in data) {
+				errors = errors || {};
 				if (data.hasOwnProperty(param)) {
 					value = data[param];
 
-					//can override config in validate
+					//can override config per validate call
 					type = config ? config[param] : this.config[param];
 
-					validator = this.validators[type];
+					error = this.validateField(type, value);
 
-					if (!validator) {
-
-						throw {
-							name: 'Validator error',
-							message: 'No handler for type ' + type
-						};
-					}
-
-					if (!validator.validate(value)) {
-						this.errors.push(validator.error);
+					if (error) {
+						errors[param] = error;
 					}
 				}
 			}
 
-			if (this.errors.length > 0) {
-				return this.errors;
+			return errors;
+		},
+
+		validateField: function (type, value) {
+			var validator = this.validators[type];
+
+			if (!validator) {
+
+				throw {
+					name: 'Validator error',
+					message: 'No handler for type ' + type
+				};
+			}
+
+			if (!validator.validate(value)) {
+				return validator.error;
 			}
 		}
 	};
