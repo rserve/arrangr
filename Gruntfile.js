@@ -98,8 +98,11 @@ module.exports = function (grunt) {
 				useDotNotation: true,
 				consolidate: true
 			}
-		}
+		},
 
+        nodemon: {
+            dev: {}
+        }
 	});
 
 
@@ -107,6 +110,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-nodemon');
 
 	//lint tasks
 	grunt.registerTask('lint', ['jshint:client', 'jshint:node']);

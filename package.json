@@ -6,9 +6,10 @@
         "type": "git",
         "url": "https://github.com/rserve/rserve.git"
     },
+    "main": "./server/server",
     "scripts": {
-        "start": "./node_modules/.bin/nodemon server/server.js",
-        "test": "node runtests"
+        "start": "node gruntcli nodemon",
+        "test": "node gruntcli all"
     },
     "devDependencies": {
         "grunt-contrib-jasmine": "~0.4.0",
@@ -18,7 +19,7 @@
         "grunt-jasmine-node": "latest",
         "jasmine-node": "latest",
         "request": "latest",
-        "nodemon": "latest"
+        "grunt-nodemon": "latest"
     },
     "dependencies": {
         "express": "latest",
