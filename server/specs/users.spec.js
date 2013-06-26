@@ -89,6 +89,14 @@ describe(usersEndpoint, function () {
                 });
             });
 
+            it('should not allow invalid email', function (done) {
+                request.post(usersEndpoint, { form: { email: 'test', password: 'password' } }, function (err, resp) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(400);
+                    done();
+                });
+            });
+
             it('should not allow empty password', function (done) {
                 request.post(usersEndpoint, { form: { email: 'test3@email.com', password: '' } }, function (err, resp) {
                     expect(err).toBeFalsy();

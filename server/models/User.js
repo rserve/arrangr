@@ -59,6 +59,13 @@ UserSchema.path('email').validate(function (email, fn) {
     }
 }, 'Email already exists');
 
+UserSchema.path('email').validate(function(email) {
+    if(this.isNew || this.isModified('email')) {
+        return (/\S+@\S+\.\S+/).test(email);
+    }
+    return true;
+}, 'Invalid email');
+
 UserSchema.path('hashedPassword').validate(function (hashedPassword) {
     return hashedPassword.length;
 }, 'Password cannot be blank');
