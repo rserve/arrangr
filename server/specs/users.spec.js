@@ -1,8 +1,4 @@
 /*global describe, it, expect, before, beforeEach, afterEach, runs, waitsFor */
-// Set different port for testing
-process.env.PORT = 8000;
-process.env.NODE_ENV = 'test';
-
 var helper = require('./spechelper');
 var request = helper.request;
 var User = helper.mongoose.model('User');
@@ -104,7 +100,6 @@ describe(usersEndpoint, function () {
     });
 
     describe('authenticated', function () {
-
         var authenticatedUser = testData.users[0];
 
         beforeEach(function () {

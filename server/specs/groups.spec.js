@@ -1,13 +1,8 @@
 /*global describe, it, expect, before, beforeEach, afterEach, runs, waitsFor */
-// Set different port for testing
-process.env.PORT = 8000;
-process.env.NODE_ENV = 'test';
-
-var request = require('request').defaults({json: true});
-var server = require('../server');
-var mongoose = require('mongoose');
-var Group = mongoose.model('Group');
-var User = mongoose.model('User');
+var helper = require('./spechelper');
+var request = helper.request;
+var Group = helper.mongoose.model('Group');
+var User = helper.mongoose.model('User');
 
 var testData = {
     user: { email: 'test@test.com', password: 'password' },
@@ -19,8 +14,7 @@ var testData = {
     ]
 };
 
-var baseEndpoint = 'http://localhost:' + process.env.PORT + '/api/';
-var groupsEndpoint = baseEndpoint + 'groups';
+var groupsEndpoint = helper.endpoint('groups');
 
 describe(groupsEndpoint, function () {
     var testUser = null;
@@ -50,44 +44,34 @@ describe(groupsEndpoint, function () {
     });
 
     describe('not authenticated', function () {
-        function testUnauthorized(cb) {
-            it('should return unauthorized', function (done) {
-                cb(function (err, resp) {
-                    expect(err).toBeFalsy();
-                    expect(resp.statusCode).toEqual(401);
-                    done();
-                });
-            });
-        }
-
         describe('get', function () {
-            testUnauthorized(function(cb) {
+            helper.testUnauthorized(function(cb) {
                 request(groupsEndpoint, cb);
             });
         });
 
         describe('get /:key', function () {
-            testUnauthorized(function(cb) {
+            helper.testUnauthorized(function(cb) {
                 var testGroup = testGroups[0];
                 request(groupsEndpoint + '/' + testGroup.key, cb);
             });
         });
 
         describe('post', function() {
-           testUnauthorized(function(cb) {
+            helper.testUnauthorized(function(cb) {
                request.post(groupsEndpoint, cb);
            });
         });
 
         describe('put /:key', function() {
-            testUnauthorized(function(cb) {
+            helper.testUnauthorized(function(cb) {
                 var testGroup = testGroups[0];
                 request.put(groupsEndpoint + '/' + testGroup.key, cb);
             });
         });
 
         describe('delete /:key', function() {
-            testUnauthorized(function(cb) {
+            helper.testUnauthorized(function(cb) {
                 var testGroup = testGroups[0];
                 request.del(groupsEndpoint + '/' + testGroup.key, cb);
             });
@@ -95,6 +79,7 @@ describe(groupsEndpoint, function () {
     });
 
     describe('authenticated', function () {
+        var authenticatedUser = testData.user;
 
         beforeEach(function () {
             var done = false;
@@ -104,7 +89,7 @@ describe(groupsEndpoint, function () {
                     if (err) {
                         console.log(err);
                     }
-                    User.create(testData.user, function (err, user) {
+                    User.create(authenticatedUser, function (err, user) {
                         if (err) {
                             console.log(err);
                         }
@@ -113,13 +98,8 @@ describe(groupsEndpoint, function () {
                             if (err) {
                                 console.log(err);
                             }
-                            request.post(baseEndpoint + 'users/login', {
-                                form: {
-                                    email: testData.user.email,
-                                    password: testData.user.password
-                                }
-                            }, function (err, resp) {
-                                    done = true;
+                            helper.login(authenticatedUser.email, authenticatedUser.password, function () {
+                                done = true;
                             });
                         });
                     });
