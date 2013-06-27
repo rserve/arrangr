@@ -58,6 +58,42 @@ describe(usersEndpoint, function () {
             });
         });
 
+        describe('get /login', function () {
+            it('should login user', function (done) {
+                var testUser = testData.users[0];
+                request.post(usersEndpoint + '/login', { form: testUser }, function (err, resp, user) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(200);
+                    expect(user.email).toEqual(testUser.email);
+                    request(usersEndpoint + '/session', function (err, resp, user) {
+                        expect(err).toBeFalsy();
+                        expect(resp.statusCode).toEqual(200);
+                        done();
+                    });
+                });
+            });
+
+            it('should not allow wrong password', function (done) {
+                request.post(usersEndpoint + '/login', { form: { email: 'test@test.com', password: 'wrong' }}, function (err, resp, body) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(400);
+                    expect(body.error).toEqual('Authorization failed');
+                    expect(body.message).toEqual('Invalid password');
+                    done();
+                });
+            });
+
+            it('should not allow non existing email', function (done) {
+                request.post(usersEndpoint + '/login', { form: { email: 'test3@test.com', password: 'password' }}, function (err, resp, body) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(400);
+                    expect(body.error).toEqual('Authorization failed');
+                    expect(body.message).toEqual('Unknown user');
+                    done();
+                });
+            });
+        });
+
         describe('post', function () {
             var testUser = { email: 'test3@email.com', password: 'password' };
             it('should create user', function (done) {
@@ -104,6 +140,8 @@ describe(usersEndpoint, function () {
                     done();
                 });
             });
+
+
         });
     });
 
@@ -152,7 +190,7 @@ describe(usersEndpoint, function () {
         describe('get /:userId', function () {
             it('should return correct user', function (done) {
                 var testUser = testUsers[1];
-                request(usersEndpoint + '/' + testUser.id, function(err, resp, user) {
+                request(usersEndpoint + '/' + testUser.id, function (err, resp, user) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
                     expect(user.email).toEqual(testUser.email);

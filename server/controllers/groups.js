@@ -49,7 +49,7 @@ exports.join = function (req, res) {
     Group.find({ _id: group.id, 'members.user': user}, function (err, groups) {
         if (!e(err, res, 'Error joining group')) {
             if (groups.length > 0) {
-                res.status(409).send({error: 'Already a member of this group'});
+                res.status(409).send({error: 'Error when joining gorup', message: 'Already a member of this group'});
             } else {
                 Group.findOneAndUpdate({_id: group.id }, { $addToSet: { members: { user: user } } },
                     function (err, groupt) {
@@ -66,7 +66,7 @@ var fromParam = function (req, res, next, q) {
     Group.findOne(q, function (err, group) {
         if (!e(err, res, 'Error finding group')) {
             if (!group) {
-                res.status(404).send({error: 'Group not found'});
+                res.status(404).send({error: 'Error finding group', message: 'Group not found'});
             } else {
                 req.group = group;
                 next();
