@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var e = require('./errorhandler');
+var e = require('../helpers/errorhandler');
 var Group = mongoose.model('Group');
 
 exports.findAll = function (req, res) {
@@ -31,7 +31,7 @@ exports.create = function (req, res) {
 
 exports.update = function (req, res) {
     var group = req.body;
-    Group.findOneAndUpdate({_id: req.group.id}, group, function (err) {
+    Group.findOneAndUpdate({_id: req.group.id}, group, function (err, group) {
         e(err, res, 'Error updating group') || res.send(group);
     });
 };
@@ -52,7 +52,7 @@ exports.join = function (req, res) {
                 res.status(409).send({error: 'Error when joining gorup', message: 'Already a member of this group'});
             } else {
                 Group.findOneAndUpdate({_id: group.id }, { $addToSet: { members: { user: user } } },
-                    function (err, groupt) {
+                    function (err, group) {
                         e(err, res, 'Error joining group') || res.send(group);
                     }
                 );

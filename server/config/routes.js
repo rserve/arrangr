@@ -7,6 +7,7 @@ module.exports = function (app, passport, auth) {
     app.get('/api/users/logout', auth.requiresLogin, users.logout);
     app.get('/api/users/session', auth.requiresLogin, users.session);
     app.get('/api/users/:userId', auth.requiresLogin, users.findById);
+    app.get('/api/users/verify/:hash', users.verify);
 
     app.param('userId', users.fromId);
 

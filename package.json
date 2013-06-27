@@ -26,6 +26,7 @@
         "mongoose": "latest",
         "connect-mongo": "latest",
         "passport": "latest",
-        "passport-local": "latest"
+        "passport-local": "latest",
+        "mandrill-api":"latest"
     }
 }

@@ -6,15 +6,21 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
+var hash = require('../helpers/hash.js');
 
 /**
  * User Schema
  */
 
 var UserSchema = new Schema({
-    email: String,
-    hashedPassword: String,
-    salt: String
+    name: String,
+    email: { type: String, unique: true, required: true },
+    hashedPassword:  { type: String, required: true },
+    salt: { type: String, required: true },
+    verificationHash: { type: String, unique: true },
+    provider: { type: String, default: '' },
+    createdAt: { type: Date, default: Date.now },
+    verifiedAt: { type: Date, default: '' }
 });
 
 /**
@@ -30,6 +36,12 @@ UserSchema
     })
     .get(function() {
         return this._password;
+    });
+
+UserSchema
+    .virtual('verified')
+    .get(function() {
+        return this.verifiedAt.length;
     });
 
 /**
@@ -61,15 +73,10 @@ UserSchema.path('email').validate(function (email, fn) {
 
 UserSchema.path('email').validate(function(email) {
     if(this.isNew || this.isModified('email')) {
-        return (/\S+@\S+\.\S+/).test(email);
+        return (/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/).test(email);
     }
     return true;
 }, 'Invalid email');
-
-UserSchema.path('hashedPassword').validate(function (hashedPassword) {
-    return hashedPassword.length;
-}, 'Password cannot be blank');
-
 
 /**
  * Pre-save hook
@@ -80,8 +87,8 @@ UserSchema.pre('save', function(next) {
         return next();
     }
 
-    if (!validatePresenceOf(this.password)) {
-        next(new Error('Invalid password'));
+    if (!this.password || this.password.length < 4) {
+        next(new Error('Password must be atleast four characters'));
     } else {
         next();
     }

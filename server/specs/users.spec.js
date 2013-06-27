@@ -133,10 +133,11 @@ describe(usersEndpoint, function () {
                 });
             });
 
-            it('should not allow empty password', function (done) {
-                request.post(usersEndpoint, { form: { email: 'test3@email.com', password: '' } }, function (err, resp) {
+            it('should generate password if empty', function (done) {
+                request.post(usersEndpoint, { form: { email: 'test3@email.com', password: '' } }, function (err, resp, user) {
                     expect(err).toBeFalsy();
-                    expect(resp.statusCode).toEqual(400);
+                    expect(resp.statusCode).toEqual(200);
+                    expect(user.hashedPassword).toBeDefined();
                     done();
                 });
             });

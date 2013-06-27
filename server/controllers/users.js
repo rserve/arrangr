@@ -3,8 +3,10 @@
  */
 
 var mongoose = require('mongoose');
-var e = require('./errorhandler');
+var e = require('../helpers/errorhandler');
 var User = mongoose.model('User');
+var mailer = require('../helpers/mailer.js');
+var hash = require('../helpers/hash.js');
 
 exports.login = function (req, res, next, passport) {
     passport.authenticate('local', function (err, user, info) {
@@ -35,8 +37,13 @@ exports.session = function (req, res) {
 exports.create = function (req, res) {
     var user = new User(req.body);
     user.provider = 'local';
+    if (!user.password) {
+        user.password = hash.gen(5);
+    }
+    user.verificationHash = hash.gen(10);
     user.save(function (err) {
         if (!e(err, res, 'Error creating user')) {
+            mailer.sendRegistrationMail(user);
             req.logIn(user, function (err) {
                 e(err, res, 'Error when logging in') || res.send(user);
             });
@@ -46,6 +53,19 @@ exports.create = function (req, res) {
 
 exports.findById = function (req, res) {
     res.send(req.profile);
+};
+
+exports.verify = function (req, res) {
+    var hash = req.params.hash;
+    User.findOneAndUpdate({verificationHash: hash}, { $set: { verifiedAt: new Date() }, $unset: { verificationHash: 1 } }, function (err, user) {
+        if (!e(err, res, 'Error verifying user')) {
+            if (!user) {
+                res.status(404).send({error: 'User not found'});
+            } else {
+                res.send(user);
+            }
+        }
+    });
 };
 
 // param parsing

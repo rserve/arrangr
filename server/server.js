@@ -10,6 +10,8 @@ var config = require('./config/config')[env];
 var auth = require('./config/middlewares/authorization');
 var mongoose = require('mongoose');
 
+process.env['MANDRILL_APIKEY'] = config.mandrill.apikey;
+
 // Connect to DB
 mongoose.connect(config.db);
 
