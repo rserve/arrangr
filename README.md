@@ -18,7 +18,6 @@ Install grunt with ``npm install -g grunt-cli``
 
 More information [http://gruntjs.com/getting-started]
 
-
 ## Starting server
 
 ``npm start``
@@ -26,7 +25,6 @@ More information [http://gruntjs.com/getting-started]
 Note: Default port 3000, to change:
 
 ``PORT=3000 npm start``
-
 
 ## Grunt tasks
 
