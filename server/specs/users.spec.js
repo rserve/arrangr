@@ -141,8 +141,19 @@ describe(usersEndpoint, function () {
                     done();
                 });
             });
+        });
 
-
+        describe('get /verify/:hash', function() {
+            it('should verify user', function(done) {
+                var testUser = testUsers[0];
+                request.get(usersEndpoint + '/verify/' + testUser.verificationHash, function(err, resp, user) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(200);
+                    expect(user.verifiedAt).toBeDefined();
+                    expect(user.verificationHash).toBeUndefined();
+                    done();
+                });
+            });
         });
     });
 

@@ -40,7 +40,6 @@ exports.create = function (req, res) {
     if (!user.password) {
         user.password = hash.gen(5);
     }
-    user.verificationHash = hash.gen(10);
     user.save(function (err) {
         if (!e(err, res, 'Error creating user')) {
             mailer.sendRegistrationMail(user);

@@ -87,6 +87,8 @@ UserSchema.pre('save', function(next) {
         return next();
     }
 
+    this.verificationHash = hash.gen(10);
+
     if (!this.password || this.password.length < 4) {
         next(new Error('Password must be atleast four characters'));
     } else {
