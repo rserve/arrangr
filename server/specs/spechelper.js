@@ -2,17 +2,18 @@
 process.env.PORT = 8000;
 process.env.NODE_ENV = 'test';
 
-var request = exports.request = require('request').defaults({json: true});
-var server = exports.server = require('../server');
-var mongoose = exports.mongoose = require('mongoose');
+var rewire = require("rewire");
+var request = exports.request = rewire('request').defaults({json: true});
+var server = exports.server = rewire('../server');
+var mongoose = exports.mongoose = rewire('mongoose');
 
 var baseEndpoint = exports.baseEndpoint = 'http://localhost:' + process.env.PORT + '/api/';
 
-exports.endpoint = function(path) {
+exports.endpoint = function (path) {
     return baseEndpoint + path;
 };
 
-exports.login = function(email, password, cb) {
+exports.login = function (email, password, cb) {
     request.post(baseEndpoint + 'users/login', {
         form: {
             email: email,
@@ -23,7 +24,7 @@ exports.login = function(email, password, cb) {
     });
 };
 
-exports.testUnauthorized = function(cb) {
+exports.testUnauthorized = function (cb) {
     it('should return unauthorized', function (done) {
         cb(function (err, resp) {
             expect(err).toBeFalsy();
@@ -32,3 +33,18 @@ exports.testUnauthorized = function(cb) {
         });
     });
 };
+
+// Mock mailer so we dont send real mails in test
+/* jshint camelcase: false */
+server.__set__('mailer', {
+        send: function (options) {
+            expect(options.message).toBeDefined();
+        },
+        sendRegistrationMail: function (user) {
+            expect(user).toBeDefined();
+            expect(user.email).toBeDefined();
+            expect(user.password).toBeDefined();
+            expect(user.verificationHash).toBeDefined();
+        }
+    }
+);

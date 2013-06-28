@@ -5,14 +5,14 @@ module.exports = {
     development: {
         db: 'mongodb://localhost/rserve',
         root: rootPath,
-        mandrill: {
+        mailer: {
             apikey: 'jwNKk8yTVM2pTfCiApHNQw'
         }
     },
     test: {
         db: 'mongodb://localhost/rserve_test',
         root: rootPath,
-        mandrill: {
+        mailer: {
             apikey: 'jwNKk8yTVM2pTfCiApHNQw'
         }
     },

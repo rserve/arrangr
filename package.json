@@ -19,7 +19,8 @@
         "grunt-jasmine-node": "latest",
         "jasmine-node": "latest",
         "request": "latest",
-        "grunt-nodemon": "latest"
+        "grunt-nodemon": "latest",
+        "rewire": "latest"
     },
     "dependencies": {
         "express": "latest",

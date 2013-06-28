@@ -154,6 +154,14 @@ describe(usersEndpoint, function () {
                     done();
                 });
             });
+
+            it('should return 404 when not found', function(done) {
+                request.get(usersEndpoint + '/verify/nonexistinghash', function(err, resp) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(404);
+                    done();
+                });
+            });
         });
     });
 
