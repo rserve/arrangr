@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var e = require('../helpers/errorhandler');
 var User = mongoose.model('User');
 var hash = require('../helpers/hash.js');
+var mailer = require('../helpers/mailer.js');
 
 exports.login = function (req, res, next, passport) {
     passport.authenticate('local', function (err, user, info) {
@@ -33,7 +34,7 @@ exports.session = function (req, res) {
     res.send(req.user);
 };
 
-exports.create = function (req, res, mailer) {
+exports.create = function (req, res) {
     var user = new User(req.body);
     user.provider = 'local';
     if (!user.password) {

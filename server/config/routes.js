@@ -1,8 +1,6 @@
-module.exports = function (app, passport, auth, mailer) {
+module.exports = function (app, passport, auth) {
     var users = require('../controllers/users');
-    app.post('/api/users', function(req, res) {
-        users.create(req, res, mailer);
-    });
+    app.post('/api/users', users.create);
     app.post('/api/users/login', function(req, res, next) {
         users.login(req, res, next, passport);
     });

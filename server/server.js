@@ -11,7 +11,6 @@ var auth = require('./config/middlewares/authorization');
 var mongoose = require('mongoose');
 
 process.env['MANDRILL_APIKEY'] = config.mailer.apikey;
-var mailer = require('./helpers/mailer.js');
 
 // Connect to DB
 mongoose.connect(config.db);
@@ -32,7 +31,7 @@ var app = express();
 require('./config/express')(app, config, passport);
 
 // Bootstrap routes
-require('./config/routes')(app, passport, auth, mailer);
+require('./config/routes')(app, passport, auth);
 
 var port = process.env.PORT || 3000;
 app.listen(port);

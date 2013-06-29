@@ -36,15 +36,14 @@ exports.testUnauthorized = function (cb) {
 
 // Mock mailer so we dont send real mails in test
 /* jshint camelcase: false */
-server.__set__('mailer', {
-        send: function (options) {
-            expect(options.message).toBeDefined();
-        },
-        sendRegistrationMail: function (user) {
-            expect(user).toBeDefined();
-            expect(user.email).toBeDefined();
-            expect(user.password).toBeDefined();
-            expect(user.verificationHash).toBeDefined();
-        }
-    }
-);
+var mailer = require('../helpers/mailer.js');
+
+mailer.send = function (options) {
+    expect(options.message).toBeDefined();
+};
+mailer.sendRegistrationMail = function (user) {
+    expect(user).toBeDefined();
+    expect(user.email).toBeDefined();
+    expect(user.password).toBeDefined();
+    expect(user.verificationHash).toBeDefined();
+};
