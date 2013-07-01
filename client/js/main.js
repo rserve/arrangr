@@ -1,7 +1,7 @@
 require.config({
 
 	paths: {
-		jquery: 'http://code.jquery.com/jquery-1.8.2',
+		jquery: '../lib/jquery-1.8.3',
 		bootstrap: '../lib/bootstrap/js/bootstrap',
 		underscore: '../lib/underscore',
 		angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular',

@@ -20,7 +20,7 @@ var UserSchema = new Schema({
     verificationHash: { type: String, unique: true },
     provider: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
-    verifiedAt: { type: Date, default: '' }
+    verifiedAt: { type: Date }
 });
 
 /**
@@ -41,16 +41,12 @@ UserSchema
 UserSchema
     .virtual('verified')
     .get(function() {
-        return this.verifiedAt.length;
+        return !!this.verifiedAt;
     });
 
 /**
  * Validations
  */
-
-var validatePresenceOf = function (value) {
-    return value && value.length;
-};
 
 // the below 4 validations only apply if you are signing up traditionally
 
@@ -145,6 +141,13 @@ UserSchema.methods = {
             return '';
         }
     }
+};
+
+UserSchema.set('toJSON', { virtuals: true });
+UserSchema.options.toJSON.transform = function (doc, ret, options) {
+    ['_id', 'password', 'hashedPassword', 'salt', 'verificationHash', '__v'].forEach(function (prop) {
+        delete ret[prop];
+    });
 };
 
 mongoose.model('User', UserSchema);

@@ -35,12 +35,12 @@ exports.session = function (req, res) {
 };
 
 exports.create = function (req, res) {
-    var user = new User(req.body);
+    var user = req.body;
     user.provider = 'local';
     if (!user.password) {
         user.password = hash.gen(5);
     }
-    user.save(function (err) {
+    User.create(user, function (err, user) {
         if (!e(err, res, 'Error creating user')) {
             mailer.sendRegistrationMail(user);
             req.logIn(user, function (err) {

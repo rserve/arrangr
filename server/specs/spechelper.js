@@ -3,9 +3,9 @@ process.env.PORT = 8000;
 process.env.NODE_ENV = 'test';
 
 var rewire = require("rewire");
-var request = exports.request = rewire('request').defaults({json: true});
-var server = exports.server = rewire('../server');
-var mongoose = exports.mongoose = rewire('mongoose');
+var request = exports.request = require('request').defaults({json: true});
+var server = exports.server = require('../server');
+var mongoose = exports.mongoose = require('mongoose');
 
 var baseEndpoint = exports.baseEndpoint = 'http://localhost:' + process.env.PORT + '/api/';
 

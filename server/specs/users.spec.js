@@ -137,7 +137,7 @@ describe(usersEndpoint, function () {
                 request.post(usersEndpoint, { form: { email: 'test3@email.com', password: '' } }, function (err, resp, user) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
-                    expect(user.hashedPassword).toBeDefined();
+                    expect(user.id).toBeDefined();
                     done();
                 });
             });
@@ -150,7 +150,6 @@ describe(usersEndpoint, function () {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
                     expect(user.verifiedAt).toBeDefined();
-                    expect(user.verificationHash).toBeUndefined();
                     done();
                 });
             });
