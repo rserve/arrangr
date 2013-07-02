@@ -68,19 +68,24 @@ define(function (require, exports, module) {
 			});
 		}
 
+        function changeMemberStatus(status) {
+            client.updateMember($scope.groupMember.id, { status: status });
+            $scope.groupMember.status = status;
+        }
+
 		$scope.leave = leaveGroup;
 		$scope.join = joinGroup;
 
-        $scope.yes = function(member) {
-            member.status = 'Yes';
+        $scope.yes = function() {
+            changeMemberStatus('Yes');
         };
 
-        $scope.no = function(member) {
-            member.status = 'No';
+        $scope.no = function() {
+            changeMemberStatus('No');
         };
 
-        $scope.maybe = function(member) {
-            member.status = 'Maybe';
+        $scope.maybe = function() {
+            changeMemberStatus('Maybe');
         };
 
 		getGroup();

@@ -85,7 +85,7 @@ define(function (require, exports, module) {
 
 		client.update = function (key, success, error) {
 			var req = new RequestBuilder().
-				setMethod('update').
+				setMethod('put').
 				setUrl('/api/groups').
 				addPath(key).
 				setSuccessCb(success).
@@ -107,6 +107,19 @@ define(function (require, exports, module) {
 
 			this.sendRequest(req);
 		};
+
+        client.updateMember = function(id, data, success, error) {
+            var req = new RequestBuilder().
+                setMethod('put').
+                setUrl('/api/groups/members').
+                addPath(id).
+                setData(data).
+                setSuccessCb(success).
+                setErrorCb(error).
+                build();
+
+            this.sendRequest(req);
+        };
 
 
 		return client;

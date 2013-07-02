@@ -42,6 +42,19 @@ exports.delete = function (req, res) {
     });
 };
 
+exports.updateMember = function(req, res) {
+    var status = req.body.status;
+    Group.findOneAndUpdate({'members._id': req.params.memberId }, { 'members.$.status' : status }, function(err, group) {
+        if(!e(err, res, 'Error updating groupmember')) {
+            if(!group) {
+                res.status(404).send({error: 'Error updating groupmember', message: 'Groupmember not found'});
+            } else {
+                res.send(group);
+            }
+        }
+    });
+};
+
 exports.join = function (req, res) {
     var user = req.user;
     var group = req.group;

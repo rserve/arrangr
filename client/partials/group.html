@@ -11,13 +11,13 @@
         <p ng-show="message" class="alert alert-{{status}}">{{message}}</p>
 
         <p>
-            <button ng-click="yes(groupMember)" class="btn" ng-class="{'btn-success':groupMember.status == 'Yes'}" type="button">
+            <button ng-click="yes()" class="btn" ng-class="{'btn-success':groupMember.status == 'Yes'}" type="button">
                 {{ '%BUTTON_YES%' | phrase }}
             </button>
-            <button ng-click="maybe(groupMember)" class="btn" ng-class="{'btn-warning':groupMember.status == 'Maybe'}" type="button">
+            <button ng-click="maybe()" class="btn" ng-class="{'btn-warning':groupMember.status == 'Maybe'}" type="button">
                 {{ '%BUTTON_MAYBE%' | phrase }}
             </button>
-            <button ng-click="no(groupMember)" class="btn" ng-class="{'btn-danger':groupMember.status == 'No'}" type="button">
+            <button ng-click="no()" class="btn" ng-class="{'btn-danger':groupMember.status == 'No'}" type="button">
                 {{ '%BUTTON_NO%' | phrase }}
             </button>
         </p>

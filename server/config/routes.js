@@ -11,7 +11,6 @@ module.exports = function (app, passport, auth) {
 
     app.param('userId', users.fromId);
 
-    // user routes
     var groups = require('../controllers/groups');
     app.get('/api/groups', auth.requiresLogin, groups.findByUser);
     app.get('/api/groups/:key', auth.requiresLogin, groups.find);
@@ -19,6 +18,8 @@ module.exports = function (app, passport, auth) {
     app.post('/api/groups/:key/join', auth.requiresLogin, groups.join);
     app.put('/api/groups/:key', auth.requiresLogin, groups.update);
     app.delete('/api/groups/:key', auth.requiresLogin, groups.delete);
+
+    app.put('/api/groups/members/:memberId', auth.requiresLogin, groups.updateMember);
 
     app.param('key', groups.fromKey);
     app.param('groupId', groups.fromId);
