@@ -2,6 +2,8 @@ define(function (require, exports, module) {
 
 	'use strict';
 
+	var fieldFactory = require('./fields/fieldFactory');
+
 	var form = {
 
 		fieldsForGroup: function (groupId) {
@@ -14,7 +16,9 @@ define(function (require, exports, module) {
 			return fields;
 		},
 
-		addField: function (field) {
+		addField: function (config) {
+			var field = fieldFactory.create(config);
+
 			this.fields[field.name] = field;
 		},
 

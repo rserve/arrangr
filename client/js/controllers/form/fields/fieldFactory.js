@@ -5,22 +5,22 @@ define(function (require, exports, module) {
 	'use strict';
 
 	var _ = require('underscore'),
+		field = require('./field'),
 		checkbox = require('./checkbox'),
-		composite = require('./composite'),
-		input = require('./input'),
 		select = require('./select');
 
 
 	var factory = {
 
-		createInput: function (config) {
-			return Object.create(input).configure(config);
-		},
-		createCheckbox: function (config) {
-			return Object.create(checkbox).configure(config);
-		},
-		createSelect: function (config) {
-			return Object.create(select).configure(config);
+		create: function (config) {
+			switch (config.type) {
+			case 'checkbox':
+				return checkbox.create(config);
+			case 'select':
+				return select.create(config);
+			default:
+				return field.create(config);
+			}
 		}
 
 	};

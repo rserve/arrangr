@@ -5,46 +5,46 @@ define(function (require, exports, module) {
 	'use strict';
 
 	var _ = require('underscore'),
-		baseField = require('./baseField');
+		field = require('./field');
 
-	var checkbox = Object.create(baseField);
 
 	/*
-	 * @override
+	 * Export create method
 	 * */
-	checkbox.validate = function () {
-		if (!this.checked) {
-			this.status = 'error';
+	exports.create = function (config) {
 
-			return {message: 'Input not checked'};
-		} else {
-			this.status = null;
-		}
+		// create new field
+		var checkbox = field.create(config);
 
-	};
+		//extend with overrides
+		_.extend(checkbox, {
 
-	/*
-	 * @override
-	 * */
-	checkbox.getValue = function () {
-		return this.checked;
-	};
+			validate: function () {
+				if (!this.checked) {
+					this.status = 'error';
+					return {message: 'Input not checked'};
+				} else {
+					this.status = null;
+				}
 
-	/*
-	 * bind "watched" to checked attribute
-	 *
-	 * @override
-	 * @parent baseField
-	 * */
-	checkbox.getBoundAttribute = function () {
-		return 'checked';
-	};
+			},
 
-	checkbox.isEmpty = function () {
-		return false;
-	};
+			getValue: function () {
+				return this.checked;
+			},
 
+			getBoundAttribute: function () {
+				return 'checked';
+			},
 
-	module.exports = checkbox;
+			isEmpty: function () {
+				return false;
+			}
+		});
+
+		return checkbox;
+
+	}
+
 
 });

@@ -7,7 +7,8 @@ define(function (require, exports, module) {
 
 
 	var form = baseForm.create();
-	form.addField(fieldFactory.createInput({
+
+	/*form.addField(fieldFactory.createInput({
 		validator: 'email',
 		name: 'email',
 		placeholder: 'Email'
@@ -18,7 +19,7 @@ define(function (require, exports, module) {
 		name: 'password',
 		placeholder: 'Password.'
 	}));
-
+*/
 
 	var Controller = function ($scope, $http, $location, usersClient, authState) {
 

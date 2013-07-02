@@ -12,17 +12,16 @@ define(function (require, exports, module) {
 		validator: 'notEmpty',
 		status: null,
 		message: null,
-		type: 'text',	//field value TODO this not working, dynamic types not allowed
-		value: null,		//field type
-		name: '',
-		placeholder: 'I am default',
+		value: null,
+		name: null,
+		placeholder: null,
 		mandatory: true
 	};
 
 
 	validatorManager.addValidators(validators);
 
-	var field = {
+	var baseField = {
 
 		reset: function () {
 			_.extend(this, {
@@ -41,19 +40,6 @@ define(function (require, exports, module) {
 			return this.value;
 		},
 
-		configure: function (config) {
-			var _this = this;
-
-			_.extend(this, defaults, config);
-
-			//check for custom validator
-			if (_.isObject(config.validator)) {
-				_this.customValidator = config.validator;
-				_this.validator = config.validator.type;
-			}
-			return this;
-
-		},
 
 		//todo this smell, clean up responsibilities
 		validate: function () {
@@ -81,12 +67,32 @@ define(function (require, exports, module) {
 			return 'value';
 		},
 
+		/*
+		* Has user entered anything in field?
+		* */
 		isEmpty: function () {
 			return this.value === null || this.value.length===0;
 		}
 
 	};
 
-	module.exports = field;
+	/*
+	* Export create method
+	* */
+	exports.create = function (config) {
+
+		var field = Object.create(baseField);
+
+		_.extend(field, defaults, config);
+
+		//check for custom validator
+		if (_.isObject(config.validator)) {
+			field.customValidator = config.validator;
+			field.validator = config.validator.type;
+		}
+
+		return field;
+
+	}
 
 });

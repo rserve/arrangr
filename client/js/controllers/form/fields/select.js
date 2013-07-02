@@ -4,12 +4,10 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var _ = require('underscore'),
-		baseField = require('./baseField');
+	var field = require('./field');
 
-	var input = Object.create(baseField);
-
-
-	module.exports = input;
+	exports.create = function (config) {
+		return field.create(config);
+	}
 
 });

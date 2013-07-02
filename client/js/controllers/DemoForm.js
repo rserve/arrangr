@@ -6,8 +6,8 @@ define(function (require, exports, module) {
 //	DEPENDENCIES
 ///////////////////////////////////////////////////
 
-	var baseForm = require('./form/baseForm'),
-		fieldFactory = require('./form/fields/fieldFactory');
+	var baseForm = require('./form/baseForm');
+
 
 ///////////////////////////////////////////////////
 // SETUP FORM
@@ -21,29 +21,26 @@ define(function (require, exports, module) {
 	 * Add form fields
 	 * */
 
-	form.addField(fieldFactory.createInput({
-		validator: 'notEmpty',
+	form.addField({
 		name: 'notEmptyInput',
-		placeholder: 'This cannot be empty',
+		validator: 'notEmpty',
 		group: 'one'
-	}));
+	});
 
-	form.addField(fieldFactory.createInput({
-		validator: 'email',
+	form.addField({
 		name: 'emailInput',
-		placeholder: 'This should be an email.',
+		validator: 'email',
 		group: 'one'
-	}));
+	});
 
-	form.addField(fieldFactory.createInput({
+	form.addField({
 		name: 'optionalInput',
-		placeholder: 'I am optional.',
 		group: 'one',
 		mandatory: false
-	}));
+	});
 
-	form.addField(fieldFactory.createInput({
-
+	form.addField({
+		name: 'customValidatorInput',
 		//example how you can inject custom validator
 		validator: {
 			validate: function (value) {
@@ -56,47 +53,42 @@ define(function (require, exports, module) {
 			type: 'mustContainArrange'
 		},
 		type: 'text',	//field value
-		name: 'customValidatorInput',
-		placeholder: 'This is using a custom validator.',
-		group: 'one'
-	}));
 
-	form.addField(fieldFactory.createInput({
-		validator: 'strongPassword',
-		type: 'password',	//field value
+		group: 'one'
+	});
+
+	form.addField({
 		name: 'strongPasswordInput',
-		placeholder: 'This is a strong password.',
+		validator: 'strongPassword',
 		group: 'one'
-	}));
+	});
 
 
-	form.addField(fieldFactory.createInput({
-		validator: 'number',
-		type: 'number',	//field value
+	form.addField({
 		name: 'numberInput',
-		placeholder: 'This must be a number.',
+		validator: 'number',
 		group: 'one'
-	}));
+	});
 
-	form.addField(fieldFactory.createInput({
-		validator: 'weakPassword',
-		type: 'password',	//field value
+	form.addField({
 		name: 'weakPasswordInput',
-		placeholder: 'This is a weak password.',
+		validator: 'weakPassword',
 		group: 'two'
-	}));
+	});
 
 
 	//checkbox field
-	form.addField(fieldFactory.createCheckbox({
+	form.addField({
 		name: 'checkMeCheckbox',
+		type:'checkbox',
 		group: 'two',
 		checked: false
-	}));
+	});
 
 	//select field
-	form.addField(fieldFactory.createSelect({
+	form.addField({
 		name: 'primesSelect',
+		type:'select',
 		group: 'two',
 		options: [
 			2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47
@@ -124,7 +116,7 @@ define(function (require, exports, module) {
 				this.message = null;
 			}
 		}
-	}));
+	});
 
 ///////////////////////////////////////////////////
 // ANGULAR CONTROLLER
@@ -146,7 +138,7 @@ define(function (require, exports, module) {
 				field.reset();
 			}
 			//hack to massage checkbox, fix this with better support for check boxes
-			else if(name === 'checkMeCheckbox' && !field.checked ){
+			else if (name === 'checkMeCheckbox' && !field.checked) {
 				field.reset();
 			}
 			//if no error, set a succes and show an "OK" message
