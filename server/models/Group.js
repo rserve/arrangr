@@ -20,4 +20,12 @@ schema.pre('save', function (next) {
     next();
 });
 
+schema.set('toJSON', { virtuals: true });
+schema.options.toJSON.transform = function (doc, ret, options) {
+    ['_id', '__v'].forEach(function (prop) {
+        delete ret[prop];
+    });
+};
+
+
 module.exports = mongoose.model('Group', schema);
