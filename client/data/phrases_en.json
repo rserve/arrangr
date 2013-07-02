@@ -12,6 +12,9 @@
 	"PLACEHOLDER_PASSWORD": "Password",
 	"BUTTON_JOIN": "Join",
 	"BUTTON_LEAVE": "Leave",
-	"PEOPLE_SIGNED": "Currently {0} people have signed!",
+    "BUTTON_YES": "Yes",
+    "BUTTON_NO": "No",
+    "BUTTON_MAYBE": "Maybe",
+    "PEOPLE_SIGNED": "Currently {0} people have signed!",
 	"ARGUMENTS": "arg1: {0}, arg2: {1}, arg3: {2}..."
 }

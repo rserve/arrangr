@@ -11,6 +11,14 @@ define(function (require, exports, module) {
 			client.findByKey(key,
 				function (data) {
 					$scope.group = data;
+                    if($scope.user) {
+                        for(var i in data.members) {
+                            if(data.members[i].user == $scope.user.id) {
+                                $scope.groupMember = data.members[i];
+                                break;
+                            }
+                        }
+                    }
 					$scope.status = 'info';
 				},
 				function (data) {
@@ -62,6 +70,18 @@ define(function (require, exports, module) {
 
 		$scope.leave = leaveGroup;
 		$scope.join = joinGroup;
+
+        $scope.yes = function(member) {
+            member.status = 'Yes';
+        };
+
+        $scope.no = function(member) {
+            member.status = 'No';
+        };
+
+        $scope.maybe = function(member) {
+            member.status = 'Maybe';
+        };
 
 		getGroup();
 
