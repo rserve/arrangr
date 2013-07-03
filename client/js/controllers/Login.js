@@ -2,7 +2,7 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var baseForm = require('./form/baseForm');
+	var baseForm = require('framework/form/baseForm');
 
 
 	var form = baseForm.create();

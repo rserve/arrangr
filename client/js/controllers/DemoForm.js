@@ -6,7 +6,7 @@ define(function (require, exports, module) {
 //	DEPENDENCIES
 ///////////////////////////////////////////////////
 
-	var baseForm = require('./form/baseForm');
+	var baseForm = require('framework/form/baseForm');
 
 
 ///////////////////////////////////////////////////
