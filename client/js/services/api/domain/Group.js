@@ -14,7 +14,7 @@ define(function (require, exports, module) {
 
 		for (var i = 0, len = this.members.length; i < len; i++) {
 			var member = this.members[i];
-			if (member.user === user._id && member.admin) {
+			if (member.user.id === user.id && member.admin) {
 				return true;
 			}
 		}

@@ -16,6 +16,7 @@ module.exports = function (app, passport, auth) {
     app.get('/api/groups/:key', auth.requiresLogin, groups.find);
     app.post('/api/groups', auth.requiresLogin, groups.create);
     app.post('/api/groups/:key/join', auth.requiresLogin, groups.join);
+    app.post('/api/groups/:key/invite', auth.requiresLogin, groups.invite);
     app.put('/api/groups/:key', auth.requiresLogin, groups.update);
     app.delete('/api/groups/:key', auth.requiresLogin, groups.delete);
 

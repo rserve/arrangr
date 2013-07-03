@@ -2,10 +2,29 @@ define(function (require, exports, module) {
 
 	'use strict';
 
+    var baseForm = require('./form/baseForm'),
+        fieldFactory = require('./form/fields/fieldFactory');
+
+
+    var inviteForm = baseForm.create();
+    inviteForm.addField(fieldFactory.createInput({
+        validator: 'email',
+        name: 'email',
+        placeholder: 'Invite member'
+    }));
+
 	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient) {
 
 		var key = $routeParams.groupId,
 			client = groupsClient;
+
+        inviteForm.initialize($scope);
+
+        inviteForm.onFieldValidate = function (name, field, error) {
+            if (!error) {
+                field.setMessage('success', '');
+            }
+        };
 
 		function getGroup() {
 			client.findByKey(key,
@@ -28,47 +47,6 @@ define(function (require, exports, module) {
 				});
 		}
 
-
-		function joinGroup() {
-
-			//get group
-			client.findByKey(key,
-				function (group) {
-
-					//update count
-					group.count = group.count + 1;
-					delete group._id; //else update fails
-
-					client.update(key).data(group).execute();
-
-					$scope.group = group;
-					$scope.status = 'success';
-					$scope.message = 'joined group';
-
-				});
-
-		}
-
-
-		function leaveGroup() {
-			//get group
-			client.findByKey(key, function (group) {
-
-				//update group
-				group.count = group.count - 1;
-				if (group.count < 0) {
-					group.count = 0;
-				}
-				delete group._id;
-
-				client.update(key, group);
-
-				$scope.group = group;
-				$scope.status = 'success';
-				$scope.message = 'leaved group';
-			});
-		}
-
         function changeMemberStatus(status) {
             client.updateMember($scope.groupMember.id, { status: status },
                 function() {
@@ -81,9 +59,6 @@ define(function (require, exports, module) {
             );
             $scope.groupMember.status = status;
         }
-
-		$scope.leave = leaveGroup;
-		$scope.join = joinGroup;
 
         $scope.yes = function() {
             changeMemberStatus('Yes');
@@ -107,6 +82,36 @@ define(function (require, exports, module) {
                 }
             }
             return c;
+        };
+
+        $scope.public = function($event) {
+            var checked = $event.target.checked;
+            client.update(key, {public: checked},
+                function() {
+                    $scope.message = '';
+                },
+                function(data) {
+                    $scope.status = 'error';
+                    $scope.message = data.message;
+                }
+            );
+            $scope.group.public = checked;
+        };
+
+        $scope.invite = function() {
+            var errors = inviteForm .validateAll();
+            if(!errors) {
+                client.invite(key, inviteForm.toJSON(),
+                    function(data) {
+                        $scope.group = data;
+                        $scope.message = '';
+                    },
+                    function(data) {
+                        $scope.status = 'error';
+                        $scope.message = data.message;
+                    }
+                );
+            }
         };
 
 		getGroup();

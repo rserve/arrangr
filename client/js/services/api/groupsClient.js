@@ -83,11 +83,12 @@ define(function (require, exports, module) {
 			this.sendRequest(req);
 		};
 
-		client.update = function (key, success, error) {
+		client.update = function (key, data, success, error) {
 			var req = new RequestBuilder().
 				setMethod('put').
 				setUrl('/api/groups').
 				addPath(key).
+                setData(data).
 				setSuccessCb(success).
 				setErrorCb(error).
 				build();
@@ -121,6 +122,19 @@ define(function (require, exports, module) {
             this.sendRequest(req);
         };
 
+        client.invite = function(key, data, success, error) {
+            var req = new RequestBuilder().
+                setMethod('post').
+                setUrl('/api/groups').
+                addPath(key).
+                addPath('invite').
+                setData(data).
+                setSuccessCb(success).
+                setErrorCb(error).
+                build();
+
+            this.sendRequest(req);
+        };
 
 		return client;
 	}];
