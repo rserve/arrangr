@@ -76,7 +76,7 @@ exports.join = function (req, res) {
 
 // param parsing
 var fromParam = function (req, res, next, q) {
-    Group.findOne(q, function (err, group) {
+    Group.findOne(q).populate('members.user', 'id name email verfied').exec(function (err, group) {
         if (!e(err, res, 'Error finding group')) {
             if (!group) {
                 res.status(404).send({error: 'Error finding group', message: 'Group not found'});

@@ -9,12 +9,13 @@ define(function (require, exports, module) {
 
 		function getGroup() {
 			client.findByKey(key,
-				function (data) {
-					$scope.group = data;
+				function (group) {
+					$scope.group = group;
+                    $scope.link = $location.absUrl();
                     if($scope.user) {
-                        for(var i in data.members) {
-                            if(data.members[i].user == $scope.user.id) {
-                                $scope.groupMember = data.members[i];
+                        for(var i in group.members) {
+                            if(group.members[i].user == $scope.user.id) {
+                                $scope.groupMember = group.members[i];
                                 break;
                             }
                         }
@@ -69,7 +70,15 @@ define(function (require, exports, module) {
 		}
 
         function changeMemberStatus(status) {
-            client.updateMember($scope.groupMember.id, { status: status });
+            client.updateMember($scope.groupMember.id, { status: status },
+                function() {
+                    // do nothing since we already updated the client
+                },
+                function(data) {
+                    $scope.status = 'error';
+                    $scope.message = "Server says '" + data.error + "'";
+                }
+            );
             $scope.groupMember.status = status;
         }
 
@@ -88,8 +97,19 @@ define(function (require, exports, module) {
             changeMemberStatus('Maybe');
         };
 
-		getGroup();
+        $scope.statusCount = function(status) {
+            var c = 0;
+            if($scope.group) {
+                for(var i in $scope.group.members) {
+                    if($scope.group.members[i].status == status) {
+                        c++;
+                    }
+                }
+            }
+            return c;
+        };
 
+		getGroup();
 
 	};
 

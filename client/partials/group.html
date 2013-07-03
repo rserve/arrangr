@@ -5,12 +5,24 @@
             <h2>{{group.name}}</h2>
         </div>
 
-        <p>Use the following link to share with friends:</p>
-        <input type="text" value="/groups/{{group.key}}">
+        <p>
+            <label>
+                Invite users by email:
+                <input type="text" value="" placeholder="Enter email to invite">
+            </label>
+        </p>
+
+        <p>
+            <label>
+                or share the group with this link:
+                <input type="text" value="{{link}}">
+            </label>
+        </p>
 
         <p ng-show="message" class="alert alert-{{status}}">{{message}}</p>
 
         <p>
+            My status:
             <button ng-click="yes()" class="btn" ng-class="{'btn-success':groupMember.status == 'Yes'}" type="button">
                 {{ '%BUTTON_YES%' | phrase }}
             </button>
@@ -21,6 +33,23 @@
                 {{ '%BUTTON_NO%' | phrase }}
             </button>
         </p>
+
+        <h3>Members ({{ group.members.length }})</h3>
+        <p>{{ statusCount('Yes') }} yes, {{ statusCount('Maybe') }} maybe and {{ statusCount('No') }} no. </p>
+        <ul class="nav" ng-repeat="member in group.members">
+            <li>
+                <button ng-show="member.status == 'Yes'" class="btn btn-success" type="button" disabled="disabled">
+                    {{ '%BUTTON_YES%' | phrase }}
+                </button>
+                <button ng-show="member.status == 'Maybe'" class="btn btn-warning" type="button" disabled="disabled">
+                    {{ '%BUTTON_MAYBE%' | phrase }}
+                </button>
+                <button ng-show="member.status == 'No'" class="btn btn-danger" type="button" disabled="disabled">
+                    {{ '%BUTTON_NO%' | phrase }}
+                </button>
+                {{ member.user.email }}
+            </li>
+        </ul>
 
 
         <a href="/">{{'%BACK_TO_GROUPS%' | phrase}}</a>
