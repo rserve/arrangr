@@ -26,25 +26,16 @@ define(function (require, exports, module) {
 			},
 			type: 'email'
 		},
-		'strongPassword': {
-			validate: function (value) {
-				return (/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/).test(value);
-			},
-			error: {
-				key: 'STRONG_PASSWORD',
-				message: "We require a strong password. 6-20 characters, one digit, one lowercase, one uppdercase and one special character (@#$%)"
-			},
-			type: 'strongPassword'
-		},
-		'weakPassword': {
+
+		'password': {
 			validate: function (value) {
 				return (/((?=.*\d)(?=.*[A-Z]).{6,20})/).test(value);
 			},
 			error: {
 				key: 'WEAK_PASSWORD',
-				message: "We require a weak password. >6 characters, one digit and one one uppdercase character."
+				message: "Password. >6 characters, one digit and one one uppdercase character."
 			},
-			type: 'weakPassword'
+			type: 'password'
 		},
 		'number': {
 			validate: function (value) {

@@ -53,8 +53,8 @@ define(function (require, exports, module) {
 	});
 
 	form.addField({
-		name: 'weakPasswordInput',
-		validator: 'weakPassword',
+		name: 'passwordInput',
+		validator: 'password',
 		group: 'two'
 	});
 
@@ -68,37 +68,36 @@ define(function (require, exports, module) {
 	});
 
 	//select field
-	/*form.addField({
-	 name: 'primesSelect',
-	 type: 'select',
-	 group: 'two',
-	 options: [
-	 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47
-	 ],
-	 value: 'Choose a prime...',
+	form.addField({
+		name: 'primesSelect',
+		type: 'select',
+		group: 'two',
+		options:[5,10,15,20,25],
+
+		//example of using custom field method
+		//TODO fix this with better select implementation
+		reset: function () {
+			this.error = null;
+
+		},
+		//example of using custom field method
+		validate: function () {
+			var error,
+				value = parseInt(this.value, 10);
+
+			if (value < 20) {
+				error = {
+					key: 'SELECT_ERROR',
+					message: "Please select an integer larger than 20."
+				};
 
 
-	 //example of using custom field method
-	 //TODO fix this with better select implementation
-	 reset: function () {
-	 this.value = 'Choose a prime...';
-	 this.message = null;
-	 this.status = 0;
-	 },
-	 //example of using custom field method
-	 validate: function () {
-	 var value = parseInt(this.value, 10);
-	 if (value < 20) {
-	 var message = this.message = 'Please select a prime larger than 20.';
-	 this.status = 'error';
+			}
+			this.error = error;
 
-	 return {message: message};
-	 } else {
-	 this.status = null;
-	 this.message = null;
-	 }
-	 }
-	 });*/
+			return error;
+		}
+	});
 
 ///////////////////////////////////////////////////
 // ANGULAR CONTROLLER
@@ -114,14 +113,12 @@ define(function (require, exports, module) {
 		//expose submit
 		$scope.submit = function (status, message) {
 
-			if (!status) {
-				form.validate();
-			} else {
 
-				form.global.message = message;
-				form.global.status = status;
+			var errors = form.validate();
 
-			}
+			form.global.message = JSON.stringify(errors);
+			form.global.status = 'error';
+
 
 		};
 

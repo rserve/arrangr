@@ -125,7 +125,7 @@ define(function (require, exports, module) {
 
 		clear: function (group) {
 
-			this.getFields(group).forEach(function (name, field) {
+			this.getFields(group).forEach(function (field) {
 				field.clear();
 			});
 		}

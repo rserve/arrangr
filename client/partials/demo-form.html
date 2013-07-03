@@ -34,13 +34,13 @@
 
         <label class="textshadow">Misc static fields (group2)</label>
 
-        <div class="control-group {{form.getField('weakPasswordInput').status}}">
+        <div class="control-group {{form.getField('passwordInput').status}}">
 
             <div class="controls">
                 <input type="password" name="password"
-                       ng-model="form.getField('weakPasswordInput').value"
-                       placeholder="{{form.getField('weakPasswordInput').placeholder}}">
-                <span class="help-inline">{{form.getField('weakPasswordInput').error.message}}</span>
+                       ng-model="form.getField('passwordInput').value"
+                       placeholder="{{form.getField('passwordInput').placeholder}}">
+                <span class="help-inline">{{form.getField('passwordInput').error.message}}</span>
             </div>
         </div>
         <div class="control-group {{form.getField('checkMeCheckbox').status}}">
@@ -55,38 +55,22 @@
 
         <div class="control-group {{form.getField('primesSelect').status}}">
             <div class="controls">
-                <select ng-model="form.getField('primesSelect').value">
-                    <option>Choose a prime...</option>
-                    <option ng-repeat="option in form.getField('primesSelect').options">{{option}}
-                    </option>
+
+
+
+                <select ng-model="form.getField('primesSelect').value" ng-options="value for (key,value) in form.getField('primesSelect').options">
+                    <option value="">-- choose a prime --</option>
+
                 </select>
                 <span class="help-inline">{{form.getField('primesSelect').error.message}}</span>
             </div>
         </div>
 
-        <!--<label class="textshadow">Composite field </label>
-
-        <div class="control-group error inline form-inline">
-            <div class="controls inline form-inline">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-
-                <input type="checkbox">
-
-                <input type="text" ng-model="field.value" placeholder="{{field.placeholder}}">
-                <span class="help-inline">Please enter: select=2, checkbox=true, input=demo</span>
-            </div>
-        </div>-->
 
         <br/>
 
         <p>
-            <button ng-click="form.reset()" class="btn btn">Reset form!
+            <button ng-click="form.clear()" class="btn btn">Reset form!
             </button>
             <button ng-click="showData()" class="btn btn">Show me ze data!
             </button>
@@ -107,24 +91,10 @@
         </p>
 
         <p>
-            <button ng-click="submit('error', 'Snap, this is an error!')"
-                    class="btn btn-danger">Submit with
-                error
+            <button ng-click="submit()"
+                    class="btn btn-danger">Submit
             </button>
 
-            <button ng-click="submit('success', 'Hello, this is success!')"
-                    class="btn btn-success">Submit with
-                success
-            </button>
-
-            <button ng-click="submit('warning', 'Warning!')" class="btn btn-warning">Submit
-                with
-                warning
-            </button>
-
-            <button ng-click="submit('info', 'Hey there, here are some information!')"
-                    class="btn btn-info">Submit with info
-            </button>
         </p>
 
 
