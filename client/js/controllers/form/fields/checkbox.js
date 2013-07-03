@@ -37,6 +37,7 @@ define(function (require, exports, module) {
 				return 'checked';
 			},
 
+			//always treat checkbox as not empty
 			isEmpty: function () {
 				return false;
 			}

@@ -11,7 +11,7 @@ define(function (require, exports, module) {
 	var filters = {
 		matchingGroup: function (group) {
 			return function (field) {
-				return field.group === group || !group; //if no group id was provided, match all
+				return field.group === group || !group; //if no group id was provided, treat as match
 			}
 		},
 		matchingName: function (name) {
@@ -30,10 +30,9 @@ define(function (require, exports, module) {
 
 		addField: function (config) {
 			var field = fieldFactory.create(config);
-
 			this.fields.push(field);
-		},
 
+		},
 
 		getField: function (name) {
 			var fields = this.getFields().filter(filters.matchingName(name));
@@ -45,9 +44,8 @@ define(function (require, exports, module) {
 		},
 
 		validate: function (group) {
-			var fields = this.getFields(group);
-
-			var error,
+			var fields = this.getFields(group),
+				error,
 				errors;
 
 			fields.forEach(function (field) {
@@ -64,30 +62,32 @@ define(function (require, exports, module) {
 
 
 		validateField: function (name) {
-			var field = this.getField(name);
+			var field = this.getField(name),
+				error;
 
 			//remove validation text if field is empty
 			if (field.isEmpty()) {
-				field.reset();
-				return;
+				field.clear();
 			} else {
-				var error = field.validate();
-				this.onFieldValidate(name, field, error);
+				error = field.validate();
 			}
+
+			return error;
 		},
 
 		toJSON: function (group) {
-			var values = {},
-				value,
-				name;
+
+			var json = {};
+
 			this.getFields(group).forEach(function (field) {
-				value = field.getValue();
-				name = field.name;
-				if (value !== null) {
-					values[name] = field.getValue();
+
+				// grab value if not empty
+				if (!field.isEmpty()) {
+					json[field.name] = field.getValue();
 				}
 			});
-			return values;
+
+			return json;
 		},
 
 		create: function () {
@@ -96,9 +96,11 @@ define(function (require, exports, module) {
 			return newForm;
 		},
 
-		initialize: function ($scope) {
+		initialize: function ($scope, config) {
 			this.bindForm($scope);
-			this.bindListeners($scope);
+
+			this.bindOnChangeListeners($scope);
+
 		},
 
 
@@ -106,38 +108,26 @@ define(function (require, exports, module) {
 			$scope.form = this;
 		},
 
-		bindListeners: function ($scope) {
-			var _this = this;
+		bindOnChangeListeners: function ($scope) {
 
 			this.getFields().forEach(function (field) {
 
-				var boundAttribute = field.getBoundAttribute();
-				var name = field.name;
-				$scope.$watch('form.getField("[name]").[boundAttribute]'.replace('[name]', name).replace('[boundAttribute]', boundAttribute), function (value) {
-					_this.validateField(name);
-				}, true);
+				$scope.$watch('form.getField("[name]").[attr]'.replace('[name]', field.name).replace('[attr]', field.getBoundAttribute()), function (value) {
+					if (field.isEmpty()) {
+						field.clear();
+					}
+				});
+
 			});
 
 
 		},
 
-		reset: function (group) {
+		clear: function (group) {
+
 			this.getFields(group).forEach(function (name, field) {
-				field.reset();
+				field.clear();
 			});
-
-			this.global = {};
-		},
-
-///////////////////////////////////////////////////
-//	TEMPLATE METHODS
-///////////////////////////////////////////////////
-
-		/*
-		 * override this to hook into behavior
-		 * */
-		onFieldValidate: function (name, field, error) {
-
 		}
 
 	};

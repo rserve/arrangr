@@ -9,32 +9,23 @@ define(function (require, exports, module) {
 		validators = require('../validators');
 
 	var defaults = {
+		name: null,
 		type: 'input',
 		validator: 'notEmpty',
-		status: null,
-		message: null,
+		error: null,
 		value: null,
-		name: null,
-		placeholder: null,
 		mandatory: true
 	};
-
 
 	validatorManager.addValidators(validators);
 
 	var baseField = {
 
-		reset: function () {
+		clear: function () {
 			_.extend(this, {
 				value: null,
-				message: null,
-				status: null
+				error: null
 			});
-		},
-
-		setMessage: function (status, message) {
-			this.status = status || '';
-			this.message = message || '';
 		},
 
 		getValue: function () {
@@ -42,16 +33,13 @@ define(function (require, exports, module) {
 		},
 
 
-		//todo this smell, clean up responsibilities
 		validate: function () {
+			var error;
 			if (this.mandatory) {
-				var error = validatorManager.validateField(this.validator, this.value);
-
-				if (error) {
-					this.setMessage('error', error.message);
-				}
-				return  error;
+				error = validatorManager.validateField(this.validator, this.value);
 			}
+			this.error = error;
+			return error;
 		},
 
 		/*
@@ -77,13 +65,8 @@ define(function (require, exports, module) {
 
 		var field = Object.create(baseField);
 
+		// add defaults, then any attributes/methods coming from config
 		_.extend(field, defaults, config);
-
-		//check for custom validator
-		if (_.isObject(config.validator)) {
-			field.customValidator = config.validator;
-			field.validator = config.validator.type;
-		}
 
 		return field;
 
