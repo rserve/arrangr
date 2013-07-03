@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 			},
 			error: {
 				key: 'NOT_EMPTY',
-				message: "Value can't be empty"
+				message: "Value can't be empty!"
 			},
 			type: 'notEmpty'
 		},
@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 			},
 			error: {
 				key: 'EMAIL',
-				message: "Email is malformed."
+				message: "Please provide emial."
 			},
 			type: 'email'
 		},
@@ -32,20 +32,10 @@ define(function (require, exports, module) {
 				return (/((?=.*\d)(?=.*[A-Z]).{6,20})/).test(value);
 			},
 			error: {
-				key: 'WEAK_PASSWORD',
-				message: "Password. >6 characters, one digit and one one uppdercase character."
+				key: 'PASSWORD',
+				message: "Password must be at least 6 characters and contain one digit and one one uppercase character."
 			},
 			type: 'password'
-		},
-		'number': {
-			validate: function (value) {
-				return (/^\d+$/).test(value);
-			},
-			error: {
-				key: 'NUMBER',
-				message: "This must be a number."
-			},
-			type: 'number'
 		}
 	};
 

@@ -37,6 +37,9 @@ define(function (require, exports, module) {
 			var error;
 			if (this.mandatory) {
 				error = validatorManager.validateField(this.validator, this.value);
+				if (error && this.customError) {
+					error = {message: this.customError};
+				}
 			}
 			this.error = error;
 			return error;

@@ -21,12 +21,7 @@ define(function (require, exports, module) {
 		}
 	};
 
-	var form = {
-
-		global: {},
-
-		fields: [],
-
+	var baseForm = {
 
 		addField: function (config) {
 			var field = fieldFactory.create(config);
@@ -52,8 +47,9 @@ define(function (require, exports, module) {
 				error = field.validate();
 
 				if (error) {
-					errors = errors || {};
-					errors[field.name] = error;
+					errors = errors || [];
+					error.name = field.name; // store name of field so we tie error to field
+					errors.push(error);
 				}
 			});
 
@@ -90,11 +86,6 @@ define(function (require, exports, module) {
 			return json;
 		},
 
-		create: function () {
-			var newForm = Object.create(form);
-
-			return newForm;
-		},
 
 		initialize: function ($scope, config) {
 			this.bindForm($scope);
@@ -112,7 +103,7 @@ define(function (require, exports, module) {
 
 			this.getFields().forEach(function (field) {
 
-				$scope.$watch('form.getField("[name]").[attr]'.replace('[name]', field.name).replace('[attr]', field.getBoundAttribute()), function (value) {
+				$scope.$watch('baseForm.getField("[name]").[attr]'.replace('[name]', field.name).replace('[attr]', field.getBoundAttribute()), function (value) {
 					if (field.isEmpty()) {
 						field.clear();
 					}
@@ -130,7 +121,13 @@ define(function (require, exports, module) {
 			});
 		}
 
+
 	};
 
-	module.exports = form;
+	exports.create = function () {
+
+		var form = Object.create(baseForm);
+		form.fields = [];
+		return  form;
+	};
 });

@@ -7,7 +7,7 @@
             <div class="control-group {{form.fields.email.status}}">
 
                 <div class="controls">
-                    <input type="text" ng-model="form.fields.email.value" placeholder="{{form.fields.email.placeholder}}">
+                    <input type="text" ng-model="form.getField('email').value" placeholder="Email">
                     <span class="help-inline">{{form.fields.email.message}}</span>
                 </div>
             </div>
@@ -15,13 +15,13 @@
         <div class="control-group {{form.fields.password.status}}">
 
             <div class="controls">
-                <input type="password" ng-model="form.fields.password.value" placeholder="{{form.fields.password.placeholder}}">
+                <input type="password" ng-model="form.getField('password').value" placeholder="Password">
                 <span class="help-inline">{{form.fields.password.message}}</span>
             </div>
         </div>
 
 
-        <div class="alert alert-{{form.global.status}}" ng-show="form.global.message">{{form.global.message}}
+        <div class="form-error" ng-show="error">{{error}}
         </div>
 
         <button ng-click="submit()" class="btn btn-large btn-info">{{'%BUTTON_LOGIN%' |
