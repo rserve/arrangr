@@ -2,40 +2,50 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var fieldFactory = require('./fields/fieldFactory');
+	var fieldFactory = require('./fields/fieldFactory'),
+		_ = require('underscore');
+
+	/*
+	 * Filters for selecting fields
+	 * */
+	var filters = {
+		matchingGroup: function (group) {
+			return function (field) {
+				return field.group === group || !group; //if no group id was provided, match all
+			}
+		},
+		matchingName: function (name) {
+			return function (field) {
+				return field.name === name;
+			}
+		}
+	};
 
 	var form = {
 
-		fieldsForGroup: function (groupId) {
-			var fields = [];
-			this.forEachField(function (name, field) {
-				if (field.group === groupId || !groupId) {
-					fields.push(field);
-				}
-			});
-			return fields;
-		},
+		global: {},
+
+		fields: [],
+
 
 		addField: function (config) {
 			var field = fieldFactory.create(config);
 
-			this.fields[field.name] = field;
+			this.fields.push(field);
 		},
+
 
 		getField: function (name) {
-			return this.fields[name];
+			var fields = this.getFields().filter(filters.matchingName(name));
+			return fields && fields[0]; //should only have one match
 		},
 
-		validateGroup: function (group) {
-			return this.validate(this.fieldsForGroup(group));
+		getFields: function (group) {
+			return  this.fields.filter(filters.matchingGroup(group));
 		},
 
-		validateAll: function () {
-
-			return this.validate(this.fieldsForGroup());
-		},
-
-		validate: function (fields) {
+		validate: function (group) {
+			var fields = this.getFields(group);
 
 			var error,
 				errors;
@@ -52,14 +62,6 @@ define(function (require, exports, module) {
 			return errors;
 		},
 
-		forEachField: function (cb) {
-			var fields = this.fields;
-			for (var name in fields) {
-				if (fields.hasOwnProperty(name)) {
-					cb(name, fields[name]);
-				}
-			}
-		},
 
 		validateField: function (name) {
 			var field = this.getField(name);
@@ -74,10 +76,13 @@ define(function (require, exports, module) {
 			}
 		},
 
-		toJSON: function () {
-			var values = {}, value;
-			this.forEachField(function (name, field) {
+		toJSON: function (group) {
+			var values = {},
+				value,
+				name;
+			this.getFields(group).forEach(function (field) {
 				value = field.getValue();
+				name = field.name;
 				if (value !== null) {
 					values[name] = field.getValue();
 				}
@@ -87,8 +92,7 @@ define(function (require, exports, module) {
 
 		create: function () {
 			var newForm = Object.create(form);
-			newForm.fields = {};
-			newForm.global = {};
+
 			return newForm;
 		},
 
@@ -105,10 +109,11 @@ define(function (require, exports, module) {
 		bindListeners: function ($scope) {
 			var _this = this;
 
-			this.forEachField(function (name, field) {
+			this.getFields().forEach(function (field) {
 
 				var boundAttribute = field.getBoundAttribute();
-				$scope.$watch('form.fields.[name].[boundAttribute]'.replace('[name]', name).replace('[boundAttribute]', boundAttribute), function (value) {
+				var name = field.name;
+				$scope.$watch('form.getField("[name]").[boundAttribute]'.replace('[name]', name).replace('[boundAttribute]', boundAttribute), function (value) {
 					_this.validateField(name);
 				}, true);
 			});
@@ -116,8 +121,8 @@ define(function (require, exports, module) {
 
 		},
 
-		reset: function () {
-			this.forEachField(function (name, field) {
+		reset: function (group) {
+			this.getFields(group).forEach(function (name, field) {
 				field.reset();
 			});
 

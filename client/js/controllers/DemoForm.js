@@ -41,18 +41,15 @@ define(function (require, exports, module) {
 
 	form.addField({
 		name: 'customValidatorInput',
-		//example how you can inject custom validator
-		validator: {
-			validate: function (value) {
-				return (/arrange/).test(value);
-			},
-			error: {
-				key: 'ARRANGE_VALIDATOR',
-				message: "I need to contain the word 'arrange'"
-			},
-			type: 'mustContainArrange'
+		validate : function (){
+			if(!(/arrange/).test(this.value)){
+				var error = {key: 'ARRANGE_VALIDATOR',
+					message: "I need to contain the word 'arrange'"
+				};
+				this.setMessage('error', error.message);
+				return error;
+			}
 		},
-		type: 'text',	//field value
 
 		group: 'one'
 	});
@@ -152,7 +149,7 @@ define(function (require, exports, module) {
 		$scope.submit = function (status, message) {
 
 			if (!status) {
-				form.validateAll();
+				form.validate();
 			} else {
 
 

@@ -9,6 +9,7 @@ define(function (require, exports, module) {
 		validators = require('../validators');
 
 	var defaults = {
+		type: 'input',
 		validator: 'notEmpty',
 		status: null,
 		message: null,
@@ -44,41 +45,34 @@ define(function (require, exports, module) {
 		//todo this smell, clean up responsibilities
 		validate: function () {
 			if (this.mandatory) {
-				var error, customValidator = this.customValidator;
-				if (customValidator) {
-					if (!customValidator.validate(this.value)) {
-						error = customValidator.error;
-					}
-				} else {
-					error = validatorManager.validateField(this.validator, this.value);
-				}
+				var error = validatorManager.validateField(this.validator, this.value);
 
 				if (error) {
-					this.setMessage( 'error',error.message);
+					this.setMessage('error', error.message);
 				}
 				return  error;
 			}
 		},
 
 		/*
-		* return field attribute that should be "watched" in angular scope
-		* */
+		 * return field attribute that should be "watched" in angular scope
+		 * */
 		getBoundAttribute: function () {
 			return 'value';
 		},
 
 		/*
-		* Has user entered anything in field?
-		* */
+		 * Has user entered anything in field?
+		 * */
 		isEmpty: function () {
-			return this.value === null || this.value.length===0;
+			return this.value === null || this.value.length === 0;
 		}
 
 	};
 
 	/*
-	* Export create method
-	* */
+	 * Export create method
+	 * */
 	exports.create = function (config) {
 
 		var field = Object.create(baseField);

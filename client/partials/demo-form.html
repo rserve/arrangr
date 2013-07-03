@@ -3,7 +3,7 @@
     <form novalidate>
         <label class="textshadow">Dynamic text inputs (group1)</label>
 
-        <div ng-repeat="field in form.fieldsForGroup('one')">
+        <div ng-repeat="field in form.getFields('one')">
             <div class="control-group {{field.status}}">
 
                 <div class="controls">
@@ -15,30 +15,30 @@
 
         <label class="textshadow">Misc static fields (group2)</label>
 
-        <div class="control-group {{form.fields.weakPasswordInput.status}}">
+        <div class="control-group {{form.getField('weakPasswordInput').status}}">
 
             <div class="controls">
-                <input type="password" name="password" ng-model="form.fields.weakPasswordInput.value"
-                       placeholder="{{form.fields.weakPasswordInput.placeholder}}">
-                <span class="help-inline">{{form.fields.weakPasswordInput.message}}</span>
+                <input type="password" name="password" ng-model="form.getField('weakPasswordInput').value"
+                       placeholder="{{form.getField('weakPasswordInput').placeholder}}">
+                <span class="help-inline">{{form.getField('weakPasswordInput').message}}</span>
             </div>
         </div>
-        <div class="control-group {{form.fields.checkMeCheckbox.status}}">
+        <div class="control-group {{form.getField('checkMeCheckbox').status}}">
             <div class="controls">
                 <label  class="checkbox">
-                    <input ng-model="form.fields.checkMeCheckbox.checked" type="checkbox"> Please check me
+                    <input ng-model="form.getField('checkMeCheckbox').checked" type="checkbox"> Please check me
                 </label>
 
             </div>
         </div>
 
-        <div class="control-group {{form.fields.primesSelect.status}}">
+        <div class="control-group {{form.getField('primesSelect').status}}">
             <div class="controls">
-                <select ng-model="form.fields.primesSelect.value">
+                <select ng-model="form.getField('primesSelect').value">
                     <option >Choose a prime...</option>
-                    <option ng-repeat="option in form.fields.primesSelect.options">{{option}}</option>
+                    <option ng-repeat="option in form.getField('primesSelect').options">{{option}}</option>
                 </select>
-                <span class="help-inline">{{form.fields.primesSelect.message}}</span>
+                <span class="help-inline">{{form.getField('primesSelect').message}}</span>
             </div>
         </div>
 
@@ -74,13 +74,13 @@
             {{form.global.message}}
         </div>
         <p>
-            <button ng-click="form.validateGroup('one')" class="btn btn-primary">Validate group 1
+            <button ng-click="form.validate('one')" class="btn btn-primary">Validate group 1
             </button>
 
-            <button ng-click="form.validateGroup('two')" class="btn btn-primary">Validate group 2
+            <button ng-click="form.validate('two')" class="btn btn-primary">Validate group 2
             </button>
 
-            <button ng-click="form.validateAll()" class="btn btn-primary">Validate all
+            <button ng-click="form.validate()" class="btn btn-primary">Validate all
             </button>
         </p>
 
