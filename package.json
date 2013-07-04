@@ -1,32 +1,33 @@
 {
-    "name": "rserve",
-    "version": "0.0.1",
-    "description": "Making booking easy",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/rserve/rserve.git"
-    },
-    "main": "./server/server",
-    "scripts": {
-        "start": "node gruntcli nodemon",
-        "test": "node gruntcli all"
-    },
-    "devDependencies": {
-        "grunt-contrib-jasmine": "~0.4.0",
-        "grunt": "~0.4.1",
-        "grunt-contrib-jshint": "~0.6.0",
-        "grunt-template-jasmine-requirejs": "~0.1.2",
-        "grunt-jasmine-node": "latest",
-        "jasmine-node": "latest",
-        "request": "latest",
-        "grunt-nodemon": "latest"
-    },
-    "dependencies": {
-        "express": "latest",
-        "mongoose": "latest",
-        "connect-mongo": "latest",
-        "passport": "latest",
-        "passport-local": "latest",
-        "mandrill-api":"latest"
-    }
+  "name": "rserve",
+  "version": "0.0.1",
+  "description": "Making booking easy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rserve/rserve.git"
+  },
+  "main": "./server/server",
+  "scripts": {
+    "start": "node gruntcli nodemon",
+    "test": "node gruntcli all"
+  },
+  "devDependencies": {
+    "grunt-contrib-jasmine": "~0.4.0",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-template-jasmine-requirejs": "~0.1.2",
+    "grunt-jasmine-node": "latest",
+    "jasmine-node": "latest",
+    "request": "latest",
+    "grunt-nodemon": "latest",
+    "grunt-contrib-requirejs": "~0.4.1"
+  },
+  "dependencies": {
+    "express": "latest",
+    "mongoose": "latest",
+    "connect-mongo": "latest",
+    "passport": "latest",
+    "passport-local": "latest",
+    "mandrill-api": "latest"
+  }
 }
