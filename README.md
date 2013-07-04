@@ -48,3 +48,8 @@ Run all tasks with ``grunt``, this will:
 * ``grunt spec_browser`` - browser only
 * ``grunt spec_node`` - node only
 
+## Build step
+
+``grunt build``
+
+Will create a build bundle in ``/build/client``
