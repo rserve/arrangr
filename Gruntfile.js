@@ -58,11 +58,11 @@ module.exports = function (grunt) {
 			node: {
 				options: {
 					curly: false,
-					node:true,
-					browser:false,
-					strict:false,
-					immed:false,
-					es5:false
+					node: true,
+					browser: false,
+					strict: false,
+					immed: false,
+					es5: false
 				},
 				files: {
 					src: ['server/**/*.js']
@@ -70,17 +70,17 @@ module.exports = function (grunt) {
 			}
 
 		},
-		jasmine : {
-			src : 'client/js/**/*.js',
-			options : {
-				specs : 'client/specs/**/*spec.js',
+		jasmine: {
+			src: 'client/js/**/*.js',
+			options: {
+				specs: 'client/specs/**/*spec.js',
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
 					requireConfigFile: 'client/js/main.js',
 					requireConfig: {
-						baseUrl:'client/js/',
-						paths:{
-							'client/js':'./'
+						baseUrl: 'client/js/',
+						paths: {
+							'client/js': './'
 						}
 					}
 				}
@@ -94,19 +94,64 @@ module.exports = function (grunt) {
 			forceExit: true,
 			jUnit: {
 				report: false,
-				savePath : "./build/reports/jasmine/",
+				savePath: "./build/reports/jasmine/",
 				useDotNotation: true,
 				consolidate: true
 			}
 		},
 
-        nodemon: {
-            dev: {
-                options: {
-                    watchedFolders: [ 'server' ]
-                }
-            }
-        }
+		nodemon: {
+			dev: {
+				options: {
+					watchedFolders: [ 'server' ]
+				}
+			}
+		},
+		requirejs: {
+			compile: {
+				options: {
+					appDir: "client",
+					baseUrl: "js",
+					dir: "build/client",
+					paths: {
+						jquery: 'empty:',
+						bootstrap: 'empty:',
+						underscore: 'empty:',
+						angular: 'empty:',
+						angularcookie: 'empty:',
+						json: '../lib/require/json',
+						text: '../lib/require/text',
+						data: '../data'
+					},
+					shim: {
+						angular: {
+							deps: ['jquery'], // for angular.element
+							exports: 'angular'
+						},
+						angularcookie:{
+							deps: ['angular']
+						},
+						'bootstrap': {
+							deps: ['jquery']
+						},
+						'underscore': {
+							exports: '_'
+						}
+
+					},
+					fileExclusionRegExp: /^(specs|index.jasmine.html|lib\/)$/,
+					optimizeCss: 'standard',
+
+					removeCombined: true,
+					modules: [
+						{
+							name: "main"
+						}
+					]
+				}
+
+			}
+		}
 	});
 
 
@@ -114,7 +159,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-jasmine-node');
-    grunt.loadNpmTasks('grunt-nodemon');
+	grunt.loadNpmTasks('grunt-nodemon');
+	grunt.loadNpmTasks('grunt-contrib-requirejs');
 
 	//lint tasks
 	grunt.registerTask('lint', ['jshint:client', 'jshint:node']);
@@ -125,9 +171,10 @@ module.exports = function (grunt) {
 	grunt.registerTask('spec', ['jasmine', 'jasmine_node']);
 	grunt.registerTask('spec_browser', ['jasmine']);
 	grunt.registerTask('spec_node', ['jasmine_node']);
+	grunt.registerTask('build', ['requirejs']);
 
 	// default tasks
-	grunt.registerTask('all', ['jshint:client', 'jshint:node','jasmine', 'jasmine_node']);
+	grunt.registerTask('all', ['jshint:client', 'jshint:node', 'jasmine', 'jasmine_node']);
 
 	grunt.registerTask('default', ['all']);
 

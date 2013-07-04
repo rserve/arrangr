@@ -4,4 +4,5 @@
 .idea
 .grunt
 node_modules
+build
 *.log
