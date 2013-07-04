@@ -13,7 +13,7 @@ define(function (require, exports, module) {
 		userInfo: 'user-info.html',
 		empty: 'empty.html',
 		notFound: 'not-found.html',
-		old: 'old.html',
+		home: 'home.html',
 		demoForm: 'demo-form.html'
 	};
 

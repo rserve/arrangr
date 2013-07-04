@@ -87,7 +87,9 @@ define(function (require, exports, module) {
 		},
 
 
-		initialize: function ($scope, config) {
+		initialize: function ($scope, name) {
+			this.name = name;
+			this.clear();
 			this.bindForm($scope);
 
 			this.bindOnChangeListeners($scope);
@@ -96,7 +98,7 @@ define(function (require, exports, module) {
 
 
 		bindForm: function ($scope) {
-			$scope.form = this;
+			$scope[this.name] = this;
 		},
 
 		bindOnChangeListeners: function ($scope) {

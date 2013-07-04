@@ -1,0 +1,58 @@
+<div class="logincontainer">
+
+    <div class="flip-container" ng-class="{'flip-container-flip':isLogin}">
+        <div class="flipper">
+            <div class="front">
+                <form novalidate class="form-inline ">
+                    <input ng-model="registerForm.getField('email').value" type="text"
+                           class="input input-medium"
+                           placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
+                           name="email">
+                    <input ng-model="registerForm.getField('password').value" type="password"
+                           class="input input-medium"
+                           placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
+                           name="password"><br/><br/>
+                    <div class="form-error" ng-show="registerError">{{registerError}}</div>
+                    <button ng-click="submit()" class="btn btn-large btn-success">
+                        {{'%BUTTON_SIGNUP%' | phrase}}
+                    </button>
+
+
+                </form>
+
+                <div class="textshadow">
+                    Already a user? <a ng-click="showLogin()" href="#">Sign in!</a>
+                </div>
+            </div>
+
+            <div class="back">
+                <form novalidate class="form-inline">
+                    <input  ng-model="loginForm.getField('email').value"  type="text"
+                           class="input input-medium"
+                           placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
+                           name="email">
+                    <input ng-model="loginForm.getField('password').value" type="password"
+                           class="input input-medium"
+                           placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
+                           name="password">
+
+                    <br/>
+                    <br/>
+
+                    <div class="form-error" ng-show="loginError">{{loginError}}</div>
+
+                    <button ng-click="submit()" class="btn btn-large btn-info">{{'%BUTTON_LOGIN%' |
+                        phrase}}
+                    </button>
+
+
+                </form>
+
+                <div class="textshadow">
+                    Not a user? <a ng-click="showRegister()" href="#">Sign up!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
