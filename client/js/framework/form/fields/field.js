@@ -1,12 +1,25 @@
-/*global define*/
+/*
+ * field.js
+ *
+ * A class representing a a basic form field based on value attribute, for example input.
+ *
+ * */
 
 define(function (require, exports, module) {
 
 	'use strict';
 
+	///////////////////////////////////////////////////
+	//	DEPENDENCIES
+	///////////////////////////////////////////////////
+
 	var _ = require('underscore'),
-		validatorManager = Object.create(require('../validatorManager')),
+		validatorManager = Object.create(require('../validatorManager')),//TODO ugly, see comment below
 		validators = require('../validators');
+
+	///////////////////////////////////////////////////
+	//	PRIVATES
+	///////////////////////////////////////////////////
 
 	var defaults = {
 		name: null,
@@ -17,10 +30,21 @@ define(function (require, exports, module) {
 		mandatory: true
 	};
 
+	// TODO a bit ugly to have logic on top closure, i.e. order of requiring should never matter.
+
+	// provide a global validatorManager for all fiels
 	validatorManager.addValidators(validators);
+
+
+	///////////////////////////////////////////////////
+	//	METHODS
+	///////////////////////////////////////////////////
 
 	var baseField = {
 
+		/*
+		* Clear value and any error on field
+		* */
 		clear: function () {
 			_.extend(this, {
 				value: null,
@@ -32,7 +56,6 @@ define(function (require, exports, module) {
 			return this.value;
 		},
 
-
 		validate: function () {
 			var error;
 			if (this.mandatory) {
@@ -41,7 +64,7 @@ define(function (require, exports, module) {
 					error = {message: this.customError};
 				}
 			}
-			this.error = error;
+			this.error = error; // if no error found this line will reset any previous error
 			return error;
 		},
 
@@ -53,7 +76,7 @@ define(function (require, exports, module) {
 		},
 
 		/*
-		 * Has user entered anything in field?
+		 * Differentiate between empty field and "falsy" value
 		 * */
 		isEmpty: function () {
 			return this.value === null || this.value.length === 0;
@@ -61,8 +84,13 @@ define(function (require, exports, module) {
 
 	};
 
+
+	///////////////////////////////////////////////////
+	//	EXPORT
+	///////////////////////////////////////////////////
+
 	/*
-	 * Export create method
+	 * Export create method to force instantiation
 	 * */
 	exports.create = function (config) {
 

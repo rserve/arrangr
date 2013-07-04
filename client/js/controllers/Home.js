@@ -1,38 +1,54 @@
+/*
+ * Home.js
+ *
+ * Home controller, entry page for users. Provide both register and login form.
+ *
+ * */
 define(function (require, exports, module) {
 
 	'use strict';
 
-	var baseForm = require('framework/form/baseForm'),
-		loginForm = baseForm.create();
+	var baseForm = require('framework/form/baseForm');
+
+	/*
+	 * Create login form
+	 * */
+
+	//TODO get phrases from config
+	var loginForm = baseForm.create().
+		addField({
+			name: 'email',
+			validator: 'notEmpty',
+			customError: 'You forgot to enter your email address!'
+		}).
+
+		addField({
+			name: 'password',
+			validator: 'notEmpty',
+			customError: 'Your password cannot be empty!'
+		});
+
+	/*
+	 * Create register form
+	 * */
+
+	//TODO get phrases from config
+	var registerForm = baseForm.create()
+		.addField({
+			name: 'email',
+			validator: 'email',
+			customError: 'Please check entered email address!'
+		}).
+		addField({
+			name: 'password',
+			validator: 'password'
+			//customError: 'Your password cannot be empty!'
+		});
 
 
-	loginForm.addField({
-		name: 'email',
-		validator: 'notEmpty',
-		customError: 'You forgot to enter your email address!'
-	});
-
-	loginForm.addField({
-		name: 'password',
-		validator: 'notEmpty',
-		customError: 'Your password cannot be empty!'
-	});
-
-
-	var registerForm = baseForm.create();
-
-	registerForm.addField({
-		name: 'email',
-		validator: 'email',
-		customError: 'Please check entered email address!'
-	});
-
-	registerForm.addField({
-		name: 'password',
-		validator: 'password'
-		//customError: 'Your password cannot be empty!'
-	});
-
+	/*
+	 * Angular controller
+	 * */
 	var Controller = function ($scope, $http, $location, usersClient, authState) {
 
 		//bind the two forms under different namespaces
@@ -40,9 +56,16 @@ define(function (require, exports, module) {
 		registerForm.initialize($scope, 'registerForm');
 
 
+		/*
+		 * Login form
+		 * */
+
 		$scope.showLogin = function () {
 
 			$scope.isLogin = true;
+
+			// we reset form when showing it instead of when hiding it because
+			// form is hidden behind "flipper"
 			loginForm.clear();
 			$scope.loginError = null;
 
@@ -69,7 +92,7 @@ define(function (require, exports, module) {
 						function (err) {
 							console.log('error', err);
 
-							$scope.loginError = err.data.message;
+							$scope.loginError = err.message;
 
 						});
 				}
@@ -77,10 +100,17 @@ define(function (require, exports, module) {
 			};
 		};
 
+		/*
+		 * Register form
+		 * */
+
 		$scope.showRegister = function () {
 
 			$scope.isLogin = false;
 			registerForm.clear();
+
+			// we reset form when showing it instead of when hiding it because
+			// form is hidden behind "flipper"
 			$scope.registerError = null;
 
 			//rebind submit
@@ -102,7 +132,7 @@ define(function (require, exports, module) {
 						},
 						function (err) {
 							console.log('error', err);
-							$scope.registerError = err.data.message;
+							$scope.registerError = err.message;
 
 						});
 				}

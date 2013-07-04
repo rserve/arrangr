@@ -1,9 +1,18 @@
-/*global define*/
+/*
+ * validators.js
+ *
+ * Validators for form fields (or any strings).
+ *
+ * TODO it is too complex for current setup, KISS
+ *
+ *
+ * */
 
 define(function (require, exports, module) {
 
 	'use strict';
-	var _ = require('underscore');
+
+	//TODO type shouldn't have to be kept on two levels
 
 	module.exports = {
 		'notEmpty': {

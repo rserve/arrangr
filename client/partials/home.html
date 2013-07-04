@@ -12,6 +12,7 @@
                            class="input input-medium"
                            placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
                            name="password"><br/><br/>
+
                     <div class="form-error" ng-show="registerError">{{registerError}}</div>
                     <button ng-click="submit()" class="btn btn-large btn-success">
                         {{'%BUTTON_SIGNUP%' | phrase}}
@@ -27,7 +28,7 @@
 
             <div class="back">
                 <form novalidate class="form-inline">
-                    <input  ng-model="loginForm.getField('email').value"  type="text"
+                    <input ng-model="loginForm.getField('email').value" type="text"
                            class="input input-medium"
                            placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
                            name="email">

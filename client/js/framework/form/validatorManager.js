@@ -1,3 +1,12 @@
+/*
+ * validatorManager.js
+ *
+ * Class for managing different validators.
+ *
+ * TODO it is too complex for current setup, KISS
+ *
+ * */
+
 define(function (require, exports, module) {
 
 	'use strict';
@@ -6,6 +15,7 @@ define(function (require, exports, module) {
 
 	module.exports = {
 
+		//TODO instantating this class (as is done) will fail as the followin three attributes will be bound to prottype
 		config: {},
 		validators: {},
 		errors: [],
@@ -27,6 +37,10 @@ define(function (require, exports, module) {
 			}
 		},
 
+		/*
+		* Validate with different strategies based on data and config
+		* If config is not provided the config bound to instance is used.
+		* */
 		validate: function (data, config) {
 
 			var param,
@@ -36,8 +50,10 @@ define(function (require, exports, module) {
 				errors;
 
 			for (param in data) {
-				errors = errors || {};
+
 				if (data.hasOwnProperty(param)) {
+					errors = errors || {};
+
 					value = data[param];
 
 					//can override config per validate call

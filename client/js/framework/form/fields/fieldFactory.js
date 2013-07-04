@@ -1,4 +1,9 @@
-/*global define*/
+/*
+ * fieldFactory.js
+ *
+ * Simple factory object to help creating fields
+ *
+ * */
 
 define(function (require, exports, module) {
 
@@ -24,6 +29,7 @@ define(function (require, exports, module) {
 		}
 
 	};
+
 
 	module.exports = factory;
 
