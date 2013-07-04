@@ -2,16 +2,16 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-    var baseForm = require('./form/baseForm'),
-        fieldFactory = require('./form/fields/fieldFactory');
+    var baseForm = require('framework/form/baseForm');
 
 
     var inviteForm = baseForm.create();
-    inviteForm.addField(fieldFactory.createInput({
+
+	inviteForm.addField({
         validator: 'email',
         name: 'email',
         placeholder: 'Invite member'
-    }));
+    });
 
     var joinForm = baseForm.create();
     joinForm.addField(fieldFactory.createInput({
@@ -29,12 +29,6 @@ define(function (require, exports, module) {
         joinForm.initialize($scope, 'joinForm');
 
         inviteForm.onFieldValidate = function (name, field, error) {
-            if (!error) {
-                field.setMessage('success', '');
-            }
-        };
-
-        joinForm.onFieldValidate = function (name, field, error) {
             if (!error) {
                 field.setMessage('success', '');
             }

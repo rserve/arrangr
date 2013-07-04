@@ -2,22 +2,23 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var baseForm = require('./form/baseForm'),
-		fieldFactory = require('./form/fields/fieldFactory');
+	var baseForm = require('framework/form/baseForm');
 
 
 	var form = baseForm.create();
-	form.addField(fieldFactory.createInput({
-		validator: 'email',
-		name: 'email',
-		placeholder: 'Email'
-	}));
 
-	form.addField(fieldFactory.createInput({
+	form.addField({
+		name: 'email',
 		validator: 'notEmpty',
+		customError:'You forgot to enter your email address!'
+	});
+
+	form.addField({
 		name: 'password',
-		placeholder: 'Password.'
-	}));
+		validator: 'notEmpty',
+		customError:'Your password cannot be empty!'
+	});
+
 
 
 	var Controller = function ($scope, $http, $location, usersClient, authState) {
@@ -26,22 +27,11 @@ define(function (require, exports, module) {
 		//Initialize form, this will bind it to scope
 		form.initialize($scope);
 
-
-		//add hook to field validate
-		form.onFieldValidate = function (name, field, error) {
-
-
-			if (!error) {
-				field.setMessage('success', 'OK');
-			}
-		};
-
 		$scope.submit = function () {
 
-			var errors = form.validateAll();
+			var errors = form.validate();
 			if (errors) {
-
-
+				$scope.error = errors[0].message; // grab only first error
 
 			} else {
 				var data = form.toJSON();
@@ -54,14 +44,14 @@ define(function (require, exports, module) {
 
 						$location.path("/groups");
 
-						form.reset();
+						form.clear();
 					},
 					function (err) {
 						console.log('error', err);
 						//form.reset();
 
-						form.global.message = err.data.error;
-						form.global.status = 'error';
+						$scope.error = err.data.error;
+
 
 
 					});

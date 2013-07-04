@@ -1,70 +1,76 @@
 <div class="logincontainer">
 
     <form novalidate>
-        <label class="textshadow">Dynamic text inputs (group1)</label>
+        <label class="textshadow">Group1</label>
 
-        <div ng-repeat="field in form.fieldsForGroup('one')">
-            <div class="control-group {{field.status}}">
+        <div class="control-group {{form.getField('notEmptyInput').status}}">
 
-                <div class="controls">
-                    <input type="text" ng-model="field.value" placeholder="{{field.placeholder}}">
-                    <span class="help-inline">{{field.message}}</span>
-                </div>
+            <div class="controls">
+                <input type="text" name="notEmpty" ng-model="form.getField('notEmptyInput').value"
+                       placeholder="I should not be empty">
+                <span class="help-inline">{{form.getField('notEmptyInput').error.message}}</span>
             </div>
         </div>
+
+        <div class="control-group {{form.getField('optionalInput').status}}">
+
+            <div class="controls">
+                <input type="text" name="optional" ng-model="form.getField('optionalInput').value"
+                       placeholder="{{form.getField('optionalInput').placeholder}}">
+                <span class="help-inline">{{form.getField('optionalInput').error.message}}</span>
+            </div>
+        </div>
+
+        <div class="control-group {{form.getField('customValidatorInput').status}}">
+
+            <div class="controls">
+                <input type="password" name="custom"
+                       ng-model="form.getField('customValidatorInput').value"
+                       placeholder="{{form.getField('customValidatorInput').placeholder}}">
+                <span class="help-inline">{{form.getField('customValidatorInput').error.message}}</span>
+            </div>
+        </div>
+
 
         <label class="textshadow">Misc static fields (group2)</label>
 
-        <div class="control-group {{form.fields.weakPasswordInput.status}}">
+        <div class="control-group {{form.getField('passwordInput').status}}">
 
             <div class="controls">
-                <input type="password" name="password" ng-model="form.fields.weakPasswordInput.value"
-                       placeholder="{{form.fields.weakPasswordInput.placeholder}}">
-                <span class="help-inline">{{form.fields.weakPasswordInput.message}}</span>
+                <input type="password" name="password"
+                       ng-model="form.getField('passwordInput').value"
+                       placeholder="{{form.getField('passwordInput').placeholder}}">
+                <span class="help-inline">{{form.getField('passwordInput').error.message}}</span>
             </div>
         </div>
-        <div class="control-group {{form.fields.checkMeCheckbox.status}}">
+        <div class="control-group {{form.getField('checkMeCheckbox').status}}">
             <div class="controls">
-                <label  class="checkbox">
-                    <input ng-model="form.fields.checkMeCheckbox.checked" type="checkbox"> Please check me
+                <label class="checkbox">
+                    <input ng-model="form.getField('checkMeCheckbox').checked" type="checkbox">
+                    Please check me
                 </label>
 
             </div>
         </div>
 
-        <div class="control-group {{form.fields.primesSelect.status}}">
+        <div class="control-group {{form.getField('primesSelect').status}}">
             <div class="controls">
-                <select ng-model="form.fields.primesSelect.value">
-                    <option >Choose a prime...</option>
-                    <option ng-repeat="option in form.fields.primesSelect.options">{{option}}</option>
+
+
+
+                <select ng-model="form.getField('primesSelect').value" ng-options="value for (key,value) in form.getField('primesSelect').options">
+                    <option value="">-- choose a prime --</option>
+
                 </select>
-                <span class="help-inline">{{form.fields.primesSelect.message}}</span>
+                <span class="help-inline">{{form.getField('primesSelect').error.message}}</span>
             </div>
         </div>
 
-        <!--<label class="textshadow">Composite field </label>
-
-        <div class="control-group error inline form-inline">
-            <div class="controls inline form-inline">
-                <select>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                </select>
-
-                <input type="checkbox">
-
-                <input type="text" ng-model="field.value" placeholder="{{field.placeholder}}">
-                <span class="help-inline">Please enter: select=2, checkbox=true, input=demo</span>
-            </div>
-        </div>-->
 
         <br/>
 
         <p>
-            <button ng-click="form.reset()" class="btn btn">Reset form!
+            <button ng-click="form.clear()" class="btn btn">Reset form!
             </button>
             <button ng-click="showData()" class="btn btn">Show me ze data!
             </button>
@@ -74,35 +80,21 @@
             {{form.global.message}}
         </div>
         <p>
-            <button ng-click="form.validateGroup('one')" class="btn btn-primary">Validate group 1
+            <button ng-click="form.validate('one')" class="btn btn-primary">Validate group 1
             </button>
 
-            <button ng-click="form.validateGroup('two')" class="btn btn-primary">Validate group 2
+            <button ng-click="form.validate('two')" class="btn btn-primary">Validate group 2
             </button>
 
-            <button ng-click="form.validateAll()" class="btn btn-primary">Validate all
+            <button ng-click="form.validate()" class="btn btn-primary">Validate all
             </button>
         </p>
 
         <p>
-            <button ng-click="submit('error', 'Snap, this is an error!')"
-                    class="btn btn-danger">Submit with
-                error
+            <button ng-click="submit()"
+                    class="btn btn-danger">Submit
             </button>
 
-            <button ng-click="submit('success', 'Hello, this is success!')"
-                    class="btn btn-success">Submit with
-                success
-            </button>
-
-            <button ng-click="submit('warning', 'Warning!')" class="btn btn-warning">Submit
-                with
-                warning
-            </button>
-
-            <button ng-click="submit('info', 'Hey there, here are some information!')"
-                    class="btn btn-info">Submit with info
-            </button>
         </p>
 
 

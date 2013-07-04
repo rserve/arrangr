@@ -1,8 +1,8 @@
 /*global describe, it, expect */
 define(function (require, exports, module) {
 
-	var formValidator = require('controllers/form/validatorManager'),
-		baseValidators = require('controllers/form/validators');
+	var formValidator = require('framework/form/validatorManager'),
+		baseValidators = require('framework/form/validators');
 
 	'use strict';
 

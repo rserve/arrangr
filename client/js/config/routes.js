@@ -40,16 +40,16 @@ define(function (require, exports, module) {
 					controller: 'Groups',
 					access: access.auth
 				}).
-				when('/', {
+				/*when('/', {
 					templateUrl: partials.register,
 					controller: 'Register',
 					access: access.anon
-				}).
-				when('/login', {
+				}).*/
+			/*	when('/login', {
 					templateUrl: partials.login,
 					controller: 'Login',
 					access: access.anon
-				}).
+				}).*/
 				when('/logout', {
 					templateUrl: partials.empty,
 					controller: 'Logout',
@@ -60,9 +60,10 @@ define(function (require, exports, module) {
 					controller: 'DemoForm',
 					access: access.public
 				}).
-				when('/old', {
-					templateUrl: partials.old,
-					access: access.public
+				when('/', {
+					templateUrl: partials.home,
+					controller: 'Home',
+					access: access.anon
 				}).
 				when('/404',
 				{
@@ -80,9 +81,9 @@ define(function (require, exports, module) {
 			$rootScope.$on("$routeChangeStart", function (event, next, current) {
 				$rootScope.error = null;
 
-				//If trying to access authenticated page not logged in, redirect to login
+				//If trying to access authenticated page not logged in, redirect to home
 				if (next.access === access.auth && !authState.isAuth()) {
-					$location.path('/login');
+					$location.path('/home');
 				}
 				//If trying to access anonymous page logged in, redirect to groups
 				else if (next.access === access.anon && authState.isAuth()) {

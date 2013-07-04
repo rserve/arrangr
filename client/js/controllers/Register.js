@@ -2,12 +2,12 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var baseForm = require('./form/baseForm'),
-		fieldFactory = require('./form/fields/fieldFactory');
+	var baseForm = require('framework/form/baseForm');
+
 
 
 	var form = baseForm.create();
-
+/*
 	form.addField(fieldFactory.createInput({
 		validator: 'email',
 		name: 'email',
@@ -18,7 +18,7 @@ define(function (require, exports, module) {
 		validator: 'strongPassword',
 		name: 'password',
 		placeholder: 'Password.'
-	}));
+	}));*/
 
 
 	var Controller = function ($scope, $http, $location, usersClient, authState) {
