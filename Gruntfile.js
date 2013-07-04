@@ -76,7 +76,7 @@ module.exports = function (grunt) {
 				specs: 'client/specs/**/*spec.js',
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
-					requireConfigFile: 'client/js/main.js',
+					requireConfigFile: 'client/js/config.js',
 					requireConfig: {
 						baseUrl: 'client/js/',
 						paths: {
@@ -128,7 +128,7 @@ module.exports = function (grunt) {
 							deps: ['jquery'], // for angular.element
 							exports: 'angular'
 						},
-						angularcookie:{
+						angularcookie: {
 							deps: ['angular']
 						},
 						'bootstrap': {
@@ -139,7 +139,8 @@ module.exports = function (grunt) {
 						}
 
 					},
-					fileExclusionRegExp: /^(specs|index.jasmine.html|lib\/)$/,
+					// skip libraries except text & json
+					fileExclusionRegExp: /^(specs|index.jasmine.html|jquery|bootstrap|underscore|angular|jasmine|index.html|prod-index.html)/,
 					optimizeCss: 'standard',
 
 					removeCombined: true,
@@ -151,6 +152,22 @@ module.exports = function (grunt) {
 				}
 
 			}
+		},
+		copy: {
+			postBuild: {
+				files: [
+					{expand: true, src: ['client/lib/**'], dest: 'build/'},
+					{ expand: true, src: ['client/prod-index.html'], dest: 'build/client', filter: 'isFile',
+						rename: function (dest, src) {
+							// use the source directory to create the file
+							// example with your directory structure
+							//   dest = 'dev/js/'
+							//   src = 'module1/js/main.js'
+							return dest + '/index.html';
+						}},
+
+				]
+			}
 		}
 	});
 
@@ -161,6 +178,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-jasmine-node');
 	grunt.loadNpmTasks('grunt-nodemon');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	//lint tasks
 	grunt.registerTask('lint', ['jshint:client', 'jshint:node']);
@@ -171,7 +189,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('spec', ['jasmine', 'jasmine_node']);
 	grunt.registerTask('spec_browser', ['jasmine']);
 	grunt.registerTask('spec_node', ['jasmine_node']);
-	grunt.registerTask('build', ['requirejs']);
+	grunt.registerTask('build', ['requirejs', 'copy:postBuild']);
 
 	// default tasks
 	grunt.registerTask('all', ['jshint:client', 'jshint:node', 'jasmine', 'jasmine_node']);

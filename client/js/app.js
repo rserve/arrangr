@@ -7,7 +7,7 @@ define(function (require, exports, module) {
 
 
 	//create app as module
-	var app = angular.module(config.appName, ['ngCookies']).
+	var app = angular.module(config.appName, []).
 
 		//add config values
 		value('version', config.version).

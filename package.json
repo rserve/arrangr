@@ -20,7 +20,8 @@
     "jasmine-node": "latest",
     "request": "latest",
     "grunt-nodemon": "latest",
-    "grunt-contrib-requirejs": "~0.4.1"
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-copy": "~0.4.1"
   },
   "dependencies": {
     "express": "latest",

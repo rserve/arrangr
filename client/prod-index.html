@@ -29,11 +29,11 @@
     <div ng-include src="template.url"></div>
 </div>
 
-<script src="/lib/require.js"></script>
+<script src="/lib/require-min.js"></script>
 <script>
 
     //grab require configuration
-    require(['js/config'], function (config) {
+    require(['js/prod-config'], function (config) {
 
         require.config(config);
         //load app
