@@ -156,13 +156,12 @@ module.exports = function (grunt) {
 		copy: {
 			postBuild: {
 				files: [
+					//copy all third party libraries to build
 					{expand: true, src: ['client/lib/**'], dest: 'build/'},
+
+					//copy prod-index.html to index.html for build
 					{ expand: true, src: ['client/prod-index.html'], dest: 'build/client', filter: 'isFile',
 						rename: function (dest, src) {
-							// use the source directory to create the file
-							// example with your directory structure
-							//   dest = 'dev/js/'
-							//   src = 'module1/js/main.js'
 							return dest + '/index.html';
 						}},
 
