@@ -26,7 +26,9 @@ define(function (require, exports, module) {
 				function (group) {
 					$scope.group = group;
                     $scope.link = $location.absUrl();
-                    if($scope.user) {
+
+					//TODO move into domain object as is done with isAdmin
+					if($scope.user) {
                         for(var i in group.members) {
                             if(group.members[i].user == $scope.user.id) {
                                 $scope.groupMember = group.members[i];
@@ -94,7 +96,7 @@ define(function (require, exports, module) {
         };
 
         $scope.invite = function() {
-            var errors = inviteForm .validateAll();
+            var errors = inviteForm.validate();
             if(!errors) {
                 client.invite(key, inviteForm.toJSON(),
                     function(data) {
