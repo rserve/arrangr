@@ -141,6 +141,14 @@ describe(groupsEndpoint, function () {
                     done();
                 });
             });
+            it('should return 404 when not member of group', function (done) {
+                var testGroup = testGroups[1];
+                request(groupsEndpoint + '/' + testGroup.key, function (err, resp) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(404);
+                    done();
+                });
+            });
         });
 
         describe('post', function() {

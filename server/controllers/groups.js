@@ -118,16 +118,22 @@ exports.invite = function(req, res) {
 
 // param parsing
 var fromParam = function (req, res, next, q) {
-    Group.findOne(q).populate('members.user', userFields).exec(function (err, group) {
-        if (!e(err, res, 'Error finding group')) {
-            if (!group) {
-                res.status(404).send({error: 'Error finding group', message: 'Group not found'});
-            } else {
-                req.group = group;
-                next();
+    if(req.user) {
+        var user = req.user;
+        q['members.user'] = user.id;
+        Group.findOne(q).populate('members.user', userFields).exec(function (err, group) {
+            if (!e(err, res, 'Error finding group')) {
+                if (!group) {
+                    res.status(404).send({error: 'Error finding group', message: 'Group not found'});
+                } else {
+                    req.group = group;
+                    next();
+                }
             }
-        }
-    });
+        });
+    } else {
+        next();
+    }
 };
 
 exports.fromKey = function (req, res, next, key) {
