@@ -9,10 +9,10 @@
         </div>
 
         <form ng-show="group.isAdmin(user)" ng-submit="invite()">
-            <div class="control-group {{form.fields.email.status}}">
+            <div class="control-group {{inviteForm.fields.email.status}}">
                 <div class="controls">
-                    <input id="inviteEmail" ng-model="form.fields.email.value" placeholder="{{form.fields.email.placeholder}}" type="text">
-                    <span class="help-inline">{{form.fields.email.message}}</span>
+                    <input id="inviteEmail" ng-model="inviteForm.fields.email.value" placeholder="{{inviteForm.fields.email.placeholder}}" type="text">
+                    <span class="help-inline">{{inviteForm.fields.email.message}}</span>
                 </div>
             </div>
         </form>

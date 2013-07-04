@@ -18,7 +18,7 @@ define(function (require, exports, module) {
 		var key = $routeParams.groupId,
 			client = groupsClient;
 
-        inviteForm.initialize($scope);
+        inviteForm.initialize($scope, 'inviteForm');
 
         inviteForm.onFieldValidate = function (name, field, error) {
             if (!error) {

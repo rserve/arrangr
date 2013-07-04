@@ -18,7 +18,7 @@ define(function (require, exports, module) {
 		},
 		'email': {
 			validate: function (value) {
-				return (/\S+@\S+\.\S+/).test(value);
+				return (/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/).test(value);
 			},
 			error: {
 				key: 'EMAIL',

@@ -88,23 +88,26 @@ define(function (require, exports, module) {
 			return newForm;
 		},
 
-		initialize: function ($scope) {
-			this.bindForm($scope);
-			this.bindListeners($scope);
+		initialize: function ($scope, name) {
+            if(!name) {
+                name = 'form';
+            }
+			this.bindForm($scope, name);
+			this.bindListeners($scope, name);
 		},
 
 
-		bindForm: function ($scope) {
-			$scope.form = this;
+		bindForm: function ($scope, name) {
+			$scope[name] = this;
 		},
 
-		bindListeners: function ($scope) {
+		bindListeners: function ($scope, formName) {
 			var _this = this;
 
 			this.forEachField(function (name, field) {
 
 				var boundAttribute = field.getBoundAttribute();
-				$scope.$watch('form.fields.[name].[boundAttribute]'.replace('[name]', name).replace('[boundAttribute]', boundAttribute), function (value) {
+				$scope.$watch('[formName].fields.[name].[boundAttribute]'.replace('[formName]', formName).replace('[name]', name).replace('[boundAttribute]', boundAttribute), function (value) {
 					_this.validateField(name);
 				}, true);
 			});
