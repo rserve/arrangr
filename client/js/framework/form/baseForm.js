@@ -12,12 +12,12 @@ define(function (require, exports, module) {
 		matchingGroup: function (group) {
 			return function (field) {
 				return field.group === group || !group; //if no group id was provided, treat as match
-			}
+			};
 		},
 		matchingName: function (name) {
 			return function (field) {
 				return field.name === name;
-			}
+			};
 		}
 	};
 
@@ -105,7 +105,8 @@ define(function (require, exports, module) {
 
 			this.getFields().forEach(function (field) {
 
-				$scope.$watch('baseForm.getField("[name]").[attr]'.replace('[name]', field.name).replace('[attr]', field.getBoundAttribute()), function (value) {
+				var watchMe = 'baseForm.getField("[name]").[attr]';
+				$scope.$watch(watchMe.replace('[name]', field.name).replace('[attr]', field.getBoundAttribute()), function (value) {
 					if (field.isEmpty()) {
 						field.clear();
 					}
