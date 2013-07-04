@@ -2,29 +2,24 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-    var baseForm = require('./form/baseForm'),
-        fieldFactory = require('./form/fields/fieldFactory');
+    var baseForm = require('framework/form/baseForm');
 
 
     var inviteForm = baseForm.create();
-    inviteForm.addField(fieldFactory.createInput({
+
+	inviteForm.addField({
         validator: 'email',
         name: 'email',
         placeholder: 'Invite member'
-    }));
+    });
 
 	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient) {
 
 		var key = $routeParams.groupId,
 			client = groupsClient;
 
-        inviteForm.initialize($scope);
+        inviteForm.initialize($scope, 'form');
 
-        inviteForm.onFieldValidate = function (name, field, error) {
-            if (!error) {
-                field.setMessage('success', '');
-            }
-        };
 
 		function getGroup() {
 			client.findByKey(key,
