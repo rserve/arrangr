@@ -101,7 +101,11 @@ module.exports = function (grunt) {
 		},
 
         nodemon: {
-            dev: {}
+            dev: {
+                options: {
+                    watchedFolders: [ 'server' ]
+                }
+            }
         }
 	});
 

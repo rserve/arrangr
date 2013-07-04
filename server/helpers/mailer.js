@@ -39,6 +39,10 @@ var mailer = {
         }, function (err) {
             console.log('Error sending registration mail', err);
         });
+    },
+
+    sendInvitationMail: function(user) {
+
     }
 };
 

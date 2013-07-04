@@ -4,10 +4,11 @@ var hash = require('../helpers/hash.js');
 var schema = new mongoose.Schema({
     key: { type: String, unique: true },
     name: { type: String, required: true },
+    public: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     members: [{
         user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
-        status: {type: String, enum: ['Yes', 'No', 'Maybe'], default: 'No' },
+        status: {type: String, enum: ['Yes', 'No', 'Maybe'], default: '' },
         admin: { type: Boolean, default: false },
         createdAt: {type: Date, default: Date.now }
     }]

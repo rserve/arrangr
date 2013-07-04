@@ -39,7 +39,8 @@ define(function (require, exports, module) {
 
 	function httpError(req, data, status) {
 		if (req.error) {
-			req.error({data: data, status: status});
+            data.status = status;
+			req.error(data);
 		}
 	}
 
