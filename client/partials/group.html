@@ -12,28 +12,29 @@
             <h4>Join group</h4>
             <div class="control-group {{joinForm.fields.email.status}}">
                 <div class="controls">
-                    <input id="joinForm" ng-model="joinForm.fields.email.value" placeholder="{{joinForm.fields.email.placeholder}}" type="text">
+                    <input ng-model="joinForm.getField('email').value" placeholder="Enter your email" type="text">
                     <span class="help-inline">{{joinForm.fields.email.message}}</span>
                 </div>
             </div>
         </form>
 
-        <p ng-show="user && !isMember(user)">
+        <p ng-show="user && !group.isMember(user)">
             <button ng-click="join(user)" class="btn btn-success">
                 {{ '%BUTTON_JOIN%' | phrase }}
             </button>
         </p>
 
-        <p ng-show="isMember(user) && !isAdmin(user)">
+        <p ng-show="group.isMember(user) && !group.isAdmin(user)">
             <button ng-click="leave(user)" class="btn btn-danger">
                 {{ '%BUTTON_LEAVE%' | phrase }}
             </button>
         </p>
 
         <form ng-show="group.isAdmin(user)" ng-submit="invite()">
+            <h4>Invite members</h4>
             <div class="control-group {{inviteForm.fields.email.status}}">
                 <div class="controls">
-                    <input id="inviteEmail" ng-model="inviteForm.fields.email.value" placeholder="{{inviteForm.fields.email.placeholder}}" type="text">
+                    <input ng-model="inviteForm.getField('email').value" placeholder="Enter email to invite" type="text">
                     <span class="help-inline">{{inviteForm.fields.email.message}}</span>
                 </div>
             </div>

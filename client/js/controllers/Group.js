@@ -10,15 +10,16 @@ define(function (require, exports, module) {
 	inviteForm.addField({
         validator: 'email',
         name: 'email',
-        placeholder: 'Invite member'
+        customError: 'Please enter a valid email'
     });
 
     var joinForm = baseForm.create();
-    joinForm.addField(fieldFactory.createInput({
+
+    joinForm.addField({
         validator: 'email',
         name: 'email',
-        placeholder: 'Enter your email'
-    }));
+        customError: 'Please enter a valid email'
+    });
 
 	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, authState) {
 
@@ -27,12 +28,6 @@ define(function (require, exports, module) {
 
         inviteForm.initialize($scope, 'inviteForm');
         joinForm.initialize($scope, 'joinForm');
-
-        inviteForm.onFieldValidate = function (name, field, error) {
-            if (!error) {
-                field.setMessage('success', '');
-            }
-        };
 
 		function getGroup() {
 			client.findByKey(key,
@@ -107,12 +102,16 @@ define(function (require, exports, module) {
         };
 
         $scope.invite = function() {
-            var errors = inviteForm .validateAll();
-            if(!errors) {
+            var errors = inviteForm.validate();
+            if (errors) {
+                $scope.status = 'error';
+                $scope.message = errors[0].message;
+            } else {
                 client.invite(key, inviteForm.toJSON(),
                     function(data) {
                         $scope.group = data;
-                        $scope.message = '';
+                        $scope.status = 'success'
+                        $scope.message = 'User invited to group';
                     },
                     function(data) {
                         $scope.status = 'error';
@@ -126,8 +125,11 @@ define(function (require, exports, module) {
             var data;
 
             if(!user) {
-                var errors = joinForm .validateAll();
-                if(!errors) {
+                var errors = joinForm.validate();
+                if (errors) {
+                    $scope.status = 'error';
+                    $scope.message = errors[0].message;
+                } else {
                     data = joinForm.toJSON();
                 }
             }
@@ -135,13 +137,13 @@ define(function (require, exports, module) {
             client.join(key, data,
                 function(data) {
                     $scope.group = data;
-                    $scope.message = '';
+                    $scope.status = 'success';
+                    $scope.message = 'You have joined the group';
                     authState.refreshUserState();
                 },
                 function(data) {
                     $scope.status = 'error';
                     $scope.message = data.message;
-                    authState.refreshUserState();
                 }
             );
         };
