@@ -9,7 +9,7 @@ var testData = {
     groups: [
         { name: "innebandy!" },
         { name: "ostprovning" },
-        { name: "coding jam" },
+        { name: "coding jam", public: true },
         { name: "spelkväll" }
     ]
 };
@@ -19,6 +19,22 @@ var groupsEndpoint = helper.endpoint('groups');
 describe(groupsEndpoint, function () {
     var testUser = null;
     var testGroups = null;
+
+    var getPublicGroup = function() {
+        for(var i in testGroups) {
+            if(testGroups[i].public) {
+                return testGroups[i];
+            }
+        }
+    };
+
+    var getPrivateGroup = function() {
+        for(var i in testGroups) {
+            if(!testGroups[i].public) {
+                return testGroups[i];
+            }
+        }
+    };
 
     beforeEach(function () {
         var done = false;
@@ -51,9 +67,25 @@ describe(groupsEndpoint, function () {
         });
 
         describe('get /:key', function () {
-            helper.testUnauthorized(function(cb) {
-                var testGroup = testGroups[0];
-                request(groupsEndpoint + '/' + testGroup.key, cb);
+            it('should return 404 if private', function(done) {
+                var testGroup = getPrivateGroup();
+                request(groupsEndpoint + '/' + testGroup.key, function (err, resp, actualGroup) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(404);
+                    done();
+                });
+            });
+
+            it('should return group if public', function(done) {
+                var testGroup = getPublicGroup();
+                request(groupsEndpoint + '/' + testGroup.key, function (err, resp, actualGroup) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(200);
+                    expect(actualGroup).toBeDefined();
+                    expect(actualGroup.key).toBe(testGroup.key);
+                    expect(actualGroup.public).toBeTruthy();
+                    done();
+                });
             });
         });
 
@@ -65,14 +97,14 @@ describe(groupsEndpoint, function () {
 
         describe('put /:key', function() {
             helper.testUnauthorized(function(cb) {
-                var testGroup = testGroups[0];
+                var testGroup = getPublicGroup();
                 request.put(groupsEndpoint + '/' + testGroup.key, cb);
             });
         });
 
         describe('delete /:key', function() {
             helper.testUnauthorized(function(cb) {
-                var testGroup = testGroups[0];
+                var testGroup = getPublicGroup();
                 request.del(groupsEndpoint + '/' + testGroup.key, cb);
             });
         });
@@ -141,7 +173,7 @@ describe(groupsEndpoint, function () {
                     done();
                 });
             });
-            it('should return 404 when not member of group', function (done) {
+            it('should return 404 when not member of private group', function (done) {
                 var testGroup = testGroups[1];
                 request(groupsEndpoint + '/' + testGroup.key, function (err, resp) {
                     expect(err).toBeFalsy();

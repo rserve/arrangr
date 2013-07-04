@@ -13,14 +13,28 @@ define(function (require, exports, module) {
         placeholder: 'Invite member'
     }));
 
-	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient) {
+    var joinForm = baseForm.create();
+    joinForm.addField(fieldFactory.createInput({
+        validator: 'email',
+        name: 'email',
+        placeholder: 'Enter your email'
+    }));
+
+	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, authState) {
 
 		var key = $routeParams.groupId,
 			client = groupsClient;
 
         inviteForm.initialize($scope, 'inviteForm');
+        joinForm.initialize($scope, 'joinForm');
 
         inviteForm.onFieldValidate = function (name, field, error) {
+            if (!error) {
+                field.setMessage('success', '');
+            }
+        };
+
+        joinForm.onFieldValidate = function (name, field, error) {
             if (!error) {
                 field.setMessage('success', '');
             }
@@ -114,12 +128,36 @@ define(function (require, exports, module) {
             }
         };
 
+        $scope.join = function(user) {
+            var data;
+
+            if(!user) {
+                var errors = joinForm .validateAll();
+                if(!errors) {
+                    data = joinForm.toJSON();
+                }
+            }
+
+            client.join(key, data,
+                function(data) {
+                    $scope.group = data;
+                    $scope.message = '';
+                    authState.refreshUserState();
+                },
+                function(data) {
+                    $scope.status = 'error';
+                    $scope.message = data.message;
+                    authState.refreshUserState();
+                }
+            );
+        };
+
 		getGroup();
 
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', '$rootScope'];
+	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', 'authState'];
 
 	module.exports = Controller;
 

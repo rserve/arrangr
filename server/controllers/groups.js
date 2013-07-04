@@ -61,22 +61,25 @@ exports.updateMember = function(req, res) {
 };
 
 exports.join = function (req, res) {
-    var user = req.user;
     var group = req.group;
 
-    Group.find({ _id: group.id, 'members.user': user}, function (err, groups) {
-        if (!e(err, res, 'Error finding group to join')) {
-            if (groups.length > 0) {
-                res.status(409).send({error: 'Error when joining gorup', message: 'Already a member of this group'});
-            } else {
-                Group.findOneAndUpdate({_id: group.id }, { $addToSet: { members: { user: user } } },
-                    function (err, group) {
-                        e(err, res, 'Error joining group') || res.send(group);
-                    }
-                );
-            }
+    if(!req.user) {
+        var email = req.body.email;
+        if(!email) {
+            return res.status(500).send({error: 'Error joining group', message: 'Email missing'});
         }
-    });
+
+        User.create({ email: email, password: hash.gen(5) }, function (err, user) {
+            if (!e(err, res, 'Error creating user')) {
+                mailer.sendRegistrationMail(user);
+                req.logIn(user, function (err) {
+                    e(err, res, 'Error when logging in') || addUserToGroup(res, group, user);
+                });
+            }
+        });
+    } else {
+        addUserToGroup(res, group, req.user);
+    }
 };
 
 var addUserToGroup = function(res, group, user) {
@@ -118,22 +121,24 @@ exports.invite = function(req, res) {
 
 // param parsing
 var fromParam = function (req, res, next, q) {
+    var query = Group.findOne(q);
     if(req.user) {
-        var user = req.user;
-        q['members.user'] = user.id;
-        Group.findOne(q).populate('members.user', userFields).exec(function (err, group) {
-            if (!e(err, res, 'Error finding group')) {
-                if (!group) {
-                    res.status(404).send({error: 'Error finding group', message: 'Group not found'});
-                } else {
-                    req.group = group;
-                    next();
-                }
-            }
-        });
+        query.or([{'members.user': req.user }, { 'public': true }]);
     } else {
-        next();
+        query.where('public', true);
     }
+
+    query.populate('members.user', userFields).exec(function (err, group) {
+        if (!e(err, res, 'Error finding group')) {
+            if (!group) {
+                next(new Error('Group not found'));
+            } else {
+                req.group = group;
+                next();
+            }
+        }
+    });
+
 };
 
 exports.fromKey = function (req, res, next, key) {

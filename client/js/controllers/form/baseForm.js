@@ -107,8 +107,12 @@ define(function (require, exports, module) {
 			this.forEachField(function (name, field) {
 
 				var boundAttribute = field.getBoundAttribute();
-				$scope.$watch('[formName].fields.[name].[boundAttribute]'.replace('[formName]', formName).replace('[name]', name).replace('[boundAttribute]', boundAttribute), function (value) {
-					_this.validateField(name);
+				$scope.$watch('[formName].fields.[name].[boundAttribute]'
+                    .replace('[formName]', formName)
+                    .replace('[name]', name)
+                    .replace('[boundAttribute]', boundAttribute),
+                    function (value) {
+					    _this.validateField(name);
 				}, true);
 			});
 

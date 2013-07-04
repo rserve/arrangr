@@ -8,6 +8,28 @@
             <h2>{{group.name}}</h2>
         </div>
 
+        <form ng-show="!user" ng-submit="join()">
+            <h4>Join group</h4>
+            <div class="control-group {{joinForm.fields.email.status}}">
+                <div class="controls">
+                    <input id="joinForm" ng-model="joinForm.fields.email.value" placeholder="{{joinForm.fields.email.placeholder}}" type="text">
+                    <span class="help-inline">{{joinForm.fields.email.message}}</span>
+                </div>
+            </div>
+        </form>
+
+        <p ng-show="user && !isMember(user)">
+            <button ng-click="join(user)" class="btn btn-success">
+                {{ '%BUTTON_JOIN%' | phrase }}
+            </button>
+        </p>
+
+        <p ng-show="isMember(user) && !isAdmin(user)">
+            <button ng-click="leave(user)" class="btn btn-danger">
+                {{ '%BUTTON_LEAVE%' | phrase }}
+            </button>
+        </p>
+
         <form ng-show="group.isAdmin(user)" ng-submit="invite()">
             <div class="control-group {{inviteForm.fields.email.status}}">
                 <div class="controls">
@@ -17,7 +39,7 @@
             </div>
         </form>
 
-        <p>
+        <p ng-show="group.isAdmin(user)">
             <label class="checkbox">
                 <input type="checkbox" ng-click="public($event)" ng-checked="group.public"/> Public
             </label>
@@ -28,7 +50,7 @@
             <input type="text" value="{{link}}">
         </p>
 
-        <p>
+        <p ng-show="group.isMember(user)">
             My status:
             <button ng-click="yes()" class="btn" ng-class="{'btn-success':groupMember.status == 'Yes'}">
                 {{ '%BUTTON_YES%' | phrase }}

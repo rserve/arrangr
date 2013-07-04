@@ -11,15 +11,28 @@ define(function (require, exports, module) {
 	var proto = Group.prototype;
 
 	proto.isAdmin = function (user) {
-
-		for (var i = 0, len = this.members.length; i < len; i++) {
-			var member = this.members[i];
-			if (member.user.id === user.id && member.admin) {
-				return true;
-			}
-		}
+        if(user) {
+            for (var i = 0, len = this.members.length; i < len; i++) {
+                var member = this.members[i];
+                if (member.user.id === user.id && member.admin) {
+                    return true;
+                }
+            }
+        }
 		return false;
 	};
+
+    proto.isMember = function(user) {
+        if(user) {
+            for (var i = 0, len = this.members.length; i < len; i++) {
+                var member = this.members[i];
+                if (member.user.id === user.id) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
 
 	module.exports = Group;
 });

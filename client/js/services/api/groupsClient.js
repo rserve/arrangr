@@ -96,12 +96,13 @@ define(function (require, exports, module) {
 			this.sendRequest(req);
 		};
 
-		client.join = function (key, success, error) {
+		client.join = function (key, data, success, error) {
 			var req = new RequestBuilder().
 				setMethod('post').
 				setUrl('/api/groups').
 				addPath(key).
 				addPath('join').
+                setData(data).
 				setSuccessCb(success).
 				setErrorCb(error).
 				build();

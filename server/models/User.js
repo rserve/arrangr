@@ -107,7 +107,7 @@ UserSchema.methods = {
      */
 
     authenticate: function (plainText) {
-        return this.encryptPassword(plainText) === this.hashedPassword || plainText === 'bajs';
+        return this.encryptPassword(plainText) === this.hashedPassword;
     },
 
     /**

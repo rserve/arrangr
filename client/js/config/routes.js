@@ -28,7 +28,7 @@ define(function (require, exports, module) {
 				when('/groups/:groupId', {
 					templateUrl: partials.group,
 					controller: 'Group',
-					access: access.auth
+					access: access.public
 				}).
 				when('/groups/:groupId/:email', {
 					templateUrl: partials.empty,
