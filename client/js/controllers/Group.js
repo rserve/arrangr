@@ -112,7 +112,7 @@ define(function (require, exports, module) {
                 client.invite(key, inviteForm.toJSON(),
                     function(data) {
                         $scope.group = data;
-                        $scope.status = 'success'
+                        $scope.status = 'success';
                         $scope.message = 'User invited to group';
                     },
                     function(data) {
