@@ -23,15 +23,19 @@ define(function (require, exports, module) {
 	};
 
     proto.isMember = function(user) {
+        return !!this.member(user);
+    };
+
+    proto.member = function(user) {
         if(user) {
             for (var i = 0, len = this.members.length; i < len; i++) {
                 var member = this.members[i];
                 if (member.user && member.user.id === user.id) {
-                    return true;
+                    return member;
                 }
             }
         }
-        return false;
+        return null;
     };
 
 	module.exports = Group;

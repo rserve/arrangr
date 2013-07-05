@@ -34,16 +34,7 @@ define(function (require, exports, module) {
 				function (group) {
 					$scope.group = group;
                     $scope.link = $location.absUrl();
-
-					//TODO move into domain object as is done with isAdmin
-					if($scope.user) {
-                        for(var i in group.members) {
-                            if(group.members[i].user == $scope.user.id) {
-                                $scope.groupMember = group.members[i];
-                                break;
-                            }
-                        }
-                    }
+                    $scope.groupMember = group.member($scope.user);
 					$scope.status = 'info';
 				},
 				function (data) {
