@@ -53,19 +53,19 @@
 
         <p ng-show="group.isMember(user)">
             My status:
-            <button ng-click="yes()" class="btn" ng-class="{'btn-success':groupMember.status == 'Yes'}">
+            <button ng-click="yes()" class="btn" ng-class="{'btn-success':member.status == 'Yes'}">
                 {{ '%BUTTON_YES%' | phrase }}
             </button>
-            <button ng-click="maybe()" class="btn" ng-class="{'btn-warning':groupMember.status == 'Maybe'}">
+            <button ng-click="maybe()" class="btn" ng-class="{'btn-warning':member.status == 'Maybe'}">
                 {{ '%BUTTON_MAYBE%' | phrase }}
             </button>
-            <button ng-click="no()" class="btn" ng-class="{'btn-danger':groupMember.status == 'No'}">
+            <button ng-click="no()" class="btn" ng-class="{'btn-danger':member.status == 'No'}">
                 {{ '%BUTTON_NO%' | phrase }}
             </button>
         </p>
 
         <h3>Members ({{ group.members.length }})</h3>
-        <p>{{ statusCount('Yes') }} yes, {{ statusCount('Maybe') }} maybe and {{ statusCount('No') }} no. </p>
+        <p>{{ group.statusCount('Yes') }} yes, {{ group.statusCount('Maybe') }} maybe and {{ group.statusCount('No') }} no. </p>
         <ul class="nav" ng-repeat="member in group.members">
             <li>
                 <button ng-show="member.status == 'Yes'" class="btn btn-success" disabled="disabled">

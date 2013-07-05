@@ -91,6 +91,7 @@ define(function (require, exports, module) {
                 setData(data).
 				setSuccessCb(success).
 				setErrorCb(error).
+                addResponseMiddleware(groupParser).
 				build();
 
 			this.sendRequest(req);
@@ -105,6 +106,7 @@ define(function (require, exports, module) {
                 setData(data).
 				setSuccessCb(success).
 				setErrorCb(error).
+                addResponseMiddleware(groupParser).
 				build();
 
 			this.sendRequest(req);
@@ -118,6 +120,7 @@ define(function (require, exports, module) {
                 setData(data).
                 setSuccessCb(success).
                 setErrorCb(error).
+                addResponseMiddleware(groupParser).
                 build();
 
             this.sendRequest(req);
@@ -132,6 +135,7 @@ define(function (require, exports, module) {
                 setData(data).
                 setSuccessCb(success).
                 setErrorCb(error).
+                addResponseMiddleware(groupParser).
                 build();
 
             this.sendRequest(req);

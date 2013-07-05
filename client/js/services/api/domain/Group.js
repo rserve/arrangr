@@ -38,5 +38,16 @@ define(function (require, exports, module) {
         return null;
     };
 
+    proto.statusCount = function(status) {
+        var c = 0;
+        for (var i = 0, len = this.members.length; i < len; i++) {
+            var member = this.members[i];
+            if(member.status == status) {
+                c++;
+            }
+        }
+        return c;
+    };
+
 	module.exports = Group;
 });

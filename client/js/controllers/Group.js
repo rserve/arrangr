@@ -34,7 +34,7 @@ define(function (require, exports, module) {
 				function (group) {
 					$scope.group = group;
                     $scope.link = $location.absUrl();
-                    $scope.groupMember = group.member($scope.user);
+                    $scope.member = group.member($scope.user);
 					$scope.status = 'info';
 				},
 				function (data) {
@@ -44,7 +44,7 @@ define(function (require, exports, module) {
 		}
 
         function changeMemberStatus(status) {
-            client.updateMember($scope.groupMember.id, { status: status },
+            client.updateMember($scope.member.id, { status: status },
                 function() {
                     // do nothing since we already updated the client
                 },
@@ -53,7 +53,7 @@ define(function (require, exports, module) {
                     $scope.message = "Server says '" + data.error + "'";
                 }
             );
-            $scope.groupMember.status = status;
+            $scope.member.status = status;
         }
 
         $scope.yes = function() {
@@ -66,18 +66,6 @@ define(function (require, exports, module) {
 
         $scope.maybe = function() {
             changeMemberStatus('Maybe');
-        };
-
-        $scope.statusCount = function(status) {
-            var c = 0;
-            if($scope.group) {
-                for(var i in $scope.group.members) {
-                    if($scope.group.members[i].status == status) {
-                        c++;
-                    }
-                }
-            }
-            return c;
         };
 
         $scope.public = function($event) {
@@ -105,6 +93,7 @@ define(function (require, exports, module) {
                         $scope.group = data;
                         $scope.status = 'success';
                         $scope.message = 'User invited to group';
+                        inviteForm.clear();
                     },
                     function(data) {
                         $scope.status = 'error';
@@ -132,6 +121,7 @@ define(function (require, exports, module) {
                     $scope.group = data;
                     $scope.status = 'success';
                     $scope.message = 'You have joined the group';
+                    joinForm.clear();
                     authState.refreshUserState();
                 },
                 function(data) {
