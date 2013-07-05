@@ -53,13 +53,13 @@
 
         <p ng-show="group.isMember(user)">
             My status:
-            <button ng-click="yes()" class="btn" ng-class="{'btn-success':member.status == 'Yes'}">
+            <button ng-click="yes()" class="btn" ng-class="{'btn-success':currentMember.status == 'Yes'}">
                 {{ '%BUTTON_YES%' | phrase }}
             </button>
-            <button ng-click="maybe()" class="btn" ng-class="{'btn-warning':member.status == 'Maybe'}">
+            <button ng-click="maybe()" class="btn" ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
                 {{ '%BUTTON_MAYBE%' | phrase }}
             </button>
-            <button ng-click="no()" class="btn" ng-class="{'btn-danger':member.status == 'No'}">
+            <button ng-click="no()" class="btn" ng-class="{'btn-danger':currentMember.status == 'No'}">
                 {{ '%BUTTON_NO%' | phrase }}
             </button>
         </p>
@@ -81,6 +81,9 @@
                     {{ '%BUTTON_INVITED%' | phrase }}
                 </button>
                 {{ member.user.email }}
+                <button ng-show="group.isAdmin(user)" class="btn btn-danger" ng-click="removeMember(member)">
+                    {{ '%BUTTON_REMOVE%' | phrase }}
+                </button>
             </li>
         </ul>
 

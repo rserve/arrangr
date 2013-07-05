@@ -20,7 +20,8 @@ module.exports = function (app, passport, auth) {
     app.put('/api/groups/:key', auth.requiresLogin, groups.update);
     app.delete('/api/groups/:key', auth.requiresLogin, groups.delete);
 
-    app.put('/api/groups/members/:memberId', auth.requiresLogin, groups.updateMember);
+    app.put('/api/groups/:key/members/:memberId', auth.requiresLogin, groups.updateMember);
+    app.delete('/api/groups/:key/members/:memberId', auth.requiresLogin, groups.deleteMember);
 
     app.param('key', groups.fromKey);
     app.param('groupId', groups.fromId);

@@ -17,6 +17,7 @@
     "BUTTON_MAYBE": "Maybe",
     "BUTTON_INVITE": "Invite",
     "BUTTON_INVITED": "Invited",
+    "BUTTON_REMOVE": "Remove",
     "PEOPLE_SIGNED": "Currently {0} people have signed!",
 	"ARGUMENTS": "arg1: {0}, arg2: {1}, arg3: {2}..."
 }

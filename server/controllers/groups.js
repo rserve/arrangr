@@ -49,6 +49,7 @@ exports.delete = function (req, res) {
 
 exports.updateMember = function(req, res) {
     var status = req.body.status;
+    //TODO: check if user is admin or trying to update self, otherwise return error
     Group.findOneAndUpdate({'members._id': req.params.memberId }, { 'members.$.status' : status }, function(err, group) {
         if(!e(err, res, 'Error updating groupmember')) {
             if(!group) {
@@ -58,6 +59,18 @@ exports.updateMember = function(req, res) {
             }
         }
     });
+};
+
+exports.deleteMember = function(req, res) {
+    //TODO: check if user is admin or trying to remove self, otherwise return error
+    var group = req.group;
+    Group.findOneAndUpdate({ _id: group.id }, { '$pull': { members: { _id: req.params.memberId } } }).populate('members.user', userFields).exec(
+        function (err, group) {
+            if(!e(err, res, 'Error removing member from group')) {
+                res.send(group);
+            }
+        }
+    );
 };
 
 exports.join = function (req, res) {

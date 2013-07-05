@@ -112,10 +112,12 @@ define(function (require, exports, module) {
 			this.sendRequest(req);
 		};
 
-        client.updateMember = function(id, data, success, error) {
+        client.updateMember = function(key, id, data, success, error) {
             var req = new RequestBuilder().
                 setMethod('put').
-                setUrl('/api/groups/members').
+                setUrl('/api/groups').
+                addPath(key).
+                addPath('members').
                 addPath(id).
                 setData(data).
                 setSuccessCb(success).
@@ -133,6 +135,21 @@ define(function (require, exports, module) {
                 addPath(key).
                 addPath('invite').
                 setData(data).
+                setSuccessCb(success).
+                setErrorCb(error).
+                addResponseMiddleware(groupParser).
+                build();
+
+            this.sendRequest(req);
+        };
+
+        client.removeMember = function(key, id, success, error) {
+            var req = new RequestBuilder().
+                setMethod('delete').
+                setUrl('/api/groups').
+                addPath(key).
+                addPath('members').
+                addPath(id).
                 setSuccessCb(success).
                 setErrorCb(error).
                 addResponseMiddleware(groupParser).

@@ -34,7 +34,7 @@ define(function (require, exports, module) {
 				function (group) {
 					$scope.group = group;
                     $scope.link = $location.absUrl();
-                    $scope.member = group.member($scope.user);
+                    $scope.currentMember = group.member($scope.user);
 					$scope.status = 'info';
 				},
 				function (data) {
@@ -44,7 +44,7 @@ define(function (require, exports, module) {
 		}
 
         function changeMemberStatus(status) {
-            client.updateMember($scope.member.id, { status: status },
+            client.updateMember(key, $scope.currentMember.id, { status: status },
                 function() {
                     // do nothing since we already updated the client
                 },
@@ -53,7 +53,7 @@ define(function (require, exports, module) {
                     $scope.message = "Server says '" + data.error + "'";
                 }
             );
-            $scope.member.status = status;
+            $scope.currentMember.status = status;
         }
 
         $scope.yes = function() {
@@ -123,6 +123,20 @@ define(function (require, exports, module) {
                     $scope.message = 'You have joined the group';
                     joinForm.clear();
                     authState.refreshUserState();
+                },
+                function(data) {
+                    $scope.status = 'error';
+                    $scope.message = data.message;
+                }
+            );
+        };
+
+        $scope.removeMember = function(member) {
+            client.removeMember(key, member.id,
+                function(data) {
+                    $scope.group = data;
+                    $scope.status = 'success';
+                    $scope.message = 'Member removed from group';
                 },
                 function(data) {
                     $scope.status = 'error';
