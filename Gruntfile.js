@@ -76,12 +76,45 @@ module.exports = function (grunt) {
 				specs: 'client/specs/**/*spec.js',
 				template: require('grunt-template-jasmine-requirejs'),
 				templateOptions: {
-					requireConfigFile: 'client/js/config.js',
+
+					/*
+					 * Because we changed how require config is loaded due to build step (separate require config main.js),
+					 * unfortunately we have to repeat the whole require config here for the jasmine runner.
+					 * */
+					//requireConfigFile: 'client/js/config.js',
 					requireConfig: {
-						baseUrl: 'client/js/',
+						baseUrl: 'client/js/', // to play nice with jasmine runner
+
 						paths: {
-							'client/js': './'
-						}
+
+							'client/js': './', // to play nice with jasmine runner
+
+							jquery: '../lib/jquery-1.8.3',
+							bootstrap: '../lib/bootstrap/js/bootstrap',
+							underscore: '../lib/underscore',
+							angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular',
+							json: '../lib/require/json',
+							text: '../lib/require/text',
+							data: '../data'
+						},
+						shim: {
+							angular: {
+								deps: ['jquery'], // for angular.element
+								exports: 'angular'
+							},
+
+							'bootstrap': {
+								deps: ['jquery']
+							},
+							'underscore': {
+								exports: '_'
+							}
+
+						},
+						priority: [
+							"angular"
+						]
+
 					}
 				}
 			}
@@ -113,6 +146,7 @@ module.exports = function (grunt) {
 					appDir: "client",
 					baseUrl: "js",
 					dir: "build/client",
+
 					paths: {
 						jquery: 'empty:',
 						bootstrap: 'empty:',
@@ -122,6 +156,7 @@ module.exports = function (grunt) {
 						json: '../lib/require/json',
 						text: '../lib/require/text',
 						data: '../data'
+
 					},
 					shim: {
 						angular: {
@@ -146,7 +181,13 @@ module.exports = function (grunt) {
 					removeCombined: true,
 					modules: [
 						{
-							name: "main"
+							name: "main",
+
+							//keep json files outside of build
+							excludeShallow: [
+								'json!data/config.json',
+								'json!data/phrases_en.json'
+							]
 						}
 					]
 				}
