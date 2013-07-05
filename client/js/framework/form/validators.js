@@ -3,8 +3,6 @@
  *
  * Validators for form fields (or any strings).
  *
- * TODO it is too complex for current setup, KISS
- *
  *
  * */
 
@@ -25,6 +23,7 @@ define(function (require, exports, module) {
 			},
 			type: 'notEmpty'
 		},
+
 		'email': {
 			validate: function (value) {
 				return (/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/).test(value);
