@@ -14,7 +14,7 @@ define(function (require, exports, module) {
 	///////////////////////////////////////////////////
 
 	var _ = require('underscore'),
-		validatorManager = Object.create(require('../validatorManager')),//TODO ugly, see comment below
+		validatorManager = require('../validatorManager'),
 		validators = require('../validators');
 
 	///////////////////////////////////////////////////
@@ -31,9 +31,8 @@ define(function (require, exports, module) {
 	};
 
 	// TODO a bit ugly to have logic on top closure, i.e. order of requiring should never matter.
-
-	// provide a global validatorManager for all fiels
-	validatorManager.addValidators(validators);
+	var fieldValidator = validatorManager.create();
+	fieldValidator.addValidators(validators);
 
 
 	///////////////////////////////////////////////////
@@ -43,8 +42,8 @@ define(function (require, exports, module) {
 	var baseField = {
 
 		/*
-		* Clear value and any error on field
-		* */
+		 * Clear value and any error on field
+		 * */
 		clear: function () {
 			_.extend(this, {
 				value: null,
@@ -59,7 +58,7 @@ define(function (require, exports, module) {
 		validate: function () {
 			var error;
 			if (this.mandatory) {
-				error = validatorManager.validateField(this.validator, this.value);
+				error = fieldValidator.validateField(this.validator, this.value);
 				if (error && this.customError) {
 					error = {message: this.customError};
 				}

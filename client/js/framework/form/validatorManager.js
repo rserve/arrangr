@@ -3,7 +3,6 @@
  *
  * Class for managing different validators.
  *
- * TODO it is too complex for current setup, KISS
  *
  * */
 
@@ -13,12 +12,7 @@ define(function (require, exports, module) {
 
 	var _ = require('underscore');
 
-	module.exports = {
-
-		//TODO instantating this class (as is done) will fail as the followin three attributes will be bound to prottype
-		config: {},
-		validators: {},
-		errors: [],
+	var validatorManager = {
 
 		addConfig: function (config) {
 			_.extend(this.config, config);
@@ -38,9 +32,9 @@ define(function (require, exports, module) {
 		},
 
 		/*
-		* Validate with different strategies based on data and config
-		* If config is not provided the config bound to instance is used.
-		* */
+		 * Validate with different strategies based on data and config
+		 * If config is not provided the config bound to instance is used.
+		 * */
 		validate: function (data, config) {
 
 			var param,
@@ -85,6 +79,17 @@ define(function (require, exports, module) {
 				return validator.error;
 			}
 		}
+	};
+
+	/*
+	* export create method to enforce instantiation
+	* */
+	exports.create = function () {
+		var manager = Object.create(validatorManager);
+		manager.config = {};
+		manager.validators = {};
+		manager.errors = [];
+		return manager;
 	};
 
 

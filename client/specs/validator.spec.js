@@ -1,12 +1,12 @@
 /*global describe, it, expect */
 define(function (require, exports, module) {
 
-	var formValidator = require('framework/form/validatorManager'),
-		baseValidators = require('framework/form/validators');
+	var formValidator = require('framework/form/validatorManager').create(),
+		baseValidators = require('framework/form/validators'),
+		_ = require('underscore');
 
 	'use strict';
 
-	var _ = require('underscore');
 
 	describe('Form Validator', function () {
 
