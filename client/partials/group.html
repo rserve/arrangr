@@ -2,7 +2,7 @@
 
     <div class="hero-unit">
 
-        <p ng-show="message" class="alert alert-{{status}}" ng-bind-html-unsafe="message | link"></p>
+        <p ng-show="message" class="alert alert-{{status}}">{{message}}</p>
 
         <div class="page-header">
             <h2>{{group.name}}</h2>
@@ -80,7 +80,7 @@
                 <button ng-show="member.status == ''" class="btn" disabled="disabled">
                     {{ '%BUTTON_INVITED%' | phrase }}
                 </button>
-                {{ member.user.email }}
+                <img src="http://www.gravatar.com/avatar/{{member.user.hashedEmail}}?s=25&d=mm"/> {{ member.user.email }}
                 <button ng-show="group.isAdmin(user) && user.id != member.user.id" class="btn btn-danger" ng-click="removeMember(member)">
                     {{ '%BUTTON_REMOVE%' | phrase }}
                 </button>

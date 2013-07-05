@@ -5,7 +5,7 @@ var User = mongoose.model('User');
 var hash = require('../helpers/hash');
 var mailer = require('../helpers/mailer.js');
 
-var userFields = 'id name email verfied';
+var userFields = 'id name email verfied hashedEmail'; //TODO typo in word verfied?
 
 exports.findAll = function (req, res) {
     Group.find(function (err, groups) {

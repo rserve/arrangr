@@ -16,6 +16,7 @@ var UserSchema = new Schema({
     name: String,
     email: { type: String, unique: true, required: true },
     hashedPassword:  { type: String, required: true },
+    hashedEmail:  String,
     salt: { type: String, required: true },
     verificationHash: { type: String, unique: true },
     provider: { type: String, default: '' },
@@ -82,6 +83,7 @@ UserSchema.pre('save', function(next) {
     if (!this.isNew) {
         return next();
     }
+	this.hashedEmail = this.hashEmail(this.email);
 
     this.verificationHash = hash.gen(10);
 
@@ -140,7 +142,32 @@ UserSchema.methods = {
         } catch (err) {
             return '';
         }
-    }
+    },
+
+	/**
+	 * hash email with md5
+	 *
+	 * @param {String} email
+	 * @return {String}
+	 * @api public
+	 */
+
+	hashEmail: function (email) {
+		if (!email) {
+			return '';
+		}
+
+		email = email.trim();
+		email = email.toLowerCase();
+
+		var encrypted;
+		try {
+			encrypted = crypto.createHash('md5', this.salt).update(email).digest('hex');
+			return encrypted;
+		} catch (err) {
+			return '';
+		}
+	}
 };
 
 UserSchema.set('toJSON', { virtuals: true });
