@@ -4,11 +4,13 @@ define(function (require, exports, module) {
 
 	var app = require('app'),
 		config = require('./config'),
-		phrase = require('./phrase');
+		phrase = require('./phrase'),
+        link = require('./link');
 
 	//add all filters
-	app.filter('config', config).
-		filter('phrase', phrase);
+	app.filter('config', config)
+       .filter('phrase', phrase)
+       .filter('link', link);
 
 	//no export
 });

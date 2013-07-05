@@ -125,8 +125,12 @@ define(function (require, exports, module) {
                     authState.refreshUserState();
                 },
                 function(data) {
+                    if(data.name == 'ValidationError' && data.errors.email.type == 'Email already exists') {
+                        $scope.message = 'Email is already registered, %sign in:/% first to join this group';
+                    } else {
+                        $scope.message = data.message;
+                    }
                     $scope.status = 'error';
-                    $scope.message = data.message;
                 }
             );
         };
