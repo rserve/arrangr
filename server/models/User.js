@@ -7,6 +7,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var hash = require('../helpers/hash.js');
+var cleaner  = require('../helpers/cleaner.js');
 
 /**
  * User Schema

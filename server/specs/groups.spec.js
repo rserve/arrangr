@@ -144,12 +144,11 @@ describe(groupsEndpoint, function () {
         });
 
         describe('get', function () {
-            it('should return users groups', function (done) {
+            it('should return users and public groups', function (done) {
                 request(groupsEndpoint, function (err, resp, actualGroups) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
-                    expect(actualGroups.length).toEqual(1);
-                    expect(actualGroups[0].key).toEqual(testGroups[0].key);
+                    expect(actualGroups.length).toEqual(2);
                     done();
                 });
             });

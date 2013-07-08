@@ -22,39 +22,24 @@ define(function (require, exports, module) {
 			$routeProvider.
 				when('/groups/:groupId', {
 					templateUrl: partials.group,
-					controller: 'GroupView',
-					access: access.auth
-				}).
-				when('/groups/:groupId', {
-					templateUrl: partials.group,
 					controller: 'Group',
 					access: access.public
-				}).
-				when('/groups/:groupId/:email', {
-					templateUrl: partials.empty,
-					controller: 'JoinGroup',
-					access: access.anon
 				}).
 				when('/groups', {
 					templateUrl: partials.groups,
 					controller: 'Groups',
 					access: access.auth
 				}).
-				/*when('/', {
-					templateUrl: partials.register,
-					controller: 'Register',
-					access: access.anon
-				}).*/
-			/*	when('/login', {
-					templateUrl: partials.login,
-					controller: 'Login',
-					access: access.anon
-				}).*/
 				when('/logout', {
 					templateUrl: partials.empty,
 					controller: 'Logout',
 					access: access.auth
 				}).
+                when('/verify/:verificationHash', {
+                    templateUrl: partials.verify,
+                    controller: 'Verify',
+                    access: access.public
+                }).
 				when('/demo-form', {
 					templateUrl: partials.demoForm,
 					controller: 'DemoForm',
@@ -65,12 +50,9 @@ define(function (require, exports, module) {
 					controller: 'Home',
 					access: access.anon
 				}).
-				when('/404',
-				{
-					templateUrl: partials.notFound,
-					access: access.public
-				}).
-				otherwise({redirectTo: '/404'});
+				otherwise({
+                    templateUrl: partials.notFound
+                });
 
 			console.log('Routes configured');
 

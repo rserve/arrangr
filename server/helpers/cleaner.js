@@ -4,11 +4,12 @@ exports.removeHiddenProperties = function (toDelete, ret) {
         toDelete = [];
     }
 
-    for(prop in ret) {
+    for(var prop in ret) {
         if(prop.indexOf('_') === 0) {
             toDelete.push(prop);
         }
     }
+
     toDelete.forEach(function (prop) {
         delete ret[prop];
     });

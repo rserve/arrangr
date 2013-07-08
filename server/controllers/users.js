@@ -59,7 +59,7 @@ exports.verify = function (req, res) {
     User.findOneAndUpdate({verificationHash: hash}, { $set: { verifiedAt: new Date() }, $unset: { verificationHash: 1 } }, function (err, user) {
         if (!e(err, res, 'Error verifying user')) {
             if (!user) {
-                res.status(404).send({error: 'User not found'});
+                res.status(404).send({error: 'Invalid hash'});
             } else {
                 res.send(user);
             }

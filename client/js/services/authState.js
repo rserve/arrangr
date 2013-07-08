@@ -16,7 +16,9 @@ define(function (require, exports, module) {
 				var userString = sessionStorage.getItem("user"),
 					user;
 				if (userString) {
-					user = JSON.parse(userString);
+                    try {
+					    user = JSON.parse(userString);
+                    } catch (e) {}
 				}
 				return user;
 			},

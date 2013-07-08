@@ -10,6 +10,7 @@ define(function (require, exports, module) {
 		login: 'login.html',
 		logout: 'logout.html',
 		register: 'register.html',
+        verify: 'verify.html',
 		userInfo: 'user-info.html',
 		empty: 'empty.html',
 		notFound: 'not-found.html',

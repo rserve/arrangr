@@ -61,6 +61,22 @@ define(function (require, exports, module) {
 
 		};
 
+        client.verify = function (hash, success, error) {
+
+            var req = new RequestBuilder().
+                setMethod('get').
+                setUrl(baseUrl).
+                addPath('verify').
+                addPath(hash).
+                setSuccessCb(success).
+                setErrorCb(error).
+                addResponseMiddleware(userParser).
+                build();
+
+            this.sendRequest(req);
+
+        };
+
 		return client;
 	}];
 
