@@ -40,7 +40,6 @@ define(function (require, exports, module) {
 				setErrorCb(error).
 				addResponseMiddleware(groupsParser).
 				build();
-
 			this.sendRequest(req);
 
 		};

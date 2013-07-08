@@ -141,7 +141,7 @@ define(function (require, exports, module) {
 		};
 
 		//show register as default
-		$scope.showRegister();
+		$scope.showLogin();
 
 
 	};

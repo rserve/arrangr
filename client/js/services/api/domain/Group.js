@@ -14,7 +14,7 @@ define(function (require, exports, module) {
         if(user) {
             for (var i = 0, len = this.members.length; i < len; i++) {
                 var member = this.members[i];
-                if (member.user && member.user.id === user.id && member.admin) {
+                if (member.user && (member.user.id === user.id || member.user === user.id) && member.admin) {
                     return true;
                 }
             }
@@ -30,7 +30,7 @@ define(function (require, exports, module) {
         if(user) {
             for (var i = 0, len = this.members.length; i < len; i++) {
                 var member = this.members[i];
-                if (member.user && member.user.id === user.id) {
+                if (member.user && (member.user.id === user.id || member.user === user.id)) {
                     return member;
                 }
             }
@@ -47,6 +47,10 @@ define(function (require, exports, module) {
             }
         }
         return c;
+    };
+
+    proto.isNew = function() {
+        return this.createdAt > (Date.now() - (60 * 60 * 24 * 3));
     };
 
 	module.exports = Group;

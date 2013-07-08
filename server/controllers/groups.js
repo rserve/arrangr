@@ -15,7 +15,7 @@ exports.findAll = function (req, res) {
 
 exports.findByUser = function (req, res) {
     var user = req.user;
-    Group.find({'members.user': user}, function (err, groups) {
+    Group.find().or([{'members.user': user}, { public: true }]).exec(function (err, groups) {
         e(err, res, 'Error finding groups by user') || res.send(groups);
     });
 };
@@ -91,17 +91,17 @@ exports.join = function (req, res) {
             }
         });
     } else {
-        addUserToGroup(res, group, req.user);
+        addUserToGroup(res, group, req.user, 'Yes');
     }
 };
 
-var addUserToGroup = function(res, group, user) {
+var addUserToGroup = function(res, group, user, status) {
     Group.find({ _id: group.id, 'members.user': user}, function (err, groups) {
         if (!e(err, res, 'Error finding group to join')) {
             if (groups.length > 0) {
                 res.status(409).send({error: 'Error when joining gorup', message: 'Already a member of this group'});
             } else {
-                Group.findOneAndUpdate({_id: group.id }, { $addToSet: { members: { user: user } } }).populate('members.user', userFields).exec(
+                Group.findOneAndUpdate({_id: group.id }, { $addToSet: { members: { user: user, status: status } } }).populate('members.user', userFields).exec(
                     function (err, group) {
                         if(!e(err, res, 'Error joining group')) {
                             res.send(group);

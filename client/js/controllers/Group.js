@@ -104,9 +104,12 @@ define(function (require, exports, module) {
         };
 
         $scope.join = function(user) {
-            var data;
+            var data,
+                register;
+
 
             if(!user) {
+                register = true;
                 var errors = joinForm.validate();
                 if (errors) {
                     $scope.status = 'error';
@@ -114,17 +117,25 @@ define(function (require, exports, module) {
                 } else {
                     data = joinForm.toJSON();
                 }
+            } else {
+                register = false;
             }
 
             client.join(key, data,
-                function(data) {
-                    $scope.group = data;
+                function(group) {
                     $scope.status = 'success';
-                    $scope.message = 'You have joined the group';
-                    joinForm.clear();
-                    authState.refreshUserState();
+                    $scope.group = group;
+                    if(register) {
+                        authState.refreshUserState();
+                        $scope.message = 'An account as be created for you, please check your mail to verify.';
+                    } else {
+                        $scope.message = 'You have joined the group';
+                        joinForm.clear();
+                    }
+                    $scope.currentMember = group.member($scope.user);
                 },
                 function(data) {
+                    // TODO: Better validation error handling
                     if(data.name == 'ValidationError' && data.errors.email.type == 'Email already exists') {
                         $scope.message = 'Email is already registered, %sign in:/% first to join this group';
                     } else {
@@ -135,7 +146,19 @@ define(function (require, exports, module) {
             );
         };
 
-        $scope.removeMember = function(member) {
+        $scope.leave = function(member) {
+            client.removeMember(key, member.id,
+                function(data) {
+                    $location.path('/groups');
+                },
+                function(data) {
+                    $scope.status = 'error';
+                    $scope.message = data.message;
+                }
+            );
+        };
+
+        $scope.removeMember = function(member)  {
             client.removeMember(key, member.id,
                 function(data) {
                     $scope.group = data;
