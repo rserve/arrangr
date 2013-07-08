@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var hash = require('../helpers/hash.js');
+var cleaner  = require('../helpers/cleaner.js');
 
 var schema = new mongoose.Schema({
     key: { type: String, unique: true },
@@ -22,11 +23,8 @@ schema.pre('save', function (next) {
 });
 
 schema.set('toJSON', { virtuals: true });
-schema.options.toJSON.transform = function (doc, ret, options) {
-    ['_id', '__v'].forEach(function (prop) {
-        delete ret[prop];
-    });
+schema.options.toJSON.transform = function(doc, ret, options) {
+    cleaner.removeHiddenProperties(ret);
 };
-
 
 module.exports = mongoose.model('Group', schema);

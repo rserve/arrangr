@@ -12,11 +12,10 @@ var hash = require('../helpers/hash.js');
  * User Schema
  */
 
-var UserSchema = new Schema({
+var schema = new Schema({
     name: String,
     email: { type: String, unique: true, required: true },
     hashedPassword:  { type: String, required: true },
-    hashedEmail:  String,
     salt: { type: String, required: true },
     verificationHash: { type: String, unique: true },
     provider: { type: String, default: '' },
@@ -28,7 +27,7 @@ var UserSchema = new Schema({
  * Virtuals
  */
 
-UserSchema
+schema
     .virtual('password')
     .set(function(password) {
         this._password = password;
@@ -39,10 +38,16 @@ UserSchema
         return this._password;
     });
 
-UserSchema
+schema
     .virtual('verified')
     .get(function() {
         return !!this.verifiedAt;
+    });
+
+schema
+    .virtual('hashedEmail')
+    .get(function() {
+        return this.hashEmail(this.email);
     });
 
 /**
@@ -51,11 +56,11 @@ UserSchema
 
 // the below 4 validations only apply if you are signing up traditionally
 
-UserSchema.path('email').validate(function (email) {
+schema.path('email').validate(function (email) {
     return email.length;
 }, 'Email cannot be blank');
 
-UserSchema.path('email').validate(function (email, fn) {
+schema.path('email').validate(function (email, fn) {
     var User = mongoose.model('User');
 
     // Check only when it is a new user or when email field is modified
@@ -68,7 +73,7 @@ UserSchema.path('email').validate(function (email, fn) {
     }
 }, 'Email already exists');
 
-UserSchema.path('email').validate(function(email) {
+schema.path('email').validate(function(email) {
     if(this.isNew || this.isModified('email')) {
         return (/\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/).test(email);
     }
@@ -79,11 +84,10 @@ UserSchema.path('email').validate(function(email) {
  * Pre-save hook
  */
 
-UserSchema.pre('save', function(next) {
+schema.pre('save', function(next) {
     if (!this.isNew) {
         return next();
     }
-	this.hashedEmail = this.hashEmail(this.email);
 
     this.verificationHash = hash.gen(10);
 
@@ -98,7 +102,7 @@ UserSchema.pre('save', function(next) {
  * Methods
  */
 
-UserSchema.methods = {
+schema.methods = {
 
     /**
      * Authenticate - check if the passwords are the same
@@ -170,11 +174,9 @@ UserSchema.methods = {
 	}
 };
 
-UserSchema.set('toJSON', { virtuals: true });
-UserSchema.options.toJSON.transform = function (doc, ret, options) {
-    ['_id', 'password', 'hashedPassword', 'salt', 'verificationHash', '__v'].forEach(function (prop) {
-        delete ret[prop];
-    });
+schema.set('toJSON', { virtuals: true });
+schema.options.toJSON.transform = function(doc, ret, options) {
+    cleaner.removeHiddenProperties(['password', 'hashedPassword', 'salt', 'verificationHash'], ret);
 };
 
-mongoose.model('User', UserSchema);
+mongoose.model('User', schema);
