@@ -29,6 +29,7 @@
                     <span ng-show="group.isNew" class="label label-info">new!</span>
                     <span ng-show="group.public" class="label label-warning">public</span>
                     <span ng-show="group.isAdmin(user)" class="label label-important">admin</span>
+                    <span ng-show="group.isMember(user) && !group.isAdmin(user)" class="label label-success">member</span>
                     <a href="/groups/{{group.key}}">
                         {{group.name}}
                     </a>

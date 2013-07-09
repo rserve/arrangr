@@ -15,7 +15,8 @@ define(function (require, exports, module) {
 		empty: 'empty.html',
 		notFound: 'not-found.html',
 		home: 'home.html',
-		demoForm: 'demo-form.html'
+		demoForm: 'demo-form.html',
+        heading: 'heading.html'
 	};
 
 	for (var key in partials) {

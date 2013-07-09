@@ -55,6 +55,8 @@ define(function (require, exports, module) {
 		loginForm.initialize($scope, 'loginForm');
 		registerForm.initialize($scope, 'registerForm');
 
+        $scope.home = true;
+
 
 		/*
 		 * Login form

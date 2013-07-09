@@ -13,6 +13,14 @@ body {
     bottom: 20%;
 }
 
+.heading-small {
+    font-family: 'Oleo Script', cursive;
+    font-size: 1.5em;
+    text-shadow: 1px 1px 1px #000;
+    margin-left: 10px;
+    line-height: 50px;
+}
+
 .heading {
     position: absolute;
     top: 10%;
@@ -36,9 +44,8 @@ body {
 }
 
 .user-detail {
-    position: fixed;
-    top: 5%;
-    right: 5%;
+    float: right;
+    margin-right: 10px;
 }
 
 .flip-container {
@@ -95,9 +102,7 @@ body {
 #main {
     font-family: Calibri, serif;
     color: #888;
-    position: absolute;
-    top: 10%;
-    left: 10%;
+    margin-top: 10px;
 }
 
 .hero-unit {

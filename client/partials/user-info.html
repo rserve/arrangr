@@ -1,9 +1,7 @@
-<div class="user-detail textshadow">
-    <div ng-show="user">
-        <img src="http://www.gravatar.com/avatar/{{user.hashedEmail}}?s=50&d=mm"/>
-        {{user.email}}
-        <span ng-hide="user.verified">(not verified)</span>
+<div class="user-detail textshadow" ng-show="user">
+    <img ng-src="http://www.gravatar.com/avatar/{{user.hashedEmail}}?s=50&d=mm" width="50" height="50"/>
+    {{user.email}}
+    <span ng-hide="user.verified">(not verified)</span>
         |
-        <a href="/logout">Logout</a>
-    </div>
+    <a href="/logout">Logout</a>
 </div>

@@ -11,7 +11,8 @@ define(function (require, exports, module) {
         Verify = require('./Verify'),
 		UserInfo = require('./UserInfo'),
 		DemoForm = require('./DemoForm'),
-		Home = require('./Home');
+		Home = require('./Home'),
+		Heading = require('./Heading');
 
 	//add all controllers
 	app.controller('Group', Group).
@@ -22,7 +23,8 @@ define(function (require, exports, module) {
         controller('Verify', Verify).
 		controller('UserInfo', UserInfo).
 		controller('DemoForm', DemoForm).
-		controller('Home', Home);
+		controller('Home', Home).
+		controller('Heading', Heading);
 
 	//no export
 });
