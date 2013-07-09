@@ -2,19 +2,37 @@ define(function (require, exports, module) {
 
 	'use strict';
 
+    var baseForm = require('framework/form/baseForm');
+
+    var createForm = baseForm.create();
+
+    createForm.addField({
+        validator: 'notEmpty',
+        name: 'name',
+        customError: 'Name cannot be empty'
+    });
+
 	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, $rootScope) {
 
-		function createGroup(group) {
-			if (!group || !group.name) {
-				$scope.message = 'Name cannot be empty.';
-			} else {
-				$scope.message = '';
+        createForm.initialize($scope, 'createForm');
 
-				groupsClient.create(group,function (data) {
-					group.name = '';
-					$scope.groups.push(data);
-				});
-			}
+		function createGroup() {
+            var errors = createForm.validate();
+            if (errors) {
+                $scope.status = 'error';
+                $scope.message = errors[0].message;
+            } else {
+                groupsClient.create(createForm.toJSON(),
+                    function (data) {
+                        createForm.clear();
+                        $scope.groups.push(data);
+                    },
+                    function (data) {
+                        $scope.status = 'error';
+                        $scope.message = data.error;
+                    }
+                );
+            }
 		}
 
 		function deleteGroup(group) {

@@ -26,6 +26,7 @@ exports.find = function (req, res) {
 
 exports.create = function (req, res) {
     var group = req.body;
+    group.createdBy = req.user;
     group.members = [
         { user: req.user, admin: true, status: 'Yes' }
     ];

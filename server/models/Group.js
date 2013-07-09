@@ -7,6 +7,7 @@ var schema = new mongoose.Schema({
     name: { type: String, required: true },
     public: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
+    createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' },
     members: [{
         user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
         status: {type: String, enum: ['Yes', 'No', 'Maybe'], default: '' },
