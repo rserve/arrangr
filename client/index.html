@@ -12,8 +12,7 @@
 <body>
 
 <script>
-    var images = ['/images/bg.jpg', '/images/bg2.jpg', '/images/bg3.jpg'];
-    var image = images[Math.floor(Math.random() * images.length)];
+    var image = '/images/bg'+Math.ceil(Math.random() * 6)+'.jpg';
     document.body.style.backgroundImage = 'url(IMG)'.replace('IMG', image);
 </script>
 
