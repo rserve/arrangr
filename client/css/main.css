@@ -47,6 +47,13 @@ body {
     left: 10%;
 }
 
+.bgbyline {
+    font-size: 60%;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
 .title {
     font-family: 'Oleo Script', cursive;
     font-size: 6em;
