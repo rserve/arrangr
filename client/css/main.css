@@ -73,6 +73,7 @@ body {
 .userinfo {
     position: absolute;
     right: 0;
+    line-height: 50px;
 }
 
 .flip-container {
