@@ -1,55 +1,53 @@
-<div id="main" class="container">
+<div class="hero-unit">
 
-    <div class="hero-unit" style="z-index: 1000">
+    <p ng-show="message" class="alert alert-{{status}}" ng-bind-html-unsafe="message | link"></p>
 
-        <p ng-show="message" class="alert alert-{{status}}" ng-bind-html-unsafe="message | link"></p>
+    <h1>Welcome!</h1>
 
-        <h1>Welcome!</h1>
+    <p>Create a new group and invite your friends</p>
 
-        <p>Create a new group and invite your friends</p>
+    <form novalidate class="form-inline">
+        <input type="text" ng-model="createForm.getField('name').value"
+               placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
+        <button ng-click="create()" class="btn btn-success">{{'%BUTTON_CREATE%' | phrase}}</button>
+    </form>
 
-        <form novalidate class="form-inline">
-            <input type="text" ng-model="createForm.getField('name').value" placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
-            <button ng-click="create()" class="btn btn-success">{{'%BUTTON_CREATE%' | phrase}}</button>
-        </form>
+    <h3>{{'%TITLE_GROUPS%' | phrase}}</h3>
 
-        <h3>{{'%TITLE_GROUPS%' | phrase}}</h3>
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <!--<th>Edit</th>-->
-                <th>Remove</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="group in groups">
-                <td>
-                    <span ng-show="group.isNew" class="label label-info">new!</span>
-                    <span ng-show="group.public" class="label label-warning">public</span>
-                    <span ng-show="group.isAdmin(user)" class="label label-important">admin</span>
-                    <span ng-show="group.isMember(user) && !group.isAdmin(user)" class="label label-success">member</span>
-                    <a href="/groups/{{group.key}}">
-                        {{group.name}}
-                    </a>
-                </td>
-                <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
-                <td>
-                    <a class="small" href="#" ng-show="group.isAdmin(user)" ng-click="delete(group)">
-                        <i class="icon-remove-circle"></i>
-                    </a>
-                </td>
-            </tr>
-            <tr ng-hide="groups.length">
-                <td colspan="3">You have not created any groups yet</td>
-            </tr>
-            </tbody>
-        </table>
-
-    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <!--<th>Edit</th>-->
+            <th>Remove</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="group in groups">
+            <td>
+                <span ng-show="group.isNew" class="label label-info">new!</span>
+                <span ng-show="group.public" class="label label-warning">public</span>
+                <span ng-show="group.isAdmin(user)" class="label label-important">admin</span>
+                <span ng-show="group.isMember(user) && !group.isAdmin(user)" class="label label-success">member</span>
+                <a href="/groups/{{group.key}}">
+                    {{group.name}}
+                </a>
+            </td>
+            <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
+            <td>
+                <a class="small" href="#" ng-show="group.isAdmin(user)" ng-click="delete(group)">
+                    <i class="icon-remove-circle"></i>
+                </a>
+            </td>
+        </tr>
+        <tr ng-hide="groups.length">
+            <td colspan="3">You have not created any groups yet</td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
+
 
 
 

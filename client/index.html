@@ -2,27 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>arran.gr - arrange your meetups!</title>
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-responsive.css"/>
     <link rel="stylesheet" href="/css/main.css"/>
     <script>
-        var image = '/images/bg'+Math.ceil(Math.random() * 6)+'.jpg';
+        var image = '/images/bg' + Math.ceil(Math.random() * 6) + '.jpg';
         document.documentElement.style.backgroundImage = 'url(IMG)'.replace('IMG', image);
     </script>
 </head>
 
 <body>
 
-<div ng-controller="UserInfo">
-    <div ng-include src="template.url"></div>
-</div>
+<div id="main" class="container">
 
-<div ng-controller="Heading">
-    <div ng-include src="template.url"></div>
-</div>
+    <div class="header">
+        <div class="userinfo" ng-controller="UserInfo">
+            <div ng-include src="template.url"></div>
+        </div>
 
-<div ng-view ng-cloak></div>
+        <div ng-controller="Heading">
+            <div ng-include src="template.url"></div>
+        </div>
+    </div>
+
+    <div ng-view ng-cloak></div>
+
+</div>
 
 <script src="/lib/require.js"></script>
 

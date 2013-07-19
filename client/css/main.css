@@ -18,8 +18,14 @@ html {
 }
 
 body {
+    background-color: transparent;
     color: white;
     font-size: 18px;
+}
+
+.header {
+    margin: 10px;
+    position: relative;
 }
 
 .logincontainer {
@@ -32,7 +38,6 @@ body {
     font-family: 'Oleo Script', cursive;
     font-size: 1.5em;
     text-shadow: 1px 1px 1px #000;
-    margin-left: 10px;
     line-height: 50px;
 }
 
@@ -58,9 +63,9 @@ body {
     text-shadow: 1px 1px #333;
 }
 
-.user-detail {
-    float: right;
-    margin-right: 10px;
+.userinfo {
+    position: absolute;
+    right: 0;
 }
 
 .flip-container {
@@ -114,13 +119,9 @@ body {
     transform: rotateY(180deg);
 }
 
-#main {
+.hero-unit {
     font-family: Calibri, serif;
     color: #888;
-    margin-top: 10px;
-}
-
-.hero-unit {
     /*background-color: #eeeeff;*/
 }
 

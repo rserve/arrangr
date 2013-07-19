@@ -1,95 +1,97 @@
-<div id="main" class="container">
+<div class="hero-unit">
 
-    <div class="hero-unit">
+    <p ng-show="message" class="alert alert-{{status}}" ng-bind-html-unsafe="message | link"></p>
 
-        <p ng-show="message" class="alert alert-{{status}}" ng-bind-html-unsafe="message | link"></p>
+    <div class="page-header">
+        <h2>{{group.name}}</h2>
+    </div>
 
-        <div class="page-header">
-            <h2>{{group.name}}</h2>
+    <form ng-show="!user" ng-submit="join()">
+        <h4>Join group</h4>
+
+        <div class="control-group {{joinForm.fields.email.status}}">
+            <div class="controls">
+                <input ng-model="joinForm.getField('email').value" placeholder="Enter your email" type="text">
+                <span class="help-inline">{{joinForm.fields.email.message}}</span>
+            </div>
         </div>
+    </form>
 
-        <form ng-show="!user" ng-submit="join()">
-            <h4>Join group</h4>
-            <div class="control-group {{joinForm.fields.email.status}}">
-                <div class="controls">
-                    <input ng-model="joinForm.getField('email').value" placeholder="Enter your email" type="text">
-                    <span class="help-inline">{{joinForm.fields.email.message}}</span>
-                </div>
+    <p ng-show="user && !group.isMember(user)">
+        <button ng-click="join(user)" class="btn btn-success">
+            {{ '%BUTTON_JOIN%' | phrase }}
+        </button>
+    </p>
+
+    <p ng-show="group.isMember(user) && !group.isAdmin(user)">
+        <button ng-click="leave(currentMember)" class="btn btn-danger">
+            {{ '%BUTTON_LEAVE%' | phrase }}
+        </button>
+    </p>
+
+    <form ng-show="group.isAdmin(user) || group.public && group.isMember(user)" ng-submit="invite()">
+        <h4>Invite members</h4>
+
+        <div class="control-group {{inviteForm.fields.email.status}}">
+            <div class="controls">
+                <input ng-model="inviteForm.getField('email').value" placeholder="Enter email to invite" type="text">
+                <span class="help-inline">{{inviteForm.fields.email.message}}</span>
             </div>
-        </form>
+        </div>
+    </form>
 
-        <p ng-show="user && !group.isMember(user)">
-            <button ng-click="join(user)" class="btn btn-success">
-                {{ '%BUTTON_JOIN%' | phrase }}
-            </button>
-        </p>
+    <p ng-show="group.isAdmin(user)">
+        <label class="checkbox">
+            <input type="checkbox" ng-click="public($event)" ng-checked="group.public"/> Public
+        </label>
+    </p>
 
-        <p ng-show="group.isMember(user) && !group.isAdmin(user)">
-            <button ng-click="leave(currentMember)" class="btn btn-danger">
-                {{ '%BUTTON_LEAVE%' | phrase }}
-            </button>
-        </p>
+    <p ng-show="group.public">
+        Share:
+        <input type="text" value="{{link}}">
+    </p>
 
-        <form ng-show="group.isAdmin(user) || group.public && group.isMember(user)" ng-submit="invite()">
-            <h4>Invite members</h4>
-            <div class="control-group {{inviteForm.fields.email.status}}">
-                <div class="controls">
-                    <input ng-model="inviteForm.getField('email').value" placeholder="Enter email to invite" type="text">
-                    <span class="help-inline">{{inviteForm.fields.email.message}}</span>
-                </div>
-            </div>
-        </form>
+    <p ng-show="group.isMember(user)">
+        My status:
+        <button ng-click="yes()" class="btn" ng-class="{'btn-success':currentMember.status == 'Yes'}">
+            {{ '%BUTTON_YES%' | phrase }}
+        </button>
+        <button ng-click="maybe()" class="btn" ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
+            {{ '%BUTTON_MAYBE%' | phrase }}
+        </button>
+        <button ng-click="no()" class="btn" ng-class="{'btn-danger':currentMember.status == 'No'}">
+            {{ '%BUTTON_NO%' | phrase }}
+        </button>
+    </p>
 
-        <p ng-show="group.isAdmin(user)">
-            <label class="checkbox">
-                <input type="checkbox" ng-click="public($event)" ng-checked="group.public"/> Public
-            </label>
-        </p>
+    <h3>Members ({{ group.members.length }})</h3>
 
-        <p ng-show="group.public">
-            Share:
-            <input type="text" value="{{link}}">
-        </p>
-
-        <p ng-show="group.isMember(user)">
-            My status:
-            <button ng-click="yes()" class="btn" ng-class="{'btn-success':currentMember.status == 'Yes'}">
+    <p>{{ group.statusCount('Yes') }} yes, {{ group.statusCount('Maybe') }} maybe and {{ group.statusCount('No') }}
+        no. </p>
+    <ul class="nav" ng-repeat="member in group.members">
+        <li>
+            <button ng-show="member.status == 'Yes'" class="btn btn-success" disabled="disabled">
                 {{ '%BUTTON_YES%' | phrase }}
             </button>
-            <button ng-click="maybe()" class="btn" ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
+            <button ng-show="member.status == 'Maybe'" class="btn btn-warning" disabled="disabled">
                 {{ '%BUTTON_MAYBE%' | phrase }}
             </button>
-            <button ng-click="no()" class="btn" ng-class="{'btn-danger':currentMember.status == 'No'}">
+            <button ng-show="member.status == 'No'" class="btn btn-danger" disabled="disabled">
                 {{ '%BUTTON_NO%' | phrase }}
             </button>
-        </p>
-
-        <h3>Members ({{ group.members.length }})</h3>
-        <p>{{ group.statusCount('Yes') }} yes, {{ group.statusCount('Maybe') }} maybe and {{ group.statusCount('No') }} no. </p>
-        <ul class="nav" ng-repeat="member in group.members">
-            <li>
-                <button ng-show="member.status == 'Yes'" class="btn btn-success" disabled="disabled">
-                    {{ '%BUTTON_YES%' | phrase }}
-                </button>
-                <button ng-show="member.status == 'Maybe'" class="btn btn-warning" disabled="disabled">
-                    {{ '%BUTTON_MAYBE%' | phrase }}
-                </button>
-                <button ng-show="member.status == 'No'" class="btn btn-danger" disabled="disabled">
-                    {{ '%BUTTON_NO%' | phrase }}
-                </button>
-                <button ng-show="member.status == ''" class="btn" disabled="disabled">
-                    {{ '%BUTTON_INVITED%' | phrase }}
-                </button>
-                <img src="http://www.gravatar.com/avatar/{{member.user.hashedEmail}}?s=25&d=mm"/> {{ member.user.email }}
-                <button ng-show="group.isAdmin(user) && user.id != member.user.id" class="btn btn-danger" ng-click="removeMember(member)">
-                    {{ '%BUTTON_REMOVE%' | phrase }}
-                </button>
-            </li>
-        </ul>
+            <button ng-show="member.status == ''" class="btn" disabled="disabled">
+                {{ '%BUTTON_INVITED%' | phrase }}
+            </button>
+            <img src="http://www.gravatar.com/avatar/{{member.user.hashedEmail}}?s=25&d=mm"/> {{ member.user.email }}
+            <button ng-show="group.isAdmin(user) && user.id != member.user.id" class="btn btn-danger"
+                    ng-click="removeMember(member)">
+                {{ '%BUTTON_REMOVE%' | phrase }}
+            </button>
+        </li>
+    </ul>
 
 
-        <a href="/">{{'%BACK_TO_GROUPS%' | phrase}}</a>
-    </div>
+    <a href="/">{{'%BACK_TO_GROUPS%' | phrase}}</a>
 </div>
 
 

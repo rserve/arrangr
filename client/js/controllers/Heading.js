@@ -7,7 +7,9 @@ define(function (require, exports, module) {
 	var Controller = function ($scope, $location) {
 
 		$scope.template = {name: 'heading', url: partials.heading};
-        $scope.hide = $location.path() == '/';
+        $scope.show = function() {
+            return $location.path() != '/';
+        };
 
 	};
 
