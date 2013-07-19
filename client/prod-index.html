@@ -4,31 +4,25 @@
     <meta charset="utf-8">
     <title>arran.gr - arrange your meetups!</title>
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-responsive.min.css"/>
     <link rel="stylesheet" href="/css/main.css"/>
-    <!--<link href='http://fonts.googleapis.com/css?family=Oleo+Script:400,700' rel='stylesheet' type='text/css'>-->
+    <script>
+        var image = '/images/bg'+Math.ceil(Math.random() * 6)+'.jpg';
+        document.documentElement.style.backgroundImage = 'url(IMG)'.replace('IMG', image);
+    </script>
 </head>
 
 <body>
-<script>
-    var images = ['/images/bg.jpg', '/images/bg2.jpg', '/images/bg3.jpg'];
-    var image = images[Math.floor(Math.random() * images.length)];
-    document.body.style.backgroundImage = 'url(IMG)'.replace('IMG', image);
-
-</script>
-<div class="heading">
-    <h1 class="title">arran.gr</h1>
-
-    <h2 class="subtitle">arrange your meetups!</h2>
-</div>
-
-
-<div ng-view ng-cloak></div>
-</div>
 
 <div ng-controller="UserInfo">
     <div ng-include src="template.url"></div>
 </div>
 
+<div ng-controller="Heading">
+    <div ng-include src="template.url"></div>
+</div>
+
+<div ng-view ng-cloak></div>
 
 <script src="/lib/require-min.js"></script>
 <script>

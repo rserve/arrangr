@@ -1,8 +1,23 @@
-body {
-    height: 100%;
+@font-face {
+    font-family: 'Oleo Script';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Oleo Script'), local('OleoScript-Regular'), url(oleoscript-400.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Oleo Script';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Oleo Script Bold'), local('OleoScript-Bold'), url(oleoscript-700.woff) format('woff');
+}
+
+html {
+    background: no-repeat center center fixed;
     background-size: cover;
-    background-repeat: no-repeat;
-    background-color: black;
+}
+
+body {
     color: white;
     font-size: 18px;
 }
