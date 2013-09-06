@@ -48,13 +48,13 @@
             <strong>Are you going?</strong>
 
         <div class="btn-group btn-group-justified">
-            <a ng-click="yes()" class="btn" ng-class="{'btn-success':currentMember.status == 'Yes'}">
+            <a ng-click="yes()" class="btn btn-default" ng-class="{'btn-success':currentMember.status == 'Yes'}">
                 {{ '%BUTTON_YES%' | phrase }}
             </a>
-            <a ng-click="maybe()" class="btn" ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
+            <a ng-click="maybe()" class="btn btn-default" ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
                 {{ '%BUTTON_MAYBE%' | phrase }}
             </a>
-            <a ng-click="no()" class="btn" ng-class="{'btn-danger':currentMember.status == 'No'}">
+            <a ng-click="no()" class="btn btn-default" ng-class="{'btn-danger':currentMember.status == 'No'}">
                 {{ '%BUTTON_NO%' | phrase }}
             </a>
         </div>
