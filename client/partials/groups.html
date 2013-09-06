@@ -1,51 +1,45 @@
-<div class="hero-unit">
+<p ng-show="message" class="alert alert-{{status}}" ng-bind-html-unsafe="message | link"></p>
 
-    <p ng-show="message" class="alert alert-{{status}}" ng-bind-html-unsafe="message | link"></p>
+<h2>{{'%TITLE_GROUPS%' | phrase}}</h2>
 
-    <h1>Welcome!</h1>
+<div class="row">
+    <div class="col-lg-9 col-md-8 col-sm-8">
 
-    <p>Create a new group and invite your friends</p>
+        <table class="table table-striped">
+            <tbody>
+            <tr ng-repeat="group in groups">
+                <td>
+                    <a href="/groups/{{group.key}}">{{group.name}}</a>
+                    <span ng-show="group.isNew" class="label label-info">new!</span>
+                    <span ng-show="group.public" class="label label-warning">public</span>
+                    <span ng-show="group.isAdmin(user)" class="label label-danger">admin</span>
+                    <span ng-show="group.isMember(user) && !group.isAdmin(user)"
+                          class="label label-success">member</span>
+                </td>
+                <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
+                <td>
+                    <a class="text-danger" href="#" ng-show="group.isAdmin(user)" ng-click="delete(group)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </td>
+            </tr>
+            <tr ng-hide="groups.length">
+                <td colspan="3">You have not created any groups yet</td>
+            </tr>
+            </tbody>
+        </table>
 
-    <form novalidate class="form-inline">
-        <input type="text" ng-model="createForm.getField('name').value"
-               placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
-        <button ng-click="create()" class="btn btn-success">{{'%BUTTON_CREATE%' | phrase}}</button>
-    </form>
-
-    <h3>{{'%TITLE_GROUPS%' | phrase}}</h3>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <!--<th>Edit</th>-->
-            <th>Remove</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="group in groups">
-            <td>
-                <span ng-show="group.isNew" class="label label-info">new!</span>
-                <span ng-show="group.public" class="label label-warning">public</span>
-                <span ng-show="group.isAdmin(user)" class="label label-important">admin</span>
-                <span ng-show="group.isMember(user) && !group.isAdmin(user)" class="label label-success">member</span>
-                <a href="/groups/{{group.key}}">
-                    {{group.name}}
-                </a>
-            </td>
-            <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
-            <td>
-                <a class="small" href="#" ng-show="group.isAdmin(user)" ng-click="delete(group)">
-                    <i class="icon-remove-circle"></i>
-                </a>
-            </td>
-        </tr>
-        <tr ng-hide="groups.length">
-            <td colspan="3">You have not created any groups yet</td>
-        </tr>
-        </tbody>
-    </table>
-
+    </div>
+    <div class="col-lg-3 col-md-4 col-sm-4">
+        <form novalidate class="form" role="form">
+            <div class="form-group">
+                <label class="control-label" for="groupName">Create a new group</label>
+                <input id="groupName" class="form-control" type="text" ng-model="createForm.getField('name').value"
+                       placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
+            </div>
+            <button ng-click="create()" class="btn btn-success">{{'%BUTTON_CREATE%' | phrase}}</button>
+        </form>
+    </div>
 </div>
 
 
