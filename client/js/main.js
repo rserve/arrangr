@@ -2,6 +2,7 @@
 require([
 	'angular',
 	'json!data/config.json',
+    'angularuirouter',
 	'jquery',
 	'app',
 	'services/services',
@@ -10,7 +11,7 @@ require([
 	'directives/directives',
 	'config/http',
 	'config/routes',
-	'config/finalize',
+	'config/finalize'
 ], function (angular, config) {
 
 	'use strict';

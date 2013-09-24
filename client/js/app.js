@@ -7,7 +7,7 @@ define(function (require, exports, module) {
 
 
 	//create app as module
-	var app = angular.module(config.appName, []).
+	var app = angular.module(config.appName, ['ui.router']).
 
 		//add config values
 		value('version', config.version).

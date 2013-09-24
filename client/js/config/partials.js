@@ -5,6 +5,7 @@ define(function (require, exports, module) {
 	var base = '/partials/';
 
 	var partials = {
+        layout: 'layout.html',
 		group: 'group.html',
 		groups: 'groups.html',
 		login: 'login.html',

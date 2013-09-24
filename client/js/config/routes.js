@@ -13,13 +13,30 @@ define(function (require, exports, module) {
 	};
 
 	app.
-		config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+		config(['$stateProvider', '$routeProvider', '$locationProvider', function ($stateProvider, $routeProvider, $locationProvider) {
 
 			//push state
 			$locationProvider.html5Mode(true);
 
+            $stateProvider
+                .state('home', {
+                    url: "/",
+                    templateUrl: partials.home
+                })
+                .state('default', {
+                    abstract: true,
+                    url: "",
+                    templateUrl: partials.default
+                })
+                .state('groups', {
+                    abstract: true,
+                    url: "/groups",
+                    parent: 'default',
+                    templateUrl: partials.groupst
+                });
+
 			//Routes
-			$routeProvider.
+			/*$routeProvider.
 				when('/groups/:groupId', {
 					templateUrl: partials.group,
 					controller: 'Group',
@@ -52,13 +69,13 @@ define(function (require, exports, module) {
 				}).
 				otherwise({
                     templateUrl: partials.notFound
-                });
+                });*/
 
 			console.log('Routes configured');
 
-		}]).
+		}]);
 
-		run(['$rootScope', '$location', '$routeParams', 'authState', function ($rootScope, $location, $routeParams, authState) {
+		/*run(['$rootScope', '$location', '$routeParams', 'authState', function ($rootScope, $location, $routeParams, authState) {
 
 			$rootScope.$on("$routeChangeStart", function (event, next, current) {
 				$rootScope.error = null;
@@ -80,7 +97,7 @@ define(function (require, exports, module) {
 
 			console.log('Route intercepts configured');
 
-		}]);
+		}]);*/
 
 	module.exports = app;
 });
