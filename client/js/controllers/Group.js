@@ -21,9 +21,9 @@ define(function (require, exports, module) {
         customError: 'Please enter a valid email'
     });
 
-	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, authState) {
+	var Controller = function ($scope, $filter, $location, $stateParams, groupsClient, authState) {
 
-		var key = $routeParams.groupId,
+		var key = $stateParams.groupId,
 			client = groupsClient;
 
         inviteForm.initialize($scope, 'inviteForm');
@@ -177,7 +177,7 @@ define(function (require, exports, module) {
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', 'authState'];
+	Controller.$inject = ['$scope', '$filter', '$location', '$stateParams', 'groupsClient', 'authState'];
 
 	module.exports = Controller;
 

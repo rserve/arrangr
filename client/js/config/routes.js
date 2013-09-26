@@ -21,18 +21,24 @@ define(function (require, exports, module) {
             $stateProvider
                 .state('home', {
                     url: "/",
+                    controller: 'Home',
                     templateUrl: partials.home
                 })
                 .state('default', {
                     abstract: true,
-                    url: "",
-                    templateUrl: partials.default
+                    templateUrl: partials.layout
                 })
                 .state('groups', {
-                    abstract: true,
                     url: "/groups",
                     parent: 'default',
-                    templateUrl: partials.groupst
+                    controller: 'Groups',
+                    templateUrl: partials.groups
+                })
+                .state('group', {
+                    url: "/groups/:groupId",
+                    parent: 'default',
+                    controller: 'Group',
+                    templateUrl: partials.group
                 });
 
 			//Routes
