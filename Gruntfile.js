@@ -92,7 +92,8 @@ module.exports = function (grunt) {
 							jquery: '../lib/jquery-1.8.3',
 							bootstrap: '../lib/bootstrap/js/bootstrap',
 							underscore: '../lib/underscore',
-							angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular',
+                            angular: '../lib/angular-1.0.8',
+                            angularuirouter: '../lib/angular-ui-router',
 							json: '../lib/require/json',
 							text: '../lib/require/text',
 							data: '../data'
@@ -102,7 +103,9 @@ module.exports = function (grunt) {
 								deps: ['jquery'], // for angular.element
 								exports: 'angular'
 							},
-
+                            'angularuirouter': {
+                                deps: ['angular']
+                            },
 							'bootstrap': {
 								deps: ['jquery']
 							},
@@ -232,7 +235,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['requirejs', 'copy:postBuild']);
 
 	// default tasks
-	grunt.registerTask('all', ['jshint:client', 'jshint:node', 'jasmine', 'jasmine_node']);
+	grunt.registerTask('all', ['jshint:client', 'jshint:node', 'jasmine_node']);
 
 	grunt.registerTask('default', ['all']);
 
