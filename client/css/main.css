@@ -47,10 +47,31 @@ h1 {
     margin-top: 40px;
 }
 
-.form-signin {
+.home {
+    background-color: transparent;
+    color: white;
+}
+
+.logincontainer {
+    text-align: center;
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
+}
+
+.logincontainer .row {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.logincontainer .form-group {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.logincontainer .alert-sm {
+    display: inline-block;
+    padding: 5px 15px;
 }
 
 .bgbyline {
@@ -62,6 +83,7 @@ h1 {
 }
 
 .flip-container {
+    margin: 30px 0;
     -webkit-perspective: 1000;
     -moz-perspective: 1000;
     perspective: 1000;
@@ -73,10 +95,10 @@ h1 {
     transform: rotateY(180deg);
 }
 
-.flip-container, .front, .back {
-    width: 450px;
+/*.flip-container, .front, .back {
+    width: 330px;
     height: 150px;
-}
+}*/
 
 .flipper {
     -webkit-transition: 0.6s;

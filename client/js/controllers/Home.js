@@ -49,7 +49,7 @@ define(function (require, exports, module) {
 	/*
 	 * Angular controller
 	 * */
-	var Controller = function ($scope, $http, $location, usersClient, authState) {
+	var Controller = function ($scope, $http, $state, usersClient, authState) {
 
 		//bind the two forms under different namespaces
 		loginForm.initialize($scope, 'loginForm');
@@ -87,7 +87,7 @@ define(function (require, exports, module) {
 
 							authState.setUserState(user);
 
-							$location.path("/groups");
+                            $state.transitionTo("groups");
 
 							loginForm.clear();
 						},
@@ -129,7 +129,7 @@ define(function (require, exports, module) {
 						function (res) {
 							console.log('success', res);
 							authState.setUserState(res);
-							$location.path("/groups");
+							$state.transitionTo("groups");
 							registerForm.clear();
 						},
 						function (err) {
@@ -148,7 +148,7 @@ define(function (require, exports, module) {
 
 	};
 
-	Controller.$inject = ['$scope', '$http', '$location', 'usersClient', 'authState'];
+	Controller.$inject = ['$scope', '$http', '$state', 'usersClient', 'authState'];
 
 	module.exports = Controller;
 

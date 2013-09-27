@@ -1,11 +1,75 @@
-<form class="form-signin">
-    <input ng-model="loginForm.getField('email').value" type="text" class="form-control" placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}" autofocus="" name="email">
-    <input ng-model="loginForm.getField('password').value" type="password" class="form-control" placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}" name="password">
-    <!--<label class="checkbox">-->
-        <!--<input type="checkbox" value="remember-me"> Remember me-->
-    <!--</label>-->
-    <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="submit()">{{'%BUTTON_LOGIN%' | phrase}}</button>
-    <div class="alert alert-success">
-        Not a user? <a ng-click="showRegister()" href="#">Sign up!</a>
+<div class="container home">
+    <div class="logincontainer">
+        <h1>arran.gr</h1>
+        <h2>arrange your meetups!</h2>
+
+        <div class="flip-container" ng-class="{'flip-container-flip':!isLogin}">
+            <div class="flipper">
+                <div class="front">
+                    <form novalidate class="form">
+                        <div class="row">
+                            <div class="col-xs-6 form-group">
+                                <input ng-model="loginForm.getField('email').value" type="text"
+                                       class="form-control"
+                                       placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
+                                       name="email">
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <input ng-model="loginForm.getField('password').value" type="password"
+                                       class="form-control"
+                                       placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
+                                       name="password">
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" ng-show="loginError">{{loginError}}</div>
+                        <p>
+                            <button type="submit" ng-click="submit()" class="btn btn-lg btn-block btn-info">
+                                {{'%BUTTON_LOGIN%' | phrase}}
+                            </button>
+                        </p>
+                        <div class="alert alert-success  alert-sm">
+                            Not a user?
+                            <a ng-click="showRegister()" href="#" class="alert-link">
+                                Sign up!
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="back">
+                    <form novalidate class="form">
+                        <div class="row">
+                            <div class="col-xs-6 form-group">
+                                <input ng-model="registerForm.getField('email').value" type="text"
+                                       class="form-control"
+                                       placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
+                                       name="email">
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <input ng-model="registerForm.getField('password').value" type="password"
+                                       class="form-control"
+                                       placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
+                                       name="password">
+                             </div>
+                         </div>
+
+                        <div class="alert alert-danger" ng-show="registerError">{{registerError}}</div>
+
+                        <p>
+                            <button ng-click="submit()" class="btn btn-lg btn-block btn-success">
+                                {{'%BUTTON_SIGNUP%' | phrase}}
+                            </button>
+                        </p>
+                        <div class="alert alert-info alert-sm">
+                            Already a user?
+                            <a ng-click="showLogin()" href="#" class="alert-link">
+                                Sign in!
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
-</form>
+</div>
