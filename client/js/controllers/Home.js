@@ -49,7 +49,7 @@ define(function (require, exports, module) {
 	/*
 	 * Angular controller
 	 * */
-	var Controller = function ($scope, $http, $state, usersClient, authState) {
+	var Controller = function ($scope, $state, usersClient, authState) {
 
 		//bind the two forms under different namespaces
 		loginForm.initialize($scope, 'loginForm');
@@ -148,7 +148,7 @@ define(function (require, exports, module) {
 
 	};
 
-	Controller.$inject = ['$scope', '$http', '$state', 'usersClient', 'authState'];
+	Controller.$inject = ['$scope', '$state', 'usersClient', 'authState'];
 
 	module.exports = Controller;
 
