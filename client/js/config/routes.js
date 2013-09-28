@@ -13,32 +13,40 @@ define(function (require, exports, module) {
 	};
 
 	app.
-		config(['$stateProvider', '$routeProvider', '$locationProvider', function ($stateProvider, $routeProvider, $locationProvider) {
+		config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
 
 			//push state
 			$locationProvider.html5Mode(true);
 
             $stateProvider
                 .state('home', {
-                    url: "/",
+                    url: '/',
                     controller: 'Home',
-                    templateUrl: partials.home
+                    templateUrl: partials.home,
+                    access: access.anon
                 })
                 .state('default', {
                     abstract: true,
                     templateUrl: partials.layout
                 })
                 .state('groups', {
-                    url: "/groups",
+                    url: '/groups',
                     parent: 'default',
                     controller: 'Groups',
-                    templateUrl: partials.groups
+                    templateUrl: partials.groups,
+                    access: access.auth
                 })
                 .state('group', {
-                    url: "/groups/:groupId",
+                    url: '/groups/:groupId',
                     parent: 'default',
                     controller: 'Group',
-                    templateUrl: partials.group
+                    templateUrl: partials.group,
+                    access: access.public
+                })
+                .state('logout', {
+                    url: '/logout',
+                    controller: 'Logout',
+                    access: access.auth
                 });
 
 			//Routes
@@ -79,31 +87,27 @@ define(function (require, exports, module) {
 
 			console.log('Routes configured');
 
-		}]);
+		}])
 
-		/*run(['$rootScope', '$location', '$routeParams', 'authState', function ($rootScope, $location, $routeParams, authState) {
+        .run(['$rootScope', '$state', '$stateParams', 'authState', function ($rootScope, $state, $stateParams, authState) {
 
-			$rootScope.$on("$routeChangeStart", function (event, next, current) {
+			$rootScope.$on("$stateChangeStart", function (event, to, toParam, from, fromParams) {
 				$rootScope.error = null;
 
 				//If trying to access authenticated page not logged in, redirect to home
-				if (next.access === access.auth && !authState.isAuth()) {
-					$location.path('/home');
+				if (to.access === access.auth && !authState.isAuth()) {
+                    event.preventDefault();
+					$state.transitionTo('home');
 				}
 				//If trying to access anonymous page logged in, redirect to groups
-				else if (next.access === access.anon && authState.isAuth()) {
-					$location.path('/groups');
+				else if (to.access === access.anon && authState.isAuth()) {
+                    event.preventDefault();
+					$state.transitionTo('groups');
 				}
-			});
-
-			$rootScope.$on('$routeChangeSuccess', function (scope, current, pre) {
-				console.log('Route changed', $location.path(), $routeParams);
-
 			});
 
 			console.log('Route intercepts configured');
-
-		}]);*/
+		}]);
 
 	module.exports = app;
 });
