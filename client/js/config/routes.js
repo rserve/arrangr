@@ -79,7 +79,6 @@ define(function (require, exports, module) {
                     views: {
                         content: {
                             controller: 'Verify',
-                            templateUrl: partials.verify
                         }
                     },
                     access: access.public

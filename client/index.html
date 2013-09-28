@@ -30,7 +30,8 @@
             bootstrap: '../lib/bootstrap/js/bootstrap',
             underscore: '../lib/underscore',
             angular: '../lib/angular-1.0.8',
-            angularuirouter: '../lib/angular-ui-router',
+            'angular-ui-router': '../lib/angular-ui-router',
+            'angular-flash': '../lib/angular-flash',
             json: '../lib/require/json',
             text: '../lib/require/text',
             data: '../data'
@@ -47,7 +48,10 @@
             'underscore': {
                 exports: '_'
             },
-            'angularuirouter': {
+            'angular-ui-router': {
+                deps: ['angular']
+            },
+            'angular-flash': {
                 deps: ['angular']
             }
 

@@ -5,13 +5,10 @@ define(function (require, exports, module) {
 	var base = '/partials/';
 
 	var partials = {
+        home: 'home.html',
         layout: 'layout.html',
-		group: 'group.html',
-		groups: 'groups.html',
-		logout: 'logout.html',
-        verify: 'verify.html',
-		notFound: 'not-found.html',
-		home: 'home.html',
+        group: 'group.html',
+        groups: 'groups.html',
 		demoForm: 'demo-form.html',
         header: 'header.html'
 	};

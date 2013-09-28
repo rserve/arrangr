@@ -2,7 +2,8 @@
 require([
 	'angular',
 	'json!data/config.json',
-    'angularuirouter',
+    'angular-ui-router',
+    'angular-flash',
 	'jquery',
 	'app',
 	'services/services',

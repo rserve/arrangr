@@ -12,33 +12,36 @@ define(function (require, exports, module) {
         customError: 'Name cannot be empty'
     });
 
-	var Controller = function ($scope, $filter, $location, $routeParams, groupsClient, $rootScope) {
+	var Controller = function ($scope, groupsClient, $rootScope, flash) {
 
         createForm.initialize($scope, 'createForm');
 
 		function createGroup() {
             var errors = createForm.validate();
             if (errors) {
-                $scope.status = 'error';
-                $scope.message = errors[0].message;
+                flash.error = errors[0].message;
             } else {
                 groupsClient.create(createForm.toJSON(),
                     function (data) {
                         createForm.clear();
+                        flash.success = 'Group created';
                         $scope.groups.push(data);
                     },
                     function (data) {
-                        $scope.status = 'error';
-                        $scope.message = data.error;
+                        flash.error = data.error;
                     }
                 );
             }
 		}
 
 		function deleteGroup(group) {
-			groupsClient.delete(group.key);
-
-			getGroups();
+			groupsClient.delete(group.key, function() {
+                flash.success = 'Group deleted';
+                getGroups();
+            },
+            function(data) {
+                flash.error = data.error;
+            });
 		}
 
 		function getGroups() {
@@ -51,7 +54,6 @@ define(function (require, exports, module) {
 		//expose methods to view
 		$scope.create = createGroup;
 		$scope.delete = deleteGroup;
-		$scope.refresh = getGroups;
 
 		$scope.isAdmin = function (group) {
 			return group.isAdmin($rootScope.user);
@@ -63,7 +65,7 @@ define(function (require, exports, module) {
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$filter', '$location', '$routeParams', 'groupsClient', '$rootScope'];
+	Controller.$inject = ['$scope', 'groupsClient', '$rootScope', 'flash'];
 
 	module.exports = Controller;
 

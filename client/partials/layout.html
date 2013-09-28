@@ -2,6 +2,10 @@
 
     <div ui-view="header"></div>
 
+    <div flash-alert active-class="in" class="alert fade" ng-show="flash.message">
+        <span class="alert-message" ng-bind-html-unsafe="flash.message | link"></span>
+    </div>
+
     <div ui-view="content"></div>
 
 </div>

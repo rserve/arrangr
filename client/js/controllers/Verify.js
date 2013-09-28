@@ -2,23 +2,26 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var Controller = function ($scope, $http, $state, $stateParams, usersClient, authState) {
+    var Controller = function ($scope, $http, $state, $stateParams, usersClient, authState, flash) {
 
         var hash = $stateParams.verificationHash;
 
         usersClient.verify(hash, function (user) {
-                $scope.status = 'success';
-                $scope.message = 'Your email has been verified, continue to %group:/groups% page';
-                authState.setUserState(user);
+                flash.success = 'Your email has been verified, please %sign in:/% to continue';
+                //Logout just in case another user is logged in
+                if(authState.isAuth()) {
+                    usersClient.logout();
+                    authState.removeUserState();
+                }
             },
             function (data) {
-                $scope.status = 'error';
-                $scope.message = data.error;
+                flash.duration = 0;
+                flash.error = data.error;
             }
         );
     };
 
-    Controller.$inject = ['$scope', '$http', '$state', '$stateParams', 'usersClient', 'authState'];
+    Controller.$inject = ['$scope', '$http', '$state', '$stateParams', 'usersClient', 'authState', 'flash'];
 
 
     module.exports = Controller;
