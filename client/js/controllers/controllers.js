@@ -1,24 +1,22 @@
 define(function (require, exports, module) {
 
-	'use strict';
+    'use strict';
 
 	var app = require('app'),
+        Home = require('./Home'),
 		Group = require('./Group'),
 		Groups = require('./Groups'),
 		Logout = require('./Logout'),
         Verify = require('./Verify'),
-		UserInfo = require('./UserInfo'),
-		DemoForm = require('./DemoForm'),
-		Home = require('./Home');
+		DemoForm = require('./DemoForm');
 
 	//add all controllers
-	app.controller('Group', Group).
+	app.controller('Home', Home).
+        controller('Group', Group).
 		controller('Groups', Groups).
 		controller('Logout', Logout).
         controller('Verify', Verify).
-		controller('UserInfo', UserInfo).
-		controller('DemoForm', DemoForm).
-		controller('Home', Home);
+		controller('DemoForm', DemoForm);
 
 	//no export
 });

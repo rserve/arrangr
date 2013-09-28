@@ -20,23 +20,26 @@ define(function (require, exports, module) {
 
             $urlRouterProvider.otherwise("/404");
 
+            //Layout
+            $stateProvider.state('default', {
+                abstract: true,
+                views: {
+                    '': {
+                        templateUrl: partials.layout
+                    },
+                    'header@default': {
+                        templateUrl: partials.header
+                    }
+                }
+            });
+
+            //Pages
             $stateProvider
                 .state('home', {
                     url: '/',
                     controller: 'Home',
                     templateUrl: partials.home,
                     access: access.anon
-                })
-                .state('default', {
-                    abstract: true,
-                    views: {
-                        '': {
-                            templateUrl: partials.layout
-                        },
-                        'header@default': {
-                            templateUrl: partials.header
-                        }
-                    }
                 })
                 .state('groups', {
                     url: '/groups',
@@ -60,16 +63,6 @@ define(function (require, exports, module) {
                     },
                     access: access.public
                 })
-                .state('logout', {
-                    url: '/logout',
-                    controller: 'Logout',
-                    access: access.auth
-                })
-                .state('verify', {
-                    url: '/verify/:verificationHash',
-                    controller: 'Verify',
-                    access: access.public
-                })
                 .state('404', {
                     url: '/404',
                     parent: 'default',
@@ -79,6 +72,22 @@ define(function (require, exports, module) {
                         }
                     },
                     access: access.public
+                })
+                .state('verify', {
+                    url: '/verify/:verificationHash',
+                    parent: 'default',
+                    views: {
+                        content: {
+                            controller: 'Verify',
+                            templateUrl: partials.verify
+                        }
+                    },
+                    access: access.public
+                })
+                .state('logout', {
+                    url: '/logout',
+                    controller: 'Logout',
+                    access: access.auth
                 });
 
             console.log('Routes configured');
