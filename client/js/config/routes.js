@@ -1,22 +1,24 @@
 define(function (require, exports, module) {
 
-	'use strict';
+    'use strict';
 
-	var app = require('app'),
-		partials = require('./partials');
+    var app = require('app'),
+        partials = require('./partials');
 
-	//access levels
-	var access = {
-		public: 1,
-		anon: 2,
-		auth: 3
-	};
+    //access levels
+    var access = {
+        public: 1,
+        anon: 2,
+        auth: 3
+    };
 
-	app.
-		config(['$stateProvider', '$locationProvider', function ($stateProvider, $locationProvider) {
+    app.
+        config(['$stateProvider', '$locationProvider', '$urlRouterProvider', function ($stateProvider, $locationProvider, $urlRouterProvider) {
 
-			//push state
-			$locationProvider.html5Mode(true);
+            //push state
+            $locationProvider.html5Mode(true);
+
+            $urlRouterProvider.otherwise("/404");
 
             $stateProvider
                 .state('home', {
@@ -27,87 +29,81 @@ define(function (require, exports, module) {
                 })
                 .state('default', {
                     abstract: true,
-                    templateUrl: partials.layout
+                    views: {
+                        '': {
+                            templateUrl: partials.layout
+                        },
+                        'header@default': {
+                            templateUrl: partials.header
+                        }
+                    }
                 })
                 .state('groups', {
                     url: '/groups',
                     parent: 'default',
-                    controller: 'Groups',
-                    templateUrl: partials.groups,
+                    views: {
+                        content: {
+                            controller: 'Groups',
+                            templateUrl: partials.groups
+                        }
+                    },
                     access: access.auth
                 })
                 .state('group', {
                     url: '/groups/:groupId',
                     parent: 'default',
-                    controller: 'Group',
-                    templateUrl: partials.group,
+                    views: {
+                        content: {
+                            controller: 'Group',
+                            templateUrl: partials.group
+                        }
+                    },
                     access: access.public
                 })
                 .state('logout', {
                     url: '/logout',
                     controller: 'Logout',
                     access: access.auth
-                });
-
-			//Routes
-			/*$routeProvider.
-				when('/groups/:groupId', {
-					templateUrl: partials.group,
-					controller: 'Group',
-					access: access.public
-				}).
-				when('/groups', {
-					templateUrl: partials.groups,
-					controller: 'Groups',
-					access: access.auth
-				}).
-				when('/logout', {
-					templateUrl: partials.empty,
-					controller: 'Logout',
-					access: access.auth
-				}).
-                when('/verify/:verificationHash', {
-                    templateUrl: partials.verify,
+                })
+                .state('verify', {
+                    url: '/verify/:verificationHash',
                     controller: 'Verify',
                     access: access.public
-                }).
-				when('/demo-form', {
-					templateUrl: partials.demoForm,
-					controller: 'DemoForm',
-					access: access.public
-				}).
-				when('/', {
-					templateUrl: partials.home,
-					controller: 'Home',
-					access: access.anon
-				}).
-				otherwise({
-                    templateUrl: partials.notFound
-                });*/
+                })
+                .state('404', {
+                    url: '/404',
+                    parent: 'default',
+                    views: {
+                        content: {
+                            templateUrl: partials.notFound
+                        }
+                    },
+                    access: access.public
+                });
 
-			console.log('Routes configured');
+            console.log('Routes configured');
 
-		}])
+        }])
 
         .run(['$rootScope', '$state', '$stateParams', 'authState', function ($rootScope, $state, $stateParams, authState) {
 
-			$rootScope.$on("$stateChangeStart", function (event, to, toParam, from, fromParams) {
-				$rootScope.error = null;
+            $rootScope.$on("$stateChangeStart", function (event, to, toParam, from, fromParams) {
+                $rootScope.error = null;
 
-				//If trying to access authenticated page not logged in, redirect to home
-				if (to.access === access.auth && !authState.isAuth()) {
+                //If trying to access authenticated page not logged in, redirect to home
+                if (to.access === access.auth && !authState.isAuth()) {
                     event.preventDefault();
-					$state.transitionTo('home');
-				}
-				//If trying to access anonymous page logged in, redirect to groups
-				else if (to.access === access.anon && authState.isAuth()) {
+                    $state.transitionTo('home');
+                }
+                //If trying to access anonymous page logged in, redirect to groups
+                else if (to.access === access.anon && authState.isAuth()) {
                     event.preventDefault();
-					$state.transitionTo('groups');
-				}
-			});
+                    $state.transitionTo('groups');
+                }
+            });
 
-			console.log('Route intercepts configured');
-		}]);
+            console.log('Route intercepts configured');
+        }]);
 
-	module.exports = app;
+    module.exports = app;
 });
