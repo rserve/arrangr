@@ -16,7 +16,7 @@ define(function (require, exports, module) {
             },
             function (data) {
                 flash.duration = 0;
-                flash.error = data.error;
+                flash.error = data.message;
             }
         );
     };

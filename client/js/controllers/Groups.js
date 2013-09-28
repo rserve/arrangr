@@ -28,7 +28,7 @@ define(function (require, exports, module) {
                         $scope.groups.push(data);
                     },
                     function (data) {
-                        flash.error = data.error;
+                        flash.error = data.message;
                     }
                 );
             }
@@ -40,7 +40,7 @@ define(function (require, exports, module) {
                 getGroups();
             },
             function(data) {
-                flash.error = data.error;
+                flash.error = data.message;
             });
 		}
 

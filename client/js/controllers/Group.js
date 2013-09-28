@@ -21,7 +21,7 @@ define(function (require, exports, module) {
         customError: 'Please enter a valid email'
     });
 
-	var Controller = function ($scope, $filter, $location, $stateParams, groupsClient, authState) {
+	var Controller = function ($scope, $state, $stateParams, groupsClient, authState, flash) {
 
 		var key = $stateParams.groupId,
 			client = groupsClient;
@@ -33,13 +33,10 @@ define(function (require, exports, module) {
 			client.findByKey(key,
 				function (group) {
 					$scope.group = group;
-                    $scope.link = $location.absUrl();
                     $scope.currentMember = group.member($scope.user);
-					$scope.status = 'info';
 				},
 				function (data) {
-					$scope.message = "Server says '" + data.error + "'";
-					$scope.status = 'error';
+                    flash.error = data.message;
 				});
 		}
 
@@ -49,8 +46,7 @@ define(function (require, exports, module) {
                     // do nothing since we already updated the client
                 },
                 function(data) {
-                    $scope.status = 'error';
-                    $scope.message = "Server says '" + data.error + "'";
+                    flash.error = data.message;
                 }
             );
             $scope.currentMember.status = status;
@@ -72,11 +68,10 @@ define(function (require, exports, module) {
             var checked = $event.target.checked;
             client.update(key, {public: checked},
                 function() {
-                    $scope.message = '';
+                    // do nothing§
                 },
                 function(data) {
-                    $scope.status = 'error';
-                    $scope.message = data.message;
+                    flash.error = data.message;
                 }
             );
             $scope.group.public = checked;
@@ -85,19 +80,16 @@ define(function (require, exports, module) {
         $scope.invite = function() {
             var errors = inviteForm.validate();
             if (errors) {
-                $scope.status = 'error';
-                $scope.message = errors[0].message;
+                flash.error = errors[0].message;
             } else {
                 client.invite(key, inviteForm.toJSON(),
                     function(data) {
                         $scope.group = data;
-                        $scope.status = 'success';
-                        $scope.message = 'User invited to group';
+                        flash.success = 'User invited to group';
                         inviteForm.clear();
                     },
                     function(data) {
-                        $scope.status = 'error';
-                        $scope.message = data.message;
+                        flash.error = data.message;
                     }
                 );
             }
@@ -112,8 +104,7 @@ define(function (require, exports, module) {
                 register = true;
                 var errors = joinForm.validate();
                 if (errors) {
-                    $scope.status = 'error';
-                    $scope.message = errors[0].message;
+                    flash.error = errors[0].message;
                 } else {
                     data = joinForm.toJSON();
                 }
@@ -123,25 +114,23 @@ define(function (require, exports, module) {
 
             client.join(key, data,
                 function(group) {
-                    $scope.status = 'success';
                     $scope.group = group;
                     if(register) {
                         authState.refreshUserState();
-                        $scope.message = 'An account as be created for you, please check your mail to verify.';
+                        flash.success = 'An account as be created for you, please check your mail to verify.';
                     } else {
-                        $scope.message = 'You have joined the group';
+                        flash.success = 'You have joined the group';
                         joinForm.clear();
                     }
                     $scope.currentMember = group.member($scope.user);
                 },
                 function(data) {
                     // TODO: Better validation error handling
-                    if(data.name == 'ValidationError' && data.errors.email.type == 'Email already exists') {
-                        $scope.message = 'Email is already registered, %sign in:/% first to join this group';
+                    if(data.name == 'ValidationError' && data.messages.email.type == 'Email already exists') {
+                        flash.success = 'Email is already registered, %sign in:/% first to join this group';
                     } else {
-                        $scope.message = data.message;
+                        flash.success = data.message;
                     }
-                    $scope.status = 'error';
                 }
             );
         };
@@ -149,11 +138,11 @@ define(function (require, exports, module) {
         $scope.leave = function(member) {
             client.removeMember(key, member.id,
                 function(data) {
-                    $location.path('/groups');
+                    flash.success = 'You have left the group';
+                    $state.transitionTo('groups');
                 },
                 function(data) {
-                    $scope.status = 'error';
-                    $scope.message = data.message;
+                    flash.error = data.message;
                 }
             );
         };
@@ -162,12 +151,10 @@ define(function (require, exports, module) {
             client.removeMember(key, member.id,
                 function(data) {
                     $scope.group = data;
-                    $scope.status = 'success';
-                    $scope.message = 'Member removed from group';
+                    flash.success = 'Member removed from group';
                 },
                 function(data) {
-                    $scope.status = 'error';
-                    $scope.message = data.message;
+                    flash.error = data.message;
                 }
             );
         };
@@ -177,7 +164,7 @@ define(function (require, exports, module) {
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$filter', '$location', '$stateParams', 'groupsClient', 'authState'];
+	Controller.$inject = ['$scope', '$location', '$stateParams', 'groupsClient', 'authState', 'flash'];
 
 	module.exports = Controller;
 
