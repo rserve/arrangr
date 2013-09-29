@@ -19,7 +19,7 @@ define(function (require, exports, module) {
 		addField({
 			name: 'email',
 			validator: 'notEmpty',
-			customError: 'You forgot to enter your email address!'
+			customError: 'You forgot to enter your email!'
 		}).
 
 		addField({

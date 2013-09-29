@@ -15,10 +15,13 @@
 html {
     background: no-repeat center center fixed;
     background-size: cover;
+    height: 100%;
 }
 
 body {
     background-color: transparent;
+    position: relative;
+    min-height: 100%;
 }
 
 h1 {
@@ -63,14 +66,18 @@ h1 {
     margin-right: -5px;
 }
 
-.logincontainer .form-group {
+.logincontainer .col-xs-6 {
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.logincontainer .alert-sm {
-    display: inline-block;
+.alert-sm {
     padding: 5px 15px;
+    margin-bottom: 15px;
+}
+
+.alert-inline {
+    display: inline-block;
 }
 
 .bgbyline {
@@ -94,10 +101,9 @@ h1 {
     transform: rotateY(180deg);
 }
 
-/*.flip-container, .front, .back {
-    width: 330px;
-    height: 150px;
-}*/
+.flip-container, .front, .back {
+    min-height: 150px;
+}*
 
 .flipper {
     -webkit-transition: 0.6s;
@@ -134,7 +140,7 @@ h1 {
 }
 
 @media (min-width: 768px) {
-    .container {
+    .home {
         margin-top: 40px;
     }
 }
