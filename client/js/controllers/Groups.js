@@ -60,7 +60,7 @@ define(function (require, exports, module) {
 		};
 
         $scope.member = function (group) {
-            return group.member($rootScope.user)
+            return group.member($rootScope.user);
         };
 
 		//default action
