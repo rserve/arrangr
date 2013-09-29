@@ -44,7 +44,6 @@ h1 {
     padding-bottom: 15px;
     background-color: white;
     background-color: rgba(255,255,255,0.9);
-    margin-top: 40px;
 }
 
 .home {
@@ -132,4 +131,10 @@ h1 {
     -webkit-transform: rotateY(180deg);
     -moz-transform: rotateY(180deg);
     transform: rotateY(180deg);
+}
+
+@media (min-width: 768px) {
+    .container {
+        margin-top: 40px;
+    }
 }
