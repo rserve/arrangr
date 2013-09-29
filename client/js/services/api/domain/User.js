@@ -11,6 +11,10 @@ define(function (require, exports, module) {
 
 	var proto = User.prototype;
 
+    proto.displayName = function() {
+        return this.email;
+    };
+
 
 	module.exports = User;
 });

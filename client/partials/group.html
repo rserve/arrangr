@@ -23,13 +23,15 @@
             <tbody>
             <tr ng-repeat="member in group.members">
                 <td>
-                    <img src="http://www.gravatar.com/avatar/{{member.user.hashedEmail}}?s=25&d=mm"/> {{
-                    member.user.email }}
+                    <img src="http://www.gravatar.com/avatar/{{member.user.hashedEmail}}?s=25&d=mm"/>
+                    {{ member.user.displayName() }}
+                </td>
+                <td>
                     <span ng-show="member.status == 'Yes'"
-                          class="label label-success">{{ '%BUTTON_YES%' | phrase }}</span>
+                          class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
                     <span ng-show="member.status == 'Maybe'"
-                          class="label label-warning">{{ '%BUTTON_MAYBE%' | phrase }}</span>
-                    <span ng-show="member.status == 'No'" class="label label-danger">{{ '%BUTTON_NO%' | phrase }}</span>
+                          class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
+                    <span ng-show="member.status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
                 </td>
                 <td>
                     <a title="Remove member" class="text-danger" href="#"
@@ -42,21 +44,21 @@
         </table>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
-        <p ng-show="group.isMember(user)">
+        <div ng-show="group.isMember(user)">
             <strong>Are you going?</strong>
 
-        <div class="btn-group btn-group-justified">
-            <a ng-click="yes()" class="btn btn-default" ng-class="{'btn-success':currentMember.status == 'Yes'}">
-                {{ '%BUTTON_YES%' | phrase }}
-            </a>
-            <a ng-click="maybe()" class="btn btn-default" ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
-                {{ '%BUTTON_MAYBE%' | phrase }}
-            </a>
-            <a ng-click="no()" class="btn btn-default" ng-class="{'btn-danger':currentMember.status == 'No'}">
-                {{ '%BUTTON_NO%' | phrase }}
-            </a>
+            <div class="btn-group btn-group-justified">
+                <a ng-click="yes()" class="btn btn-default" ng-class="{'btn-success':currentMember.status == 'Yes'}">
+                    {{ '%BUTTON_YES%' | phrase }}
+                </a>
+                <a ng-click="maybe()" class="btn btn-default" ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
+                    {{ '%BUTTON_MAYBE%' | phrase }}
+                </a>
+                <a ng-click="no()" class="btn btn-default" ng-class="{'btn-danger':currentMember.status == 'No'}">
+                    {{ '%BUTTON_NO%' | phrase }}
+                </a>
+            </div>
         </div>
-        </p>
 
         <form class="form" role="form" ng-show="!user" ng-submit="join()">
             <h4>Join group</h4>

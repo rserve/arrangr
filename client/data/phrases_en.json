@@ -3,11 +3,11 @@
 	"ONE": "1",
 	"TWO": "2",
 	"THREE": "3",
-	"TITLE_GROUPS": "Groups",
+	"TITLE_GROUPS": "Meetups",
 	"BUTTON_CREATE": "Create",
 	"BUTTON_SIGNUP": "Sign up!",
 	"BUTTON_LOGIN": "Sign in!",
-	"PLACEHOLDER_GROUP_NAME": "Name of group...",
+	"PLACEHOLDER_GROUP_NAME": "Meetup name",
 	"PLACEHOLDER_EMAIL": "Email",
 	"PLACEHOLDER_PASSWORD": "Password",
 	"BUTTON_JOIN": "Join",
@@ -19,5 +19,9 @@
     "BUTTON_INVITED": "Invited",
     "BUTTON_REMOVE": "Remove",
     "PEOPLE_SIGNED": "Currently {0} people have signed!",
-	"ARGUMENTS": "arg1: {0}, arg2: {1}, arg3: {2}..."
+	"ARGUMENTS": "arg1: {0}, arg2: {1}, arg3: {2}...",
+    "LABEL_YES": "going",
+    "LABEL_MAYBE": "maybe",
+    "LABEL_NO": "not going"
+
 }

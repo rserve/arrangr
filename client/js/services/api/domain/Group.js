@@ -14,7 +14,7 @@ define(function (require, exports, module) {
         if(user) {
             for (var i = 0, len = this.members.length; i < len; i++) {
                 var member = this.members[i];
-                if (member.user && (member.user.id === user.id || member.user === user.id) && member.admin) {
+                if (member.admin && member.user && (member.user === user.id || member.user.id === user.id)) {
                     return true;
                 }
             }
@@ -30,7 +30,7 @@ define(function (require, exports, module) {
         if(user) {
             for (var i = 0, len = this.members.length; i < len; i++) {
                 var member = this.members[i];
-                if (member.user && (member.user.id === user.id || member.user === user.id)) {
+                if (member.user && (member.user === user.id || member.user.id === user.id)) {
                     return member;
                 }
             }

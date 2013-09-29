@@ -24,8 +24,8 @@ define(function (require, exports, module) {
                 groupsClient.create(createForm.toJSON(),
                     function (data) {
                         createForm.clear();
-                        flash.success = 'Group created';
-                        $scope.groups.push(data);
+                        flash.success = 'Meetup created';
+                        getGroups();
                     },
                     function (data) {
                         flash.error = data.message;
@@ -36,7 +36,7 @@ define(function (require, exports, module) {
 
 		function deleteGroup(group) {
 			groupsClient.delete(group.key, function() {
-                flash.success = 'Group deleted';
+                flash.success = 'Meetup deleted';
                 getGroups();
             },
             function(data) {
@@ -58,6 +58,10 @@ define(function (require, exports, module) {
 		$scope.isAdmin = function (group) {
 			return group.isAdmin($rootScope.user);
 		};
+
+        $scope.member = function (group) {
+            return group.member($rootScope.user)
+        };
 
 		//default action
 		getGroups();

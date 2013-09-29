@@ -4,7 +4,8 @@ define(function (require, exports, module) {
 
 	var RequestBuilder = require('./RequestBuilder'),
 		BaseClient = require('./BaseClient'),
-		Group = require('./domain/Group');
+		Group = require('./domain/Group'),
+		User = require('./domain/User');
 
 	var service = ['$http', function ($http) {
 
@@ -17,14 +18,21 @@ define(function (require, exports, module) {
 			for (var i = 0, len = data.length; i < len; i++) {
 				var group = new Group(data[i]);
 				groups.push(group);
-
 			}
 			return groups;
 		};
 
 		var groupParser = function (data) {
-			return  new Group(data);
+            var group = new Group(data);
+            memberParser(group);
+			return group;
 		};
+
+        var memberParser = function(group) {
+            for(var j = 0, len = group.members.length; j < len; j++) {
+                group.members[j].user = new User(group.members[j].user);
+            }
+        };
 
 
 		/*

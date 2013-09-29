@@ -8,11 +8,19 @@
             <tr ng-repeat="group in groups">
                 <td>
                     <a href="/groups/{{group.key}}">{{group.name}}</a>
+                 </td>
+                <td>
                     <span ng-show="group.isNew" class="label label-info">new!</span>
                     <span ng-show="group.public" class="label label-warning">public</span>
-                    <span ng-show="group.isAdmin(user)" class="label label-danger">admin</span>
-                    <span ng-show="group.isMember(user) && !group.isAdmin(user)"
+                    <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
+                    <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
+                    <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
+                    <span ng-show="!member(group).status && group.isAdmin(user)" class="label label-danger">admin</span>
+                    <span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"
                           class="label label-success">member</span>
+                </td>
+                <td>
+
                 </td>
                 <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
                 <td>
@@ -22,7 +30,7 @@
                 </td>
             </tr>
             <tr ng-hide="groups.length">
-                <td colspan="3">You have not created any groups yet</td>
+                <td colspan="3">You have not created any meetups yet</td>
             </tr>
             </tbody>
         </table>
@@ -31,7 +39,7 @@
     <div class="col-lg-3 col-md-4 col-sm-4">
         <form novalidate class="form" role="form">
             <div class="form-group">
-                <label class="control-label" for="groupName">Create a new group</label>
+                <label class="control-label" for="groupName">Create a new meetup</label>
                 <input id="groupName" class="form-control" type="text" ng-model="createForm.getField('name').value"
                        placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
             </div>

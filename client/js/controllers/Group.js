@@ -85,7 +85,7 @@ define(function (require, exports, module) {
                 client.invite(key, inviteForm.toJSON(),
                     function(data) {
                         $scope.group = data;
-                        flash.success = 'User invited to group';
+                        flash.success = 'User invited';
                         inviteForm.clear();
                     },
                     function(data) {
@@ -119,7 +119,7 @@ define(function (require, exports, module) {
                         authState.refreshUserState();
                         flash.success = 'An account as be created for you, please check your mail to verify.';
                     } else {
-                        flash.success = 'You have joined the group';
+                        flash.success = 'You have joined the meetup';
                         joinForm.clear();
                     }
                     $scope.currentMember = group.member($scope.user);
@@ -138,7 +138,7 @@ define(function (require, exports, module) {
         $scope.leave = function(member) {
             client.removeMember(key, member.id,
                 function(data) {
-                    flash.success = 'You have left the group';
+                    flash.success = 'You have left the meetup';
                     $state.transitionTo('groups');
                 },
                 function(data) {
@@ -151,7 +151,7 @@ define(function (require, exports, module) {
             client.removeMember(key, member.id,
                 function(data) {
                     $scope.group = data;
-                    flash.success = 'Member removed from group';
+                    flash.success = 'Member removed';
                 },
                 function(data) {
                     flash.error = data.message;
