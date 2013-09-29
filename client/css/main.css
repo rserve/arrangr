@@ -141,6 +141,6 @@ h1 {
 
 @media (min-width: 768px) {
     .home {
-        margin-top: 40px;
+        padding-top: 55px;
     }
 }
