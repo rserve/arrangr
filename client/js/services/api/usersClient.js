@@ -47,12 +47,13 @@ define(function (require, exports, module) {
 
 		};
 
-        client.update = function (user, success, error) {
+        client.update = function (userId, data, success, error) {
 
             var req = new RequestBuilder().
                 setMethod('put').
                 setUrl(baseUrl).
-                setData(user).
+                addPath(userId).
+                setData(data).
                 setSuccessCb(success).
                 setErrorCb(error).
                 addResponseMiddleware(userParser).

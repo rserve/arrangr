@@ -10,7 +10,8 @@ define(function (require, exports, module) {
         group: 'group.html',
         groups: 'groups.html',
 		demoForm: 'demo-form.html',
-        header: 'header.html'
+        header: 'header.html',
+        profile: 'profile.html'
 	};
 
 	for (var key in partials) {

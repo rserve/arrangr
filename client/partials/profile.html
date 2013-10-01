@@ -1,0 +1,10 @@
+<h2>Profile</h2>
+
+<form class="form" role="form" novalidate ng-submit="save()">
+    <div class="form-group {{profileForm.getField('name').status}}">
+        <input class="form-control" ng-model="profileForm.getField('name').value" placeholder="Name" type="text">
+        <span class="help-inline">{{profileForm.getField('name').message}}</span>
+    </div>
+
+    <button ng-click="create()" class="btn btn-success">Save</button>
+</form>

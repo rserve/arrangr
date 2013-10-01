@@ -78,10 +78,21 @@ define(function (require, exports, module) {
                     parent: 'default',
                     views: {
                         content: {
-                            controller: 'Verify',
+                            controller: 'Verify'
                         }
                     },
                     access: access.public
+                })
+                .state('profile', {
+                    url: '/profile',
+                    parent: 'default',
+                    views: {
+                        content: {
+                            controller: 'Profile',
+                            templateUrl: partials.profile
+                        }
+                    },
+                    access: access.auth
                 })
                 .state('logout', {
                     url: '/logout',

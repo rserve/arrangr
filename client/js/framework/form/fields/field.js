@@ -27,6 +27,7 @@ define(function (require, exports, module) {
 		validator: 'notEmpty',
 		error: null,
 		value: null,
+        initialValue: null,
 		mandatory: true
 	};
 
@@ -46,7 +47,7 @@ define(function (require, exports, module) {
 		 * */
 		clear: function () {
 			_.extend(this, {
-				value: null,
+				value: this.initialValue,
 				error: null
 			});
 		},

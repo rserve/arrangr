@@ -8,7 +8,8 @@ define(function (require, exports, module) {
 		Groups = require('./Groups'),
 		Logout = require('./Logout'),
         Verify = require('./Verify'),
-		DemoForm = require('./DemoForm');
+		DemoForm = require('./DemoForm'),
+		Profile = require('./Profile');
 
 	//add all controllers
 	app.controller('Home', Home).
@@ -16,7 +17,8 @@ define(function (require, exports, module) {
 		controller('Groups', Groups).
 		controller('Logout', Logout).
         controller('Verify', Verify).
-		controller('DemoForm', DemoForm);
+		controller('DemoForm', DemoForm).
+		controller('Profile', Profile);
 
 	//no export
 });
