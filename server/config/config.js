@@ -7,7 +7,8 @@ module.exports = {
         root: rootPath,
         mailer: {
             apikey: 'jwNKk8yTVM2pTfCiApHNQw'
-        }
+        },
+        logger: 'dev'
     },
     test: {
         db: 'mongodb://localhost/rserve_test',
@@ -16,5 +17,7 @@ module.exports = {
             apikey: 'jwNKk8yTVM2pTfCiApHNQw'
         }
     },
-    production: {}
+    production: {
+        logger: 'default'
+    }
 };

@@ -12,9 +12,8 @@ define(function (require, exports, module) {
 	var proto = User.prototype;
 
     proto.displayName = function() {
-        return this.email;
+        return this.name || this.email;
     };
-
 
 	module.exports = User;
 });

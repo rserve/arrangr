@@ -18,8 +18,8 @@ exports.login = function (email, password, cb) {
             email: email,
             password: password
         }
-    }, function (err, resp) {
-        cb();
+    }, function (err, res, user) {
+        cb(user);
     });
 };
 

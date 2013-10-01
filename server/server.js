@@ -1,5 +1,6 @@
 // Module dependencies
 var express = require('express');
+var namespace = require('express-namespace');
 var fs = require('fs');
 var passport = require('passport');
 

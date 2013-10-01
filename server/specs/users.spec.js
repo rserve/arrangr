@@ -165,13 +165,14 @@ describe(usersEndpoint, function () {
     });
 
     describe('authenticated', function () {
-        var authenticatedUser = testData.users[0];
+        var authenticatedUser = null;
 
         beforeEach(function () {
             var done = false;
 
             runs(function () {
-                helper.login(authenticatedUser.email, authenticatedUser.password, function () {
+                helper.login(testUsers[0].email, testUsers[0].password, function (user) {
+                    authenticatedUser = user;
                     done = true;
                 });
             });
@@ -213,6 +214,19 @@ describe(usersEndpoint, function () {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
                     expect(user.email).toEqual(testUser.email);
+                    done();
+                });
+            });
+        });
+
+        describe('put /:userId', function () {
+            it('should update name', function (done) {
+                var testUser = authenticatedUser;
+                var expectedName = 'new name';
+                request.put(usersEndpoint + '/' + testUser.id, {form: {name: expectedName }}, function (err, resp, user) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(200);
+                    expect(user.name).toEqual(expectedName);
                     done();
                 });
             });

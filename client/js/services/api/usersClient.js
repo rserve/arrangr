@@ -47,7 +47,23 @@ define(function (require, exports, module) {
 
 		};
 
-		client.logout = function (success, error) {
+        client.update = function (user, success, error) {
+
+            var req = new RequestBuilder().
+                setMethod('put').
+                setUrl(baseUrl).
+                setData(user).
+                setSuccessCb(success).
+                setErrorCb(error).
+                addResponseMiddleware(userParser).
+                build();
+
+            this.sendRequest(req);
+
+        };
+
+
+        client.logout = function (success, error) {
 
 			var req = new RequestBuilder().
 				setMethod('get').

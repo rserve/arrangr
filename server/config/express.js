@@ -8,6 +8,10 @@ var mongoStore = require('connect-mongo')(express);
 module.exports = function (app, config, passport) {
     app.set('showStackError', true);
 
+    if (config.logger) {
+        app.use(express.logger(config.logger));
+    }
+
     // should be placed before express.static
     app.use(express.compress({
         filter: function (req, res) {
@@ -26,11 +30,6 @@ module.exports = function (app, config, passport) {
 
     app.use(express.favicon());
     app.use(express.static('client'));
-
-    // don't use logger for test env
-    if (process.env.NODE_ENV !== 'test') {
-        app.use(express.logger('dev'));
-    }
 
     app.configure(function () {
         // cookieParser should be above session

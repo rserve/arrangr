@@ -50,6 +50,13 @@ exports.create = function (req, res) {
     });
 };
 
+exports.update = function (req, res) {
+    var user = req.body;
+    User.findOneAndUpdate({_id: req.profile.id}, user, function (err, user) {
+        e(err, res, 'Error updating user') || res.send(user);
+    });
+};
+
 exports.findById = function (req, res) {
     res.send(req.profile);
 };

@@ -29,6 +29,7 @@
     "connect-mongo": "~0.3.3",
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
-    "mandrill-api": "~1.0.35"
+    "mandrill-api": "~1.0.35",
+    "express-namespace": "~0.1.1"
   }
 }
