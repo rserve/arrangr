@@ -10,7 +10,10 @@
     </button>
 </p>
 
-<h2>{{group.name}}</h2>
+<h2>
+    {{group.name}}
+    <small>{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}}</small>
+</h2>
 <p>{{group.description}}</p>
 
 <div class="row">
@@ -46,8 +49,7 @@
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
         <div ng-show="group.isMember(user)">
-            <strong>Are you going?</strong>
-
+            <h3>Are you going?</h3>
             <div class="btn-group btn-group-justified">
                 <a ng-click="yes()" class="btn btn-default" ng-class="{'btn-success':currentMember.status == 'Yes'}">
                     {{ '%BUTTON_YES%' | phrase }}
@@ -63,7 +65,6 @@
 
         <form class="form" role="form" ng-show="!user" ng-submit="join()">
             <h3>Join meetup</h3>
-
             <div class="form-group {{joinForm.getField('email').status}}">
                 <input class="form-control" ng-model="joinForm.getField('email').value" placeholder="Enter your email"
                        type="text">
@@ -73,9 +74,9 @@
 
         <form class="form" role="form" ng-show="group.isAdmin(user) || group.public && group.isMember(user)"
               ng-submit="invite()">
+            <h3>Invite friends</h3>
             <div class="form-group {{inviteForm.fields.email.status}}">
-                <label class="control-label" for="inviteMember">Invite members</label>
-                <input class="form-control" id="inviteMember" ng-model="inviteForm.getField('email').value"
+                <input class="form-control" ng-model="inviteForm.getField('email').value"
                        placeholder="Enter email to invite" type="text">
                 <span class="help-inline">{{inviteForm.fields.email.message}}</span>
             </div>
@@ -90,6 +91,22 @@
             <div class="form-group">
                 <label class="control-label" for="groupFormDescription">Description</label>
                 <input class="form-control" id="groupFormDescription" type="text" ng-model="groupForm.getField('description').value" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="groupFormWeekday">Weekday</label>
+                <select id="groupFormWeekday" class="form-control" ng-model="groupForm.getField('weekday').value">
+                    <option value="1">{{ '%WEEKDAY_1%' | phrase }}</option>
+                    <option value="2">{{ '%WEEKDAY_2%' | phrase }}</option>
+                    <option value="3">{{ '%WEEKDAY_3%' | phrase }}</option>
+                    <option value="4">{{ '%WEEKDAY_4%' | phrase }}</option>
+                    <option value="5">{{ '%WEEKDAY_5%' | phrase }}</option>
+                    <option value="6">{{ '%WEEKDAY_6%' | phrase }}</option>
+                    <option value="0">{{ '%WEEKDAY_0%' | phrase }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="groupFormTime">Time</label>
+                <input class="form-control" id="groupFormTime" type="time" ng-model="groupForm.getField('time').value" placeholder=""/>
             </div>
             <div class="form-group">
                 <label class="control-label" for="groupFormPublic">Public</label>

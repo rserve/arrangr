@@ -6,10 +6,8 @@ var schema = new mongoose.Schema({
     key: { type: String, unique: true },
     name: { type: String, required: true },
     description: { type: String },
-    image: {
-        mimeType: { type: String, required: true },
-        data: { type: String, required: true }
-    },
+    startDate: { type: Date, required: true, default: Date.now },
+    endDate: { type: Date },
     public: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' },

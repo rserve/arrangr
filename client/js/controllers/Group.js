@@ -53,6 +53,14 @@ define(function (require, exports, module) {
                             name: 'description',
                             initialValue: group.description,
                             validator: null
+                        }).
+                        addField({
+                            name: 'weekday',
+                            initialValue: group.weekday()
+                        }).
+                        addField({
+                            name: 'time',
+                            initialValue: group.time()
                         });
 
                     groupForm.initialize($scope, 'groupForm');

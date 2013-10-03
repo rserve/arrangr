@@ -7,13 +7,17 @@ define(function (require, exports, module) {
 	var factory = ['localization', function (localization) {
 		return function (text, args) {
 
-			var matches = text.match(/\%([A-Z_]*)\%/mg),
+			var matches = text.match(/\%([A-Z0-9_]*)\%/mg),
 				key;
 
-			matches.forEach(function (match) {
-				key = match.trim().slice(1, -1);
-				text = text.replace(match, localization.getPhrase(key, args));
-			});
+            if(matches) {
+
+                matches.forEach(function (match) {
+                    key = match.trim().slice(1, -1);
+                    text = text.replace(match, localization.getPhrase(key, args));
+                });
+
+            }
 
 			return text;
 		};
