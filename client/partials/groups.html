@@ -20,7 +20,7 @@
                     <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
                     <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
                     <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
-                    <span ng-show="!member(group).status && group.isAdmin(user)" class="label label-danger">admin</span>
+                    <span ng-show="group.isAdmin(user)" class="label label-danger">admin</span>
                     <span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"
                           class="label label-success">member</span>
                 </td>
@@ -29,7 +29,7 @@
                 </td>
                 <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
                 <td>
-                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isAdmin(user)" ng-click="delete(group)">
+                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </td>

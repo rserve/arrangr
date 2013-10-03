@@ -29,7 +29,7 @@ module.exports = function (app, passport, auth) {
             app.post('', auth.requiresLogin, groups.create);
             app.post('/:key/invite', auth.requiresLogin, groups.invite);
             app.put('/:key', auth.requiresLogin, groups.update);
-            app.delete('/:key', auth.requiresLogin, groups.delete);
+            app.delete('/:key', [auth.requiresLogin, auth.group.hasAuthorization], groups.delete);
 
             app.put('/:key/members/:memberId', auth.requiresLogin, groups.updateMember);
             app.delete('/:key/members/:memberId', auth.requiresLogin, groups.deleteMember);

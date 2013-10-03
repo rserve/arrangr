@@ -114,7 +114,7 @@ describe(groupsEndpoint, function () {
         var authenticatedUser = testData.user;
 
         beforeEach(function () {
-            var done = false;
+            var done = 0;
 
             runs(function () {
                 User.remove({}, function (err) {
@@ -126,20 +126,27 @@ describe(groupsEndpoint, function () {
                             console.log(err);
                         }
                         testUser = user;
-                        testGroups[0].update({ $addToSet: { members: { user: user } } }, function (err) {
+                        testGroups[0].update({ $addToSet: { members: { user: user, admin: true } } }, function (err) {
                             if (err) {
                                 console.log(err);
                             }
-                            helper.login(authenticatedUser.email, authenticatedUser.password, function () {
-                                done = true;
-                            });
+                            done++;
+                        });
+                        testGroups[1].update({ $addToSet: { members: { user: user, admin: false } } }, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            done++;
+                        });
+                        helper.login(authenticatedUser.email, authenticatedUser.password, function () {
+                            done++;
                         });
                     });
                 });
             });
 
             waitsFor(function () {
-                return done;
+                return done == 3;
             });
         });
 
@@ -148,7 +155,7 @@ describe(groupsEndpoint, function () {
                 request(groupsEndpoint, function (err, resp, actualGroups) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
-                    expect(actualGroups.length).toEqual(2);
+                    expect(actualGroups.length).toEqual(3);
                     done();
                 });
             });
@@ -173,7 +180,7 @@ describe(groupsEndpoint, function () {
                 });
             });
             it('should return 404 when not member of private group', function (done) {
-                var testGroup = testGroups[1];
+                var testGroup = testGroups[3];
                 request(groupsEndpoint + '/' + testGroup.key, function (err, resp) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(404);
@@ -225,6 +232,15 @@ describe(groupsEndpoint, function () {
                         expect(groups.length).toEqual(testData.groups.length-1);
                         done();
                     });
+                });
+            });
+
+            it('should not be able to remove if not admin', function(done) {
+                var testGroup = testGroups[1];
+                request.del(groupsEndpoint + '/' + testGroup.key, function(err, resp) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(403);
+                    done();
                 });
             });
         });

@@ -38,6 +38,10 @@ define(function (require, exports, module) {
         return null;
     };
 
+    proto.isOwner = function (user) {
+        return user && this.createdBy == user.id;
+    };
+
     proto.statusCount = function (status) {
         var c = 0;
         for (var i = 0, len = this.members.length; i < len; i++) {

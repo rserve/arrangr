@@ -22,3 +22,16 @@ exports.user = {
         next();
     }
 };
+
+exports.group = {
+    hasAuthorization: function(req, res, next) {
+        for (var i = 0, len = req.group.members.length; i < len; i++) {
+            var member = req.group.members[i];
+            if (member.admin && member.user && member.user.id === req.user.id) {
+                next();
+                return;
+            }
+        }
+        return res.status(403).send();
+    }
+};
