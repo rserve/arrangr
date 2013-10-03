@@ -117,8 +117,7 @@ define(function (require, exports, module) {
                 var startDate = $scope.group.startDate ? new Date($scope.group.startDate) : new Date();
 
                 if(data.weekday) {
-                    var n = new Date();
-                    var current = $scope.group.weekday() || n.getDay();
+                    var current = $scope.group.weekday() || new Date().getDay();
                     var diff = current - data.weekday;
                     startDate.setDate(startDate.getDate()-diff);
                     delete data.weekday;
