@@ -64,7 +64,7 @@ define(function (require, exports, module) {
     proto.time = function () {
         if(this.startDate) {
             var d = new Date(this.startDate);
-            return d.getHours() + ':' + d.getMinutes();
+            return (d.getHours() < 10 ? '0' : '') + d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
         }
         return null;
     };

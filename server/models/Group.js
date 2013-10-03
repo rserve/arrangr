@@ -6,7 +6,7 @@ var schema = new mongoose.Schema({
     key: { type: String, unique: true },
     name: { type: String, required: true },
     description: { type: String },
-    startDate: { type: Date, required: true, default: Date.now },
+    startDate: { type: Date, required: true },
     endDate: { type: Date },
     public: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },

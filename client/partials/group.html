@@ -12,7 +12,7 @@
 
 <h2>
     {{group.name}}
-    <small>{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}}</small>
+    <small ng-show="group.startDate">{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}}</small>
 </h2>
 <p>{{group.description}}</p>
 

@@ -10,6 +10,11 @@
                     <a href="/groups/{{group.key}}">{{group.name}}</a>
                  </td>
                 <td>
+                    <span ng-show="group.startDate">
+                        {{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}}
+                    </span>
+                </td>
+                <td>
                     <span ng-show="group.isNew" class="label label-info">new!</span>
                     <span ng-show="group.public" class="label label-warning">public</span>
                     <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>

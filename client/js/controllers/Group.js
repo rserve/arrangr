@@ -113,7 +113,27 @@ define(function (require, exports, module) {
             if (errors) {
                 flash.error = errors[0].message;
             } else {
-                client.update(key, groupForm.toJSON(),
+                var data = groupForm.toJSON();
+                var startDate = $scope.group.startDate ? new Date($scope.group.startDate) : new Date();
+
+                if(data.weekday) {
+                    var n = new Date();
+                    var current = $scope.group.weekday() || n.getDay();
+                    var diff = current - data.weekday;
+                    startDate.setDate(startDate.getDate()-diff);
+                    delete data.weekday;
+                }
+
+                if(data.time) {
+                    var t = data.time.split(':');
+                    startDate.setHours(t[0]);
+                    startDate.setMinutes(t[1]);
+                    delete data.time;
+                }
+
+                data.startDate = startDate;
+
+                client.update(key, data,
                     function (data) {
                         $scope.group = data;
                         flash.success = 'Meetup updated';
