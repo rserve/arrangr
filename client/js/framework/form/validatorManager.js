@@ -65,6 +65,10 @@ define(function (require, exports, module) {
 		},
 
 		validateField: function (type, value) {
+            if(!type) {
+                return false;
+            }
+
 			var validator = this.validators[type];
 
 			if (!validator) {

@@ -79,7 +79,7 @@ define(function (require, exports, module) {
 		 * Differentiate between empty field and "falsy" value
 		 * */
 		isEmpty: function () {
-			return this.value === null || this.value.length === 0;
+			return this.value === null || this.value === undefined || this.value.length === 0;
 		}
 
 	};

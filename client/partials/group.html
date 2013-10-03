@@ -11,6 +11,7 @@
 </p>
 
 <h2>{{group.name}}</h2>
+<p>{{group.description}}</p>
 
 <div class="row">
     <div class="col-lg-9 col-md-8 col-sm-8">
@@ -61,12 +62,12 @@
         </div>
 
         <form class="form" role="form" ng-show="!user" ng-submit="join()">
-            <h4>Join group</h4>
+            <h3>Join meetup</h3>
 
-            <div class="form-group {{joinForm.fields.email.status}}">
+            <div class="form-group {{joinForm.getField('email').status}}">
                 <input class="form-control" ng-model="joinForm.getField('email').value" placeholder="Enter your email"
                        type="text">
-                <span class="help-inline">{{joinForm.fields.email.message}}</span>
+                <span class="help-inline">{{joinForm.getField('email').message}}</span>
             </div>
         </form>
 
@@ -80,11 +81,22 @@
             </div>
         </form>
 
-        <p ng-show="group.isAdmin(user)">
-            <label class="checkbox">
-                <input type="checkbox" ng-click="public($event)" ng-checked="group.public"/> Public
-            </label>
-        </p>
+        <form class="form" role="form" ng-submit="update()" ng-show="group.isAdmin(user)">
+            <h3>Edit group</h3>
+            <div class="form-group">
+                <label class="control-label" for="groupFormName">Name</label>
+                <input class="form-control" id="groupFormName" type="text" ng-model="groupForm.getField('name').value" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="groupFormDescription">Description</label>
+                <input class="form-control" id="groupFormDescription" type="text" ng-model="groupForm.getField('description').value" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="groupFormPublic">Public</label>
+                <input class="form-control" id="groupFormPublic" type="checkbox" ng-model="groupForm.getField('public').value"/>
+            </div>
+            <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
+        </form>
 
         <!--<p ng-show="group.public">-->
         <!--Share:-->

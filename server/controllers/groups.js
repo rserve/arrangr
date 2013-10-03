@@ -38,7 +38,7 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
     var group = req.body;
     //TODO: check if user is admin
-    Group.findOneAndUpdate({_id: req.group.id}, group, function (err, group) {
+    Group.findOneAndUpdate({_id: req.group.id}, group).populate('members.user', userFields).exec(function (err, group) {
         e(err, res, 'Error updating group') || res.send(group);
     });
 };

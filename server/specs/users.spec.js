@@ -230,6 +230,14 @@ describe(usersEndpoint, function () {
                     done();
                 });
             });
+            it('should not be able to update someone else', function(done) {
+                var testUser = testUsers[1];
+                request.put(usersEndpoint + '/' + testUser.id, {form: {name: 'new name' }}, function (err, resp) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(403);
+                    done();
+                });
+            });
         });
     });
 });
