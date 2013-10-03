@@ -31,4 +31,16 @@ schema.options.toJSON.transform = function(doc, ret, options) {
     cleaner.removeHiddenProperties(ret);
 };
 
+schema.methods = {
+    isAdmin: function(user) {
+        for (var i = 0, len = this.members.length; i < len; i++) {
+            var member = this.members[i];
+            if (member.admin && member.user && member.user.id === user.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
 module.exports = mongoose.model('Group', schema);

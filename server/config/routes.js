@@ -28,11 +28,11 @@ module.exports = function (app, passport, auth) {
             app.get('', auth.requiresLogin, groups.findByUser);
             app.post('', auth.requiresLogin, groups.create);
             app.post('/:key/invite', auth.requiresLogin, groups.invite);
-            app.put('/:key', auth.requiresLogin, groups.update);
+            app.put('/:key', [auth.requiresLogin, auth.group.hasAuthorization], groups.update);
             app.delete('/:key', [auth.requiresLogin, auth.group.hasAuthorization], groups.delete);
 
-            app.put('/:key/members/:memberId', auth.requiresLogin, groups.updateMember);
-            app.delete('/:key/members/:memberId', auth.requiresLogin, groups.deleteMember);
+            app.put('/:key/members/:memberId', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.updateMember);
+            app.delete('/:key/members/:memberId', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.deleteMember);
 
             app.param('key', groups.fromKey);
             app.param('groupId', groups.fromId);

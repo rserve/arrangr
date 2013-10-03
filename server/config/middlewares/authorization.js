@@ -14,24 +14,38 @@ exports.requiresLogin = function (req, res, next) {
  *  User authorizations routing middleware
  */
 
+function sendUnauthorized(res, message) {
+    res.status(403).send(message);
+}
+
 exports.user = {
     hasAuthorization : function (req, res, next) {
-        if (req.profile.id != req.user.id) {
-            return res.status(403).send();
+        // user is authorized if self
+        if (req.profile.id == req.user.id) {
+            return next();
         }
-        next();
+
+        return sendUnauthorized(res, 'User not authorized');
     }
 };
 
 exports.group = {
     hasAuthorization: function(req, res, next) {
-        for (var i = 0, len = req.group.members.length; i < len; i++) {
-            var member = req.group.members[i];
-            if (member.admin && member.user && member.user.id === req.user.id) {
-                next();
-                return;
-            }
+        // user is authorized if admin in group
+        if(req.group.isAdmin(req.user)) {
+            return next();
         }
-        return res.status(403).send();
+
+        return sendUnauthorized(res, 'User not authorized for group');
+    },
+    member: {
+        hasAuthorization: function(req, res, next) {
+            // user is authorized if admin or trying to update own membership
+            if(req.group.isAdmin(req.user) || req.params.memberId == req.user.id) {
+                return next();
+            }
+
+            return sendUnauthorized(res, 'User not authorized for this groupmember');
+        }
     }
 };

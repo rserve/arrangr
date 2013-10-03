@@ -37,7 +37,6 @@ exports.create = function (req, res) {
 
 exports.update = function (req, res) {
     var group = req.body;
-    //TODO: check if user is admin
     Group.findOneAndUpdate({_id: req.group.id}, group).populate('members.user', userFields).exec(function (err, group) {
         e(err, res, 'Error updating group') || res.send(group);
     });
@@ -51,7 +50,6 @@ exports.delete = function (req, res) {
 
 exports.updateMember = function(req, res) {
     var status = req.body.status;
-    //TODO: check if user is admin or trying to update self, otherwise return error
     Group.findOneAndUpdate({'members._id': req.params.memberId }, { 'members.$.status' : status }, function(err, group) {
         if(!e(err, res, 'Error updating groupmember')) {
             if(!group) {
@@ -64,7 +62,6 @@ exports.updateMember = function(req, res) {
 };
 
 exports.deleteMember = function(req, res) {
-    //TODO: check if user is admin or trying to remove self, otherwise return error
     var group = req.group;
     Group.findOneAndUpdate({ _id: group.id }, { '$pull': { members: { _id: req.params.memberId } } }).populate('members.user', userFields).exec(
         function (err, group) {
