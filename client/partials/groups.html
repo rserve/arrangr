@@ -20,7 +20,7 @@
                     <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
                     <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
                     <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
-                    <span ng-show="group.isAdmin(user)" class="label label-danger">admin</span>
+                    <span ng-show="!member(group).status && group.isAdmin(user)" class="label label-danger">admin</span>
                     <span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"
                           class="label label-success">member</span>
                 </td>
