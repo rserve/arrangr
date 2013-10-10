@@ -10,7 +10,7 @@ define(function (require, exports, module) {
             response;
 
         var template = '<div class="preview">' +
-            '<img />' +
+            '<img class="thumbnail"/>' +
             '<div class="progressBar"></div>' +
             '</div>';
 
@@ -62,13 +62,23 @@ define(function (require, exports, module) {
                 },
 
                 uploadStarted: function (i, file, len) {
+                    dropbox.find('.thumbnail').hide();
                     createImage(file);
                 },
 
                 progressUpdated: function (i, file, progress) {
                     $.data(file).find('.progressBar').width(progress);
-                }
+                },
 
+                docOver: function() {
+                    dropbox.addClass('dragging');
+                },
+                docLeave: function() {
+                    dropbox.removeClass('dragging');
+                },
+                drop: function() {
+                    dropbox.removeClass('dragging');
+                }
             });
         };
 
@@ -106,7 +116,6 @@ define(function (require, exports, module) {
 
         return {
             restrict: 'C',
-            template: '<span class="message">Drop image here.</span>',
             link: function (scope, element, attr) {
                 scope.$watch(attr.uploadUrl, function (url) {
                     if (url) {

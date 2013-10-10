@@ -11,7 +11,10 @@
 </p>
 
 <div class="p">
-    <div class="pull-left imagedrop" upload-url="group.thumbnailPath()"></div>
+    <div class="pull-left imagedrop" upload-url="group.thumbnailPath()">
+        <img class="thumbnail" ng-show="group.image" ng-src="{{ group.image.data }}"/>
+        <span class="thumbnail message" ng-show="!group.image && group.isAdmin(user)">Drop image here.</span>
+    </div>
 
     <h2>
         {{group.name}}

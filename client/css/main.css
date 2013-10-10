@@ -144,8 +144,6 @@ h1 {
 }
 
 .imagedrop {
-    background: white;
-    border-radius:3px;
     position: relative;
     max-height: 100px;
     min-height: 75px;
@@ -153,18 +151,27 @@ h1 {
     overflow: hidden;
     margin-right: 1em;
     margin-bottom: 1em;
-    box-shadow:0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);
 }
 
 .imagedrop:before{
     border-radius:3px 3px 0 0;
 }
 
-.imagedrop .message{
+.imagedrop .message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     font-size: 0.8em;
     text-align: center;
     padding: 1em;
     display: block;
+}
+
+.dragging .message {
+    border: 3px dashed #999;
+    display: block !important;
 }
 
 .imagedrop .preview{
@@ -174,10 +181,11 @@ h1 {
     text-align: center;
 }
 
-.imagedrop .preview img{
+.imagedrop img{
     max-width: 100px;
     max-height: 100px;
     display: block;
+    margin: auto;
 }
 
 .imagedrop .progressBar{
