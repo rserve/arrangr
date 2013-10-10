@@ -139,6 +139,33 @@ h1 {
     transform: rotateY(180deg);
 }
 
+.p {
+    margin: 1em 0;
+}
+
+.imagedrop {
+    background: white;
+    border-radius:3px;
+    position: relative;
+    height: 100px;
+    overflow: hidden;
+    width: 100px;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    box-shadow:0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);
+}
+
+.imagedrop:before{
+    border-radius:3px 3px 0 0;
+}
+
+.imagedrop .message{
+    font-size: 0.8em;
+    text-align: center;
+    padding: 1em;
+    display: block;
+}
+
 @media (min-width: 768px) {
     .home {
         padding-top: 55px;

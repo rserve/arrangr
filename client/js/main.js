@@ -5,6 +5,7 @@ require([
     'angular-ui-router',
     'angular-flash',
 	'jquery',
+	'jquery-filedrop',
 	'app',
 	'services/services',
 	'controllers/controllers',

@@ -6,6 +6,12 @@ var schema = new mongoose.Schema({
     key: { type: String, unique: true },
     name: { type: String, required: true },
     description: { type: String },
+    imageData: { type: String },
+    image: {
+      format: { type: String },
+      data: { type: String },
+      size: { type: Number }
+    },
     startDate: { type: Date, default: Date.now },
     endDate: { type: Date },
     public: { type: Boolean, default: false },

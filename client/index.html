@@ -30,6 +30,7 @@
         baseUrl: '/js',
         paths: {
             jquery: '../lib/jquery-1.8.3',
+            'jquery-filedrop': '../lib/jquery.filedrop',
             bootstrap: '../lib/bootstrap/js/bootstrap',
             underscore: '../lib/underscore',
             angular: '../lib/angular-1.0.8',
@@ -56,18 +57,18 @@
             },
             'angular-flash': {
                 deps: ['angular']
+            },
+            'jquery-filedrop': {
+                deps: ['jquery']
             }
-
         },
         priority: [
             "angular"
         ]
-
     });
 
     //load app
     require(['main']);
-
 
 </script>
 </body>

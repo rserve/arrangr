@@ -73,5 +73,10 @@ define(function (require, exports, module) {
         return null;
     };
 
+    proto.thumbnailPath = function() {
+        return '/api/groups/' + this.key + '/thumbnail';
+    };
+
+
     module.exports = Group;
 });

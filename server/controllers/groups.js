@@ -4,6 +4,7 @@ var Group = mongoose.model('Group');
 var User = mongoose.model('User');
 var hash = require('../helpers/hash');
 var mailer = require('../helpers/mailer.js');
+var fs = require('fs');
 
 var userFields = 'id name email verfied hashedEmail'; //TODO typo in word verfied?
 
@@ -128,6 +129,38 @@ exports.invite = function(req, res) {
                 addUserToGroup(res, group, user);
             }
         }
+    });
+};
+
+exports.uploadThumbnail = function(req, res) {
+    //TODO: Real validation
+    if(!req.files || !req.files.thumbnail) {
+        res.status(500).send('Missing thumbnail file');
+        return;
+    }
+
+    var thumbnail = req.files.thumbnail;
+
+    var format = thumbnail.headers['content-type'];
+
+    if(format.indexOf('image') == -1) {
+        res.status(500).send('Only images allowed');
+        return;
+    }
+
+    if(thumbnail.size > 100 * 1000) {
+        res.status(500).send('File too big: ' + thumbnail.size);
+        return;
+    }
+
+    var image = {
+        data: "data:" + format + ";base64," + new Buffer(fs.readFileSync(thumbnail.path, 'binary'), 'binary').toString('base64'),
+        format: format,
+        size: thumbnail.size
+    };
+
+    Group.findOneAndUpdate({_id: req.group.id}, { image: image }).populate('members.user', userFields).exec(function (err, group) {
+        e(err, res, 'Error uploading thumbnail') || res.send(group);
     });
 };
 

@@ -34,6 +34,8 @@ module.exports = function (app, passport, auth) {
             app.put('/:key/members/:memberId', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.updateMember);
             app.delete('/:key/members/:memberId', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.deleteMember);
 
+            app.post('/:key/thumbnail', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.uploadThumbnail);
+
             app.param('key', groups.fromKey);
             app.param('groupId', groups.fromId);
         });
