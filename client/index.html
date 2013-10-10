@@ -42,6 +42,9 @@
 
         },
         shim: {
+            jquery: {
+                exports: 'jQuery'
+            },
             angular: {
                 deps: ['jquery'], // for angular.element
                 exports: 'angular'

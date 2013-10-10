@@ -5,7 +5,7 @@ define(function (require, exports, module) {
         imagedrop = require('./imagedrop');
 
 	//add all directives
-    app.directive('imagedrop', imagedrop);
+    app.directive('imagedrop', ['flash', imagedrop]);
 
 	//no export
 });
