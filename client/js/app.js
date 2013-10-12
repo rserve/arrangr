@@ -11,10 +11,12 @@ define(function (require, exports, module) {
 
 		//add config values
 		value('version', config.version).
-		value('name', config.appName).
-        config(function(flashProvider) {
-            flashProvider.errorClassnames.push('alert-danger');
-        });
+		value('name', config.appName);
+	// TODO this breaks uglify js
+	/*.
+	 config(function(flashProvider) {
+	 flashProvider.errorClassnames.push('alert-danger');
+	 })*/
 
 	console.log('Angular module created:', config.appName, config.version);
 

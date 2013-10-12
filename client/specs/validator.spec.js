@@ -30,17 +30,6 @@ define(function (require, exports, module) {
 		});
 
 		describe('validate', function () {
-			it('should throw error when validator is not found', function () {
-				var exception;
-				try {
-					formValidator.validate({myParam: 'johnDoe'});
-				} catch (e) {
-					exception = e;
-				}
-
-				expect(exception).toBeDefined();
-
-			});
 
 			it('should call method of correct validator', function () {
 				var validator = {type: 'isNonEmpty', validate: function () {
@@ -70,21 +59,12 @@ define(function (require, exports, module) {
 				expect(validator.validate).toHaveBeenCalled();
 			});
 
-			/*it('should not return errors on valid data', function () {
-				formValidator.addConfig({myParam: 'email'});
-				formValidator.addValidator(baseValidators.email);
-
-				var errors = formValidator.validate({myParam: 'test@email.com'});
-
-				expect(errors).toBeUndefined();
-			});*/
 
 			it('should return correct errors on invalid data', function () {
 				formValidator.addConfig({myParam: 'email'});
 				formValidator.addValidator(baseValidators.email);
 
 				var errors = formValidator.validate({myParam: 'test@email'});
-				console.log(errors);
 				expect(errors).toBeDefined();
 			});
 		});

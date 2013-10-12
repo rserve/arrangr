@@ -6,6 +6,12 @@ Requires mongodb server.
 
 ## Installing
 
+### MongoDB
+
+[http://www.mongodb.org/](http://www.mongodb.org/)
+
+MongoDB must be started for application to work.
+
 ### Node modules
 
 Install all node modules and dependencies with ``npm install``
@@ -15,6 +21,7 @@ More information [https://npmjs.org/]
 ### Grunt
 
 Install grunt with ``npm install -g grunt-cli``
+cd ..
 
 More information [http://gruntjs.com/getting-started]
 
@@ -26,27 +33,21 @@ Note: Default port 3000, to change:
 
 ``PORT=3000 npm start``
 
-## Grunt tasks
+## Testing
 
-Run all tasks with ``grunt``, this will:
+``npm test``
 
- * run jshint on browser and node js-files.
- * run jasmine spec runner for browser through phantomjs
- * run jasmine spec runner for node
+Will:
 
-### Jshint
+* run jshint on browser and node js-files.
+* run karma jasmine spec runner for browser through phantomjs
+* run jasmine spec runner for node
 
-[http://www.jshint.com/]
+### Browser watch
 
-* ``grunt lint`` - browser and node
-* ``grunt lint_browser`` - browser only
-* ``grunt lint_node`` - node only
+``grunt karma:watch``
 
-### Spec runner
-
-* ``grunt spec`` - browser and node
-* ``grunt spec_browser`` - browser only
-* ``grunt spec_node`` - node only
+Will start karma spec server and connect Chrome browser. Watches browser script or specs files for changes and executes specs.
 
 ## Build step
 

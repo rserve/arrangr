@@ -70,59 +70,22 @@ module.exports = function (grunt) {
 			}
 
 		},
-		jasmine: {
-			src: 'client/js/**/*.js',
-			options: {
-				specs: 'client/specs/**/*spec.js',
-				template: require('grunt-template-jasmine-requirejs'),
-				templateOptions: {
-
-					/*
-					 * Because we changed how require config is loaded due to build step (separate require config main.js),
-					 * unfortunately we have to repeat the whole require config here for the jasmine runner.
-					 * */
-					//requireConfigFile: 'client/js/config.js',
-					requireConfig: {
-						baseUrl: 'client/js/', // to play nice with jasmine runner
-
-						paths: {
-
-							'client/js': './', // to play nice with jasmine runner
-
-							jquery: '../lib/jquery-1.8.3',
-							bootstrap: '../lib/bootstrap/js/bootstrap',
-							underscore: '../lib/underscore',
-                            angular: '../lib/angular-1.0.8',
-                            angularuirouter: '../lib/angular-ui-router',
-							json: '../lib/require/json',
-							text: '../lib/require/text',
-							data: '../data'
-						},
-						shim: {
-							angular: {
-								deps: ['jquery'], // for angular.element
-								exports: 'angular'
-							},
-                            'angularuirouter': {
-                                deps: ['angular']
-                            },
-							'bootstrap': {
-								deps: ['jquery']
-							},
-							'underscore': {
-								exports: '_'
-							}
-
-						},
-						priority: [
-							"angular"
-						]
-
-					}
-				}
+		karma: {
+			// watch files and re-run tests. Chrome will run tests
+			watch: {
+				configFile: 'karma.conf.js',
+				singleRun: false,
+				autoWatch: true,
+				browsers: ['Chrome']
+			},
+			//continuous integration mode: run tests once in PhantomJS browser.
+			continuous: {
+				configFile: 'karma.conf.js',
+				singleRun: true,
+				browsers: ['PhantomJS']
 			}
 		},
-		// squelch jhint warning
+		// squelch jshint warning
 		/* jshint camelcase: false */
 		jasmine_node: {
 			specNameMatcher: '.spec',
@@ -143,8 +106,11 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		/*
+		* Build task with require.js optimizer
+		* */
 		requirejs: {
-			compile: {
+			build: {
 				options: {
 					appDir: "client",
 					baseUrl: "js",
@@ -152,35 +118,46 @@ module.exports = function (grunt) {
 
 					paths: {
 						jquery: 'empty:',
+						'jquery-filedrop': 'empty:',
 						bootstrap: 'empty:',
 						underscore: 'empty:',
 						angular: 'empty:',
-						angularcookie: 'empty:',
+						'angular-ui-router': 'empty:',
+						'angular-flash': 'empty:',
 						json: '../lib/require/json',
 						text: '../lib/require/text',
 						data: '../data'
 
 					},
 					shim: {
+						jquery: {
+							exports: 'jQuery'
+						},
 						angular: {
 							deps: ['jquery'], // for angular.element
 							exports: 'angular'
-						},
-						angularcookie: {
-							deps: ['angular']
 						},
 						'bootstrap': {
 							deps: ['jquery']
 						},
 						'underscore': {
 							exports: '_'
+						},
+						'angular-ui-router': {
+							deps: ['angular']
+						},
+						'angular-flash': {
+							deps: ['angular']
+						},
+						'jquery-filedrop': {
+							deps: ['jquery']
 						}
-
 					},
-					// skip libraries except text & json
-					fileExclusionRegExp: /^(specs|index.jasmine.html|jquery|bootstrap|underscore|angular|jasmine|index.html|prod-index.html)/,
+					// skip specs, "hidden" folders and libraries except text & json
+					// TODO regexp could be simplified
+					fileExclusionRegExp: /^(specs|angular|jquery|require\.js|underscore|bootstrap|\.)/,
 					optimizeCss: 'standard',
-
+					optimize:'none',
 					removeCombined: true,
 					modules: [
 						{
@@ -198,46 +175,33 @@ module.exports = function (grunt) {
 			}
 		},
 		copy: {
-			postBuild: {
+			build: {
 				files: [
-					//copy all third party libraries to build
-					{expand: true, src: ['client/lib/**'], dest: 'build/'},
-
-					//copy prod-index.html to index.html for build
-					{ expand: true, src: ['client/prod-index.html'], dest: 'build/client', filter: 'isFile',
-						rename: function (dest, src) {
-							return dest + '/index.html';
-						}},
-
+					{expand: true, cwd: 'build_statics//', src: ['**'], dest: 'build/client/'}
 				]
 			}
+		},
+		clean: {
+			build: ["build"]
 		}
 	});
 
 
 	//Deps tasks
 	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-jasmine');
 	grunt.loadNpmTasks('grunt-jasmine-node');
 	grunt.loadNpmTasks('grunt-nodemon');
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-karma');
+	grunt.loadNpmTasks('grunt-contrib-clean');
 
-	//lint tasks
-	grunt.registerTask('lint', ['jshint:client', 'jshint:node']);
-	grunt.registerTask('lint_browser', ['jshint:client']);
-	grunt.registerTask('lint_node', ['jshint:node']);
-
-	//spec tastks
-	grunt.registerTask('spec', ['jasmine', 'jasmine_node']);
-	grunt.registerTask('spec_browser', ['jasmine']);
-	grunt.registerTask('spec_node', ['jasmine_node']);
-	grunt.registerTask('build', ['requirejs', 'copy:postBuild']);
+	grunt.registerTask('build', ['clean:build','requirejs', 'copy:build']);
 
 	// default tasks
-	grunt.registerTask('all', ['jshint:client', 'jshint:node', 'jasmine_node']);
+	grunt.registerTask('test', ['jshint:client', 'jshint:node', 'karma:continuous', 'jasmine_node']);
 
-	grunt.registerTask('default', ['all']);
+	grunt.registerTask('default', ['test']);
 
 
 };
