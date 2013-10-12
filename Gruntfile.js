@@ -157,7 +157,7 @@ module.exports = function (grunt) {
 					// TODO regexp could be simplified
 					fileExclusionRegExp: /^(specs|angular|jquery|require\.js|underscore|bootstrap|\.)/,
 					optimizeCss: 'standard',
-					optimize:'none',
+					//optimize:'none',
 					removeCombined: true,
 					modules: [
 						{
