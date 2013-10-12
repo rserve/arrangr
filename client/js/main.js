@@ -11,6 +11,7 @@ require([
 	'controllers/controllers',
 	'filters/filters',
 	'directives/directives',
+	'config/flash',
 	'config/http',
 	'config/routes',
 	'config/finalize'
