@@ -2,7 +2,8 @@
 
     <div ui-view="header"></div>
 
-    <div flash-alert active-class="in" class="alert fade" ng-show="flash.message">
+    <div flash-alert active-class="in alert" class="fade">
+        <i class="icon-info-sign"></i>
         <span class="alert-message" ng-bind-html-unsafe="flash.message | link"></span>
     </div>
 

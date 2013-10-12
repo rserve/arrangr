@@ -11,7 +11,10 @@ define(function (require, exports, module) {
 
         var template = '<div class="preview">' +
             '<img class="thumbnail"/>' +
-            '<div class="progressBar"></div>' +
+            '<div class="progress">' +
+            '<div class="progress-bar progress-bar-success"  role="progressbar">' +
+            '</div>' +
+            '</div>' +
             '</div>';
 
         var init = function (element, url) {
@@ -28,8 +31,9 @@ define(function (require, exports, module) {
 
                 uploadFinished: function (i, file, res) {
                     $.data(file).addClass('done');
-                    $.data(file).find('.progressBar').fadeOut('slow');
+                    $.data(file).find('.progress').fadeOut('slow');
                     flash.success = 'Image uploaded';
+
                     response = res;
                 },
 
@@ -67,7 +71,7 @@ define(function (require, exports, module) {
                 },
 
                 progressUpdated: function (i, file, progress) {
-                    $.data(file).find('.progressBar').width(progress);
+                    $.data(file).find('.progress-bar').width(progress);
                 },
 
                 docOver: function() {
