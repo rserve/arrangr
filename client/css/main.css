@@ -153,10 +153,6 @@ h1 {
     margin-bottom: 1em;
 }
 
-.imagedrop:before{
-    border-radius:3px 3px 0 0;
-}
-
 .imagedrop .message {
     position: absolute;
     top: 0;
@@ -172,6 +168,7 @@ h1 {
 .dragging .message {
     border: 3px dashed #999;
     display: block !important;
+    z-index: 999;
 }
 
 .imagedrop .preview{
@@ -188,20 +185,7 @@ h1 {
     margin: auto;
 }
 
-.imagedrop .progressBar{
-    background-color: #2586d0;
-    position: absolute;
-    height: 12px;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    -moz-transition:0.25s;
-    -webkit-transition:0.25s;
-    -o-transition:0.25s;
-    transition:0.25s;
-}
-
-.imagedrop .preview.done .progressBar{
+.imagedrop .preview.done .progress-bar {
     width:100% !important;
 }
 
