@@ -18,7 +18,7 @@
 
     <h2>
         {{group.name}}
-        <small ng-show="group.startDate">{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}}</small>
+        <small ng-show="group.startDate">{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}} (<span am-time-ago="group.startDate"></span>)</small>
     </h2>
     <p>{{group.description}}</p>
     <div class="clearfix"></div>
@@ -61,17 +61,17 @@
             <small>{{ comment.author }} <span am-time-ago="comment.createdAt"></span></small>
         </blockquote>
 
-        <form class="form" role="form"
+       <!-- <form class="form" role="form"
               ng-show="group.isAdmin(user) || group.public && group.isMember(user)"
               ng-submit="addComment()">
             <div class="form-group">
                 <textarea ng-model="commentForm.getField('text').value"
                           placeholder="Add a comment..." class="form-control" rows="2"></textarea>
-                <!--<span class="help-inline">{{commentForm.getField('text').error.message}}</span>-->
+                &lt;!&ndash;<span class="help-inline">{{commentForm.getField('text').error.message}}</span>&ndash;&gt;
             </div>
             <button type="submit" class="btn btn-success">{{'%BUTTON_COMMENT%' | phrase}}</button>
 
-        </form>
+        </form>-->
 
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
