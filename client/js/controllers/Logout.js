@@ -6,7 +6,6 @@ define(function (require, exports, module) {
 
 
 		usersClient.logout(function (res) {
-				console.log('success', res);
 				authState.removeUserState();
 				$state.transitionTo('home');
 			},

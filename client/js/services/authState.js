@@ -1,50 +1,56 @@
 define(function (require, exports, module) {
 
-	'use strict';
+    'use strict';
 
-	var factory = [ '$rootScope', function ($rootScope) {
+    var factory = [ '$rootScope', '$injector', function ($rootScope, $injector) {
 
+        var usersClient;
 
-		return {
+        return {
 
-			isAuth: function () {
-				return !!this.getUserState();
-			},
+            isAuth: function () {
+                return !!this.getUserState();
+            },
 
+            getUserState: function () {
+                return sessionStorage.getItem("user");
+            },
 
-			getUserState: function () {
-				var userString = sessionStorage.getItem("user"),
-					user;
-				if (userString) {
-                    try {
-					    user = JSON.parse(userString);
-                    } catch (e) {}
-				}
-				return user;
-			},
+            refreshUserState: function () {
+                if(this.getUserState()) {
+                    // Inject at run because of circular dependancy
+                    usersClient = usersClient || $injector.get('usersClient');
+                    usersClient.session(
+                        function (user) {
+                            this.setUserState(user);
+                            $rootScope.user = user;
+                        }, function (err) {
+                            this.removeUserState();
+                        }
+                    );
+                } else {
+                    console.log('No user state found in browser');
+                }
+            },
 
-			refreshUserState: function () {
-				var user = this.getUserState();
-				$rootScope.user = user;
-				console.log('User state refreshed:', user?user:' no user');
-			},
+            setUserState: function (user) {
+                if (user) {
+                    sessionStorage.setItem("user", user.id);
+                    $rootScope.user = user;
+                    console.log('User state stored', user);
+                }
+            },
 
-			setUserState: function (user) {
-				sessionStorage.setItem("user", JSON.stringify(user));
-				$rootScope.user = user;
+            removeUserState: function () {
+                if (this.getUserState()) {
+                    sessionStorage.removeItem("user");
+                    console.log('User state removed');
+                }
+                $rootScope.user = null;
+            }
+        };
+    }];
 
-				console.log('User state stored', user);
-
-			},
-
-			removeUserState: function () {
-				sessionStorage.removeItem("user");
-				$rootScope.user = null;
-				console.log('User state removed');
-			}
-		};
-	}];
-
-	module.exports = factory;
+    module.exports = factory;
 
 });

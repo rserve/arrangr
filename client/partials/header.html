@@ -2,7 +2,7 @@
     <small class="top-right" ng-show="user">
         <img ng-src="http://www.gravatar.com/avatar/{{user.hashedEmail}}?s=25&d=mm" width="25" height="25"/>
         <a href="/profile">
-            {{user.email}}
+            {{ user.displayName() }}
         </a>
         <span ng-hide="user.verified">(not verified)</span>
         |

@@ -16,6 +16,32 @@ define(function (require, exports, module) {
 
 		var baseUrl = '/api/users';
 
+        client.get = function(userId, success, error) {
+            var req = new RequestBuilder().
+                setMethod('get').
+                setUrl(baseUrl).
+                addPath(userId).
+                setSuccessCb(success).
+                setErrorCb(error).
+                setResponseParser(userParser).
+                build();
+
+            this.sendRequest(req);
+        };
+
+        client.session = function(success, error) {
+            var req = new RequestBuilder().
+                setMethod('get').
+                setUrl(baseUrl).
+                addPath('session').
+                setSuccessCb(success).
+                setErrorCb(error).
+                setResponseParser(userParser).
+                build();
+
+            this.sendRequest(req);
+        };
+
 		client.login = function (user, success, error) {
 
 			var req = new RequestBuilder().

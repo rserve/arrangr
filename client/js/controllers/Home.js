@@ -83,7 +83,6 @@ define(function (require, exports, module) {
 
 					usersClient.login(data,
 						function (user) {
-							console.log('success', user);
 
 							authState.setUserState(user);
 
@@ -127,7 +126,6 @@ define(function (require, exports, module) {
 
 					usersClient.create(data,
 						function (res) {
-							console.log('success', res);
 							authState.setUserState(res);
 							$state.transitionTo("groups");
 							registerForm.clear();
