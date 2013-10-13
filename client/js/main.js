@@ -4,6 +4,7 @@ require([
 	'json!data/config.json',
     'angular-ui-router',
     'angular-flash',
+    'angular-moment',
 	'jquery',
 	'jquery-filedrop',
 	'app',

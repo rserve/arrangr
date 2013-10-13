@@ -164,6 +164,19 @@ exports.uploadThumbnail = function(req, res) {
     });
 };
 
+exports.addComment = function (req, res){
+	var group = req.group;
+
+	Group.findOneAndUpdate({_id: group.id }, { $addToSet: { comments: { text: req.body.text, author:req.body.author} } } ).
+		populate('members.user', userFields).exec(
+		function (err, group) {
+			if(!e(err, res, 'Error adding comment')) {
+				res.send(group);
+			}
+		}
+	);
+};
+
 // param parsing
 var fromParam = function (req, res, next, q) {
     var query = Group.findOne(q);

@@ -121,9 +121,11 @@ module.exports = function (grunt) {
 						'jquery-filedrop': 'empty:',
 						bootstrap: 'empty:',
 						underscore: 'empty:',
+						moment: 'empty:',
 						angular: 'empty:',
 						'angular-ui-router': 'empty:',
 						'angular-flash': 'empty:',
+						'angular-moment': 'empty:',
 						json: '../lib/require/json',
 						text: '../lib/require/text',
 						data: '../data'
@@ -148,6 +150,9 @@ module.exports = function (grunt) {
 						},
 						'angular-flash': {
 							deps: ['angular']
+						},
+						'angular-moment': {
+							deps: ['moment','angular']
 						},
 						'jquery-filedrop': {
 							deps: ['jquery']

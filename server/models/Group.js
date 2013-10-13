@@ -22,7 +22,12 @@ var schema = new mongoose.Schema({
         status: {type: String, enum: ['Yes', 'No', 'Maybe'], default: '' },
         admin: { type: Boolean, default: false },
         createdAt: {type: Date, default: Date.now }
-    }]
+    }],
+	comments: [{
+		text: {type: String, default: '' },
+		author: {type: String, default: '' },
+		createdAt: {type: Date, default: Date.now }
+	}]
 });
 
 schema.pre('save', function (next) {

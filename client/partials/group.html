@@ -54,6 +54,25 @@
             </tr>
             </tbody>
         </table>
+
+
+        <blockquote ng-repeat="comment in group.comments">
+            <p>  {{ comment.text }}</p>
+            <small>{{ comment.author }} <span am-time-ago="comment.createdAt"></span></small>
+        </blockquote>
+
+        <form class="form" role="form"
+              ng-show="group.isAdmin(user) || group.public && group.isMember(user)"
+              ng-submit="addComment()">
+            <div class="form-group">
+                <textarea ng-model="commentForm.getField('text').value"
+                          placeholder="Add a comment..." class="form-control" rows="2"></textarea>
+                <!--<span class="help-inline">{{commentForm.getField('text').error.message}}</span>-->
+            </div>
+            <button type="submit" class="btn btn-success">{{'%BUTTON_COMMENT%' | phrase}}</button>
+
+        </form>
+
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
         <div ng-show="group.isMember(user)">
@@ -131,6 +150,7 @@
 
     </div>
 </div>
+
 
 <a class="btn btn-info" href="/groups">
     <span class="glyphicon glyphicon-chevron-left"></span>

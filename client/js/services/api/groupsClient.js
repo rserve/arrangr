@@ -5,7 +5,8 @@ define(function (require, exports, module) {
 	var RequestBuilder = require('./RequestBuilder'),
 		BaseClient = require('./BaseClient'),
 		Group = require('./domain/Group'),
-		User = require('./domain/User');
+		User = require('./domain/User'),
+		Comment = require('./domain/Comment');
 
 	var service = ['$http', function ($http) {
 
@@ -25,14 +26,23 @@ define(function (require, exports, module) {
 		var groupParser = function (data) {
             var group = new Group(data);
             memberParser(group);
+            commentParser(group);
 			return group;
 		};
+
+
 
         var memberParser = function(group) {
             for(var j = 0, len = group.members.length; j < len; j++) {
                 group.members[j].user = new User(group.members[j].user);
             }
         };
+
+		var commentParser = function(group) {
+			group.comments.forEach(function (comment, i, comments){
+				comments[i] = new Comment(comment);
+			});
+		};
 
 
 		/*
@@ -165,6 +175,20 @@ define(function (require, exports, module) {
             this.sendRequest(req);
         };
 
+		client.addComment = function(key, data, success, error) {
+			var req = new RequestBuilder().
+				setMethod('post').
+				setUrl('/api/groups').
+				addPath(key).
+				addPath('comments').
+				setData(data).
+				setSuccessCb(success).
+				setErrorCb(error).
+				setResponseParser(groupParser).
+				build();
+
+			this.sendRequest(req);
+		};
 
 		return client;
 	}];

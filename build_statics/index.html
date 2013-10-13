@@ -32,9 +32,11 @@
             'jquery-filedrop': '../lib/jquery.filedrop',
             bootstrap: 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min',
             underscore: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min',
+            moment: '../lib/moment.min',
             angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min',
             'angular-ui-router': '../lib/angular-ui-router.min',
             'angular-flash': '../lib/angular-flash.min',
+            'angular-moment': '../lib/angular-moment.min',
             json: '../lib/require/json',
             text: '../lib/require/text',
             data: '../data'
@@ -59,6 +61,9 @@
             },
             'angular-flash': {
                 deps: ['angular']
+            },
+            'angular-moment': {
+                deps: ['moment','angular']
             },
             'jquery-filedrop': {
                 deps: ['jquery']
