@@ -24,7 +24,7 @@ module.exports = function (app, passport, auth) {
             var groups = require('../controllers/groups');
 
             app.get('/:key', groups.find);
-            app.post('/join', groups.join);
+            app.post('/:key/join', groups.join);
             app.get('', auth.requiresLogin, groups.findByUser);
             app.post('', auth.requiresLogin, groups.create);
             app.post('/:key/invite', auth.requiresLogin, groups.invite);
