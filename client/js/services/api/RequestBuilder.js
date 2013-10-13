@@ -44,7 +44,7 @@ define(function (require, exports, module) {
 		return this;
 	};
 
-	proto.addResponseMiddleware = function (fn) {
+	proto.setResponseParser = function (fn) {
 		this.respMiddleware = fn;
 		return this;
 	};

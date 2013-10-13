@@ -25,7 +25,7 @@ define(function (require, exports, module) {
 				setData(user).
 				setSuccessCb(success).
 				setErrorCb(error).
-				addResponseMiddleware(userParser).
+				setResponseParser(userParser).
 				build();
 
 			this.sendRequest(req);
@@ -40,7 +40,7 @@ define(function (require, exports, module) {
 				setData(user).
 				setSuccessCb(success).
 				setErrorCb(error).
-				addResponseMiddleware(userParser).
+				setResponseParser(userParser).
 				build();
 
 			this.sendRequest(req);
@@ -56,7 +56,7 @@ define(function (require, exports, module) {
                 setData(data).
                 setSuccessCb(success).
                 setErrorCb(error).
-                addResponseMiddleware(userParser).
+                setResponseParser(userParser).
                 build();
 
             this.sendRequest(req);
@@ -87,7 +87,7 @@ define(function (require, exports, module) {
                 addPath(hash).
                 setSuccessCb(success).
                 setErrorCb(error).
-                addResponseMiddleware(userParser).
+                setResponseParser(userParser).
                 build();
 
             this.sendRequest(req);

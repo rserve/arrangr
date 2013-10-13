@@ -46,7 +46,7 @@ define(function (require, exports, module) {
 				setUrl('/api/groups').
 				setSuccessCb(success).
 				setErrorCb(error).
-				addResponseMiddleware(groupsParser).
+				setResponseParser(groupsParser).
 				build();
 			this.sendRequest(req);
 
@@ -59,7 +59,7 @@ define(function (require, exports, module) {
 				addPath(key).
 				setSuccessCb(success).
 				setErrorCb(error).
-				addResponseMiddleware(groupParser).
+				setResponseParser(groupParser).
 				build();
 
 			this.sendRequest(req);
@@ -72,7 +72,7 @@ define(function (require, exports, module) {
 				setData(data).
 				setSuccessCb(success).
 				setErrorCb(error).
-				addResponseMiddleware(groupParser).
+				setResponseParser(groupParser).
 				build();
 
 			this.sendRequest(req);
@@ -98,7 +98,7 @@ define(function (require, exports, module) {
                 setData(data).
 				setSuccessCb(success).
 				setErrorCb(error).
-                addResponseMiddleware(groupParser).
+                setResponseParser(groupParser).
 				build();
 
 			this.sendRequest(req);
@@ -113,7 +113,7 @@ define(function (require, exports, module) {
                 setData(data).
 				setSuccessCb(success).
 				setErrorCb(error).
-                addResponseMiddleware(groupParser).
+                setResponseParser(groupParser).
 				build();
 
 			this.sendRequest(req);
@@ -129,7 +129,7 @@ define(function (require, exports, module) {
                 setData(data).
                 setSuccessCb(success).
                 setErrorCb(error).
-                addResponseMiddleware(groupParser).
+                setResponseParser(groupParser).
                 build();
 
             this.sendRequest(req);
@@ -144,7 +144,7 @@ define(function (require, exports, module) {
                 setData(data).
                 setSuccessCb(success).
                 setErrorCb(error).
-                addResponseMiddleware(groupParser).
+                setResponseParser(groupParser).
                 build();
 
             this.sendRequest(req);
@@ -159,11 +159,12 @@ define(function (require, exports, module) {
                 addPath(id).
                 setSuccessCb(success).
                 setErrorCb(error).
-                addResponseMiddleware(groupParser).
+                setResponseParser(groupParser).
                 build();
 
             this.sendRequest(req);
         };
+
 
 		return client;
 	}];
