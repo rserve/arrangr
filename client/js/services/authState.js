@@ -18,14 +18,15 @@ define(function (require, exports, module) {
 
             refreshUserState: function () {
                 if(this.getUserState()) {
+                    var self = this;
                     // Inject at run because of circular dependancy
                     usersClient = usersClient || $injector.get('usersClient');
                     usersClient.session(
                         function (user) {
-                            this.setUserState(user);
                             $rootScope.user = user;
                         }, function (err) {
-                            this.removeUserState();
+                            console.log(err);
+                            self.removeUserState();
                         }
                     );
                 } else {

@@ -26,7 +26,7 @@ define(function (require, exports, module) {
                 paramname: 'thumbnail',
 
                 maxfiles: 1,
-                maxfilesize: 0.1, // in mb
+                maxfilesize: 1, // in mb
                 url: url,
 
                 uploadFinished: function (i, file, res) {

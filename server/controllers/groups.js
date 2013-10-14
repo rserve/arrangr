@@ -3,10 +3,11 @@ var e = require('../helpers/errorhandler');
 var Group = mongoose.model('Group');
 var User = mongoose.model('User');
 var hash = require('../helpers/hash');
-var mailer = require('../helpers/mailer.js');
-var fs = require('fs');
+var mailer = require('../helpers/mailer');
+var image = require('../helpers/image');
 
-var userFields = 'id name email verfied hashedEmail'; //TODO typo in word verfied?
+//Fields from user to populate into member array
+var userFields = 'id name email verified hashedEmail';
 
 exports.findAll = function (req, res) {
     Group.find(function (err, groups) {
@@ -148,19 +149,25 @@ exports.uploadThumbnail = function(req, res) {
         return;
     }
 
-    if(thumbnail.size > 100 * 1000) {
+    if(thumbnail.size > 1000 * 1000) {
         res.status(500).send('File too big: ' + thumbnail.size);
         return;
     }
 
-    var image = {
-        data: "data:" + format + ";base64," + new Buffer(fs.readFileSync(thumbnail.path, 'binary'), 'binary').toString('base64'),
-        format: format,
-        size: thumbnail.size
-    };
+    image.thumbnail(thumbnail.path, 100, function(err, buffer) {
+        if(err) {
+            res.status(500).send(err);
+        } else {
+            var image = {
+                data: "data:" + format + ";base64," + buffer.toString('base64'),
+                format: format,
+                size: thumbnail.size
+            };
 
-    Group.findOneAndUpdate({_id: req.group.id}, { image: image }).populate('members.user', userFields).exec(function (err, group) {
-        e(err, res, 'Error uploading thumbnail') || res.send(group);
+            Group.findOneAndUpdate({_id: req.group.id}, { image: image }).populate('members.user', userFields).exec(function (err, group) {
+                e(err, res, 'Error uploading thumbnail') || res.send(group);
+            });
+        }
     });
 };
 
