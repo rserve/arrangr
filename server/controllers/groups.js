@@ -154,9 +154,13 @@ exports.uploadThumbnail = function(req, res) {
         return;
     }
 
-    image.thumbnail(thumbnail.path, 100, function(err, buffer) {
+    image.thumbnail(thumbnail.path, { size: 100, remove: true }, function(err, buffer) {
         if(err) {
-            res.status(500).send(err);
+            if(err.code === -1) {
+                res.status(500).send('Error resizing image');
+            } else {
+                res.status(500).send(err);
+            }
         } else {
             var image = {
                 data: "data:" + format + ";base64," + buffer.toString('base64'),

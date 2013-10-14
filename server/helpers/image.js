@@ -1,13 +1,27 @@
 var im = require('imagemagick');
+var fs = require('fs');
 
 var image = {
-  thumbnail: function(path, size, cb) {
-      im.resize({
+  thumbnail: function(path, options, cb) {
+      var proc = im.resize({
           srcPath: path,
-          width:   100,
-          height:  100
+          width:   options.size,
+          height:  options.size
       }, function(err, stdout, stderr){
-          cb(err, new Buffer(stdout, 'binary'));
+          if(err) {
+              cb(err);
+          }
+          else {
+              //remove temporary file
+              fs.unlink(path, function() {
+                  if (err) console.log(err);
+              });
+              cb(false, new Buffer(stdout, 'binary'));
+          }
+      });
+
+      proc.on('error', function(err) {
+          proc.kill();
       });
   }
 };

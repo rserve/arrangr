@@ -32,6 +32,7 @@ define(function (require, exports, module) {
                 uploadFinished: function (i, file, res) {
                     $.data(file).addClass('done');
                     $.data(file).find('.progress').fadeOut('slow');
+                    dropbox.removeClass('uploading').find('> .thumbnail').hide();
                     flash.success = 'Image uploaded';
 
                     response = res;
@@ -52,6 +53,8 @@ define(function (require, exports, module) {
                             flash.error = 'Error from server:' + response;
                             break;
                     }
+
+                    dropbox.find('.preview').remove();
                 },
 
                 // Called before each upload is started
@@ -66,7 +69,7 @@ define(function (require, exports, module) {
                 },
 
                 uploadStarted: function (i, file, len) {
-                    dropbox.find('.thumbnail').hide();
+                    dropbox.addClass('uploading');
                     createImage(file);
                 },
 

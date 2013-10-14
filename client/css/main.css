@@ -189,6 +189,10 @@ h1 {
     width:100% !important;
 }
 
+.uploading .thumbnail {
+    display: none !important;
+}
+
 @media (min-width: 768px) {
     .home {
         padding-top: 55px;
