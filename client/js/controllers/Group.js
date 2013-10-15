@@ -257,11 +257,28 @@ define(function (require, exports, module) {
 			}
 		};
 
+
+		$scope.commentHelper = {
+			increase: 10,
+			visible: 5,
+			total: function () {
+				return $scope.group && $scope.group.comments.length;
+			},
+			showMore: function () {
+				this.visible = Math.min(this.visible + this.increase, this.total())
+			},
+			more: function () {
+				return  Math.min(this.total() - this.visible, this.increase);
+			}
+
+
+		};
+
 		getGroup();
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$location', '$stateParams', 'groupsClient', 'authState', 'flash'];
+	Controller.$inject = ['$scope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash'];
 
 	module.exports = Controller;
 

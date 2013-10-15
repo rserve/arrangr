@@ -18,19 +18,23 @@
 
     <h2>
         {{group.name}}
-        <small ng-show="group.startDate">{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}} (<span am-time-ago="group.startDate"></span>)</small>
+        <small ng-show="group.startDate">{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at
+            {{group.time()}} (<span am-time-ago="group.startDate"></span>)
+        </small>
     </h2>
     <p>{{group.description}}</p>
+
     <div class="clearfix"></div>
 </div>
 
 <div class="row">
     <div class="col-lg-9 col-md-8 col-sm-8">
+        <h3>Members</h3>
 
         <p><span class="badge">{{ group.statusCount('Yes') }}</span> yes, <span class="badge">{{ group.statusCount('Maybe') }}</span>
-            maybe and <span class="badge">{{ group.statusCount('No') }}</span> no out of <span class="badge">{{ group.members.length }}</span>
+            maybe and <span class="badge">{{ group.statusCount('No') }}</span> no out of <span
+                    class="badge">{{ group.members.length }}</span>
             total.</p>
-
         <table class="table table-striped">
             <tbody>
             <tr ng-repeat="member in group.members">
@@ -47,44 +51,70 @@
                 </td>
                 <td>
                     <a title="Remove member" class="text-danger" href="#"
-                       ng-show="group.isAdmin(user) && user.id != member.user.id" ng-click="removeMember(member)">
+                       ng-show="group.isAdmin(user) && user.id != member.user.id"
+                       ng-click="removeMember(member)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </td>
             </tr>
             </tbody>
         </table>
+        <h3>Comments</h3>
+
+        <div class="panel panel-default">
+            <table class="table">
+                <tr ng-show="!group.isMember(user)"><td colspan="2">Join meetup to add a comment...</td></tr>
+                <tr ng-show="group.isMember(user)">
+                    <td width="30"><img
+                            src="http://www.gravatar.com/avatar/{{user.hashedEmail}}?s=25&d=mm"/>
+                    </td>
+                    <td>
+                        <form class="form" role="form"
+
+                              ng-submit="addComment()">
 
 
-        <blockquote  ng-show="group.public || group.isMember(user)"ng-repeat="comment in group.comments">
-            <p>  {{ comment.text }}</p>
-            <small>{{ comment.author }} <span am-time-ago="comment.createdAt"></span></small>
-        </blockquote>
+                            <input ng-model="commentForm.getField('text').value"
+                                   placeholder="Write a comment..." class="form-control"/>
+                        </form>
+                    </td>
+                </tr>
 
-    <form class="form" role="form"
-              ng-show="group.isMember(user)"
-              ng-submit="addComment()">
-            <div class="form-group">
-                <textarea ng-model="commentForm.getField('text').value"
-                          placeholder="Add a comment..." class="form-control" rows="2"></textarea>
-                <!--<span class="help-inline">{{commentForm.getField('text').error.message}}</span>-->
-            </div>
-            <button type="submit" class="btn btn-success">{{'%BUTTON_COMMENT%' | phrase}}</button>
+                <tr ng-show="group.public || group.isMember(user)"
+                    ng-repeat="comment in group.comments |  orderBy:'createdAt':true | limitTo:commentHelper.visible">
+                    <td width="30"><img
+                            src="http://www.gravatar.com/avatar/{{member.user.hashedEmail}}?s=25&d=mm"/>
+                    </td>
+                    <td>
+                        <small>{{ comment.author }} <span am-time-ago="comment.createdAt"></span>
+                        </small>
+                        <p>{{ comment.text }}</p></td>
+                </tr>
 
-        </form>
+
+            </table>
+            <div ng-show="commentHelper.more()>0" class="panel-footer"><a href="#"
+                                                                          ng-click="commentHelper.showMore()">View
+                {{commentHelper.more()}} more comments...</a></div>
+        </div>
+
 
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
         <div ng-show="group.isMember(user)">
             <h3>Are you going?</h3>
+
             <div class="btn-group btn-group-justified">
-                <a ng-click="yes()" class="btn btn-default" ng-class="{'btn-success':currentMember.status == 'Yes'}">
+                <a ng-click="yes()" class="btn btn-default"
+                   ng-class="{'btn-success':currentMember.status == 'Yes'}">
                     {{ '%BUTTON_YES%' | phrase }}
                 </a>
-                <a ng-click="maybe()" class="btn btn-default" ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
+                <a ng-click="maybe()" class="btn btn-default"
+                   ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
                     {{ '%BUTTON_MAYBE%' | phrase }}
                 </a>
-                <a ng-click="no()" class="btn btn-default" ng-class="{'btn-danger':currentMember.status == 'No'}">
+                <a ng-click="no()" class="btn btn-default"
+                   ng-class="{'btn-danger':currentMember.status == 'No'}">
                     {{ '%BUTTON_NO%' | phrase }}
                 </a>
             </div>
@@ -92,16 +122,20 @@
 
         <form class="form" role="form" ng-show="!user" ng-submit="join()">
             <h3>Join meetup</h3>
+
             <div class="form-group {{joinForm.getField('email').status}}">
-                <input class="form-control" ng-model="joinForm.getField('email').value" placeholder="Enter your email"
+                <input class="form-control" ng-model="joinForm.getField('email').value"
+                       placeholder="Enter your email"
                        type="text">
                 <span class="help-inline">{{joinForm.getField('email').message}}</span>
             </div>
         </form>
 
-        <form class="form" role="form" ng-show="group.isAdmin(user) || group.public && group.isMember(user)"
+        <form class="form" role="form"
+              ng-show="group.isAdmin(user) || group.public && group.isMember(user)"
               ng-submit="invite()">
             <h3>Invite friends</h3>
+
             <div class="form-group {{inviteForm.fields.email.status}}">
                 <input class="form-control" ng-model="inviteForm.getField('email').value"
                        placeholder="Enter email to invite" type="text">
@@ -111,17 +145,21 @@
 
         <form class="form" role="form" ng-submit="update()" ng-show="group.isAdmin(user)">
             <h3>Edit group</h3>
+
             <div class="form-group">
                 <label class="control-label" for="groupFormName">Name</label>
-                <input class="form-control" id="groupFormName" type="text" ng-model="groupForm.getField('name').value" placeholder=""/>
+                <input class="form-control" id="groupFormName" type="text"
+                       ng-model="groupForm.getField('name').value" placeholder=""/>
             </div>
             <div class="form-group">
                 <label class="control-label" for="groupFormDescription">Description</label>
-                <input class="form-control" id="groupFormDescription" type="text" ng-model="groupForm.getField('description').value" placeholder=""/>
+                <input class="form-control" id="groupFormDescription" type="text"
+                       ng-model="groupForm.getField('description').value" placeholder=""/>
             </div>
             <div class="form-group">
                 <label class="control-label" for="groupFormWeekday">Weekday</label>
-                <select id="groupFormWeekday" class="form-control" ng-model="groupForm.getField('weekday').value">
+                <select id="groupFormWeekday" class="form-control"
+                        ng-model="groupForm.getField('weekday').value">
                     <option value="1">{{ '%WEEKDAY_1%' | phrase }}</option>
                     <option value="2">{{ '%WEEKDAY_2%' | phrase }}</option>
                     <option value="3">{{ '%WEEKDAY_3%' | phrase }}</option>
@@ -133,11 +171,13 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="groupFormTime">Time</label>
-                <input class="form-control" id="groupFormTime" type="time" ng-model="groupForm.getField('time').value" placeholder=""/>
+                <input class="form-control" id="groupFormTime" type="time"
+                       ng-model="groupForm.getField('time').value" placeholder=""/>
             </div>
             <div class="form-group">
                 <label class="control-label" for="groupFormPublic">Public</label>
-                <input class="form-control" id="groupFormPublic" type="checkbox" ng-model="groupForm.getField('public').value"/>
+                <input class="form-control" id="groupFormPublic" type="checkbox"
+                       ng-model="groupForm.getField('public').value"/>
             </div>
             <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
         </form>
