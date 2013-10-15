@@ -21,7 +21,8 @@ var schema = new Schema({
     verificationHash: { type: String, unique: true },
     provider: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
-    verifiedAt: { type: Date }
+    verifiedAt: { type: Date },
+    gravatar: { type: Boolean, default: true }
 });
 
 /**
