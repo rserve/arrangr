@@ -265,7 +265,7 @@ define(function (require, exports, module) {
 				return $scope.group && $scope.group.comments.length;
 			},
 			showMore: function () {
-				this.visible = Math.min(this.visible + this.increase, this.total())
+				this.visible = Math.min(this.visible + this.increase, this.total());
 			},
 			more: function () {
 				return  Math.min(this.total() - this.visible, this.increase);
