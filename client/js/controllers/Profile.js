@@ -11,12 +11,27 @@ define(function (require, exports, module) {
 
         var profileForm = baseForm.create();
 
-        console.log($rootScope.user.name);
-
         profileForm.addField({
             initialValue: $rootScope.user.name,
             name: 'name'
         });
+
+        profileForm.addField({
+            initialValue: $rootScope.user.gravatar,
+            name: 'gravatar',
+            validator: null
+        });
+
+        profileForm.addField({
+            name: 'password',
+            validator: null
+        });
+
+        profileForm.addField({
+            name: 'password2',
+            validator: null
+        });
+
 
         profileForm.initialize($scope, 'profileForm');
 

@@ -7,7 +7,7 @@ var mailer = require('../helpers/mailer');
 var image = require('../helpers/image');
 
 //Fields from user to populate into member array
-var userFields = 'id name email verified hashedEmail';
+var userFields = 'id name email verified hashedEmail gravatar';
 
 exports.findAll = function (req, res) {
     Group.find(function (err, groups) {
