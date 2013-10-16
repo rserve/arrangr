@@ -83,12 +83,16 @@
                 <tr ng-show="group.public || group.isMember(user)"
                     ng-repeat="comment in group.comments |  orderBy:'createdAt':true | limitTo:commentHelper.visible">
                     <td width="30"><img
-                            src="http://www.gravatar.com/avatar/{{member.user.hashedEmail}}?s=25&d=mm"/>
+                            src="http://www.gravatar.com/avatar/{{comment.hashedEmail}}?s=25&d=mm"/>
                     </td>
                     <td>
-                        <small>{{ comment.author }} <span am-time-ago="comment.createdAt"></span>
-                        </small>
-                        <p>{{ comment.text }}</p></td>
+                        <small>{{ comment.author }} <span am-time-ago="comment.createdAt"></span></small>
+                        <a title="Delete comment" class="text-danger" href="#" ng-show="comment.isOwner(user)" ng-click="deleteComment(comment)">
+                            Delete
+                        </a>
+                        <p>{{ comment.text }} {{ comment.isOwner(user) }}</p>
+                    </td>
+
                 </tr>
 
 

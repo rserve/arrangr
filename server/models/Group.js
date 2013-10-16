@@ -24,6 +24,8 @@ var schema = new mongoose.Schema({
         createdAt: {type: Date, default: Date.now }
     }],
 	comments: [{
+		userRefId: {type: String, default: '' },
+		hashedEmail: {type: String, default: '' },
 		text: {type: String, default: '' },
 		author: {type: String, default: '' },
 		createdAt: {type: Date, default: Date.now }
@@ -43,24 +45,27 @@ schema.options.toJSON.transform = function(doc, ret, options) {
 };
 
 schema.methods = {
-    isAdmin: function(user) {
-        for (var i = 0, len = this.members.length; i < len; i++) {
-            var member = this.members[i];
-            if (member.admin && member.user && member.user.id === user.id) {
-                return true;
-            }
-        }
-        return false;
-    },
-	isMember: function(user, memberId) {
-		for (var i = 0, len = this.members.length; i < len; i++) {
-			var member = this.members[i];
 
-			if (member.id === memberId && member.user && member.user.id === user.id) {
-				return true;
-			}
-		}
-		return false;
+	isAdmin: function (user) {
+
+		return this.members.some(function (member) {
+			return member.admin && member.user && member.user.id === user.id;
+		});
+	},
+
+	// check if user belongs to a member
+	isMember: function (user, memberId) {
+		return this.members.some(function (member) {
+			return member.id === memberId && member.user && member.user.id === user.id;
+		});
+	},
+
+	// check if user owns comment
+	ownsComment: function (user, commentId) {
+
+		return this.comments.some(function (comment) {
+			return comment.id === commentId && comment.userRefId === user.id;
+		});
 	}
 };
 

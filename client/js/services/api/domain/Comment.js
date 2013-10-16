@@ -10,15 +10,10 @@ define(function (require, exports, module) {
 
 	var proto = Comment.prototype;
 
-/*	proto.displayTime = function () {
-		if (this.createdAt) {
-			var d = new Date(this.createdAt);
-			return (d.getHours() < 10 ? '0' : '') + d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
-		}
-		return null;
-	};*/
 
-
+	proto.isOwner = function (user) {
+		return this.userRefId === user.id;
+	};
 
 	module.exports = Comment;
 });

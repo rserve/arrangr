@@ -240,8 +240,11 @@ define(function (require, exports, module) {
 			if (errors) {
 				flash.error = errors[0].message;
 			} else {
+				var user =$scope.currentMember.user;
 				var data = _.extend(commentForm.toJSON(), {
-					author: $scope.currentMember.user.displayName()
+					author: user.displayName(),
+					userRefId: user.id,
+					hashedEmail: user.hashedEmail
 				});
 
 				client.addComment(key, data,
@@ -255,6 +258,21 @@ define(function (require, exports, module) {
 					}
 				);
 			}
+		};
+
+		$scope.deleteComment = function (comment) {
+
+			client.deleteComment(key, comment.id,
+				function (data) {
+					$scope.group = data;
+					flash.success = 'Comment deleted';
+					commentForm.clear();
+				},
+				function (data) {
+					flash.error = data.message;
+				}
+			);
+
 		};
 
 

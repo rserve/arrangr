@@ -41,13 +41,22 @@ exports.group = {
     member: {
         hasAuthorization: function(req, res, next) {
             // user is authorized if admin or trying to update own membership
-            if(req.group.isAdmin(req.user) || req.group.isMember(req.user, req.params.memberId)
-				//req.params.memberId == req.user.id
-				 ) {
+            if(req.group.isAdmin(req.user) || req.group.isMember(req.user, req.params.memberId)) {
                 return next();
             }
 
-            return sendUnauthorized(res, 'User not authorized for this groupmember ' +req.params.memberId+', '+req.user.id);
+            return sendUnauthorized(res, 'User not authorized for this member ');
         }
-    }
+    },
+
+	comment: {
+		hasAuthorization: function(req, res, next) {
+			// user is authorized if owner of comment
+			if(req.group.ownsComment(req.user, req.params.commentId)) {
+				return next();
+			}
+
+			return sendUnauthorized(res, 'User not authorized for this comment ');
+		}
+	}
 };

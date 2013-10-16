@@ -178,10 +178,29 @@ exports.uploadThumbnail = function(req, res) {
 exports.addComment = function (req, res){
 	var group = req.group;
 
-	Group.findOneAndUpdate({_id: group.id }, { $addToSet: { comments: { text: req.body.text, author:req.body.author} } } ).
-		populate('members.user', userFields).exec(
+	Group.findOneAndUpdate({ _id: group.id }, {
+		$addToSet: {
+			comments: {
+				text: req.body.text,
+				author: req.body.author,
+				hashedEmail: req.body.hashedEmail,
+				userRefId: req.body.userRefId
+			}
+		}
+	}).populate('members.user', userFields).exec(
 		function (err, group) {
-			if(!e(err, res, 'Error adding comment')) {
+			if (!e(err, res, 'Error adding comment')) {
+				res.send(group);
+			}
+		}
+	);
+};
+
+exports.deleteComment = function(req, res) {
+	var group = req.group;
+	Group.findOneAndUpdate({ _id: group.id }, { '$pull': { comments: { _id: req.params.commentId } } }).populate('members.user', userFields).exec(
+		function (err, group) {
+			if(!e(err, res, 'Error removing comment from group')) {
 				res.send(group);
 			}
 		}

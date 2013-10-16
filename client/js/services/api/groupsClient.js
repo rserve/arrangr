@@ -190,6 +190,21 @@ define(function (require, exports, module) {
 			this.sendRequest(req);
 		};
 
+		client.deleteComment = function(key, id, success, error) {
+			var req = new RequestBuilder().
+				setMethod('delete').
+				setUrl('/api/groups').
+				addPath(key).
+				addPath('comments').
+				addPath(id).
+				setSuccessCb(success).
+				setErrorCb(error).
+				setResponseParser(groupParser).
+				build();
+
+			this.sendRequest(req);
+		};
+
 		return client;
 	}];
 
