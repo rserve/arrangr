@@ -38,7 +38,7 @@ exports.create = function (req, res) {
     var user = req.body;
     user.provider = 'local';
     if (!user.password) {
-        user.password = hash.gen(5);
+        user.password = hash.gen(6);
     }
     User.create(user, function (err, user) {
         if (!e(err, res, 'Error creating user')) {
@@ -59,6 +59,8 @@ exports.update = function (req, res) {
             req.profile.save(function (err) {
                 e(err, res, 'Error updating user') || res.send(user);
             });
+        } else {
+            res.send(user);
         }
     });
 };
