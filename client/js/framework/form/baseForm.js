@@ -106,7 +106,9 @@ define(function (require, exports, module) {
 				// grab value if not empty
 				if (!field.isEmpty()) {
 					json[field.name] = field.getValue();
-				}
+				} else {
+                    json[field.name] = null;
+                }
 			});
 
 			return json;
@@ -171,6 +173,7 @@ define(function (require, exports, module) {
 
 			this.getFields(group).forEach(function (field) {
 				field.clear();
+                field.init();
 			});
 		}
 

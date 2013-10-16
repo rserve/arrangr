@@ -44,7 +44,18 @@ define(function (require, exports, module) {
 				message: "Password must be at least 6 characters and contain one digit and one one uppercase character."
 			},
 			type: 'password'
-		}
+		},
+
+        'passwordweak': {
+            validate: function (value) {
+                return !value || (/(.{6,20})/).test(value);
+            },
+            error: {
+                key: 'PASSWORDWEAK',
+                message: "Password must be at least 6 characters."
+            },
+            type: 'passwordweak'
+        }
 	};
 
 });

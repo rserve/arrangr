@@ -53,7 +53,13 @@ exports.create = function (req, res) {
 exports.update = function (req, res) {
     var user = req.body;
     User.findOneAndUpdate({_id: req.profile.id}, user, function (err, user) {
-        e(err, res, 'Error updating user') || res.send(user);
+        if(e(err, res, 'Error updating user')) return;
+        if(req.body.password) {
+            req.profile.password = req.body.password;
+            req.profile.save(function (err) {
+                e(err, res, 'Error updating user') || res.send(user);
+            });
+        }
     });
 };
 

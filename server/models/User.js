@@ -87,17 +87,15 @@ schema.path('email').validate(function(email) {
  */
 
 schema.pre('save', function(next) {
-    if (!this.isNew) {
-        return next();
+    if (this.isNew) {
+        this.verificationHash = hash.gen(10);
     }
 
-    this.verificationHash = hash.gen(10);
-
-    if (!this.password || this.password.length < 4) {
-        next(new Error('Password must be atleast four characters'));
-    } else {
-        next();
+    if (!this.password || this.password.length < 6) {
+        return next(new Error('Password must be atleast six characters'));
     }
+
+    next();
 });
 
 /**

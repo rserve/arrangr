@@ -6,13 +6,16 @@
     <div class="form-group">
         <strong class="col-sm-2 control-label">Picture</strong>
         <div class="col-sm-10">
+            <div class="col-sm-2 col-xs-6">
             <label>
                 <input type="checkbox" name="gravatar" ng-model="profileForm.getField('gravatar').value"> Use gravatar
             </label>
-            or
+            </div>
+            <div class="col-sm-2 col-xs-6">
             <div class="imagedrop" upload-url="user.thumbnailPath()">
                 <img class="thumbnail" ng-show="user.image" ng-src="{{ user.image.data }}"/>
                 <span class="thumbnail message" ng-show="!user.image">Drop image here.</span>
+            </div>
             </div>
         </div>
     </div>
@@ -25,19 +28,26 @@
         </div>
     </div>
 
-    <div class="form-group {{profileForm.getField('password').status}}">
-        <label for="profileFormPassword" class="col-sm-2 control-label">Password</label>
+    <div class="form-group">
+        <label for="profileFormEmail" class="col-sm-2 control-label">Email</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" ng-model="profileForm.getField('password').value" id="profileFormPassword" placeholder="New password">
-            <span class="help-inline">{{profileForm.getField('password').message}}</span>
+            <input type="text" class="form-control" value="{{ user.email }}" id="profileFormEmail" disabled>
         </div>
     </div>
 
-    <div class="form-group {{profileForm.getField('password2').status}}">
+    <div class="form-group {{passwordForm.getField('password').status}}">
+        <label for="profileFormPassword" class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" ng-model="passwordForm.getField('password').value" id="profileFormPassword" placeholder="New password">
+            <span class="help-inline">{{passordForm.getField('password').message}}</span>
+        </div>
+    </div>
+
+    <div class="form-group {{passwordForm.getField('password2').status}}">
         <label for="profileFormPassword2" class="col-sm-2 control-label">Confirm</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" ng-model="profileForm.getField('password2').value" id="profileFormPassword2" placeholder="again...">
-            <span class="help-inline">{{profileForm.getField('password2').message}}</span>
+            <input type="password" class="form-control" ng-model="passwordForm.getField('password2').value" id="profileFormPassword2" placeholder="again...">
+            <span class="help-inline">{{passwordForm.getField('password2').message}}</span>
         </div>
     </div>
 

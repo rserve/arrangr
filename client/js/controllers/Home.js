@@ -41,7 +41,7 @@ define(function (require, exports, module) {
 		}).
 		addField({
 			name: 'password',
-			validator: 'password'
+			validator: 'passwordweak'
 			//customError: 'Your password cannot be empty!'
 		});
 

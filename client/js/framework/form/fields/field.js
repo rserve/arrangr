@@ -47,10 +47,15 @@ define(function (require, exports, module) {
 		 * */
 		clear: function () {
 			_.extend(this, {
-				value: this.initialValue,
 				error: null
 			});
 		},
+
+        init: function () {
+            _.extend(this, {
+                value: this.initialValue
+            });
+        },
 
 		getValue: function () {
 			return this.value;
