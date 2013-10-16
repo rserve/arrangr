@@ -12,15 +12,11 @@ define(function (require, exports, module) {
 	var proto = Group.prototype;
 
 	proto.isAdmin = function (user) {
-		if (user) {
-			for (var i = 0, len = this.members.length; i < len; i++) {
-				var member = this.members[i];
-				if (member.admin && member.user && (member.user === user.id || member.user.id === user.id)) {
-					return true;
-				}
-			}
-		}
-		return false;
+
+		return user && this.members.some(function (member) {
+			return member.admin && member.user && (member.user === user.id || member.user.id === user.id);
+		});
+
 	};
 
 	proto.isMember = function (user) {
@@ -44,14 +40,11 @@ define(function (require, exports, module) {
 	};
 
 	proto.statusCount = function (status) {
-		var c = 0;
-		for (var i = 0, len = this.members.length; i < len; i++) {
-			var member = this.members[i];
-			if (member.status == status) {
-				c++;
-			}
-		}
-		return c;
+
+		return this.members.filter(function (member) {
+			return member.status == status;
+		}).length;
+
 	};
 
 	proto.isNew = function () {

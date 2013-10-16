@@ -1,5 +1,6 @@
 //make sure all dependencies are loaded
 require([
+	'es5shim',
 	'angular',
 	'json!data/config.json',
     'angular-ui-router',
@@ -16,7 +17,7 @@ require([
 	'config/http',
 	'config/routes',
 	'config/finalize'
-], function (angular, config) {
+], function (es5shim, angular, config) {
 
 	'use strict';
 

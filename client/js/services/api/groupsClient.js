@@ -14,13 +14,11 @@ define(function (require, exports, module) {
 		 * Response parsers
 		 * */
 		var groupsParser = function (data) {
-			var groups = [];
 
-			for (var i = 0, len = data.length; i < len; i++) {
-				var group = new Group(data[i]);
-				groups.push(group);
-			}
-			return groups;
+			return data.map(function (attr) {
+				return new Group(attr);
+			});
+
 		};
 
 		var groupParser = function (data) {
@@ -30,13 +28,11 @@ define(function (require, exports, module) {
 			return group;
 		};
 
-
-
-        var memberParser = function(group) {
-            for(var j = 0, len = group.members.length; j < len; j++) {
-                group.members[j].user = new User(group.members[j].user);
-            }
-        };
+		var memberParser = function(group) {
+			group.members.forEach(function (member, i, members){
+				members[i].user = new User(member.user);
+			});
+		};
 
 		var commentParser = function(group) {
 			group.comments.forEach(function (comment, i, comments){

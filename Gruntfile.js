@@ -117,6 +117,7 @@ module.exports = function (grunt) {
 					dir: "build/client",
 
 					paths: {
+						'es5shim': 'empty:',
 						jquery: 'empty:',
 						'jquery-filedrop': 'empty:',
 						bootstrap: 'empty:',
