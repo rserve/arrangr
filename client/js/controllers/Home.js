@@ -8,6 +8,7 @@ define(function (require, exports, module) {
 
 	'use strict';
 
+	var angular = require('angular');
 
 	var Controller = function ($scope, $state, usersClient, authState) {
 

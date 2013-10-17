@@ -2,6 +2,8 @@ define(function (require, exports, module) {
 
 	'use strict';
 
+	var angular = require('angular');
+
 	var Controller = function ($scope, groupsClient, $rootScope, flash) {
 		$scope.model = {};
 
