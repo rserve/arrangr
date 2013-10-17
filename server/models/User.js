@@ -22,7 +22,12 @@ var schema = new Schema({
     provider: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
     verifiedAt: { type: Date },
-    gravatar: { type: Boolean, default: true }
+    gravatar: { type: Boolean, default: true },
+	image: {
+		format: { type: String },
+		data: { type: String },
+		size: { type: Number }
+	}
 });
 
 /**

@@ -7,6 +7,7 @@ var e = require('../helpers/errorhandler');
 var User = mongoose.model('User');
 var hash = require('../helpers/hash.js');
 var mailer = require('../helpers/mailer.js');
+var image = require('../helpers/image');
 
 exports.login = function (req, res, next, passport) {
     passport.authenticate('local', function (err, user, info) {
@@ -80,6 +81,48 @@ exports.verify = function (req, res) {
             }
         }
     });
+};
+
+exports.uploadThumbnail = function(req, res) {
+	//TODO: Real validation
+	if(!req.files || !req.files.thumbnail) {
+		res.status(500).send('Missing thumbnail file');
+		return;
+	}
+
+	var thumbnail = req.files.thumbnail;
+
+	var format = thumbnail.headers['content-type'];
+
+	if(format.indexOf('image') == -1) {
+		res.status(500).send('Only images allowed');
+		return;
+	}
+
+	if(thumbnail.size > 1000 * 1000) {
+		res.status(500).send('File too big: ' + thumbnail.size);
+		return;
+	}
+
+	image.thumbnail(thumbnail.path, { size: 100, remove: true }, function(err, buffer) {
+		if(err) {
+			if(err.code === -1) {
+				res.status(500).send('Error resizing image');
+			} else {
+				res.status(500).send(err);
+			}
+		} else {
+			var image = {
+				data: "data:" + format + ";base64," + buffer.toString('base64'),
+				format: format,
+				size: thumbnail.size
+			};
+
+			User.findOneAndUpdate({_id: req.profile.id}, { image: image }).exec(function (err, user) {
+				e(err, res, 'Error uploading thumbnail') || res.send(user);
+			});
+		}
+	});
 };
 
 // param parsing

@@ -39,7 +39,7 @@
             <tbody>
             <tr ng-repeat="member in group.members">
                 <td>
-                    <img src="http://www.gravatar.com/avatar/{{member.user.hashedEmail}}?s=25&d=mm"/>
+                    <img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
                     {{ member.user.displayName() }}
                 </td>
                 <td>
@@ -65,8 +65,7 @@
             <table class="table">
                 <tr ng-show="!group.isMember(user)"><td colspan="2">Join meetup to add a comment...</td></tr>
                 <tr ng-show="group.isMember(user)">
-                    <td width="30"><img
-                            src="http://www.gravatar.com/avatar/{{user.hashedEmail}}?s=25&d=mm"/>
+                    <td width="30"><img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
                     </td>
                     <td>
                         <form class="form" role="form"
@@ -82,8 +81,7 @@
 
                 <tr ng-show="group.public || group.isMember(user)"
                     ng-repeat="comment in group.comments |  orderBy:'createdAt':true | limitTo:commentHelper.visible">
-                    <td width="30"><img
-                            src="http://www.gravatar.com/avatar/{{comment.hashedEmail}}?s=25&d=mm"/>
+                    <td width="30"><img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
                     </td>
                     <td>
                         <small>{{ comment.author }} <span am-time-ago="comment.createdAt"></span></small>

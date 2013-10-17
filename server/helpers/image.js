@@ -13,7 +13,7 @@ var image = {
           }
           else {
               //remove temporary file
-              fs.unlink(path, function() {
+              fs.unlink(path, function(err) {
                   if (err) console.log(err);
               });
               cb(false, new Buffer(stdout, 'binary'));

@@ -11,9 +11,23 @@ define(function (require, exports, module) {
 
 	var proto = User.prototype;
 
-    proto.displayName = function() {
-        return this.name || this.email;
-    };
+	proto.displayName = function () {
+		return this.name || this.email;
+	};
+
+	proto.thumbnailPath = function () {
+		return '/api/users/' + this.id + '/thumbnail';
+	};
+
+	proto.thumbnailSrc = function () {
+		if (!this.gravatar && this.image.data) {
+			return this.image.data;
+		}
+		else {
+			return "http://www.gravatar.com/avatar/[hashedEmail]?s=25&d=mm".replace('[hashedEmail]', this.hashedEmail);
+		}
+	};
 
 	module.exports = User;
-});
+})
+;
