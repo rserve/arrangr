@@ -42,13 +42,18 @@
 
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
-        <form novalidate class="form" role="form">
+        <form novalidate class="form" role="form" name="form" ng-submit="create()">
             <h3>Create meetup</h3>
             <div class="form-group">
-                <input id="groupName" class="form-control" type="text" ng-model="createForm.getField('name').value"
+                <input required
+                       name="name"
+                       id="groupName"
+                       class="form-control"
+                       type="text"
+                       ng-model="model.name"
                        placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
             </div>
-            <button ng-click="create()" class="btn btn-success">{{'%BUTTON_CREATE%' | phrase}}</button>
+            <button class="btn btn-success">{{'%BUTTON_CREATE%' | phrase}}</button>
         </form>
     </div>
 </div>

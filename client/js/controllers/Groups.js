@@ -2,46 +2,35 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-    var baseForm = require('framework/form/baseForm');
-
-    var createForm = baseForm.create();
-
-    createForm.addField({
-        validator: 'notEmpty',
-        name: 'name',
-        customError: 'Name cannot be empty'
-    });
-
 	var Controller = function ($scope, groupsClient, $rootScope, flash) {
-
-        createForm.initialize($scope, 'createForm');
+		$scope.model = {};
 
 		function createGroup() {
-            var errors = createForm.validate();
-            if (errors) {
-                flash.error = errors[0].message;
-            } else {
-                groupsClient.create(createForm.toJSON(),
-                    function (data) {
-                        createForm.clear();
-                        flash.success = 'Meetup created';
-                        getGroups();
-                    },
-                    function (data) {
-                        flash.error = data.message;
-                    }
-                );
-            }
+
+			if ($scope.form.name.$pristine || $scope.form.name.$invalid) {
+				flash.error = 'Name cannot be empty';
+			} else {
+				groupsClient.create($scope.model,
+					function (data) {
+						$scope.model = angular.copy({});
+						flash.success = 'Meetup created';
+						getGroups();
+					},
+					function (data) {
+						flash.error = data.message;
+					}
+				);
+			}
 		}
 
 		function deleteGroup(group) {
-			groupsClient.delete(group.key, function() {
-                flash.success = 'Meetup deleted';
-                getGroups();
-            },
-            function(data) {
-                flash.error = data.message;
-            });
+			groupsClient.delete(group.key, function () {
+					flash.success = 'Meetup deleted';
+					getGroups();
+				},
+				function (data) {
+					flash.error = data.message;
+				});
 		}
 
 		function getGroups() {
@@ -59,9 +48,9 @@ define(function (require, exports, module) {
 			return group.isAdmin($rootScope.user);
 		};
 
-        $scope.member = function (group) {
-            return group.member($rootScope.user);
-        };
+		$scope.member = function (group) {
+			return group.member($rootScope.user);
+		};
 
 		//default action
 		getGroups();
