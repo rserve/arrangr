@@ -8,136 +8,75 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var baseForm = require('framework/form/baseForm');
 
-	/*
-	 * Create login form
-	 * */
-
-	//TODO get phrases from config
-	var loginForm = baseForm.create().
-		addField({
-			name: 'email',
-			validator: 'notEmpty',
-			customError: 'You forgot to enter your email!'
-		}).
-
-		addField({
-			name: 'password',
-			validator: 'notEmpty',
-			customError: 'Your password cannot be empty!'
-		});
-
-	/*
-	 * Create register form
-	 * */
-
-	//TODO get phrases from config
-	var registerForm = baseForm.create()
-		.addField({
-			name: 'email',
-			validator: 'email',
-			customError: 'Please check entered email address!'
-		}).
-		addField({
-			name: 'password',
-			validator: 'passwordweak'
-			//customError: 'Your password cannot be empty!'
-		});
-
-
-	/*
-	 * Angular controller
-	 * */
 	var Controller = function ($scope, $state, usersClient, authState) {
 
-		//bind the two forms under different namespaces
-		loginForm.initialize($scope, 'loginForm');
-		registerForm.initialize($scope, 'registerForm');
+		$scope.login = function () {
 
-        $scope.home = true;
+			var form = $scope.loginForm;
+			var email = form.email;
+			var password = form.password;
 
+			if (email.$pristine || email.$invalid) {
+				$scope.loginModel.error = "You forgot to enter your email!";
+			} else if (password.$pristine || password.$invalid) {
+				$scope.loginModel.error = "Your password cannot be empty!";
+			} else {
 
-		/*
-		 * Login form
-		 * */
-
-		$scope.showLogin = function () {
-
-			$scope.isLogin = true;
-
-			// we reset form when showing it instead of when hiding it because
-			// form is hidden behind "flipper"
-			loginForm.clear();
-			$scope.loginError = null;
-
-			//rebind submit
-			$scope.submit = function () {
-
-				var errors = loginForm.validate();
-				if (errors) {
-					$scope.loginError = errors[0].message; // grab only first error
-
-				} else {
-					var data = loginForm.toJSON();
-
-					usersClient.login(data,
-						function (user) {
-
-							authState.setUserState(user);
-
-                            $state.transitionTo("groups");
-
-							loginForm.clear();
-						},
-						function (err) {
-							console.log('error', err);
-
-							$scope.loginError = err.message;
-
-						});
-				}
-
-			};
+				// we could use loginMode here also for data, but it contains error message
+				usersClient.login({
+						email: email.$viewValue,
+						password: password.$viewValue
+					},
+					function (user) {
+						authState.setUserState(user);
+						$state.transitionTo("groups");
+					},
+					function (err) {
+						console.log('error', err);
+						$scope.loginModel.error = err.message;
+					});
+			}
 		};
 
-		/*
-		 * Register form
-		 * */
+		$scope.register = function () {
+
+			var form = $scope.registerForm;
+			var email = form.email;
+			var password = form.password;
+
+			if (email.$pristine || email.$invalid) {
+				$scope.registerModel.error = "Please check entered email address!";
+			} else if (password.$pristine || password.$invalid) {
+				$scope.registerModel.error = "Password must be at least 6 characters.";
+			} else {
+
+				// we could use registerModel here also for data, but it contains error message
+				usersClient.create({
+						email: email.$viewValue,
+						password: password.$viewValue
+					},
+					function (res) {
+						authState.setUserState(res);
+						$state.transitionTo("groups");
+					},
+					function (err) {
+						console.log('error', err);
+						$scope.registerModel.error = err.message;
+					});
+			}
+		};
+
+
+		// split into two models to keep "flip" animation smooth (only clear hidden form)
+		$scope.showLogin = function () {
+			$scope.isLogin = true;
+			$scope.loginModel = angular.copy({});
+		};
 
 		$scope.showRegister = function () {
-
 			$scope.isLogin = false;
-			registerForm.clear();
-
-			// we reset form when showing it instead of when hiding it because
-			// form is hidden behind "flipper"
-			$scope.registerError = null;
-
-			//rebind submit
-			$scope.submit = function () {
-
-				var errors = registerForm.validate();
-				if (errors) {
-					$scope.registerError = errors[0].message; // grab only first error
-
-				} else {
-					var data = registerForm.toJSON();
-
-					usersClient.create(data,
-						function (res) {
-							authState.setUserState(res);
-							$state.transitionTo("groups");
-							registerForm.clear();
-						},
-						function (err) {
-							console.log('error', err);
-							$scope.registerError = err.message;
-
-						});
-				}
-
-			};
+			$scope.registerModel = angular.copy({});
 		};
 
 		//show register as default

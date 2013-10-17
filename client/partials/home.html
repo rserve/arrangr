@@ -6,26 +6,30 @@
         <div class="flip-container" ng-class="{'flip-container-flip':!isLogin}">
             <div class="flipper">
                 <div class="front">
-                    <form novalidate class="form">
+                    <form name="loginForm" novalidate class="form" ng-submit="login()">
                         <div class="row">
                             <div class="col-xs-6 form-group">
-                                <input ng-model="loginForm.getField('email').value" type="text"
+                                <input required
+                                       ng-model="loginModel.email"
+                                       type="text"
                                        class="form-control"
                                        placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
                                        name="email">
                             </div>
                             <div class="col-xs-6 form-group">
-                                <input ng-model="loginForm.getField('password').value" type="password"
+                                <input required
+                                       ng-model="loginModel.password"
+                                       type="password"
                                        class="form-control"
                                        placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
                                        name="password">
                             </div>
                         </div>
 
-                        <div class="form-group alert alert-sm alert-danger" ng-show="loginError">{{loginError}}</div>
+                        <div class="form-group alert alert-sm alert-danger" ng-show="loginModel.error">{{loginModel.error}}</div>
 
                         <div class="form-group">
-                            <button type="submit" ng-click="submit()" class="btn btn-lg btn-block btn-info">
+                            <button type="submit" class="btn btn-lg btn-block btn-info">
                                 {{'%BUTTON_LOGIN%' | phrase}}
                             </button>
                         </div>
@@ -40,26 +44,31 @@
                 </div>
 
                 <div class="back">
-                    <form novalidate class="form">
+                    <form name="registerForm" novalidate class="form" ng-submit="register()">
                         <div class="row">
                             <div class="col-xs-6 form-group">
-                                <input ng-model="registerForm.getField('email').value" type="text"
+                                <input
+                                       ng-model="registerModel.email"
+                                       type="email"
                                        class="form-control"
                                        placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
                                        name="email">
                             </div>
+
                             <div class="col-xs-6 form-group">
-                                <input ng-model="registerForm.getField('password').value" type="password"
+                                <input ng-pattern="/(.{6,20})/"
+                                       ng-model="registerModel.password"
+                                       type="password"
                                        class="form-control"
                                        placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
                                        name="password">
-                             </div>
+                            </div>
                          </div>
 
-                        <div class="form-group alert alert-sm alert-danger" ng-show="registerError">{{registerError}}</div>
+                        <div class="form-group alert alert-sm alert-danger" ng-show="registerModel.error">{{registerModel.error}}</div>
 
                         <div class="form-group">
-                            <button ng-click="submit()" class="btn btn-lg btn-block btn-success">
+                            <button class="btn btn-lg btn-block btn-success">
                                 {{'%BUTTON_SIGNUP%' | phrase}}
                             </button>
                         </div>
