@@ -83,7 +83,7 @@ exports.join = function (req, res) {
             return res.status(500).send({error: 'Error joining group', message: 'Email missing'});
         }
 
-        User.create({ email: email, password: hash.gen(5) }, function (err, user) {
+        User.create({ email: email, password: hash.gen(6) }, function (err, user) {
             if (!e(err, res, 'Error creating user')) {
                 mailer.sendRegistrationMail(user);
                 req.logIn(user, function (err) {
@@ -121,7 +121,8 @@ exports.invite = function(req, res) {
     User.findOne({email: email}, function(err, user) {
         if(!e(err, res, 'Error finding invited user')) {
             if(!user) {
-                User.create({ email: email, password: hash.gen(5) }, function (err, user) {
+                console.log('enmau', email);
+				User.create({ email: email, password: hash.gen(6) }, function (err, user) {
                     if (!e(err, res, 'Error creating invited user')) {
                         addUserToGroup(res, group, user);
                     }
