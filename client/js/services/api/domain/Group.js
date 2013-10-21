@@ -6,7 +6,8 @@ define(function (require, exports, module) {
 
 	var Group = function (data) {
 		_.extend(this, data);
-
+		this._weekday = this.weekday();
+		this._time = this.time();
 	};
 
 	var proto = Group.prototype;

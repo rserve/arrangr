@@ -3,35 +3,12 @@ define(function (require, exports, module) {
 	'use strict';
 
 	var _ = require('underscore');
-	var baseForm = require('framework/form/baseForm');
-
-
-	var inviteForm = baseForm.create();
-
-	inviteForm.addField({
-		validator: 'email',
-		name: 'email',
-		customError: 'Please enter a valid email'
-	});
-
-	var joinForm = baseForm.create();
-
-	joinForm.addField({
-		validator: 'email',
-		name: 'email',
-		customError: 'Please enter a valid email'
-	});
-
-
-	var groupForm;
 
 	var Controller = function ($scope, $state, $stateParams, groupsClient, authState, flash) {
 
 		var key = $stateParams.groupId,
 			client = groupsClient;
 
-		inviteForm.initialize($scope, 'inviteForm');
-		joinForm.initialize($scope, 'joinForm');
 
 		function getGroup() {
 			client.findByKey(key,
@@ -39,33 +16,6 @@ define(function (require, exports, module) {
 					$scope.group = group;
 					$scope.currentMember = group.member($scope.user);
 
-					groupForm = baseForm.create();
-					groupForm.
-						addField({
-							name: 'public',
-							initialValue: group.public,
-							validator: null
-						}).
-						addField({
-							name: 'name',
-							initialValue: group.name,
-							customError: 'Name cannot be empty'
-						}).
-						addField({
-							name: 'description',
-							initialValue: group.description,
-							validator: null
-						}).
-						addField({
-							name: 'weekday',
-							initialValue: group.weekday()
-						}).
-						addField({
-							name: 'time',
-							initialValue: group.time()
-						});
-
-					groupForm.initialize($scope, 'groupForm');
 				},
 				function (data) {
 					flash.error = data.message;
@@ -98,25 +48,36 @@ define(function (require, exports, module) {
 
 
 		$scope.update = function () {
-			var errors = groupForm.validate();
-			if (errors) {
-				flash.error = errors[0].message;
-			} else {
-				var data = groupForm.toJSON();
-				var startDate = $scope.group.startDate ? new Date($scope.group.startDate) : new Date();
 
-				if (data.weekday) {
-					var current = $scope.group.weekday() || new Date().getDay();
-					var diff = current - data.weekday;
-					startDate.setDate(startDate.getDate() - diff);
-					delete data.weekday;
+			if ($scope.groupForm.$invalid) {
+				if ($scope.groupForm.name.$invalid) {
+					flash.error = 'Name cannot be empty';
+				} else {
+					flash.error = 'Please check form.';
 				}
 
-				if (data.time) {
-					var t = data.time.split(':');
+			} else {
+				//NOTE: now group is the form model, but cannot send whole object to backend,
+				// pick out the form values
+				//var data = $scope.group;
+				var data = {
+					name: $scope.group.name,
+					description: $scope.group.description,
+					public: $scope.group.public
+				};
+
+				var startDate = $scope.group.startDate ? new Date($scope.group.startDate) : new Date();
+
+				if ($scope.group._weekday) {
+					var current = $scope.group.weekday() || new Date().getDay();
+					var diff = current - $scope.group._weekday;
+					startDate.setDate(startDate.getDate() - diff);
+				}
+
+				if ($scope.group._time) {
+					var t = $scope.group._time.split(':');
 					startDate.setHours(t[0]);
 					startDate.setMinutes(t[1]);
-					delete data.time;
 				}
 
 				data.startDate = startDate;
@@ -133,15 +94,14 @@ define(function (require, exports, module) {
 		};
 
 		$scope.invite = function () {
-			var errors = inviteForm.validate();
-			if (errors) {
-				flash.error = errors[0].message;
+			if ($scope.inviteForm.$invalid) {
+				flash.error = 'Please enter a valid email';
 			} else {
-				client.invite(key, inviteForm.toJSON(),
+				client.invite(key, $scope.inviteModel,
 					function (data) {
 						$scope.group = data;
 						flash.success = 'User invited';
-						inviteForm.clear();
+						$scope.inviteModel.email = "";
 					},
 					function (data) {
 						flash.error = data.message;
@@ -151,31 +111,31 @@ define(function (require, exports, module) {
 		};
 
 		$scope.join = function (user) {
-			var data,
-				register;
-
+			var register;
 
 			if (!user) {
 				register = true;
-				var errors = joinForm.validate();
-				if (errors) {
-					flash.error = errors[0].message;
-				} else {
-					data = joinForm.toJSON();
+
+				if ($scope.joinForm.$invalid) {
+					flash.error = 'Please enter a valid email';
+					return
 				}
+
 			} else {
 				register = false;
 			}
 
-			client.join(key, data,
+			client.join(key, $scope.joinModel,
 				function (group) {
 					$scope.group = group;
 					if (register) {
 						authState.refreshUserState();
 						flash.success = 'An account as be created for you, please check your mail to verify.';
+						if ($scope.joinModel) {
+							$scope.joinModel.email = "";
+						}
 					} else {
 						flash.success = 'You have joined the meetup';
-						joinForm.clear();
 					}
 					$scope.currentMember = group.member($scope.user);
 				},
@@ -184,7 +144,7 @@ define(function (require, exports, module) {
 					if (data.name == 'ValidationError' && data.messages.email.type == 'Email already exists') {
 						flash.success = 'Email is already registered, %sign in:/% first to join this group';
 					} else {
-						flash.success = data.message;
+						flash.error = data.message;
 					}
 				}
 			);
