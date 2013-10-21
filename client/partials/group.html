@@ -68,12 +68,11 @@
                     <td width="30"><img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
                     </td>
                     <td>
-                        <form class="form" role="form"
+                        <form novalidate class="form" role="form" name="commentForm"
 
                               ng-submit="addComment()">
 
-
-                            <input ng-model="commentForm.getField('text').value"
+                            <input required ng-model="commentModel.text" name="comment"
                                    placeholder="Write a comment..." class="form-control"/>
                         </form>
                     </td>
@@ -88,7 +87,7 @@
                         <a title="Delete comment" class="text-danger" href="#" ng-show="comment.isOwner(user)" ng-click="deleteComment(comment)">
                             Delete
                         </a>
-                        <p>{{ comment.text }} {{ comment.isOwner(user) }}</p>
+                        <p>{{ comment.text }}</p>
                     </td>
 
                 </tr>

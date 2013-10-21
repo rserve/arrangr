@@ -22,13 +22,6 @@ define(function (require, exports, module) {
 		customError: 'Please enter a valid email'
 	});
 
-	var commentForm = baseForm.create();
-
-	commentForm.addField({
-		validator: 'notEmpty',
-		name: 'text',
-		customError: 'Comment cannot be empty.'
-	});
 
 	var groupForm;
 
@@ -37,7 +30,6 @@ define(function (require, exports, module) {
 		var key = $stateParams.groupId,
 			client = groupsClient;
 
-		commentForm.initialize($scope, 'commentForm');
 		inviteForm.initialize($scope, 'inviteForm');
 		joinForm.initialize($scope, 'joinForm');
 
@@ -104,19 +96,6 @@ define(function (require, exports, module) {
 			changeMemberStatus('Maybe');
 		};
 
-//        $scope.public = function ($event) {
-//            var
-// checked = $event.target.checked;
-//            client.update(key, {public: checked},
-//                function () {
-//                    // do nothing§
-//                },
-//                function (data) {
-//                    flash.error = data.message;
-//                }
-//            );
-//            $scope.group.public = checked;
-//        };
 
 		$scope.update = function () {
 			var errors = groupForm.validate();
@@ -236,12 +215,11 @@ define(function (require, exports, module) {
 		};
 
 		$scope.addComment = function () {
-			var errors = commentForm.validate();
-			if (errors) {
-				flash.error = errors[0].message;
+			if ($scope.commentForm.comment.$invalid) {
+				flash.error = 'Comment cannot be empty.';
 			} else {
-				var user =$scope.currentMember.user;
-				var data = _.extend(commentForm.toJSON(), {
+				var user = $scope.currentMember.user;
+				var data = _.extend($scope.commentModel, {
 					author: user.displayName(),
 					userRefId: user.id,
 					hashedEmail: user.hashedEmail
@@ -251,7 +229,7 @@ define(function (require, exports, module) {
 					function (data) {
 						$scope.group = data;
 						flash.success = 'Comment added';
-						commentForm.clear();
+						$scope.commentModel.text = "";
 					},
 					function (data) {
 						flash.error = data.message;
