@@ -1,14 +1,16 @@
 <h2>Edit your profile</h2>
 
 
-<form class="form-horizontal" role="form" novalidate ng-submit="save()">
+<form class="form-horizontal" role="form" name="form" novalidate ng-submit="save()">
 
     <div class="form-group">
         <strong class="col-sm-2 control-label">Picture</strong>
         <div class="col-sm-10">
             <div class="col-sm-2 col-xs-6">
             <label>
-                <input type="checkbox" name="gravatar" ng-model="profileForm.getField('gravatar').value"> Use gravatar
+                <input name="gravatar"
+                       type="checkbox"
+                       ng-model="model.gravatar">
             </label>
             </div>
             <div class="col-sm-2 col-xs-6">
@@ -20,11 +22,15 @@
         </div>
     </div>
 
-    <div class="form-group {{profileForm.getField('name').status}}">
+    <div class="form-group">
         <label for="profileFormName" class="col-sm-2 control-label">Name</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" ng-model="profileForm.getField('name').value" id="profileFormName" placeholder="Your display name">
-            <span class="help-inline">{{profileForm.getField('name').message}}</span>
+            <input name="name"
+                   class="form-control"
+                   type="text"
+                   id="profileFormName"
+                   ng-model="model.name"
+                   placeholder="Your display name">
         </div>
     </div>
 
@@ -35,25 +41,36 @@
         </div>
     </div>
 
-    <div class="form-group {{passwordForm.getField('password').status}}">
+    <div class="form-group">
         <label for="profileFormPassword" class="col-sm-2 control-label">Password</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" ng-model="passwordForm.getField('password').value" id="profileFormPassword" placeholder="New password">
-            <span class="help-inline">{{passordForm.getField('password').message}}</span>
+            <input name="password"
+                   class="form-control"
+                   type="password"
+                   ng-model="model.password"
+                   ng-pattern="/(.{6,20})/"
+                   id="profileFormPassword"
+                   placeholder="New password">
+
         </div>
     </div>
 
-    <div class="form-group {{passwordForm.getField('password2').status}}">
+    <div class="form-group">
         <label for="profileFormPassword2" class="col-sm-2 control-label">Confirm</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" ng-model="passwordForm.getField('password2').value" id="profileFormPassword2" placeholder="again...">
-            <span class="help-inline">{{passwordForm.getField('password2').message}}</span>
+            <input name="password2"
+                   class="form-control"
+                   type="password"
+                   ng-pattern="/(.{6,20})/"
+                   id="profileFormPassword2"
+                   ng-model="model.password2"
+                   placeholder="New password">
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button ng-click="create()" class="btn btn-success">Save</button>
+            <button class="btn btn-success">Save</button>
         </div>
     </div>
 
