@@ -124,7 +124,7 @@
         <form class="form" role="form" name="joinForm" novalidate ng-show="!user" ng-submit="join()">
             <h3>Join meetup</h3>
 
-            <div class="form-group {{joinForm.getField('email').status}}">
+            <div class="form-group">
                 <input class="form-control" ng-model="joinModel.email"
                        placeholder="Enter your email"
                        required type="text">

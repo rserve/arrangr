@@ -118,7 +118,7 @@ define(function (require, exports, module) {
 
 				if ($scope.joinForm.$invalid) {
 					flash.error = 'Please enter a valid email';
-					return
+					return;
 				}
 
 			} else {
@@ -204,7 +204,6 @@ define(function (require, exports, module) {
 				function (data) {
 					$scope.group = data;
 					flash.success = 'Comment deleted';
-					commentForm.clear();
 				},
 				function (data) {
 					flash.error = data.message;

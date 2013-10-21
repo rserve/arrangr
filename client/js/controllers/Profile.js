@@ -2,8 +2,9 @@ define(function (require, exports, module) {
 
 	'use strict';
 
-	var Controller = function ($scope, $rootScope, $state, $stateParams, usersClient, authState, flash) {
+	var angular = require('angular');
 
+	var Controller = function ($scope, $rootScope, $state, $stateParams, usersClient, authState, flash) {
 
 		function clearForm() {
 			$scope.model = angular.copy({});
