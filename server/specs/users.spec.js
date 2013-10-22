@@ -95,7 +95,7 @@ describe(usersEndpoint, function () {
         });
 
         describe('post', function () {
-            var testUser = { email: 'test3@email.com', password: 'password' };
+            var testUser = { email: 'test3@email.com' };
             it('should create user', function (done) {
                 request.post(usersEndpoint, { form: testUser }, function (err, resp, responseUser) {
                     expect(err).toBeFalsy();
@@ -132,21 +132,13 @@ describe(usersEndpoint, function () {
                     done();
                 });
             });
-
-            it('should generate password if empty', function (done) {
-                request.post(usersEndpoint, { form: { email: 'test3@email.com', password: '' } }, function (err, resp, user) {
-                    expect(err).toBeFalsy();
-                    expect(resp.statusCode).toEqual(200);
-                    expect(user.id).toBeDefined();
-                    done();
-                });
-            });
         });
 
-        describe('get /verify/:hash', function() {
+        describe('post /password', function() {
             it('should verify user', function(done) {
                 var testUser = testUsers[0];
-                request.get(usersEndpoint + '/verify/' + testUser.verificationHash, function(err, resp, user) {
+				var password = 'password';
+                request.post(usersEndpoint + '/password', { form: { hash: testUser.verificationHash, password: password } }, function(err, resp, user) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
                     expect(user.verifiedAt).toBeDefined();
@@ -155,7 +147,7 @@ describe(usersEndpoint, function () {
             });
 
             it('should return 404 when not found', function(done) {
-                request.get(usersEndpoint + '/verify/nonexistinghash', function(err, resp) {
+                request.post(usersEndpoint + '/password', { form: { hash: 'nonexistinghash' }}, function(err, resp) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(404);
                     done();

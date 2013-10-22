@@ -7,14 +7,14 @@ define(function (require, exports, module) {
 		Group = require('./Group'),
 		Groups = require('./Groups'),
 		Logout = require('./Logout'),
-        Verify = require('./Verify'),
+        Password = require('./Password'),
 		Profile = require('./Profile');
 
 	app.controller('Home', Home).
         controller('Group', Group).
 		controller('Groups', Groups).
 		controller('Logout', Logout).
-        controller('Verify', Verify).
+        controller('Password', Password).
 		controller('Profile', Profile);
 
 });

@@ -41,16 +41,6 @@ define(function (require, exports, module) {
                     templateUrl: partials.home,
                     access: access.anon
                 })
-				.state('registered', {
-					url: '/registered',
-					parent: 'default',
-					views: {
-						content: {
-							templateUrl: partials.registered
-						}
-					},
-					access: access.anon
-				})
                 .state('groups', {
                     url: '/groups',
                     parent: 'default',
@@ -83,12 +73,13 @@ define(function (require, exports, module) {
                     },
                     access: access.public
                 })
-                .state('verify', {
-                    url: '/verify/:verificationHash',
+                .state('password', {
+                    url: '/password/:hash',
                     parent: 'default',
                     views: {
                         content: {
-                            controller: 'Verify'
+                            controller: 'Password',
+							templateUrl: partials.password
                         }
                     },
                     access: access.public

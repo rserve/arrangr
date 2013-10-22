@@ -54,8 +54,7 @@ define(function (require, exports, module) {
 						email: email.$viewValue
 					},
 					function (res) {
-						authState.setUserState(res);
-						$state.transitionTo("registered");
+						$scope.registerModel.success = 'Verification email sent!';
 					},
 					function (err) {
 						console.log('error', err);

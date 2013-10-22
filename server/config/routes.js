@@ -15,7 +15,7 @@ module.exports = function (app, passport, auth) {
             app.get('/session', auth.requiresLogin, users.session);
             app.get('/:userId', auth.requiresLogin, users.findById);
             app.put('/:userId', auth.user.hasAuthorization, users.update);
-            app.get('/verify/:hash', users.verify);
+            app.post('/password', users.password);
 			app.post('/:userId/thumbnail', [auth.requiresLogin, auth.user.hasAuthorization], users.uploadThumbnail);
 
             app.param('userId', users.fromId);

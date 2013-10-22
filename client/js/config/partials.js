@@ -12,7 +12,7 @@ define(function (require, exports, module) {
 		demoForm: 'demo-form.html',
         header: 'header.html',
         profile: 'profile.html',
-        registered: 'registered.html'
+		password: 'password.html'
 	};
 
 	for (var key in partials) {

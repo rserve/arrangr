@@ -104,13 +104,13 @@ define(function (require, exports, module) {
 
 		};
 
-        client.verify = function (hash, success, error) {
+        client.password = function (data, success, error) {
 
             var req = new RequestBuilder().
-                setMethod('get').
+                setMethod('post').
                 setUrl(baseUrl).
-                addPath('verify').
-                addPath(hash).
+                addPath('password').
+				setData(data).
                 setSuccessCb(success).
                 setErrorCb(error).
                 setResponseParser(userParser).

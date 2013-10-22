@@ -10,6 +10,7 @@
 	"PLACEHOLDER_GROUP_NAME": "Meetup name",
 	"PLACEHOLDER_EMAIL": "Email",
 	"PLACEHOLDER_PASSWORD": "Password",
+	"PLACEHOLDER_PASSWORD_CONFIRM": "Confirm",
 	"BUTTON_JOIN": "Join",
 	"BUTTON_LEAVE": "Leave",
     "BUTTON_YES": "Yes",

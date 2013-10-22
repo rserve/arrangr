@@ -43,6 +43,5 @@ mailer.send = function (options) {
 mailer.sendRegistrationMail = function (user) {
     expect(user).toBeDefined();
     expect(user.email).toBeDefined();
-    expect(user.password).toBeDefined();
     expect(user.verificationHash).toBeDefined();
 };
