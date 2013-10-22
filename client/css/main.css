@@ -103,6 +103,7 @@ h1 {
 
 .flip-container, .front, .back {
     min-height: 150px;
+    width: 100%;
 }*
 
 .flipper {

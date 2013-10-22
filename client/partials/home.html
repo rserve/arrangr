@@ -45,25 +45,15 @@
 
                 <div class="back">
                     <form name="registerForm" novalidate class="form" ng-submit="register()">
-                        <div class="row">
-                            <div class="col-xs-6 form-group">
-                                <input
-                                       ng-model="registerModel.email"
-                                       type="email"
-                                       class="form-control"
-                                       placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
-                                       name="email">
-                            </div>
+                        <div class="form-group">
 
-                            <div class="col-xs-6 form-group">
-                                <input ng-pattern="/(.{6,20})/"
-                                       ng-model="registerModel.password"
-                                       type="password"
-                                       class="form-control"
-                                       placeholder="{{'%PLACEHOLDER_PASSWORD%' | phrase}}"
-                                       name="password">
-                            </div>
-                         </div>
+                            <input required
+                                   ng-model="registerModel.email"
+                                   type="email"
+                                   class="form-control"
+                                   placeholder="{{'%PLACEHOLDER_EMAIL%' | phrase}}"
+                                   name="email">
+                        </div>
 
                         <div class="form-group alert alert-sm alert-danger" ng-show="registerModel.error">{{registerModel.error}}</div>
 

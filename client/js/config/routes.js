@@ -41,6 +41,16 @@ define(function (require, exports, module) {
                     templateUrl: partials.home,
                     access: access.anon
                 })
+				.state('registered', {
+					url: '/registered',
+					parent: 'default',
+					views: {
+						content: {
+							templateUrl: partials.registered
+						}
+					},
+					access: access.anon
+				})
                 .state('groups', {
                     url: '/groups',
                     parent: 'default',

@@ -44,26 +44,26 @@ define(function (require, exports, module) {
 
 			var form = $scope.registerForm;
 			var email = form.email;
-			var password = form.password;
 
 			if (email.$pristine || email.$invalid) {
 				$scope.registerModel.error = "Please check entered email address!";
-			} else if (password.$pristine || password.$invalid) {
-				$scope.registerModel.error = "Password must be at least 6 characters.";
 			} else {
 
 				// we could use registerModel here also for data, but it contains error message
 				usersClient.create({
-						email: email.$viewValue,
-						password: password.$viewValue
+						email: email.$viewValue
 					},
 					function (res) {
 						authState.setUserState(res);
-						$state.transitionTo("groups");
+						$state.transitionTo("registered");
 					},
 					function (err) {
 						console.log('error', err);
-						$scope.registerModel.error = err.message;
+						if(err.name == 'ValidationError' && err.errors.email) {
+							$scope.registerModel.error = err.errors.email.type;
+						} else {
+							$scope.registerModel.error = err.message;
+						}
 					});
 			}
 		};

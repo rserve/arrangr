@@ -38,15 +38,10 @@ exports.session = function (req, res) {
 exports.create = function (req, res) {
     var user = req.body;
     user.provider = 'local';
-    if (!user.password) {
-        user.password = hash.gen(6);
-    }
     User.create(user, function (err, user) {
         if (!e(err, res, 'Error creating user')) {
             mailer.sendRegistrationMail(user);
-            req.logIn(user, function (err) {
-                e(err, res, 'Error when logging in') || res.send(user);
-            });
+            res.send(user);
         }
     });
 };

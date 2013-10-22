@@ -16,8 +16,8 @@ var cleaner  = require('../helpers/cleaner.js');
 var schema = new Schema({
     name: String,
     email: { type: String, unique: true, required: true },
-    hashedPassword:  { type: String, required: true },
-    salt: { type: String, required: true },
+    hashedPassword:  { type: String },
+    salt: { type: String },
     verificationHash: { type: String, unique: true },
     provider: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
@@ -96,7 +96,7 @@ schema.pre('save', function(next) {
         this.verificationHash = hash.gen(10);
     }
 
-    if (!this.password || this.password.length < 6) {
+    if (!this.isNew && (!this.password || this.password.length < 6)) {
         return next(new Error('Password must be atleast six characters'));
     }
 

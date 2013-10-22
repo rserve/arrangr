@@ -11,7 +11,8 @@ define(function (require, exports, module) {
         groups: 'groups.html',
 		demoForm: 'demo-form.html',
         header: 'header.html',
-        profile: 'profile.html'
+        profile: 'profile.html',
+        registered: 'registered.html'
 	};
 
 	for (var key in partials) {
