@@ -8,11 +8,9 @@ define(function (require, exports, module) {
         link = require('./link'),
         alert = require('./alert');
 
-	//add all filters
 	app.filter('config', config)
        .filter('phrase', phrase)
        .filter('link', link)
        .filter('alert', alert);
 
-	//no export
 });

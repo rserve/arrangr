@@ -106,7 +106,18 @@ var addUserToGroup = function(res, group, user, status) {
                     function (err, group) {
                         if(!e(err, res, 'Error joining group')) {
                             res.send(group);
-                            mailer.sendInvitationMail(user);
+
+							// find creator
+							User.findOne({_id: group.createdBy}, function(err, groupCreator) {
+								if(!e(err, res, 'Error finding creator')) {
+									if(!user) {
+
+									} else {
+										mailer.sendInvitationMail(user, group, groupCreator);
+									}
+								}
+							});
+
                         }
                     }
                 );

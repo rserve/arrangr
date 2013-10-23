@@ -7,8 +7,8 @@ define(function (require, exports, module) {
 	var factory = ['$window', function ($window) {
 
 		var localization = {
-			//language: $window.navigator.userLanguage || $window.navigator.language,
-			language: 'en', //just english for now
+
+			language: 'en',
 
 			getPhrase: function (key, args) {
 

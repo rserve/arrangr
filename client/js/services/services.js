@@ -14,5 +14,5 @@ define(function (require, exports, module) {
 		factory('localization', localization).
 		factory('authState', authState);
 
-	//no export
+
 });

@@ -17,6 +17,5 @@ define(function (require, exports, module) {
 		};
 	};
 
-	//export
 	module.exports = factory;
 });

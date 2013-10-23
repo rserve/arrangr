@@ -51,8 +51,7 @@ define(function (require, exports, module) {
 
 	proto.build = function () {
 
-		var _this,
-			fullUrl = this.url;
+		var fullUrl = this.url;
 
 		//add paths to full url
 		if (this.path.length > 0) {
