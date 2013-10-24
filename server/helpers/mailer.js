@@ -41,12 +41,7 @@ var mailer = {
 	sendRegistrationMail: function (user) {
 		mandrill.messages.sendTemplate({
 			template_name: 'registration',
-			template_content: [
-				{
-					name: "password",
-					content: "Your password is: <b>" + user.password + "</b>"
-				}
-			],
+			template_content: [],
 			message: {
 				to: [
 					{
@@ -113,6 +108,10 @@ var mailer = {
 		}, function (err) {
 			console.log('Error sending registration mail', err);
 		});*/
+    },
+
+	sendLostPasswordMail: function(user) {
+
 	}
 };
 

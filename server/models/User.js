@@ -96,7 +96,7 @@ schema.pre('save', function(next) {
         this.verificationHash = hash.gen(10);
     }
 
-    if (!this.isNew && (!this.password || this.password.length < 6)) {
+    if (!this.isNew && this.password && this.password.length < 6) {
         return next(new Error('Password must be atleast six characters'));
     }
 

@@ -146,8 +146,21 @@ describe(usersEndpoint, function () {
                 });
             });
 
+			it('should create hash', function(done) {
+				var testUser = testUsers[0];
+				request.post(usersEndpoint + '/password', { form: { email: testUser.email } }, function(err, resp, user) {
+					expect(err).toBeFalsy();
+					expect(resp.statusCode).toEqual(200);
+					User.findOne({_id: testUser.id }, function(err, user) {
+						expect(err).toBeFalsy();
+						expect(user.verificationHash).toBeDefined();
+						done();
+					});
+				});
+			});
+
             it('should return 404 when not found', function(done) {
-                request.post(usersEndpoint + '/password', { form: { hash: 'nonexistinghash' }}, function(err, resp) {
+                request.post(usersEndpoint + '/password', { form: { hash: 'nonexistinghash', password: 'anything' }}, function(err, resp) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(404);
                     done();

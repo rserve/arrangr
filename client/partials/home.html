@@ -26,13 +26,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group alert alert-sm alert-danger" ng-show="loginModel.error">{{loginModel.error}}</div>
+                        <div class="form-group alert alert-sm alert-danger" ng-show="loginModel.error">
+                            {{loginModel.error}}<br/>
+                            <a ng-show="loginModel.email" ng-click="forgotPassword()" href="#" class="alert-link">Forgot password?</a>
+                        </div>
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-lg btn-block btn-info">
                                 {{'%BUTTON_LOGIN%' | phrase}}
                             </button>
                         </div>
+
+                        <div class="form-group alert alert-sm alert-success" ng-show="loginModel.success">{{loginModel.success}}</div>
 
                         <div class="alert alert-success alert-sm alert-inline">
                             Not a user?

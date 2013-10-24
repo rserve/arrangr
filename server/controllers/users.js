@@ -5,7 +5,7 @@
 var mongoose = require('mongoose');
 var e = require('../helpers/errorhandler');
 var User = mongoose.model('User');
-var hash = require('../helpers/hash.js');
+var hashgen = require('../helpers/hash.js');
 var mailer = require('../helpers/mailer.js');
 var image = require('../helpers/image');
 
@@ -67,25 +67,47 @@ exports.findById = function (req, res) {
 
 exports.password = function (req, res) {
 	var hash = req.body.hash;
+	var password = req.body.password;
+	var email = req.body.email;
 
-	User.findOne({verificationHash: hash}, function (err, user) {
-		if(!e(err, res, 'Error settings password')) {
-			if (!user) {
-				res.status(404).send({error: 'Invalid hash'});
-			} else {
-				user.password = req.body.password;
-				user.verifiedAt = new Date();
-				user.verificationHash = undefined;
-				user.save(function (err) {
-					if(!e(err, res, 'Error updating password')) {
-						req.logIn(user, function (err) {
-							e(err, res, 'Error when logging in') || res.send(user);
-						});
-					}
-				});
+	if(hash && password) {
+		User.findOne({verificationHash: hash}, function (err, user) {
+			if(!e(err, res, 'Error setting password')) {
+				if (!user) {
+					res.status(404).send({error: 'Invalid hash'});
+				} else {
+					user.password = password;
+					user.verifiedAt = new Date();
+					user.verificationHash = undefined;
+					user.save(function (err) {
+						if(!e(err, res, 'Error updating password')) {
+							req.logIn(user, function (err) {
+								e(err, res, 'Error when logging in') || res.send(user);
+							});
+						}
+					});
+				}
 			}
-		}
-	});
+		});
+	} else if(email) {
+		User.findOne({email: email}, function(err, user) {
+			if(!e(err, res, 'Error resetting password')) {
+				if (!user) {
+					res.status(404).send({error: 'Email does not exist'});
+				} else {
+					user.verificationHash = hashgen.gen(10);
+					user.save(function (err) {
+						if(!e(err, res, 'Error resetting password')) {
+							mailer.sendLostPasswordMail(user);
+							res.send(user);
+						}
+					});
+				}
+			}
+		});
+	} else {
+		res.status(500).send('Invalid request');
+	}
 };
 
 exports.uploadThumbnail = function (req, res) {

@@ -52,6 +52,12 @@ h1 {
 .home {
     background-color: transparent;
     color: white;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 400px;
 }
 
 .logincontainer {
@@ -192,10 +198,4 @@ h1 {
 
 .uploading .thumbnail {
     display: none !important;
-}
-
-@media (min-width: 768px) {
-    .home {
-        padding-top: 55px;
-    }
 }

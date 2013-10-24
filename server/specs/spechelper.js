@@ -45,3 +45,15 @@ mailer.sendRegistrationMail = function (user) {
     expect(user.email).toBeDefined();
     expect(user.verificationHash).toBeDefined();
 };
+
+mailer.sendInvitationMail = function (user, group, groupCreator) {
+	expect(user).toBeDefined();
+	expect(group).toBeDefined();
+	expect(groupCreator).toBeDefined();
+};
+
+mailer.sendLostPasswordMail = function(user) {
+	expect(user).toBeDefined();
+	expect(user.email).toBeDefined();
+	expect(user.verificationHash).toBeDefined();
+};

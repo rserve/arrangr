@@ -21,7 +21,7 @@ define(function (require, exports, module) {
 			if (email.$pristine || email.$invalid) {
 				$scope.loginModel.error = "You forgot to enter your email!";
 			} else if (password.$pristine || password.$invalid) {
-				$scope.loginModel.error = "Your password cannot be empty!";
+				$scope.loginModel.error = 'Your password cannot be empty!';
 			} else {
 
 				// we could use loginMode here also for data, but it contains error message
@@ -77,6 +77,18 @@ define(function (require, exports, module) {
 		$scope.showRegister = function () {
 			$scope.isLogin = false;
 			$scope.registerModel = angular.copy({});
+		};
+
+		$scope.forgotPassword = function() {
+			usersClient.password({email: $scope.loginModel.email },
+				function() {
+					$scope.loginModel.error = null;
+					$scope.loginModel.success = 'Email sent!';
+				},
+				function(err) {
+					$scope.loginModel.error = err.message;
+				}
+			);
 		};
 
 		//show register as default
