@@ -50,8 +50,8 @@ var mailer = {
 				],
 				global_merge_vars: [
 					{
-						name: 'VERIFYLINK',
-						content: 'http://arran.gr/verify/' + user.verificationHash
+						name: 'LINK',
+						content: 'http://arran.gr/password/' + user.verificationHash
 					}
 				],
 
@@ -111,7 +111,27 @@ var mailer = {
     },
 
 	sendLostPasswordMail: function(user) {
-
+		mandrill.messages.sendTemplate({
+			template_name: 'password-reset',
+			template_content: [],
+			message: {
+				to: [
+					{
+						email: user.email
+					}
+				],
+				global_merge_vars: [
+					{
+						name: 'LINK',
+						content: 'http://arran.gr/password/' + user.verificationHash
+					}
+				]
+			}
+		}, function (res) {
+//            console.log(res);
+		}, function (err) {
+			console.log('Error sending registration mail', err);
+		});
 	}
 };
 
