@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>arran.gr - arrange your meetups!</title>
+    <link rel="stylesheet" href="/css/emoji.min.css">
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
     <!--<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.css"/>-->
     <link rel="stylesheet" href="/css/main.css"/>
@@ -19,7 +20,8 @@
 
 <div class="clearfix"></div>
 
-<small class="bgbyline">Photo: <a href="https://www.facebook.com/FotoSander" target="_blank">FotoSander</a></small>
+<small class="bgbyline">Photo: <a href="https://www.facebook.com/FotoSander" target="_blank">FotoSander</a>
+</small>
 
 <script src="/lib/require.js"></script>
 
@@ -39,6 +41,8 @@
             'angular-ui-router': '../lib/angular-ui-router',
             'angular-flash': '../lib/angular-flash',
             'angular-moment': '../lib/angular-moment',
+            'angular-sanitize': '../lib/angular-sanitize',
+            'emoji': '../lib/emoji.min',
             json: '../lib/require/json',
             text: '../lib/require/text',
             data: '../data'
@@ -65,11 +69,19 @@
                 deps: ['angular']
             },
             'angular-moment': {
-                deps: ['moment','angular']
+                deps: ['moment', 'angular']
+            },
+            'angular-sanitize': {
+                deps: ['angular']
             },
             'jquery-filedrop': {
                 deps: ['jquery']
+            },
+            'emoji': {
+                deps: ['angular']
+
             }
+
         },
         priority: [
             "angular"

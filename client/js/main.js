@@ -6,6 +6,8 @@ require([
     'angular-ui-router',
     'angular-flash',
     'angular-moment',
+    'angular-sanitize',
+    'emoji',
 	'jquery',
 	'jquery-filedrop',
 	'app',

@@ -7,7 +7,12 @@ define(function (require, exports, module) {
 
 
 	//create app as module
-	var app = angular.module(config.appName, ['ui.router', 'angular-flash.service', 'angular-flash.flash-alert-directive','angularMoment']).
+	var app = angular.module(config.appName, ['ui.router',
+			'angular-flash.service',
+			'angular-flash.flash-alert-directive',
+			'angularMoment',
+			'ngSanitize',
+			'emoji' ]).
 
 		value('version', config.version).
 		value('name', config.appName);
