@@ -17,7 +17,8 @@ exports.findAll = function (req, res) {
 
 exports.findByUser = function (req, res) {
     var user = req.user;
-    Group.find().or([{'members.user': user}, { public: true }]).exec(function (err, groups) {
+	var now = new Date();
+    Group.find({startDate: { $gt: now } }).or([{'members.user': user}, { public: true }]).exec(function (err, groups) {
         e(err, res, 'Error finding groups by user') || res.send(groups);
     });
 };
@@ -219,9 +220,25 @@ exports.deleteComment = function(req, res) {
 	);
 };
 
+exports.increment = function(req, res) {
+	var group = req.group.toJSON();
+	delete group.id;
+	delete group.createdAt;
+	group.startDate = new Date(group.startDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+	group.comments = [];
+	group.members.forEach(function (member){
+		delete member.id;
+		member.status = '';
+		member.user = member.user.id;
+	});
+	Group.create(group, function (err, group) {
+		e(err, res, 'Error creating next group cycle') || res.send(group);
+	});
+};
+
 // param parsing
 var fromParam = function (req, res, next, q) {
-    var query = Group.findOne(q);
+    var query = Group.findOne(q).sort({ startDate: 'desc'});
     if(req.user) {
         query.or([{'members.user': req.user }, { 'public': true }]);
     } else {

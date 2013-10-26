@@ -40,6 +40,8 @@ module.exports = function (app, passport, auth) {
 
             app.post('/:key/thumbnail', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.uploadThumbnail);
 
+			app.post('/:key/increment', [auth.requiresLogin, auth.group.hasAuthorization], groups.increment);
+
             app.param('key', groups.fromKey);
             app.param('groupId', groups.fromId);
         });

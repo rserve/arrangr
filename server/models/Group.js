@@ -3,23 +3,22 @@ var hash = require('../helpers/hash.js');
 var cleaner  = require('../helpers/cleaner.js');
 
 var schema = new mongoose.Schema({
-    key: { type: String, unique: true },
+    key: { type: String },
     name: { type: String, required: true },
     description: { type: String },
-    imageData: { type: String },
     image: {
       format: { type: String },
       data: { type: String },
       size: { type: Number }
     },
-    startDate: { type: Date, default: Date.now },
+    startDate: { type: Date, default: new Date(new Date().getTime() + 60 * 60 * 1000) },
     endDate: { type: Date },
     public: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' },
     members: [{
         user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
-        status: {type: String, enum: ['Yes', 'No', 'Maybe'], default: '' },
+        status: {type: String, enum: ['Yes', 'No', 'Maybe', ''], default: '' },
         admin: { type: Boolean, default: false },
         createdAt: {type: Date, default: Date.now }
     }],
@@ -34,6 +33,7 @@ var schema = new mongoose.Schema({
 
 schema.pre('save', function (next) {
     if (!this.key) {
+		// TODO: Check if key exits
         this.key = hash.gen(5);
     }
     next();
