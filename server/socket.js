@@ -1,6 +1,5 @@
 var socketIO = require('socket.io');
 var io = null;
-var _socket;
 
 exports.listen = function (server) {
 	io = socketIO.listen(server, {
@@ -13,14 +12,11 @@ exports.listen = function (server) {
 };
 
 exports.groupChanged = function (group) {
-	if (_socket) {
-		_socket.emit('groupChanged', createMessage(group._id, group));
-	}
+	io.sockets.emit('groupChanged', createMessage(group._id, group));
 };
 
 function onConnection(socket) {
 
-	_socket = socket;
 	var client = socket.handshake.address;
 
 	log('connected: ' + client.address + ':' + client.port);
@@ -28,6 +24,7 @@ function onConnection(socket) {
 	socket.on('disconnect', function () {
 		log('disconnected');
 	});
+
 
 }
 

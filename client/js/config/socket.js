@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 		socket.on('disconnect', function () {
 			console.log('[socket] disconnect');
 		});
-		console.log('Socket configured');
+
 	}]);
 
 	module.exports = app;
