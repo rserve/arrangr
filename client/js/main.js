@@ -8,6 +8,8 @@ require([
     'angular-moment',
     'angular-sanitize',
     'emoji',
+    'socketio',
+    'socket',
 	'jquery',
 	'jquery-filedrop',
 	'app',
@@ -18,7 +20,8 @@ require([
 	'config/flash',
 	'config/http',
 	'config/routes',
-	'config/finalize'
+	'config/finalize',
+	'config/socket'
 ], function (es5shim, angular, config) {
 
 	'use strict';

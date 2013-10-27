@@ -43,6 +43,8 @@
             'angular-moment': '../lib/angular-moment',
             'angular-sanitize': '../lib/angular-sanitize',
             'emoji': '../lib/emoji.min',
+            'socketio': '../lib/socket.io',
+            socket: '../lib/socket',
             json: '../lib/require/json',
             text: '../lib/require/text',
             data: '../data'
@@ -79,7 +81,12 @@
             },
             'emoji': {
                 deps: ['angular']
-
+            },
+            'socket': {
+                deps: ['angular']
+            },
+            'socketio': {
+                exports: ['io']
             }
 
         },

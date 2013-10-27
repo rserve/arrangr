@@ -4,7 +4,9 @@ define(function (require, exports, module) {
 
 	var _ = require('underscore');
 
-	var Controller = function ($scope, $state, $stateParams, groupsClient, authState, flash) {
+	var Group = require('../services/api/domain/Group');
+
+	var Controller = function ($scope, $state, $stateParams, groupsClient, authState, flash, socket) {
 
 		var key = $stateParams.groupId,
 			client = groupsClient;
@@ -229,11 +231,19 @@ define(function (require, exports, module) {
 
 		};
 
+		$scope.$on('socket:groupChanged', function (ev, message) {
+
+			if (message.id === $scope.group.id) {
+				$scope.group = new Group(message.data);
+			}
+
+		});
+
 		getGroup();
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash'];
+	Controller.$inject = ['$scope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash', 'socket'];
 
 	module.exports = Controller;
 

@@ -4,6 +4,10 @@ var namespace = require('express-namespace');
 var fs = require('fs');
 var passport = require('passport');
 
+var http = require('http');
+
+var socket = require('./socket');
+
 // Load configurations
 // if test env, load example file
 var env = process.env.NODE_ENV || 'development';
@@ -27,6 +31,7 @@ require('./config/passport')(passport, config);
 
 // Setup express
 var app = express();
+var server = http.createServer(app);
 
 // express settings
 require('./config/express')(app, config, passport);
@@ -35,8 +40,9 @@ require('./config/express')(app, config, passport);
 require('./config/routes')(app, passport, auth);
 
 var port = process.env.PORT || 3000;
-app.listen(port);
+//app.listen(port);
 console.log('Express app started on port ' + port);
-
+server.listen(port);
+socket.listen(server);
 /*global exports:true*/
 exports = module.exports = app;
