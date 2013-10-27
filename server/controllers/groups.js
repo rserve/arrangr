@@ -6,6 +6,7 @@ var hash = require('../helpers/hash');
 var mailer = require('../helpers/mailer');
 var image = require('../helpers/image');
 var socket = require('../socket');
+var moment = require('moment');
 
 //Fields from user to populate into member array
 var userFields = 'id name email verified hashedEmail gravatar';
@@ -245,7 +246,7 @@ exports.increment = function (req, res) {
 	var group = req.group.toJSON();
 	delete group.id;
 	delete group.createdAt;
-	group.startDate = new Date(group.startDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+	group.startDate = moment(group.startDate).add('days', 7).toDate();
 	group.comments = [];
 	group.members.forEach(function (member) {
 		delete member.id;

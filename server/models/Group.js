@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var hash = require('../helpers/hash.js');
 var cleaner  = require('../helpers/cleaner.js');
+var moment = require('moment');
 
 var schema = new mongoose.Schema({
     key: { type: String },
@@ -11,7 +12,7 @@ var schema = new mongoose.Schema({
       data: { type: String },
       size: { type: Number }
     },
-    startDate: { type: Date, default: new Date(new Date().getTime() + 60 * 60 * 1000) },
+    startDate: { type: Date, default: moment().add('hours', 1).toDate() },
     endDate: { type: Date },
     public: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
