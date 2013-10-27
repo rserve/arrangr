@@ -1,6 +1,7 @@
 /*global describe, it, expect, before, beforeEach, afterEach, runs, waitsFor */
 var helper = require('./spechelper');
 var request = helper.request;
+var moment = require('moment');
 var Group = helper.mongoose.model('Group');
 var User = helper.mongoose.model('User');
 
@@ -244,5 +245,27 @@ describe(groupsEndpoint, function () {
                 });
             });
         });
+
+		describe('post /:key/increment', function() {
+			it('should increment group to the next cycle', function(done) {
+				var testGroup = testGroups[0];
+				request.post(groupsEndpoint + '/' + testGroup.key + '/increment', function(err, resp, group) {
+					expect(err).toBeFalsy();
+					expect(resp.statusCode).toEqual(200);
+					expect(new Date(group.startDate)).toEqual(moment(testGroup.startDate).add('days', 7).toDate());
+					expect(group.comments.length).toBe(0);
+					done();
+				});
+			});
+
+			it('should not be able to increment if not admin', function(done) {
+				var testGroup = testGroups[1];
+				request.post(groupsEndpoint + '/' + testGroup.key + '/increment', function(err, resp) {
+					expect(err).toBeFalsy();
+					expect(resp.statusCode).toEqual(403);
+					done();
+				});
+			});
+		});
     });
 });
