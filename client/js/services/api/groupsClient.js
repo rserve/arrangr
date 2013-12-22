@@ -46,6 +46,10 @@ define(function (require, exports, module) {
 		 * */
 		var client = new BaseClient($http);
 
+		client.parse = function(data) {
+			return groupParser(data);
+		};
+
 		client.findAll = function (success, error) {
 			var req = new RequestBuilder().
 				setMethod('get').

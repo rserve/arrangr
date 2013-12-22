@@ -20,7 +20,7 @@ define(function (require, exports, module) {
 	};
 
 	proto.thumbnailSrc = function () {
-		if (!this.gravatar && this.image.data) {
+		if (!this.gravatar && this.image && this.image.data) {
 			return this.image.data;
 		}
 		else {

@@ -39,7 +39,7 @@
             <tbody>
             <tr ng-repeat="member in group.members">
                 <td>
-                    <img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
+                    <img ng-src="{{ member.user.thumbnailSrc() }}" width="25" height="25"/>
                     {{ member.user.displayName() }}
                 </td>
                 <td>

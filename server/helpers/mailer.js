@@ -63,25 +63,14 @@ var mailer = {
 		});
 	},
 
-	sendInvitationMail: function (user, group, groupCreator) {
+	sendInvitationMail: function (user, group, inviter) {
 
-		var iCalString = getInvitationICal(user, group, groupCreator);
+		var iCalString = getInvitationICal(user, group, inviter);
 		var inviteEncoded = new Buffer(iCalString, 'utf8').toString('base64');
 
-		/*
-
-		TODO de-comment the one below to send invite with iCal
-		but we need different template
-
-
 		mandrill.messages.sendTemplate({
-			template_name: 'registration',
-			template_content: [
-				{
-					name: "password",
-					content: "Your password is: <b>" + user.password + "</b>"
-				}
-			],
+			template_name: 'invite',
+			template_content: [],
 			message: {
 				to: [
 					{
@@ -90,8 +79,16 @@ var mailer = {
 				],
 				global_merge_vars: [
 					{
-						name: 'VERIFYLINK',
-						content: 'http://arran.gr/verify/' + user.verificationHash
+						name: 'LINK',
+						content: 'http://arran.gr/groups/' + group.key
+					},
+					{
+						name: 'INVITER',
+						content: inviter.name || inviter.email
+					},
+					{
+						name: 'MEETUP',
+						content: group.name
 					}
 				],
 				"attachments": [
@@ -106,8 +103,8 @@ var mailer = {
 		}, function (res) {
 //            console.log(res);
 		}, function (err) {
-			console.log('Error sending registration mail', err);
-		});*/
+			console.log('Error sending invitation mail', err);
+		});
     },
 
 	sendLostPasswordMail: function(user) {

@@ -104,16 +104,16 @@ exports.join = function (req, res) {
 			if (!e(err, res, 'Error creating user')) {
 				mailer.sendRegistrationMail(user);
 				req.logIn(user, function (err) {
-					e(err, res, 'Error when logging in') || addUserToGroup(res, group, user);
+					e(err, res, 'Error when logging in') || addUserToGroup(req, res, group, user);
 				});
 			}
 		});
 	} else {
-		addUserToGroup(res, group, req.user, 'Yes');
+		addUserToGroup(req, res, group, req.user, 'Yes');
 	}
 };
 
-var addUserToGroup = function (res, group, user, status) {
+var addUserToGroup = function (req, res, group, user, status) {
 	Group.find({ _id: group.id, 'members.user': user}, function (err, groups) {
 		if (!e(err, res, 'Error finding group to join')) {
 			if (groups.length > 0) {
@@ -125,17 +125,9 @@ var addUserToGroup = function (res, group, user, status) {
 							socket.groupChanged(group);
 							res.send(group);
 
-							// find creator
-							User.findOne({_id: group.createdBy}, function (err, groupCreator) {
-								if (!e(err, res, 'Error finding creator')) {
-									if (!user) {
-
-									} else {
-										mailer.sendInvitationMail(user, group, groupCreator);
-									}
-								}
-							});
-
+							if(req.user.id != user.id) {
+								mailer.sendInvitationMail(user, group, req.user);
+							}
 						}
 					}
 				);
@@ -153,11 +145,11 @@ exports.invite = function (req, res) {
 				console.log('enmau', email);
 				User.create({ email: email, password: hash.gen(6) }, function (err, user) {
 					if (!e(err, res, 'Error creating invited user')) {
-						addUserToGroup(res, group, user);
+						addUserToGroup(req, res, group, user);
 					}
 				});
 			} else {
-				addUserToGroup(res, group, user);
+				addUserToGroup(req, res, group, user);
 			}
 		}
 	});

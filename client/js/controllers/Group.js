@@ -233,9 +233,10 @@ define(function (require, exports, module) {
 
 		$scope.$on('socket:groupChanged', function (ev, message) {
 
-			if (message.id === $scope.group.id) {
-				$scope.group = new Group(message.data);
-			}
+			// Should not replace group only update, breaks bindings when some relations are missing
+//			if (message.id === $scope.group.id) {
+//				$scope.group = groupsClient.parse(message.data);
+//			}
 
 		});
 
