@@ -3,7 +3,9 @@ var rootPath = path.normalize(__dirname + '/../..');
 
 module.exports = {
     development: {
-        db: 'mongodb://localhost/rserve',
+        db: process.env.MONGOLAB_URI ||
+			process.env.MONGOHQ_URL ||
+			'mongodb://localhost/rserve',
         root: rootPath,
         mailer: {
             apikey: 'jwNKk8yTVM2pTfCiApHNQw'
