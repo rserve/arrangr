@@ -142,8 +142,7 @@ exports.invite = function (req, res) {
 	User.findOne({email: email}, function (err, user) {
 		if (!e(err, res, 'Error finding invited user')) {
 			if (!user) {
-				console.log('enmau', email);
-				User.create({ email: email, password: hash.gen(6) }, function (err, user) {
+				User.create({ email: email }, function (err, user) {
 					if (!e(err, res, 'Error creating invited user')) {
 						addUserToGroup(req, res, group, user);
 					}

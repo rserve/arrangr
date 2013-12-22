@@ -80,7 +80,7 @@ var mailer = {
 				global_merge_vars: [
 					{
 						name: 'LINK',
-						content: 'http://arran.gr/groups/' + group.key
+						content: user.verified? 'http://arran.gr/groups/' + group.key : 'http://arran.gr/password/' + user.verificationHash
 					},
 					{
 						name: 'INVITER',
