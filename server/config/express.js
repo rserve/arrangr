@@ -23,7 +23,7 @@ module.exports = function (app, config, passport) {
     // Route all requests that's not for static files (ending with .*) to the index page and let angular do the client routing
     app.use(function (req, res, next) {
         if (!req.url.match(/.*\..*/) && !req.url.match(/\/api\/.*/)) {
-            req.url = '/';
+            req.url = '/index.html';
         }
         next();
     });
