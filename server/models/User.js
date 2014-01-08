@@ -18,7 +18,7 @@ var schema = new Schema({
     email: { type: String, unique: true, required: true },
     hashedPassword:  { type: String },
     salt: { type: String },
-    verificationHash: { type: String, unique: true },
+    verificationHash: { type: String },
     provider: { type: String, default: '' },
     createdAt: { type: Date, default: Date.now },
     verifiedAt: { type: Date },
