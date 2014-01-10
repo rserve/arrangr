@@ -217,6 +217,20 @@ define(function (require, exports, module) {
 			this.sendRequest(req);
 		};
 
+		client.increment = function(key, success, error) {
+			var req = new RequestBuilder().
+				setMethod('post').
+				setUrl('/api/groups').
+				addPath(key).
+				addPath('increment').
+				setSuccessCb(success).
+				setErrorCb(error).
+				setResponseParser(groupParser).
+				build();
+
+			this.sendRequest(req);
+		};
+
 		return client;
 	}];
 

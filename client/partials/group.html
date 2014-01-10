@@ -103,6 +103,7 @@
 
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
+        <div ng-show="group.upcoming()">
         <div ng-show="group.isMember(user)">
             <h3>Are you going?</h3>
 
@@ -182,12 +183,9 @@
             </div>
             <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
         </form>
+        </div>
 
-        <!--<p ng-show="group.public">-->
-        <!--Share:-->
-        <!--<input type="text" value="{{link}}">-->
-        <!--</p>-->
-
+        <a href="#" ng-click="increment()" class="btn btn-info">{{'%BUTTON_NEXT%' | phrase}}</a>
 
     </div>
 </div>

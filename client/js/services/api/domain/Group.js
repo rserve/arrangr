@@ -72,6 +72,9 @@ define(function (require, exports, module) {
 		return '/api/groups/' + this.key + '/thumbnail';
 	};
 
+	proto.upcoming = function() {
+		return new Date(this.startDate).getTime() > new Date().getTime();
+	};
 
 	module.exports = Group;
 });

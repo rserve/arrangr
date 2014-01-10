@@ -47,7 +47,6 @@ define(function (require, exports, module) {
 			});
 		}
 
-
 		//expose methods to view
 		$scope.create = createGroup;
 		$scope.delete = deleteGroup;

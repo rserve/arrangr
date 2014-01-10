@@ -22,6 +22,7 @@
     "BUTTON_SAVE": "Save",
     "BUTTON_UPDATE": "Update",
     "BUTTON_COMMENT": "Comment",
+	"BUTTON_NEXT": "Next",
     "PEOPLE_SIGNED": "Currently {0} people have signed!",
 	"ARGUMENTS": "arg1: {0}, arg2: {1}, arg3: {2}...",
     "LABEL_YES": "going",
