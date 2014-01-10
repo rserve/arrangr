@@ -1,7 +1,6 @@
-<h2>{{'%TITLE_GROUPS%' | phrase}}</h2>
-
 <div class="row">
     <div class="col-lg-9 col-md-8 col-sm-8">
+        <h2>{{'%TITLE_GROUPS%' | phrase}}</h2>
 
         <table class="table table-striped">
             <tbody>
@@ -40,6 +39,43 @@
             </tbody>
         </table>
 
+        <div ng-show="archive.length">
+        <h2>Archive</h2>
+
+        <table class="table table-striped">
+            <tbody>
+            <tr ng-repeat="group in archive">
+                <td>
+                    <a href="/groups/{{group.key}}">{{group.name}}</a>
+                </td>
+                <td>
+                    <span ng-show="group.startDate">
+                        {{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}}
+                    </span>
+                </td>
+                <td>
+                    <span ng-show="group.isNew" class="label label-info">new!</span>
+                    <span ng-show="group.public" class="label label-warning">public</span>
+                    <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
+                    <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
+                    <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
+                    <span ng-show="!member(group).status && group.isAdmin(user)" class="label label-danger">admin</span>
+                    <span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"
+                          class="label label-success">member</span>
+                </td>
+                <td>
+
+                </td>
+                <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
+                <td>
+                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
         <form novalidate class="form" role="form" name="form" ng-submit="create()">

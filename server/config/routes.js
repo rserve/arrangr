@@ -24,11 +24,12 @@ module.exports = function (app, passport, auth) {
         app.namespace('/groups', function() {
             var groups = require('../controllers/groups');
 
-            app.get('/:key', groups.find);
-            app.post('/:key/join', groups.join);
-            app.get('', auth.requiresLogin, groups.findByUser);
-            app.post('', auth.requiresLogin, groups.create);
-            app.post('/:key/invite', auth.requiresLogin, groups.invite);
+			app.get('/archive', auth.requiresLogin, groups.findByUserArchive);
+			app.get('/:key', groups.find);
+			app.post('/:key/join', groups.join);
+			app.get('', auth.requiresLogin, groups.findByUser);
+			app.post('', auth.requiresLogin, groups.create);
+			app.post('/:key/invite', auth.requiresLogin, groups.invite);
             app.put('/:key', [auth.requiresLogin, auth.group.hasAuthorization], groups.update);
             app.delete('/:key', [auth.requiresLogin, auth.group.hasAuthorization], groups.delete);
 

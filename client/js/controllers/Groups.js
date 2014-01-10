@@ -41,6 +41,12 @@ define(function (require, exports, module) {
 			});
 		}
 
+		function getArchive() {
+			groupsClient.findArchive(function (data) {
+				$scope.archive = data;
+			});
+		}
+
 
 		//expose methods to view
 		$scope.create = createGroup;
@@ -56,7 +62,7 @@ define(function (require, exports, module) {
 
 		//default action
 		getGroups();
-
+		getArchive();
 	};
 
 	//inject dependencies

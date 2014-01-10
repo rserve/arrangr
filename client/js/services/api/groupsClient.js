@@ -62,6 +62,18 @@ define(function (require, exports, module) {
 
 		};
 
+		client.findArchive = function (success, error) {
+			var req = new RequestBuilder().
+				setMethod('get').
+				setUrl('/api/groups/archive').
+				setSuccessCb(success).
+				setErrorCb(error).
+				setResponseParser(groupsParser).
+				build();
+			this.sendRequest(req);
+
+		};
+
 		client.findByKey = function (key, success, error) {
 			var req = new RequestBuilder().
 				setMethod('get').

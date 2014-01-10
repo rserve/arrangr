@@ -28,6 +28,17 @@ exports.findByUser = function (req, res) {
 	});
 };
 
+exports.findByUserArchive = function (req, res) {
+	var user = req.user;
+	var now = new Date();
+	Group.find({startDate: { $lt: now } }).or([
+			{'members.user': user},
+			{ public: true }
+	]).exec(function (err, groups) {
+		e(err, res, 'Error finding groups archive by user') || res.send(groups);
+	});
+};
+
 exports.find = function (req, res) {
 	res.send(req.group);
 };
