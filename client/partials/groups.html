@@ -46,11 +46,11 @@
             <tbody>
             <tr ng-repeat="group in archive">
                 <td>
-                    <a href="/groups/{{group.key}}">{{group.name}}</a>
+                    <a href="/groups/{{group.id}}">{{group.name}}</a>
                 </td>
                 <td>
                     <span ng-show="group.startDate">
-                        {{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at {{group.time()}}
+                        {{ group.startDate | amCalendar }}
                     </span>
                 </td>
                 <td>

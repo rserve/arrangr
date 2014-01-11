@@ -23,7 +23,7 @@ exports.findByUser = function (req, res) {
 	Group.find({startDate: { $gt: now } }).or([
 			{'members.user': user},
 			{ public: true }
-		]).exec(function (err, groups) {
+		]).sort({ startDate: 'desc'}).exec(function (err, groups) {
 		e(err, res, 'Error finding groups by user') || res.send(groups);
 	});
 };
@@ -34,7 +34,7 @@ exports.findByUserArchive = function (req, res) {
 	Group.find({startDate: { $lt: now } }).or([
 			{'members.user': user},
 			{ public: true }
-	]).exec(function (err, groups) {
+	]).sort({ startDate: 'desc'}).exec(function (err, groups) {
 		e(err, res, 'Error finding groups archive by user') || res.send(groups);
 	});
 };
@@ -290,7 +290,13 @@ var fromParam = function (req, res, next, q) {
 };
 
 exports.fromKey = function (req, res, next, key) {
-	fromParam(req, res, next, { key: key });
+	var q;
+	if(key.length < 24) {
+		q = { key: key };
+	} else {
+		q = { _id: key };
+	}
+	fromParam(req, res, next, q);
 };
 
 exports.fromId = function (req, res, next, id) {
