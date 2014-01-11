@@ -6,6 +6,18 @@ define(function (require, exports, module) {
 
 	var factory = ['$window', function ($window) {
 
+		// Display 24 hours time instead of moment default AM/PM
+		$window.moment.lang('en', {
+			calendar : {
+				lastDay : '[Yesterday at] HH:mm',
+				sameDay : '[Today at] HH:mm',
+				nextDay : '[Tomorrow at] HH:mm',
+				lastWeek : '[last] dddd [at] HH:mm',
+				nextWeek : 'dddd [at] HH:mm',
+				sameElse : 'D/M YYYY'
+			}
+		});
+
 		var localization = {
 
 			language: 'en',
