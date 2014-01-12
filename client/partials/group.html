@@ -104,85 +104,91 @@
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
         <div ng-show="group.upcoming()">
-        <div ng-show="group.isMember(user)">
-            <h3>Are you going?</h3>
+            <div ng-show="group.isMember(user)">
+                <h3>Are you going?</h3>
 
-            <div class="btn-group btn-group-justified">
-                <a ng-click="yes()" class="btn btn-default"
-                   ng-class="{'btn-success':currentMember.status == 'Yes'}">
-                    {{ '%BUTTON_YES%' | phrase }}
-                </a>
-                <a ng-click="maybe()" class="btn btn-default"
-                   ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
-                    {{ '%BUTTON_MAYBE%' | phrase }}
-                </a>
-                <a ng-click="no()" class="btn btn-default"
-                   ng-class="{'btn-danger':currentMember.status == 'No'}">
-                    {{ '%BUTTON_NO%' | phrase }}
-                </a>
+                <div class="btn-group btn-group-justified">
+                    <a ng-click="yes()" class="btn btn-default"
+                       ng-class="{'btn-success':currentMember.status == 'Yes'}">
+                        {{ '%BUTTON_YES%' | phrase }}
+                    </a>
+                    <a ng-click="maybe()" class="btn btn-default"
+                       ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
+                        {{ '%BUTTON_MAYBE%' | phrase }}
+                    </a>
+                    <a ng-click="no()" class="btn btn-default"
+                       ng-class="{'btn-danger':currentMember.status == 'No'}">
+                        {{ '%BUTTON_NO%' | phrase }}
+                    </a>
+                </div>
             </div>
-        </div>
 
-        <form class="form" role="form" name="joinForm" novalidate ng-show="!user" ng-submit="join()">
-            <h3>Join meetup</h3>
+            <form class="form" role="form" name="joinForm" novalidate ng-show="!user" ng-submit="join()">
+                <h3>Join meetup</h3>
 
-            <div class="form-group">
-                <input class="form-control" ng-model="joinModel.email"
-                       placeholder="Enter your email"
-                       required type="text">
+                <div class="form-group">
+                    <input class="form-control" ng-model="joinModel.email"
+                           placeholder="Enter your email"
+                           required type="text">
 
-            </div>
-        </form>
+                </div>
+            </form>
 
-        <form class="form" novalidate name="inviteForm" role="form"
-              ng-show="group.isAdmin(user) || group.public && group.isMember(user)"
-              ng-submit="invite()">
-            <h3>Invite friends</h3>
+            <form class="form" novalidate name="inviteForm" role="form"
+                  ng-show="group.isAdmin(user) || group.public && group.isMember(user)"
+                  ng-submit="invite()">
+                <h3>Invite friends</h3>
 
-            <div class="form-group">
-                <input required type="email" class="form-control" ng-model="inviteModel.email"
-                       placeholder="Enter email to invite" type="text">
-            </div>
-        </form>
+                <div class="form-group">
+                    <input required type="email" class="form-control" ng-model="inviteModel.email"
+                           placeholder="Enter email to invite" type="text">
+                </div>
+            </form>
 
-        <form novalidate class="form" role="form" name="groupForm" ng-submit="update()" ng-show="group.isAdmin(user)">
-            <h3>Edit group</h3>
+            <form novalidate class="form" role="form" name="groupForm" ng-submit="update()" ng-show="group.isAdmin(user)">
+                <h3>Edit group</h3>
 
-            <div class="form-group">
-                <label class="control-label" for="groupFormName">Name</label>
-                <input required class="form-control" id="groupFormName" type="text"
-                       ng-model="group.name" name="name" placeholder=""/>
+                <div class="form-group">
+                    <label class="control-label" for="groupFormName">Name</label>
+                    <input required class="form-control" id="groupFormName" type="text"
+                           ng-model="group.name" name="name" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="groupFormDescription">Description</label>
+                    <input class="form-control" id="groupFormDescription" type="text"
+                           ng-model="group.description" name="description" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="groupFormWeekday">Weekday</label>
+                    <select id="groupFormWeekday" class="form-control"
+                            ng-model="group._weekday" name="weekday" >
+                        <option value="1">{{ '%WEEKDAY_1%' | phrase }}</option>
+                        <option value="2">{{ '%WEEKDAY_2%' | phrase }}</option>
+                        <option value="3">{{ '%WEEKDAY_3%' | phrase }}</option>
+                        <option value="4">{{ '%WEEKDAY_4%' | phrase }}</option>
+                        <option value="5">{{ '%WEEKDAY_5%' | phrase }}</option>
+                        <option value="6">{{ '%WEEKDAY_6%' | phrase }}</option>
+                        <option value="0">{{ '%WEEKDAY_0%' | phrase }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="groupFormTime">Time</label>
+                    <input class="form-control" id="groupFormTime" type="time"
+                           ng-model="group._time" name="time"  placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="groupFormPublic">Public</label>
+                    <input class="form-control" id="groupFormPublic" type="checkbox"
+                           ng-model="group.public" name="public" />
+                </div>
+                <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
+            </form>
+
+            <div>
+                <h3>Reminder</h3>
+                <p>Send reminder to all members that hasn't answered yes or no yet.</p>
+                <a href="#" ng-click="remind()" class="btn btn-info">{{'%BUTTON_SEND%' | phrase}}</a>
             </div>
-            <div class="form-group">
-                <label class="control-label" for="groupFormDescription">Description</label>
-                <input class="form-control" id="groupFormDescription" type="text"
-                       ng-model="group.description" name="description" placeholder=""/>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="groupFormWeekday">Weekday</label>
-                <select id="groupFormWeekday" class="form-control"
-                        ng-model="group._weekday" name="weekday" >
-                    <option value="1">{{ '%WEEKDAY_1%' | phrase }}</option>
-                    <option value="2">{{ '%WEEKDAY_2%' | phrase }}</option>
-                    <option value="3">{{ '%WEEKDAY_3%' | phrase }}</option>
-                    <option value="4">{{ '%WEEKDAY_4%' | phrase }}</option>
-                    <option value="5">{{ '%WEEKDAY_5%' | phrase }}</option>
-                    <option value="6">{{ '%WEEKDAY_6%' | phrase }}</option>
-                    <option value="0">{{ '%WEEKDAY_0%' | phrase }}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="groupFormTime">Time</label>
-                <input class="form-control" id="groupFormTime" type="time"
-                       ng-model="group._time" name="time"  placeholder=""/>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="groupFormPublic">Public</label>
-                <input class="form-control" id="groupFormPublic" type="checkbox"
-                       ng-model="group.public" name="public" />
-            </div>
-            <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
-        </form>
         </div>
 
         <div>

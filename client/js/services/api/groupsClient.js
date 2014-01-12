@@ -231,6 +231,19 @@ define(function (require, exports, module) {
 			this.sendRequest(req);
 		};
 
+		client.remind = function(key, success, error) {
+			var req = new RequestBuilder().
+				setMethod('get').
+				setUrl('/api/groups').
+				addPath(key).
+				addPath('remind').
+				setSuccessCb(success).
+				setErrorCb(error).
+				build();
+
+			this.sendRequest(req);
+		};
+
 		return client;
 	}];
 

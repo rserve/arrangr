@@ -1,12 +1,12 @@
 /*global describe, it, expect, before, beforeEach, afterEach, runs, waitsFor */
-process.env.PORT = 8000;
 process.env.NODE_ENV = 'test';
 
 var request = exports.request = require('request').defaults({json: true, jar: true});
 var server = exports.server = require('../server');
 var mongoose = exports.mongoose = require('mongoose');
+var config = require('../config/config')['test'];
 
-var baseEndpoint = exports.baseEndpoint = 'http://localhost:' + process.env.PORT + '/api/';
+var baseEndpoint = exports.baseEndpoint = 'http://localhost:' + config.port + '/api/';
 
 exports.endpoint = function (path) {
     return baseEndpoint + path;

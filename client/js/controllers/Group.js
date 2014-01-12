@@ -187,6 +187,16 @@ define(function (require, exports, module) {
 				});
 		};
 
+		$scope.remind = function () {
+			client.remind(key,
+				function () {
+					flash.success = 'Meetup updated to next cycle';
+				},
+				function (data) {
+					flash.error = data.message;
+				});
+		};
+
 		$scope.addComment = function () {
 			if ($scope.commentForm.comment.$invalid) {
 				flash.error = 'Comment cannot be empty.';

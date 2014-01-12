@@ -264,6 +264,15 @@ exports.increment = function (req, res) {
 	});
 };
 
+exports.remind = function(req, res) {
+	req.group.members.forEach(function(member) {
+		if(!member.status.match('(Yes|No)')) {
+			mailer.sendReminderMail(member.user, req.group);
+		}
+	});
+	res.send();
+};
+
 // param parsing
 var fromParam = function (req, res, next, q) {
 	var query = Group.findOne(q).sort({ startDate: 'desc'});

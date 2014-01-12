@@ -1,6 +1,12 @@
 var Mandrill = require('mandrill-api').Mandrill;
 var mandrill = new Mandrill();
-var env = process.env.NODE_ENV;
+var env = process.env.NODE_ENV || 'development';
+var config = require('../config/config')[env];
+
+var baseUrl = 'http://' + config.host;
+if(config.port != 80) {
+	baseUrl += ':' + config.port;
+}
 
 function getInvitationICal(user, group, groupCreator) {
 
@@ -18,7 +24,7 @@ function getInvitationICal(user, group, groupCreator) {
 	endDate.setHours(endDate.getHours() + 2);
 	event.set('end', endDate.toString());
 
-	event.set('url', 'http://arran.gr/groups/' + group.key);
+	event.set('url', baseUrl + '/groups/' + group.key);
 
 	event.set('organizer', {name: groupCreator.name || groupCreator.email, email: groupCreator.email});
 
@@ -51,7 +57,7 @@ var mailer = {
 				global_merge_vars: [
 					{
 						name: 'LINK',
-						content: 'http://arran.gr/password/' + user.verificationHash
+						content: baseUrl + '/password/' + user.verificationHash
 					}
 				],
 
@@ -80,7 +86,7 @@ var mailer = {
 				global_merge_vars: [
 					{
 						name: 'LINK',
-						content: user.verified? 'http://arran.gr/groups/' + group.key : 'http://arran.gr/password/' + user.verificationHash
+						content: user.verified? baseUrl + '/groups/' + group.key : baseUrl + '/password/' + user.verificationHash
 					},
 					{
 						name: 'INVITER',
@@ -128,6 +134,34 @@ var mailer = {
 //            console.log(res);
 		}, function (err) {
 			console.log('Error sending registration mail', err);
+		});
+	},
+
+	sendReminderMail: function(user, group) {
+		mandrill.messages.sendTemplate({
+			template_name: 'reminder',
+			template_content: [],
+			message: {
+				to: [
+					{
+						email: user.email
+					}
+				],
+				global_merge_vars: [
+					{
+						name: 'LINK',
+						content: baseUrl + '/groups/' + group.key
+					},
+					{
+						name: 'MEETUP',
+						content: group.name
+					}
+				]
+			}
+		}, function (res) {
+//            console.log(res);
+		}, function (err) {
+			console.log('Error sending reminder mail', err);
 		});
 	}
 };

@@ -3,9 +3,9 @@ var rootPath = path.normalize(__dirname + '/../..');
 
 module.exports = {
     development: {
-        db: process.env.MONGOLAB_URI ||
-			process.env.MONGOHQ_URL ||
-			'mongodb://localhost/rserve',
+		host: 'localhost',
+		port: 3000,
+        db: 'mongodb://localhost/rserve',
         root: rootPath,
         mailer: {
             apikey: 'jwNKk8yTVM2pTfCiApHNQw'
@@ -13,13 +13,22 @@ module.exports = {
         logger: 'dev'
     },
     test: {
+		host: 'localhost',
+		port: 8000,
         db: 'mongodb://localhost/rserve_test',
         root: rootPath,
         mailer: {
-            apikey: 'jwNKk8yTVM2pTfCiApHNQw'
+            apikey: null
         }
     },
     production: {
+		host: 'arrangr.herokuapp.com',
+		port: 80,
+		db: process.env.MONGOLAB_URI || 'mongodb://localhost/rserve',
+		root: rootPath,
+		mailer: {
+			apikey: 'jwNKk8yTVM2pTfCiApHNQw'
+		},
         logger: 'default'
     }
 };
