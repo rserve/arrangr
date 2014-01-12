@@ -66,7 +66,6 @@ exports.update = function (req, res) {
 		exec(function (err, group) {
 			if (!e(err, res, 'Error updating group')) {
 				socket.groupChanged(group);
-				console.log('group changed');
 				res.send(group);
 			}
 
@@ -285,6 +284,15 @@ exports.remind = function (req, res) {
 	req.group.members.forEach(function (member) {
 		if (!member.status.match('(Yes|No)')) {
 			mailer.sendReminderMail(member.user, req.group);
+		}
+	});
+	res.send();
+};
+
+exports.status = function (req, res) {
+	req.group.members.forEach(function (member) {
+		if (member.status.match('(Yes|No|Maybe)')) {
+			mailer.sendStatusMail(member.user, req.group);
 		}
 	});
 	res.send();

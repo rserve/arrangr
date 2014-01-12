@@ -244,6 +244,19 @@ define(function (require, exports, module) {
 			this.sendRequest(req);
 		};
 
+		client.status = function(key, success, error) {
+			var req = new RequestBuilder().
+				setMethod('get').
+				setUrl('/api/groups').
+				addPath(key).
+				addPath('status').
+				setSuccessCb(success).
+				setErrorCb(error).
+				build();
+
+			this.sendRequest(req);
+		};
+
 		return client;
 	}];
 

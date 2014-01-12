@@ -217,6 +217,16 @@ define(function (require, exports, module) {
 				});
 		};
 
+		$scope.status = function () {
+			client.status(key,
+				function () {
+					flash.success = 'Status sent';
+				},
+				function (data) {
+					flash.error = data.message;
+				});
+		};
+
 		$scope.addComment = function () {
 			if ($scope.commentForm.comment.$invalid) {
 				flash.error = 'Comment cannot be empty.';

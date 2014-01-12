@@ -43,6 +43,7 @@ module.exports = function (app, passport, auth) {
 
 			app.post('/:key/increment', [auth.requiresLogin, auth.group.hasAuthorization], groups.increment);
 			app.get('/:key/remind', [auth.requiresLogin, auth.group.hasAuthorization], groups.remind);
+			app.get('/:key/status', [auth.requiresLogin, auth.group.hasAuthorization], groups.status);
 
             app.param('key', groups.fromKey);
             app.param('groupId', groups.fromId);

@@ -46,7 +46,6 @@ schema.options.toJSON.transform = function(doc, ret, options) {
 schema.methods = {
 
 	isAdmin: function (user) {
-
 		return this.members.some(function (member) {
 			return member.admin && member.user && member.user.id === user.id;
 		});
@@ -61,10 +60,15 @@ schema.methods = {
 
 	// check if user owns comment
 	ownsComment: function (user, commentId) {
-
 		return this.comments.some(function (comment) {
 			return comment.id === commentId && comment.user.id === user.id;
 		});
+	},
+
+	statusCount: function (status) {
+		return this.members.filter(function (member) {
+			return member.status == status;
+		}).length;
 	}
 };
 

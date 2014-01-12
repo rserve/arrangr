@@ -163,6 +163,46 @@ var mailer = {
 		}, function (err) {
 			console.log('Error sending reminder mail', err);
 		});
+	},
+
+	sendStatusMail: function(user, group) {
+		mandrill.messages.sendTemplate({
+			template_name: 'status',
+			template_content: [],
+			message: {
+				to: [
+					{
+						email: user.email
+					}
+				],
+				global_merge_vars: [
+					{
+						name: 'LINK',
+						content: baseUrl + '/groups/' + group.key
+					},
+					{
+						name: 'MEETUP',
+						content: group.name
+					},
+					{
+						name: 'TOTAL',
+						content: group.members.length
+					},
+					{
+						name: 'YES',
+						content: group.statusCount('Yes')
+					},
+					{
+						name: 'MAYBE',
+						content: group.statusCount('Maybe')
+					}
+				]
+			}
+		}, function (res) {
+//            console.log(res);
+		}, function (err) {
+			console.log('Error sending status mail', err);
+		});
 	}
 };
 
