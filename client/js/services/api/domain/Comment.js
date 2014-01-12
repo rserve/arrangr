@@ -4,7 +4,7 @@ define(function (require, exports, module) {
 
 	var _ = require('underscore');
 
-	var User = require('./user');
+	var User = require('./User');
 
 	var Comment = function (data) {
 		_.extend(this, data);
