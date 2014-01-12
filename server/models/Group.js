@@ -24,10 +24,11 @@ var schema = new mongoose.Schema({
         createdAt: {type: Date, default: Date.now }
     }],
 	comments: [{
-		userRefId: {type: String, default: '' },
-		hashedEmail: {type: String, default: '' },
+		user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
+		/*userRefId: {type: String, default: '' },
+		hashedEmail: {type: String, default: '' },*/
 		text: {type: String, default: '' },
-		author: {type: String, default: '' },
+	/*	author: {type: String, default: '' },*/
 		createdAt: {type: Date, default: Date.now }
 	}]
 });

@@ -4,8 +4,11 @@ define(function (require, exports, module) {
 
 	var _ = require('underscore');
 
+	var User = require('./user');
+
 	var Comment = function (data) {
 		_.extend(this, data);
+		this.user = new User(data.user);
 	};
 
 	var proto = Comment.prototype;

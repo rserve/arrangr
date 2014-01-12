@@ -76,15 +76,16 @@
                             <input required ng-model="commentModel.text" name="comment"
                                    placeholder="Write a comment..." class="form-control"/>
                         </form>
+                        <a style="float:right;text-align: right;font-size: small" href="http://www.emoji-cheat-sheet.com/" target="_blank">Emoji cheat sheet &raquo;</a>
                     </td>
-                </tr>
+
 
                 <tr ng-show="group.public || group.isMember(user)"
                     ng-repeat="comment in group.comments |  orderBy:'createdAt':true | limitTo:commentHelper.visible">
-                    <td width="30"><img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
+                    <td width="30"><img ng-src="{{ comment.user.thumbnailSrc() }}" width="25" height="25"/>
                     </td>
                     <td>
-                        <small>{{ comment.author }} <span am-time-ago="comment.createdAt"></span></small>
+                        <small>{{ comment.user.displayName() }} <span am-time-ago="comment.createdAt"></span></small>
                         <a title="Delete comment" class="text-danger" href="#" ng-show="comment.isOwner(user)" ng-click="deleteComment(comment)">
                             Delete
                         </a>
