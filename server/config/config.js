@@ -22,7 +22,7 @@ module.exports = {
         }
     },
     production: {
-		host: 'arrangr.herokuapp.com',
+		host: 'www.arran.gr',
 		port: 80,
 		db: process.env.MONGOLAB_URI || 'mongodb://localhost/rserve',
 		root: rootPath,
