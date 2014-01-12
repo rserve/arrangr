@@ -22,7 +22,7 @@
             {{group.time()}} (<span am-time-ago="group.startDate"></span>)
         </small>
     </h2>
-    <p>{{group.description}}</p>
+    <p ng-bind-html-unsafe="group.description"></p>
 
     <div class="clearfix"></div>
 </div>
@@ -151,17 +151,17 @@
                 <div class="form-group">
                     <label class="control-label" for="groupFormName">Name</label>
                     <input required class="form-control" id="groupFormName" type="text"
-                           ng-model="group.name" name="name" placeholder=""/>
+                           ng-model="groupModel.name" name="name" placeholder=""/>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="groupFormDescription">Description</label>
-                    <input class="form-control" id="groupFormDescription" type="text"
-                           ng-model="group.description" name="description" placeholder=""/>
+                    <textarea rows="5" cols="50" class="form-control" id="groupFormDescription" type="text"
+                           ng-model="groupModel.description" name="description" placeholder=""/>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="groupFormWeekday">Weekday</label>
                     <select id="groupFormWeekday" class="form-control"
-                            ng-model="group._weekday" name="weekday" >
+                            ng-model="groupModel.weekday" name="weekday" >
                         <option value="1">{{ '%WEEKDAY_1%' | phrase }}</option>
                         <option value="2">{{ '%WEEKDAY_2%' | phrase }}</option>
                         <option value="3">{{ '%WEEKDAY_3%' | phrase }}</option>
@@ -174,12 +174,12 @@
                 <div class="form-group">
                     <label class="control-label" for="groupFormTime">Time</label>
                     <input class="form-control" id="groupFormTime" type="time"
-                           ng-model="group._time" name="time"  placeholder=""/>
+                           ng-model="groupModel.time" name="time"  placeholder=""/>
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="groupFormPublic">Public</label>
                     <input class="form-control" id="groupFormPublic" type="checkbox"
-                           ng-model="group.public" name="public" />
+                           ng-model="groupModel.public" name="public" />
                 </div>
                 <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
             </form>

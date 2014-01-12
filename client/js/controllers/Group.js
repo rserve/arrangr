@@ -11,11 +11,15 @@ define(function (require, exports, module) {
 		var key = $stateParams.groupId,
 			client = groupsClient;
 
+		function updateGroup(data) {
+			$scope.group = data;
+			resetGroupModel();
+		}
 
 		function getGroup() {
 			client.findByKey(key,
 				function (group) {
-					$scope.group = group;
+					updateGroup(group);
 					$scope.currentMember = group.member($scope.user);
 
 				},
@@ -49,6 +53,42 @@ define(function (require, exports, module) {
 		};
 
 
+		// keep model data for update group form separate from actual group object
+		// (otherwise descriptions etc on page will be updated in real time when form fields is being edited)
+		function resetGroupModel() {
+			var model = $scope.groupModel = angular.copy({});
+			model.name = $scope.group.name;
+			model.description = $scope.group.description;
+			model.public = $scope.group.public;
+			model.time = $scope.group._time;
+			model.weekday = $scope.group._weekday;
+
+
+		}
+
+		// why are we doing like this?
+		function calculateStartDate() {
+			var startDate = $scope.group.startDate ? new Date($scope.group.startDate) : new Date();
+
+			var weekday = $scope.groupModel.weekday;
+			if (weekday) {
+				var current = $scope.group.weekday() || new Date().getDay();
+				var diff = current - weekday;
+				startDate.setDate(startDate.getDate() - diff);
+			}
+
+			var time = $scope.groupModel.time;
+
+			if ($scope.groupModel.time) {
+				var t = time.split(':');
+				startDate.setHours(t[0]);
+				startDate.setMinutes(t[1]);
+			}
+
+			return startDate;
+		}
+
+
 		$scope.update = function () {
 
 			if ($scope.groupForm.$invalid) {
@@ -59,34 +99,12 @@ define(function (require, exports, module) {
 				}
 
 			} else {
-				//NOTE: now group is the form model, but cannot send whole object to backend,
-				// pick out the form values
-				//var data = $scope.group;
-				var data = {
-					name: $scope.group.name,
-					description: $scope.group.description,
-					public: $scope.group.public
-				};
 
-				var startDate = $scope.group.startDate ? new Date($scope.group.startDate) : new Date();
+				$scope.groupModel.startDate = calculateStartDate();
 
-				if ($scope.group._weekday) {
-					var current = $scope.group.weekday() || new Date().getDay();
-					var diff = current - $scope.group._weekday;
-					startDate.setDate(startDate.getDate() - diff);
-				}
-
-				if ($scope.group._time) {
-					var t = $scope.group._time.split(':');
-					startDate.setHours(t[0]);
-					startDate.setMinutes(t[1]);
-				}
-
-				data.startDate = startDate;
-
-				client.update(key, data,
+				client.update(key, $scope.groupModel,
 					function (data) {
-						$scope.group = data;
+						updateGroup(data);
 						flash.success = 'Meetup updated';
 					},
 					function (data) {
@@ -101,7 +119,7 @@ define(function (require, exports, module) {
 			} else {
 				client.invite(key, $scope.inviteModel,
 					function (data) {
-						$scope.group = data;
+						updateGroup(data);
 						flash.success = 'User invited';
 						$scope.inviteModel.email = "";
 					},
@@ -129,7 +147,7 @@ define(function (require, exports, module) {
 
 			client.join(key, $scope.joinModel,
 				function (group) {
-					$scope.group = group;
+					updateGroup(group);
 					if (register) {
 						authState.refreshUserState();
 						flash.success = 'An account as be created for you, please check your mail to verify.';
@@ -167,7 +185,7 @@ define(function (require, exports, module) {
 		$scope.removeMember = function (member) {
 			client.removeMember(key, member.id,
 				function (data) {
-					$scope.group = data;
+					updateGroup(data);
 					flash.success = 'Member removed';
 				},
 				function (data) {
@@ -179,7 +197,7 @@ define(function (require, exports, module) {
 		$scope.increment = function () {
 			client.increment(key,
 				function (data) {
-					$scope.group = data;
+					updateGroup(data);
 					flash.success = 'Meetup updated to next cycle';
 				},
 				function (data) {
@@ -210,7 +228,7 @@ define(function (require, exports, module) {
 
 				client.addComment(key, data,
 					function (data) {
-						$scope.group = data;
+						updateGroup(data);
 						flash.success = 'Comment added';
 						$scope.commentModel.text = "";
 					},
@@ -225,7 +243,8 @@ define(function (require, exports, module) {
 
 			client.deleteComment(key, comment.id,
 				function (data) {
-					$scope.group = data;
+					updateGroup(data);
+
 					flash.success = 'Comment deleted';
 				},
 				function (data) {
