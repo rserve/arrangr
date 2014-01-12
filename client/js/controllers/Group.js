@@ -190,7 +190,7 @@ define(function (require, exports, module) {
 		$scope.remind = function () {
 			client.remind(key,
 				function () {
-					flash.success = 'Meetup updated to next cycle';
+					flash.success = 'Reminder sent';
 				},
 				function (data) {
 					flash.error = data.message;
