@@ -15,7 +15,7 @@ define(function (require, exports, module) {
 
 
 	proto.isOwner = function (user) {
-		return this.userRefId === user.id;
+		return this.user.id === user.id;
 	};
 
 	module.exports = Comment;

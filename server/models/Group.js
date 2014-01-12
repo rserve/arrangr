@@ -25,10 +25,7 @@ var schema = new mongoose.Schema({
     }],
 	comments: [{
 		user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
-		/*userRefId: {type: String, default: '' },
-		hashedEmail: {type: String, default: '' },*/
 		text: {type: String, default: '' },
-	/*	author: {type: String, default: '' },*/
 		createdAt: {type: Date, default: Date.now }
 	}]
 });
@@ -66,7 +63,7 @@ schema.methods = {
 	ownsComment: function (user, commentId) {
 
 		return this.comments.some(function (comment) {
-			return comment.id === commentId && comment.userRefId === user.id;
+			return comment.id === commentId && comment.user.id === user.id;
 		});
 	}
 };

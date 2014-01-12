@@ -223,9 +223,7 @@ define(function (require, exports, module) {
 			} else {
 				var user = $scope.currentMember.user;
 				var data = _.extend($scope.commentModel, {
-					author: user.displayName(),
 					userRefId: user.id,
-					hashedEmail: user.hashedEmail
 				});
 
 				client.addComment(key, data,

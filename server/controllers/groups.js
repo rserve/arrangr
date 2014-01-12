@@ -227,9 +227,6 @@ exports.addComment = function (req, res) {
 	var group = req.group;
 	User.findOne({_id: req.body.userRefId}, function (err, user) {
 
-		console.log('err', err);
-		console.log('user', user);
-		console.log('user id', req.body.userRefId);
 		Group.findOneAndUpdate({ _id: group.id }, {
 			$addToSet: {
 				comments: {
