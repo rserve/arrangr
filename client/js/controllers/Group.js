@@ -4,6 +4,8 @@ define(function (require, exports, module) {
 
 	var _ = require('underscore');
 
+	var angular = require('angular');
+
 	var Group = require('../services/api/domain/Group');
 
 	var Controller = function ($scope, $state, $stateParams, groupsClient, authState, flash, socket) {
