@@ -89,7 +89,7 @@ h1 {
 .bgbyline {
     color: white;
     position: absolute;
-    right: 10px;
+    left: 10px;
     bottom: 10px;
     text-shadow: 1px 1px #333;
 }
@@ -199,3 +199,4 @@ h1 {
 .uploading .thumbnail {
     display: none !important;
 }
+

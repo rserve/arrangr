@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
     <!--<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.css"/>-->
     <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/gh-fork-ribbon.css"/>
     <script>
         var image = '/images/bg' + Math.ceil(Math.random() * 6) + '.jpg';
         document.documentElement.style.backgroundImage = 'url(IMG)'.replace('IMG', image);
@@ -16,9 +17,16 @@
 
 <body>
 
+<img src="/images/beta-ribbon.gif" border="0" width="150" height="150" style="position:absolute; right:0px; top:0px; margin:0px; padding:0px">
+
 <div ui-view></div>
 
 <div class="clearfix"></div>
+<div class="github-fork-ribbon-wrapper right-bottom">
+    <div class="github-fork-ribbon">
+        <span>Beta</span>
+    </div>
+</div>
 
 <small class="bgbyline">Photo: <a href="https://www.facebook.com/FotoSander" target="_blank">FotoSander</a>
 </small>
