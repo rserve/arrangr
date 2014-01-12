@@ -81,16 +81,19 @@ exports.delete = function (req, res) {
 
 exports.updateMember = function (req, res) {
 	var status = req.body.status;
-	Group.findOneAndUpdate({'members._id': req.params.memberId }, { 'members.$.status': status }, function (err, group) {
-		if (!e(err, res, 'Error updating groupmember')) {
-			if (!group) {
-				res.status(404).send({error: 'Error updating groupmember', message: 'Groupmember not found'});
-			} else {
-				socket.groupChanged(group);
-				res.send(group);
+	Group.findOneAndUpdate({'members._id': req.params.memberId }, { 'members.$.status': status }).
+		populate('members.user', userFields).
+		populate('comments.user', userFields).
+		exec(function (err, group) {
+			if (!e(err, res, 'Error updating groupmember')) {
+				if (!group) {
+					res.status(404).send({error: 'Error updating groupmember', message: 'Groupmember not found'});
+				} else {
+					socket.groupChanged(group);
+					res.send(group);
+				}
 			}
-		}
-	});
+		});
 };
 
 exports.deleteMember = function (req, res) {
@@ -98,8 +101,7 @@ exports.deleteMember = function (req, res) {
 	Group.findOneAndUpdate({ _id: group.id }, { '$pull': { members: { _id: req.params.memberId } } }).
 		populate('members.user', userFields).
 		populate('comments.user', userFields).
-		exec(
-		function (err, group) {
+		exec(function (err, group) {
 			if (!e(err, res, 'Error removing member from group')) {
 				socket.groupChanged(group);
 				res.send(group);
@@ -225,9 +227,9 @@ exports.addComment = function (req, res) {
 	var group = req.group;
 	User.findOne({_id: req.body.userRefId}, function (err, user) {
 
-console.log('err',err);
-console.log('user',user);
-console.log('user id',req.body.userRefId);
+		console.log('err', err);
+		console.log('user', user);
+		console.log('user id', req.body.userRefId);
 		Group.findOneAndUpdate({ _id: group.id }, {
 			$addToSet: {
 				comments: {

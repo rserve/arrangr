@@ -274,9 +274,9 @@ define(function (require, exports, module) {
 		$scope.$on('socket:groupChanged', function (ev, message) {
 
 			// Should not replace group only update, breaks bindings when some relations are missing
-//			if (message.id === $scope.group.id) {
-//				$scope.group = groupsClient.parse(message.data);
-//			}
+			if (message.id === $scope.group.id) {
+				updateGroup(groupsClient.parse(message.data));
+			}
 
 		});
 
