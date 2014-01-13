@@ -7,6 +7,7 @@ module.exports = {
 		port: 3000,
         db: 'mongodb://localhost/rserve',
         root: rootPath,
+		static: 'client',
         mailer: {
             apikey: 'jwNKk8yTVM2pTfCiApHNQw'
         },
@@ -17,6 +18,7 @@ module.exports = {
 		port: 8000,
         db: 'mongodb://localhost/rserve_test',
         root: rootPath,
+		static: 'client',
         mailer: {
             apikey: null
         }
@@ -26,6 +28,7 @@ module.exports = {
 		port: 80,
 		db: process.env.MONGOLAB_URI || 'mongodb://localhost/rserve',
 		root: rootPath,
+		static: 'build/client',
 		mailer: {
 			apikey: 'jwNKk8yTVM2pTfCiApHNQw'
 		},

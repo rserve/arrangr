@@ -5,8 +5,6 @@
 var express = require('express');
 var mongoStore = require('connect-mongo')(express);
 
-var STATIC_DIR = process.argv[2] || 'client';
-
 module.exports = function (app, config, passport) {
     app.set('showStackError', true);
 
@@ -32,8 +30,7 @@ module.exports = function (app, config, passport) {
 
     app.use(express.favicon());
 
-	console.log('Static dir "' + STATIC_DIR+'"');
-    app.use(express.static(STATIC_DIR));
+    app.use(express.static(config.static));
 
     app.configure(function () {
         // cookieParser should be above session

@@ -160,6 +160,22 @@
                 </div>
             </form>
 
+            <div ng-show="group.isAdmin(user)">
+                <div>
+                    <h3>Reminder</h3>
+
+                    <p>Send reminder to all members that hasn't answered yes or no yet.</p>
+                    <a href="#" ng-click="remind()" class="btn btn-info">{{'%BUTTON_SEND%' | phrase}}</a>
+                </div>
+
+                <div>
+                    <h3>Status</h3>
+
+                    <p>Send status update to everyone that has responded.</p>
+                    <a href="#" ng-click="status()" class="btn btn-info">{{'%BUTTON_SEND%' | phrase}}</a>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -203,9 +203,10 @@ h1 {
 
 img.ribbon {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: -20px;
+    top: -20px;
     margin: 0px;
     padding: 0px;
+    z-index: 999;
 }
 
