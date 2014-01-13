@@ -9,10 +9,10 @@ define(function (require, exports, module) {
         layout: 'layout.html',
         group: 'group.html',
         groups: 'groups.html',
-		demoForm: 'demo-form.html',
         header: 'header.html',
         profile: 'profile.html',
-		password: 'password.html'
+		password: 'password.html',
+		'editGroup': 'edit-group.html'
 	};
 
 	for (var key in partials) {

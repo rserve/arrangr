@@ -15,7 +15,6 @@ define(function (require, exports, module) {
 
 		function updateGroup(data) {
 			$scope.group = data;
-			resetGroupModel();
 		}
 
 		function getGroup() {
@@ -54,66 +53,6 @@ define(function (require, exports, module) {
 			changeMemberStatus('Maybe');
 		};
 
-
-		// keep model data for update group form separate from actual group object
-		// (otherwise descriptions etc on page will be updated in real time when form fields is being edited)
-		function resetGroupModel() {
-			var model = $scope.groupModel = angular.copy({});
-			model.name = $scope.group.name;
-			model.description = $scope.group.description;
-			model.public = $scope.group.public;
-			model.time = $scope.group._time;
-			model.weekday = $scope.group._weekday;
-
-
-		}
-
-		// why are we doing like this?
-		function calculateStartDate() {
-			var startDate = $scope.group.startDate ? new Date($scope.group.startDate) : new Date();
-
-			var weekday = $scope.groupModel.weekday;
-			if (weekday) {
-				var current = $scope.group.weekday() || new Date().getDay();
-				var diff = current - weekday;
-				startDate.setDate(startDate.getDate() - diff);
-			}
-
-			var time = $scope.groupModel.time;
-
-			if ($scope.groupModel.time) {
-				var t = time.split(':');
-				startDate.setHours(t[0]);
-				startDate.setMinutes(t[1]);
-			}
-
-			return startDate;
-		}
-
-
-		$scope.update = function () {
-
-			if ($scope.groupForm.$invalid) {
-				if ($scope.groupForm.name.$invalid) {
-					flash.error = 'Name cannot be empty';
-				} else {
-					flash.error = 'Please check form.';
-				}
-
-			} else {
-
-				$scope.groupModel.startDate = calculateStartDate();
-
-				client.update(key, $scope.groupModel,
-					function (data) {
-						updateGroup(data);
-						flash.success = 'Meetup updated';
-					},
-					function (data) {
-						flash.error = data.message;
-					});
-			}
-		};
 
 		$scope.invite = function () {
 			if ($scope.inviteForm.$invalid) {
@@ -196,44 +135,13 @@ define(function (require, exports, module) {
 			);
 		};
 
-		$scope.increment = function () {
-			client.increment(key,
-				function (data) {
-					updateGroup(data);
-					flash.success = 'Meetup updated to next cycle';
-				},
-				function (data) {
-					flash.error = data.message;
-				});
-		};
-
-		$scope.remind = function () {
-			client.remind(key,
-				function () {
-					flash.success = 'Reminder sent';
-				},
-				function (data) {
-					flash.error = data.message;
-				});
-		};
-
-		$scope.status = function () {
-			client.status(key,
-				function () {
-					flash.success = 'Status sent';
-				},
-				function (data) {
-					flash.error = data.message;
-				});
-		};
-
 		$scope.addComment = function () {
 			if ($scope.commentForm.comment.$invalid) {
 				flash.error = 'Comment cannot be empty.';
 			} else {
 				var user = $scope.currentMember.user;
 				var data = _.extend($scope.commentModel, {
-					userRefId: user.id,
+					userRefId: user.id
 				});
 
 				client.addComment(key, data,

@@ -8,13 +8,15 @@ define(function (require, exports, module) {
 		Groups = require('./Groups'),
 		Logout = require('./Logout'),
         Password = require('./Password'),
-		Profile = require('./Profile');
+		Profile = require('./Profile'),
+		EditGroup = require('./EditGroup');
 
 	app.controller('Home', Home).
         controller('Group', Group).
 		controller('Groups', Groups).
 		controller('Logout', Logout).
         controller('Password', Password).
-		controller('Profile', Profile);
+		controller('Profile', Profile).
+		controller('EditGroup', EditGroup);
 
 });

@@ -63,6 +63,17 @@ define(function (require, exports, module) {
                     },
                     access: access.public
                 })
+				.state('edit-group', {
+					url: '/groups/:groupId/edit',
+					parent: 'default',
+					views: {
+						content: {
+							controller: 'EditGroup',
+							templateUrl: partials.editGroup
+						}
+					},
+					access: access.auth
+				})
                 .state('404', {
                     url: '/404',
                     parent: 'default',

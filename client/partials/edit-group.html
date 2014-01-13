@@ -1,0 +1,95 @@
+<span class="pull-right">
+<a class="btn btn-danger" href="/groups/{{group.key}}">
+    {{'%BUTTON_STOP_EDITING%' | phrase}}
+</a>
+</span>
+
+<div class="p">
+    <div class="pull-left imagedrop" upload-url="group.thumbnailPath()">
+        <img class="thumbnail" ng-show="group.image" ng-src="{{ group.image.data }}"/>
+        <span class="thumbnail message" ng-show="!group.image && group.isAdmin(user)">Drop image here.</span>
+    </div>
+
+    <h2>
+        {{group.name}}
+        <small ng-show="group.startDate">{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at
+            {{group.time()}} (<span am-time-ago="group.startDate"></span>)
+        </small>
+    </h2>
+    <p ng-bind-html-unsafe="group.description"></p>
+
+    <div class="clearfix"></div>
+</div>
+
+
+<div class="row"   ng-show="group.isAdmin(user)">
+    <div class="col-lg-5 col-md-5 col-sm-5">
+        <h2>Edit group</h2>
+
+        <form novalidate class="form" role="form" name="groupForm" ng-submit="update()">
+
+            <div class="form-group">
+                <label class="control-label" for="groupFormName">Name</label>
+                <input required class="form-control" id="groupFormName" type="text"
+                       ng-model="groupModel.name" name="name" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="groupFormDescription">Description</label>
+                <textarea rows="5" cols="50" class="form-control" id="groupFormDescription"
+                          type="text"
+                          ng-model="groupModel.description" name="description" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="groupFormWeekday">Weekday</label>
+                <select id="groupFormWeekday" class="form-control"
+                        ng-model="groupModel.weekday" name="weekday">
+                    <option value="1">{{ '%WEEKDAY_1%' | phrase }}</option>
+                    <option value="2">{{ '%WEEKDAY_2%' | phrase }}</option>
+                    <option value="3">{{ '%WEEKDAY_3%' | phrase }}</option>
+                    <option value="4">{{ '%WEEKDAY_4%' | phrase }}</option>
+                    <option value="5">{{ '%WEEKDAY_5%' | phrase }}</option>
+                    <option value="6">{{ '%WEEKDAY_6%' | phrase }}</option>
+                    <option value="0">{{ '%WEEKDAY_0%' | phrase }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="groupFormTime">Time</label>
+                <input class="form-control" id="groupFormTime" type="time"
+                       ng-model="groupModel.time" name="time" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="groupFormPublic">Public</label>
+                <input class="form-control" id="groupFormPublic" type="checkbox"
+                       ng-model="groupModel.public" name="public"/>
+            </div>
+            <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
+        </form>
+    </div>
+
+    <div class="col-lg-5 col-md-5 col-sm-5">
+        <h2>Actions</h2>
+
+        <div>
+            <h3>Reminder</h3>
+
+            <p>Send reminder to all members that hasn't answered yes or no yet.</p>
+            <a href="#" ng-click="remind()" class="btn btn-info">{{'%BUTTON_SEND%' | phrase}}</a>
+        </div>
+
+        <div>
+            <h3>Status</h3>
+
+            <p>Send status update to everyone that has responded.</p>
+            <a href="#" ng-click="status()" class="btn btn-info">{{'%BUTTON_SEND%' | phrase}}</a>
+        </div>
+
+        <div>
+            <h3>Next week</h3>
+
+            <p>Update meetup to next week</p>
+            <a href="#" ng-click="increment()" class="btn btn-info">{{'%BUTTON_NEXT%' | phrase}}</a>
+        </div>
+    </div>
+
+</div>
+

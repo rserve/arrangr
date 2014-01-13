@@ -1,4 +1,5 @@
 {
+	"BACK_TO_GROUP": "Back to group",
 	"BACK_TO_GROUPS": "Back to group listing",
 	"ONE": "1",
 	"TWO": "2",
@@ -24,6 +25,8 @@
     "BUTTON_COMMENT": "Comment",
 	"BUTTON_NEXT": "Next",
 	"BUTTON_SEND": "Send",
+	"BUTTON_EDIT": "Edit",
+	"BUTTON_STOP_EDITING": "Stop Editing",
     "PEOPLE_SIGNED": "Currently {0} people have signed!",
 	"ARGUMENTS": "arg1: {0}, arg2: {1}, arg3: {2}...",
     "LABEL_YES": "going",
