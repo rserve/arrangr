@@ -107,8 +107,8 @@ module.exports = function (grunt) {
 			}
 		},
 		/*
-		* Build task with require.js optimizer
-		* */
+		 * Build task with require.js optimizer
+		 * */
 		requirejs: {
 			build: {
 				options: {
@@ -127,6 +127,10 @@ module.exports = function (grunt) {
 						'angular-ui-router': 'empty:',
 						'angular-flash': 'empty:',
 						'angular-moment': 'empty:',
+						'angular-sanitize': 'empty:',
+						'emoji': 'empty:',
+						'socketio': 'empty:',
+						'socket': 'empty:',
 						json: '../lib/require/json',
 						text: '../lib/require/text',
 						data: '../data'
@@ -153,10 +157,22 @@ module.exports = function (grunt) {
 							deps: ['angular']
 						},
 						'angular-moment': {
-							deps: ['moment','angular']
+							deps: ['moment', 'angular']
+						},
+						'angular-sanitize': {
+							deps: ['angular']
 						},
 						'jquery-filedrop': {
 							deps: ['jquery']
+						},
+						'emoji': {
+							deps: ['angular']
+						},
+						'socket': {
+							deps: ['angular']
+						},
+						'socketio': {
+							exports: ['io']
 						}
 					},
 					// skip specs, "hidden" folders and libraries except text & json
@@ -202,7 +218,7 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 
-	grunt.registerTask('build', ['clean:build','requirejs', 'copy:build']);
+	grunt.registerTask('build', ['clean:build', 'requirejs', 'copy:build']);
 
 	// default tasks
 	grunt.registerTask('test', ['jshint:client', 'jshint:node', 'karma:continuous', 'jasmine_node']);

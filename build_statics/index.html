@@ -20,7 +20,7 @@
 
 <small class="bgbyline">Photo: <a href="https://www.facebook.com/FotoSander" target="_blank">FotoSander</a></small>
 
-<script src="/lib/require-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.5/require.min.js"></script>
 
 <script>
     //configure require
@@ -38,6 +38,10 @@
             'angular-ui-router': '../lib/angular-ui-router.min',
             'angular-flash': '../lib/angular-flash.min',
             'angular-moment': '../lib/angular-moment.min',
+            'angular-sanitize': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-sanitize.min',
+            'emoji': '../lib/emoji.min',
+            'socketio': 'http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min',
+            socket: '../lib/socket',
             json: '../lib/require/json',
             text: '../lib/require/text',
             data: '../data'
@@ -64,11 +68,24 @@
                 deps: ['angular']
             },
             'angular-moment': {
-                deps: ['moment','angular']
+                deps: ['moment', 'angular']
+            },
+            'angular-sanitize': {
+                deps: ['angular']
             },
             'jquery-filedrop': {
                 deps: ['jquery']
+            },
+            'emoji': {
+                deps: ['angular']
+            },
+            'socket': {
+                deps: ['angular']
+            },
+            'socketio': {
+                exports: ['io']
             }
+
         },
         priority: [
             "angular"

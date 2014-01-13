@@ -89,7 +89,7 @@ h1 {
 .bgbyline {
     color: white;
     position: absolute;
-    left: 10px;
+    right: 10px;
     bottom: 10px;
     text-shadow: 1px 1px #333;
 }
