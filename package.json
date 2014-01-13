@@ -9,7 +9,8 @@
   "main": "./server/server",
   "scripts": {
     "start": "node gruntcli nodemon",
-    "test": "node gruntcli test"
+    "test": "node gruntcli test",
+	"postinstall": "node gruntcli build"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
