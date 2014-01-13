@@ -166,9 +166,26 @@ var mailer = {
 	},
 
 	sendStatusMail: function(user, group) {
+		var participants = { 'Yes': [], 'Maybe': [], 'No': []};
+
+		group.members.forEach(function(member) {
+			if(member.status) {
+				participants[member.status].push(member.user.name || member.user.email);
+			}
+		});
+
 		mandrill.messages.sendTemplate({
 			template_name: 'status',
-			template_content: [],
+			template_content: [{
+				name: "yesParticipants",
+				content: participants['Yes'].join(', ') || 'None'
+			},{
+				name: "maybeParticipants",
+				content: participants['Maybe'].join(', ') || 'None'
+			},{
+				name: "noParticipants",
+				content: participants['No'].join(', ') || 'None'
+			}],
 			message: {
 				to: [
 					{
