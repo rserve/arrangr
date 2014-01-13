@@ -9,7 +9,7 @@ var socket = require('../socket');
 var moment = require('moment');
 
 //Fields from user to populate into member array
-var userFields = 'id name email verified hashedEmail gravatar';
+var userFields = 'id name email verified hashedEmail gravatar image';
 
 exports.findAll = function (req, res) {
 	Group.find(function (err, groups) {
