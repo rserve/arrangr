@@ -1,8 +1,6 @@
-# rserve - Booking made easy
+# arran.gr - Arrange your meetups
 
 [![Build Status](https://drone.io/github.com/rserve/rserve/status.png)](https://drone.io/github.com/rserve/rserve/latest)
-
-Requires mongodb server.
 
 ## Installing
 
@@ -21,7 +19,6 @@ More information [https://npmjs.org/]
 ### Grunt
 
 Install grunt with ``npm install -g grunt-cli``
-cd ..
 
 More information [http://gruntjs.com/getting-started]
 
@@ -33,23 +30,11 @@ Note: Default port 3000, to change:
 
 ``PORT=3000 npm start``
 
-## Testing
+## Run tests
 
 ``npm test``
 
-Will:
-
-* run jshint on browser and node js-files.
-* run karma jasmine spec runner for browser through phantomjs
-* run jasmine spec runner for node
-
-### Browser watch
-
-``grunt karma:watch``
-
-Will start karma spec server and connect Chrome browser. Watches browser script or specs files for changes and executes specs.
-
-## Build step
+## Build
 
 ``grunt build``
 
