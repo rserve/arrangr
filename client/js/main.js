@@ -31,6 +31,14 @@ require([
 	//kick off!
 	angular.element(document).ready(function () {
 		console.log('Document ready, bootstrapping app');
-		angular.bootstrap(document, [config.appName]);
+
+		// Get user state before bootstrap so we can route correctly
+		var $http = angular.bootstrap().get('$http');
+		$http.get("/api/users/session").success(function(user) {
+			sessionStorage.setItem("user", user.id);
+			angular.bootstrap(document, [config.appName]);
+		}).error(function(data, status, headers, config) {
+			console.log('Error accessing api');
+		});
 	});
 });
