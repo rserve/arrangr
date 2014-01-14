@@ -10,7 +10,6 @@ define(function (require, exports, module) {
 				$state.transitionTo('home');
 			},
 			function (res) {
-				console.log('error', res);
 			});
 	};
 

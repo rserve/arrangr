@@ -25,12 +25,11 @@ define(function (require, exports, module) {
                         function (user) {
                             $rootScope.user = user;
                         }, function (err) {
-                            console.log(err);
                             self.removeUserState();
                         }
                     );
                 } else {
-                    console.log('No user state found in browser');
+
                 }
             },
 
@@ -38,14 +37,12 @@ define(function (require, exports, module) {
                 if (user) {
                     sessionStorage.setItem("user", user.id);
                     $rootScope.user = user;
-                    console.log('User state stored', user);
                 }
             },
 
             removeUserState: function () {
                 if (this.getUserState()) {
                     sessionStorage.removeItem("user");
-                    console.log('User state removed');
                 }
                 $rootScope.user = null;
             }

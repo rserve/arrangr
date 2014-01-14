@@ -10,7 +10,6 @@ define(function (require, exports, module) {
 
 		$rootScope.appInitialized = true;
 
-		console.log('App initialized');
 	}]);
 
 	module.exports = app;
