@@ -37,8 +37,12 @@ require([
 		$http.get("/api/users/session").success(function(user) {
 			sessionStorage.setItem("user", user.id);
 			angular.bootstrap(document, [config.appName]);
-		}).error(function(data, status, headers, config) {
-			console.log('Error accessing api');
+		}).error(function(data, status) {
+			if(status == 401) {
+				angular.bootstrap(document, [config.appName]);
+			} else {
+				console.log('Error accessing api', data);
+			}
 		});
 	});
 });
