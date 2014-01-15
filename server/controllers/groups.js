@@ -118,12 +118,10 @@ exports.join = function (req, res) {
 			return res.status(500).send({error: 'Error joining group', message: 'Email missing'});
 		}
 
-		User.create({ email: email, password: hash.gen(6) }, function (err, user) {
+		User.create({ email: email }, function (err, user) {
 			if (!e(err, res, 'Error creating user')) {
 				mailer.sendRegistrationMail(user);
-				req.logIn(user, function (err) {
-					e(err, res, 'Error when logging in') || addUserToGroup(req, res, group, user);
-				});
+				addUserToGroup(req, res, group, user);
 			}
 		});
 	} else {
@@ -145,7 +143,7 @@ var addUserToGroup = function (req, res, group, user, status) {
 							socket.groupChanged(group);
 							res.send(group);
 
-							if (req.user.id != user.id) {
+							if (req.user && req.user.id != user.id) {
 								mailer.sendInvitationMail(user, group, req.user);
 							}
 						}

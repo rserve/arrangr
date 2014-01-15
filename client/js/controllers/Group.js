@@ -90,7 +90,6 @@ define(function (require, exports, module) {
 				function (group) {
 					updateGroup(group);
 					if (register) {
-						authState.refreshUserState();
 						flash.success = 'An account as be created for you, please check your mail to verify.';
 						if ($scope.joinModel) {
 							$scope.joinModel.email = "";
@@ -121,6 +120,26 @@ define(function (require, exports, module) {
 					flash.error = data.message;
 				}
 			);
+		};
+
+		$scope.remind = function () {
+			client.remind(key,
+				function () {
+					flash.success = 'Reminder sent';
+				},
+				function (data) {
+					flash.error = data.message;
+				});
+		};
+
+		$scope.status = function () {
+			client.status(key,
+				function () {
+					flash.success = 'Status sent';
+				},
+				function (data) {
+					flash.error = data.message;
+				});
 		};
 
 		$scope.removeMember = function (member) {

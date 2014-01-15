@@ -59,8 +59,7 @@ var mailer = {
 						name: 'LINK',
 						content: baseUrl + '/password/' + user.verificationHash
 					}
-				],
-
+				]
 			}
 		}, function (res) {
 //            console.log(res);
@@ -83,6 +82,7 @@ var mailer = {
 						email: user.email
 					}
 				],
+				subject: group.name,
 				global_merge_vars: [
 					{
 						name: 'LINK',
@@ -147,6 +147,7 @@ var mailer = {
 						email: user.email
 					}
 				],
+				subject: group.name,
 				global_merge_vars: [
 					{
 						name: 'LINK',
@@ -192,6 +193,7 @@ var mailer = {
 						email: user.email
 					}
 				],
+				subject: group.name,
 				global_merge_vars: [
 					{
 						name: 'LINK',

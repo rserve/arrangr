@@ -95,26 +95,6 @@ define(function (require, exports, module) {
 				});
 		};
 
-		$scope.remind = function () {
-			client.remind(key,
-				function () {
-					flash.success = 'Reminder sent';
-				},
-				function (data) {
-					flash.error = data.message;
-				});
-		};
-
-		$scope.status = function () {
-			client.status(key,
-				function () {
-					flash.success = 'Status sent';
-				},
-				function (data) {
-					flash.error = data.message;
-				});
-		};
-
 
 		getGroup();
 	};
