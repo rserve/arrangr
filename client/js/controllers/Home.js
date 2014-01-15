@@ -34,7 +34,6 @@ define(function (require, exports, module) {
 						$state.transitionTo("groups");
 					},
 					function (err) {
-						console.log('error', err);
 						$scope.loginModel.error = err.message;
 					});
 			}
@@ -57,7 +56,6 @@ define(function (require, exports, module) {
 						$scope.registerModel.success = 'Verification email sent!';
 					},
 					function (err) {
-						console.log('error', err);
 						if(err.name == 'ValidationError' && err.errors.email) {
 							$scope.registerModel.error = err.errors.email.type;
 						} else {

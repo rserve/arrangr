@@ -16,12 +16,13 @@ function getInvitationICal(user, group, groupCreator) {
 	var summary = group.name + (group.description ? '-' + group.description : '');
 
 	event.set('summary', summary);
-	event.set('offset', new Date().getTimezoneOffset());
+	//var timezoneOffset = new Date().getTimezoneOffset();
+	var timezoneOffset = -60; // hack to work with server timezone (to get it to swedish times)
+	event.set('offset', timezoneOffset);
 	event.set('start', group.startDate.toString());
 
-	// 2 hours
 	var endDate = new Date(group.startDate);
-	endDate.setHours(endDate.getHours() + 2);
+	endDate.setHours(endDate.getHours() + 1);
 	event.set('end', endDate.toString());
 
 	event.set('url', baseUrl + '/groups/' + group.key);

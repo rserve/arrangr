@@ -26,11 +26,8 @@ require([
 
 	'use strict';
 
-	console.log('Dependencies loaded');
-
 	//kick off!
 	angular.element(document).ready(function () {
-		console.log('Document ready, bootstrapping app');
 
 		// Get user state before bootstrap so we can route correctly
 		var $http = angular.bootstrap().get('$http');
@@ -41,7 +38,6 @@ require([
 			if(status == 401) {
 				angular.bootstrap(document, [config.appName]);
 			} else {
-				console.log('Error accessing api', data);
 			}
 		});
 	});

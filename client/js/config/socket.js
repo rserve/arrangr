@@ -8,13 +8,13 @@ define(function (require, exports, module) {
 		socket.forward('groupChanged');
 		socket.forward('disconnect');
 
-		socket.on('groupChanged', function (message) {
+		/*socket.on('groupChanged', function (message) {
 			console.log('[socket] groupChanged', message.data);
 		});
 
 		socket.on('disconnect', function () {
 			console.log('[socket] disconnect');
-		});
+		});*/
 
 	}]);
 

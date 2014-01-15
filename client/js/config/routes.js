@@ -112,8 +112,6 @@ define(function (require, exports, module) {
                     access: access.auth
                 });
 
-            console.log('Routes configured');
-
         }])
 
         .run(['$rootScope', '$state', '$stateParams', 'authState', function ($rootScope, $state, $stateParams, authState) {
@@ -133,7 +131,6 @@ define(function (require, exports, module) {
                 }
             });
 
-            console.log('Route intercepts configured');
         }]);
 
     module.exports = app;
