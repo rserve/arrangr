@@ -14,6 +14,9 @@
                     </span>
                 </td>
                 <td>
+                    <span class="badge">{{ group.statusCount('Yes') }}</span>
+                </td>
+                <td>
                     <span ng-show="group.isNew" class="label label-info">new!</span>
                     <span ng-show="group.public" class="label label-warning">public</span>
                     <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
@@ -28,7 +31,7 @@
                 </td>
                 <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
                 <td>
-                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)">
+                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)" ng-confirm-click="Are you sure?">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </td>
@@ -54,6 +57,9 @@
                     </span>
                 </td>
                 <td>
+                    <span class="badge">{{ group.statusCount('Yes') }}</span>
+                </td>
+                <td>
                     <span ng-show="group.isNew" class="label label-info">new!</span>
                     <span ng-show="group.public" class="label label-warning">public</span>
                     <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
@@ -68,7 +74,7 @@
                 </td>
                 <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
                 <td>
-                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)">
+                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)" ng-confirm-click="Are you sure?">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </td>

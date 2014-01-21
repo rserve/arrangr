@@ -57,7 +57,8 @@
                 <td>
                     <a title="Remove member" class="text-danger" href="#"
                        ng-show="group.isAdmin(user) && user.id != member.user.id"
-                       ng-click="removeMember(member)">
+                       ng-click="removeMember(member)"
+                       ng-confirm-click="Are you sure?">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </td>

@@ -26,7 +26,7 @@ define(function (require, exports, module) {
 		}
 
 		function deleteGroup(group) {
-			groupsClient.delete(group.key, function () {
+			groupsClient.delete(group.id, function () {
 					flash.success = 'Meetup deleted';
 					getGroups();
 					getArchive();
