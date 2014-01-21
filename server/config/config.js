@@ -8,9 +8,6 @@ module.exports = {
         db: 'mongodb://localhost/rserve',
         root: rootPath,
 		static: 'client',
-        mailer: {
-            apikey: 'jwNKk8yTVM2pTfCiApHNQw'
-        },
         logger: 'dev'
     },
     test: {
@@ -18,10 +15,7 @@ module.exports = {
 		port: 8000,
         db: 'mongodb://localhost/rserve_test',
         root: rootPath,
-		static: 'client',
-        mailer: {
-            apikey: null
-        }
+		static: 'client'
     },
     production: {
 		host: 'www.arran.gr',
@@ -29,9 +23,6 @@ module.exports = {
 		db: process.env.MONGOLAB_URI || 'mongodb://localhost/rserve',
 		root: rootPath,
 		static: 'build/client',
-		mailer: {
-			apikey: 'jwNKk8yTVM2pTfCiApHNQw'
-		},
         logger: 'default'
     }
 };
