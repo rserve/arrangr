@@ -6,6 +6,9 @@ var express = require('express');
 var mongoStore = require('connect-mongo')(express);
 
 module.exports = function (app, config, passport) {
+
+	app.use(require('prerender-node'));
+
     app.set('showStackError', true);
 
     if (config.logger) {
