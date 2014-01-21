@@ -8,7 +8,8 @@ module.exports = {
         db: 'mongodb://localhost/rserve',
         root: rootPath,
 		static: 'client',
-        logger: 'dev'
+        logger: 'dev',
+		mandrill: 'pB_BN80OtE1oUBvda0Xtkg'
     },
     test: {
 		host: 'localhost',

@@ -15,6 +15,10 @@ var config = require('./config/config')[env];
 var auth = require('./config/middlewares/authorization');
 var mongoose = require('mongoose');
 
+if(config.mandrill) {
+	process.env['MANDRILL_APIKEY'] = config.mandrill;
+}
+
 // Connect to DB
 mongoose.connect(config.db);
 
