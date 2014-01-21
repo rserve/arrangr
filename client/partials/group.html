@@ -147,6 +147,8 @@
                            required type="text">
 
                 </div>
+
+                <button class="btn btn-success">{{'%BUTTON_JOIN%' | phrase}}</button>
             </form>
 
             <form class="form" novalidate name="inviteForm" role="form"
@@ -158,6 +160,8 @@
                     <input required type="email" class="form-control" ng-model="inviteModel.email"
                            placeholder="Enter email to invite" type="text">
                 </div>
+
+                <button class="btn btn-success">{{'%BUTTON_INVITE%' | phrase}}</button>
             </form>
 
             <div ng-show="group.isAdmin(user)">
