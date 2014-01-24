@@ -122,6 +122,7 @@ define(function (require, exports, module) {
                 //If trying to access authenticated page not logged in, redirect to home
                 if (to.access === access.auth && !authState.isAuth()) {
                     event.preventDefault();
+					$rootScope.redirectTo = { to: to, toParam: to };
                     $state.transitionTo('home');
                 }
                 //If trying to access anonymous page logged in, redirect to groups

@@ -15,7 +15,7 @@ exports.requiresLogin = function (req, res, next) {
  */
 
 function sendUnauthorized(res, message) {
-    res.status(403).send(message);
+    res.status(403).send({error: 'Unauthorized', message: message});
 }
 
 exports.user = {
@@ -30,6 +30,13 @@ exports.user = {
 };
 
 exports.group = {
+	hasAccess: function(req, res, next) {
+		if(req.group.public || req.user && req.group.isMember(req.user)) {
+			return next();
+		}
+
+		return sendUnauthorized(res, 'User has no access to group');
+	},
     hasAuthorization: function(req, res, next) {
         // user is authorized if admin in group
         if(req.group.isAdmin(req.user)) {

@@ -299,14 +299,14 @@ exports.status = function (req, res) {
 // param parsing
 var fromParam = function (req, res, next, q) {
 	var query = Group.findOne(q).sort({ startDate: 'desc'});
-	if (req.user) {
+	/*if (req.user) {
 		query.or([
 			{'members.user': req.user },
 			{ 'public': true }
 		]);
 	} else {
 		query.where('public', true);
-	}
+	}*/
 
 	query.
 		populate('members.user', userFields).

@@ -8,7 +8,7 @@ define(function (require, exports, module) {
 
 	var Group = require('../services/api/domain/Group');
 
-	var Controller = function ($scope, $state, $stateParams, groupsClient, authState, flash, socket) {
+	var Controller = function ($scope, $rootScope, $state, $stateParams, groupsClient, authState, flash, socket) {
 
 		var key = $stateParams.groupId,
 			client = groupsClient;
@@ -25,7 +25,12 @@ define(function (require, exports, module) {
 
 				},
 				function (data) {
-					flash.error = data.message;
+					if(data.error == 'Unauthorized') {
+						$rootScope.redirectTo = { to: $state.current, toParam: $stateParams };
+						$state.transitionTo('home');
+					} else {
+						flash.error = data.message;
+					}
 				});
 		}
 
@@ -221,7 +226,7 @@ define(function (require, exports, module) {
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash', 'socket'];
+	Controller.$inject = ['$scope', '$rootScope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash', 'socket'];
 
 	module.exports = Controller;
 

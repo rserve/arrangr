@@ -10,7 +10,7 @@ define(function (require, exports, module) {
 
 	var angular = require('angular');
 
-	var Controller = function ($scope, $state, usersClient, authState) {
+	var Controller = function ($scope, $rootScope, $state, usersClient, authState) {
 
 		$scope.login = function () {
 
@@ -31,7 +31,11 @@ define(function (require, exports, module) {
 					},
 					function (user) {
 						authState.setUserState(user);
-						$state.transitionTo("groups");
+						if($rootScope.redirectTo) {
+							$state.transitionTo($rootScope.redirectTo.to, $rootScope.redirectTo.toParam);
+						} else {
+							$state.transitionTo("groups");
+						}
 					},
 					function (err) {
 						$scope.loginModel.error = err.message;
@@ -95,7 +99,7 @@ define(function (require, exports, module) {
 
 	};
 
-	Controller.$inject = ['$scope', '$state', 'usersClient', 'authState'];
+	Controller.$inject = ['$scope', '$rootScope', '$state', 'usersClient', 'authState'];
 
 	module.exports = Controller;
 

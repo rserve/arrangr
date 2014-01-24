@@ -1,12 +1,17 @@
 <div class="page-header">
-    <small class="top-right" ng-show="user">
-        <img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
-        <a href="/profile">
-            {{ user.displayName() }}
-        </a>
-        <span ng-hide="user.verified">(not verified)</span>
-        |
-        <a href="/logout">Logout</a>
+    <small class="top-right">
+        <span ng-show="user">
+            <img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
+            <a href="/profile">
+                {{ user.displayName() }}
+            </a>
+            <span ng-hide="user.verified">(not verified)</span>
+            |
+            <a href="/logout">Logout</a>
+        </span>
+        <span ng-hide="user">
+            <a href="/">Login</a>
+        </span>
     </small>
     <h1>
         <a href="/" title="Home">

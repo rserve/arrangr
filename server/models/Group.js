@@ -54,7 +54,7 @@ schema.methods = {
 	// check if user belongs to a member
 	isMember: function (user, memberId) {
 		return this.members.some(function (member) {
-			return member.id === memberId && member.user && member.user.id === user.id;
+			return (memberId === undefined || member.id === memberId) && member.user && member.user.id === user.id;
 		});
 	},
 

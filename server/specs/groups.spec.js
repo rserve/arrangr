@@ -68,11 +68,11 @@ describe(groupsEndpoint, function () {
         });
 
         describe('get /:key', function () {
-            it('should return 404 if private', function(done) {
+            it('should return 403 if private', function(done) {
                 var testGroup = getPrivateGroup();
                 request(groupsEndpoint + '/' + testGroup.key, function (err, resp, actualGroup) {
                     expect(err).toBeFalsy();
-                    expect(resp.statusCode).toEqual(404);
+                    expect(resp.statusCode).toEqual(403);
                     done();
                 });
             });
@@ -180,11 +180,11 @@ describe(groupsEndpoint, function () {
                     done();
                 });
             });
-            it('should return 404 when not member of private group', function (done) {
+            it('should return 403 when not member of private group', function (done) {
                 var testGroup = testGroups[3];
                 request(groupsEndpoint + '/' + testGroup.key, function (err, resp) {
                     expect(err).toBeFalsy();
-                    expect(resp.statusCode).toEqual(404);
+                    expect(resp.statusCode).toEqual(403);
                     done();
                 });
             });
