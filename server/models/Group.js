@@ -51,10 +51,16 @@ schema.methods = {
 		});
 	},
 
-	// check if user belongs to a member
-	isMember: function (user, memberId) {
+	// check if user member
+	isMember: function (user) {
 		return this.members.some(function (member) {
-			return (memberId === undefined || member.id === memberId) && member.user && member.user.id === user.id;
+			return member.user && member.user.id === user.id;
+		});
+	},
+
+	isSelf: function(user, memberId) {
+		return this.members.some(function (member) {
+			return member.id === memberId && member.user && member.user.id === user.id;
 		});
 	},
 

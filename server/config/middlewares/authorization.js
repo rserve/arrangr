@@ -48,7 +48,7 @@ exports.group = {
     member: {
         hasAuthorization: function(req, res, next) {
             // user is authorized if admin or trying to update own membership
-            if(req.group.isAdmin(req.user) || req.group.isMember(req.user, req.params.memberId)) {
+            if(req.group.isAdmin(req.user) || req.group.isSelf(req.user, req.params.memberId)) {
                 return next();
             }
 
