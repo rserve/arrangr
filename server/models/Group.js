@@ -35,6 +35,11 @@ schema.pre('save', function (next) {
 		// TODO: Check if key exits
         this.key = hash.gen(5);
     }
+
+	if (this.isNew) {
+		this.verificationHash = hash.gen(10);
+	}
+
     next();
 });
 
@@ -45,6 +50,18 @@ schema.options.toJSON.transform = function(doc, ret, options) {
 
 schema.methods = {
 
+	member: function(user) {
+		if (user) {
+			for (var i = 0, len = this.members.length; i < len; i++) {
+				var member = this.members[i];
+				if (member.user && member.user.id === user.id) {
+					return member;
+				}
+			}
+		}
+		return null;
+	},
+
 	isAdmin: function (user) {
 		return this.members.some(function (member) {
 			return member.admin && member.user && member.user.id === user.id;
@@ -53,9 +70,7 @@ schema.methods = {
 
 	// check if user member
 	isMember: function (user) {
-		return this.members.some(function (member) {
-			return member.user && member.user.id === user.id;
-		});
+		return !!this.member(user);
 	},
 
 	isSelf: function(user, memberId) {
@@ -75,6 +90,13 @@ schema.methods = {
 		return this.members.filter(function (member) {
 			return member.status == status;
 		}).length;
+	},
+
+	memberHash: function (user) {
+		var m = this.member(user);
+		if(m) {
+			return hash.md5(m.id);
+		}
 	}
 };
 

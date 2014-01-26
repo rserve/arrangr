@@ -9,7 +9,8 @@ define(function (require, exports, module) {
 		Logout = require('./Logout'),
         Password = require('./Password'),
 		Profile = require('./Profile'),
-		EditGroup = require('./EditGroup');
+		EditGroup = require('./EditGroup'),
+		GroupAutoLogin = require('./GroupAutoLogin');
 
 	app.controller('Home', Home).
         controller('Group', Group).
@@ -17,6 +18,7 @@ define(function (require, exports, module) {
 		controller('Logout', Logout).
         controller('Password', Password).
 		controller('Profile', Profile).
-		controller('EditGroup', EditGroup);
+		controller('EditGroup', EditGroup).
+		controller('GroupAutoLogin', GroupAutoLogin);
 
 });

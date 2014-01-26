@@ -12,3 +12,7 @@ exports.gen = function(len) {
     id = id.replace('/', '_');
     return id;
 };
+
+exports.md5 = function(data) {
+	return crypto.createHash('md5').update(data).digest("hex");
+};

@@ -296,6 +296,25 @@ exports.status = function (req, res) {
 	res.send();
 };
 
+exports.autoLogin = function(req, res) {
+	if(req.body.hash) {
+		var found = false;
+		req.group.members.forEach(function (member) {
+			if(req.body.hash == hash.md5(member.id)) {
+				found = true;
+				req.logIn(member.user, function (err) {
+					if (!e(err, res, 'Error auto logging in user')) {
+						res.send(req.user);
+					}
+				});
+			}
+		});
+		if(!found) {
+			res.status(404).send({error: 'Error auto logging in user', message: 'Invalid hash'});
+		}
+	}
+};
+
 // param parsing
 var fromParam = function (req, res, next, q) {
 	var query = Group.findOne(q).sort({ startDate: 'desc'});

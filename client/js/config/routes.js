@@ -63,6 +63,11 @@ define(function (require, exports, module) {
                     },
                     access: access.public
                 })
+				.state('group-user', {
+					url: '/groups/:groupId/:userHash',
+					controller: 'GroupAutoLogin',
+					access: access.public
+				})
 				.state('edit-group', {
 					url: '/groups/:groupId/edit',
 					parent: 'default',

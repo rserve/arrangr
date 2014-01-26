@@ -13,7 +13,6 @@ define(function (require, exports, module) {
 	var proto = Group.prototype;
 
 	proto.isAdmin = function (user) {
-
 		return user && this.members.some(function (member) {
 			return member.admin && member.user && (member.user === user.id || member.user.id === user.id);
 		});

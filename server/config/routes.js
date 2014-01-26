@@ -45,6 +45,8 @@ module.exports = function (app, passport, auth) {
 			app.get('/:key/remind', [auth.requiresLogin, auth.group.hasAuthorization], groups.remind);
 			app.get('/:key/status', [auth.requiresLogin, auth.group.hasAuthorization], groups.status);
 
+			app.post('/:key/login', groups.autoLogin);
+
             app.param('key', groups.fromKey);
             app.param('groupId', groups.fromId);
         });
