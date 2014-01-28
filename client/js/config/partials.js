@@ -8,11 +8,11 @@ define(function (require, exports, module) {
         home: 'home.html',
         layout: 'layout.html',
         group: 'group.html',
-        groups: 'groups.html',
-        header: 'header.html',
-        profile: 'profile.html',
-		password: 'password.html',
-		'editGroup': 'edit-group.html'
+		groupEdit: 'group-edit.html',
+		groups: 'groups.html',
+		header: 'header.html',
+		profile: 'profile.html',
+		password: 'password.html'
 	};
 
 	for (var key in partials) {

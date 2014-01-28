@@ -5,20 +5,20 @@ define(function (require, exports, module) {
 	var app = require('app'),
         Home = require('./Home'),
 		Group = require('./Group'),
+		GroupEdit = require('./GroupEdit'),
+		GroupAutoLogin = require('./GroupAutoLogin'),
 		Groups = require('./Groups'),
 		Logout = require('./Logout'),
         Password = require('./Password'),
-		Profile = require('./Profile'),
-		EditGroup = require('./EditGroup'),
-		GroupAutoLogin = require('./GroupAutoLogin');
+		Profile = require('./Profile');
 
 	app.controller('Home', Home).
         controller('Group', Group).
+		controller('GroupEdit', GroupEdit).
+		controller('GroupAutoLogin', GroupAutoLogin).
 		controller('Groups', Groups).
 		controller('Logout', Logout).
         controller('Password', Password).
-		controller('Profile', Profile).
-		controller('EditGroup', EditGroup).
-		controller('GroupAutoLogin', GroupAutoLogin);
+		controller('Profile', Profile);
 
 });

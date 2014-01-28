@@ -63,21 +63,21 @@ define(function (require, exports, module) {
                     },
                     access: access.public
                 })
-				.state('group-user', {
-					url: '/groups/:groupId/:userHash',
-					controller: 'GroupAutoLogin',
-					access: access.public
-				})
-				.state('edit-group', {
+				.state('group-edit', {
 					url: '/groups/:groupId/edit',
 					parent: 'default',
 					views: {
 						content: {
-							controller: 'EditGroup',
-							templateUrl: partials.editGroup
+							controller: 'GroupEdit',
+							templateUrl: partials.groupEdit
 						}
 					},
 					access: access.auth
+				})
+				.state('group-user', {
+					url: '/groups/:groupId/:userHash',
+					controller: 'GroupAutoLogin',
+					access: access.public
 				})
                 .state('404', {
                     url: '/404',
