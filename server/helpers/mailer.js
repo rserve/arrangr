@@ -138,21 +138,21 @@ var mailer = {
 		});
 	},
 
-	sendReminderMail: function(user, group) {
+	sendReminderMail: function(member, group) {
 		mandrill.messages.sendTemplate({
 			template_name: 'reminder',
 			template_content: [],
 			message: {
 				to: [
 					{
-						email: user.email
+						email: member.user.email
 					}
 				],
 				subject: group.name,
 				global_merge_vars: [
 					{
 						name: 'LINK',
-						content: baseUrl + '/groups/' + group.key + '/' + group.memberHash(user)
+						content: baseUrl + '/groups/' + group.key + member._hash ? ('/' + member._hash) : ''
 					},
 					{
 						name: 'MEETUP',
@@ -167,7 +167,7 @@ var mailer = {
 		});
 	},
 
-	sendStatusMail: function(user, group) {
+	sendStatusMail: function(member, group) {
 		var participants = { 'Yes': [], 'Maybe': [], 'No': []};
 
 		group.members.forEach(function(member) {
@@ -191,14 +191,14 @@ var mailer = {
 			message: {
 				to: [
 					{
-						email: user.email
+						email: member.user.email
 					}
 				],
 				subject: group.name,
 				global_merge_vars: [
 					{
 						name: 'LINK',
-						content: baseUrl + '/groups/' + group.key + '/' + group.memberHash(user)
+						content: baseUrl + '/groups/' + group.key + member._hash ? ('/' + member._hash) : ''
 					},
 					{
 						name: 'MEETUP',

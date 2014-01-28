@@ -3,6 +3,7 @@ define(function (require, exports, module) {
 	'use strict';
 
 	var _ = require('underscore');
+	var moment = require('moment');
 
 	var Group = function (data) {
 		_.extend(this, data);
@@ -48,21 +49,19 @@ define(function (require, exports, module) {
 	};
 
 	proto.isNew = function () {
-		return this.createdAt > (Date.now() - (60 * 60 * 24 * 3));
+		return moment().subtract('days', 3).isBefore(this.createdAt);
 	};
 
 	proto.weekday = function () {
 		if (this.startDate) {
-			var d = new Date(this.startDate);
-			return d.getDay();
+			return moment(this.startDate).format('d');
 		}
 		return null;
 	};
 
 	proto.time = function () {
 		if (this.startDate) {
-			var d = new Date(this.startDate);
-			return (d.getHours() < 10 ? '0' : '') + d.getHours() + ':' + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+			return moment(this.startDate).format('HH:mm');
 		}
 		return null;
 	};
@@ -72,7 +71,7 @@ define(function (require, exports, module) {
 	};
 
 	proto.upcoming = function() {
-		return new Date(this.startDate).getTime() > new Date().getTime();
+		return moment(this.startDate).isAfter();
 	};
 
 	module.exports = Group;

@@ -21,7 +21,8 @@ var schema = new mongoose.Schema({
         user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
         status: {type: String, enum: ['Yes', 'No', 'Maybe', ''], default: '' },
         admin: { type: Boolean, default: false },
-        createdAt: {type: Date, default: Date.now }
+        createdAt: {type: Date, default: Date.now },
+		_hash: { type: String, default: hash.gen(10) }
     }],
 	comments: [{
 		user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
@@ -35,10 +36,6 @@ schema.pre('save', function (next) {
 		// TODO: Check if key exits
         this.key = hash.gen(5);
     }
-
-	if (this.isNew) {
-		this.verificationHash = hash.gen(10);
-	}
 
     next();
 });
@@ -90,13 +87,6 @@ schema.methods = {
 		return this.members.filter(function (member) {
 			return member.status == status;
 		}).length;
-	},
-
-	memberHash: function (user) {
-		var m = this.member(user);
-		if(m) {
-			return hash.md5(m.id);
-		}
 	}
 };
 

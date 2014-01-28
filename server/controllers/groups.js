@@ -266,6 +266,8 @@ exports.increment = function (req, res) {
 	group.comments = [];
 	group.members.forEach(function (member) {
 		delete member.id;
+		delete member.createdAt;
+		delete member._hash;
 		member.status = '';
 		member.user = member.user.id;
 	});
@@ -281,7 +283,7 @@ exports.increment = function (req, res) {
 exports.remind = function (req, res) {
 	req.group.members.forEach(function (member) {
 		if (!member.status.match('(Yes|No)')) {
-			mailer.sendReminderMail(member.user, req.group);
+			mailer.sendReminderMail(member, req.group);
 		}
 	});
 	res.send();
@@ -290,7 +292,7 @@ exports.remind = function (req, res) {
 exports.status = function (req, res) {
 	req.group.members.forEach(function (member) {
 		if (member.status.match('(Yes|No|Maybe)')) {
-			mailer.sendStatusMail(member.user, req.group);
+			mailer.sendStatusMail(member, req.group);
 		}
 	});
 	res.send();
@@ -300,7 +302,7 @@ exports.autoLogin = function(req, res) {
 	if(req.body.hash) {
 		var found = false;
 		req.group.members.forEach(function (member) {
-			if(req.body.hash == hash.md5(member.id)) {
+			if(req.body.hash == member._hash) {
 				found = true;
 				req.logIn(member.user, function (err) {
 					if (!e(err, res, 'Error auto logging in user')) {

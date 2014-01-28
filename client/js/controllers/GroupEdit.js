@@ -4,8 +4,9 @@ define(function (require, exports, module) {
 
 	var angular = require('angular');
 	var Group = require('../services/api/domain/Group');
+	var moment = require('moment');
 
-	var Controller = function ($scope, $state, $stateParams, groupsClient, authState, flash, socket) {
+	var Controller = function ($scope, $state, $stateParams, groupsClient, authState, flash) {
 
 		var key = $stateParams.groupId,
 			client = groupsClient;
@@ -36,31 +37,24 @@ define(function (require, exports, module) {
 			model.weekday = $scope.group._weekday;
 		}
 
-		// why are we doing like this?
 		function calculateStartDate() {
-			var startDate = $scope.group.startDate ? new Date($scope.group.startDate) : new Date();
-
-			var weekday = $scope.groupModel.weekday;
-			if (weekday) {
-				var current = $scope.group.weekday() || new Date().getDay();
-				var diff = current - weekday;
-				startDate.setDate(startDate.getDate() - diff);
-			}
+			var startDate = moment($scope.group.startDate).day($scope.groupModel.weekday);
 
 			var time = $scope.groupModel.time;
 
-			if ($scope.groupModel.time) {
+			if (time) {
 				var t = time.split(':');
-				startDate.setHours(t[0]);
-				startDate.setMinutes(t[1]);
+				startDate.hours(t[0]).minutes(t[1]);
+			}
+
+			if(startDate.isBefore()) {
+				startDate.add('days', 7);
 			}
 
 			return startDate;
 		}
 
-
 		$scope.update = function () {
-
 			if ($scope.groupForm.$invalid) {
 				if ($scope.groupForm.name.$invalid) {
 					flash.error = 'Name cannot be empty';
@@ -83,7 +77,6 @@ define(function (require, exports, module) {
 			}
 		};
 
-
 		$scope.increment = function () {
 			client.increment(key,
 				function (data) {
@@ -95,12 +88,11 @@ define(function (require, exports, module) {
 				});
 		};
 
-
 		getGroup();
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash', 'socket'];
+	Controller.$inject = ['$scope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash'];
 
 	module.exports = Controller;
 
