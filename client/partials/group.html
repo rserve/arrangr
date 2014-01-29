@@ -73,10 +73,10 @@
 
         <div class="panel panel-default">
             <table class="table">
-                <tr ng-show="!group.isMember(user)">
+                <tr ng-show="group.upcoming() && !group.isMember(user)">
                     <td colspan="2">Join meetup to add a comment...</td>
                 </tr>
-                <tr ng-show="group.isMember(user)">
+                <tr ng-show="group.upcoming() && group.isMember(user)">
                     <td width="30"><img ng-src="{{ user.thumbnailSrc() }}" width="25" height="25"/>
                     </td>
                     <td>
@@ -91,33 +91,27 @@
                            href="http://www.emoji-cheat-sheet.com/" target="_blank">Emoji cheat
                             sheet &raquo;</a>
                     </td>
+                </tr>
 
-
-                <tr ng-show="group.public || group.isMember(user)"
-                    ng-repeat="comment in group.comments |  orderBy:'createdAt':true | limitTo:commentHelper.visible">
-                    <td width="30"><img ng-src="{{ comment.user.thumbnailSrc() }}" width="25"
-                                        height="25"/>
+                <tr ng-show="group.public || group.isMember(user)" ng-repeat="comment in group.comments |  orderBy:'createdAt':true | limitTo:commentHelper.visible">
+                    <td width="30">
+                        <img ng-src="{{ comment.user.thumbnailSrc() }}" width="25" height="25"/>
                     </td>
                     <td>
-                        <small>{{ comment.user.displayName() }} <span
-                                am-time-ago="comment.createdAt"></span></small>
-                        <a title="Delete comment" class="text-danger" href="#"
-                           ng-show="comment.isOwner(user)" ng-click="deleteComment(comment)">
-                            Delete
+                        <small>{{ comment.user.displayName() }} <span am-time-ago="comment.createdAt"></span></small>
+                        <a title="Delete comment" class="pull-right text-danger" href="#" ng-show="comment.isOwner(user)" ng-click="deleteComment(comment)">
+                            <span class="glyphicon glyphicon-remove"></span>
                         </a>
 
                         <p ng-bind-html="comment.text | emoji"></p>
                     </td>
 
                 </tr>
-
-
             </table>
-            <div ng-show="commentHelper.more()>0" class="panel-footer"><a href="#"
-                                                                          ng-click="commentHelper.showMore()">View
-                {{commentHelper.more()}} more comments...</a></div>
+            <div ng-show="commentHelper.more()>0" class="panel-footer">
+                <a href="#" ng-click="commentHelper.showMore()">View {{commentHelper.more()}} more comments...</a>
+            </div>
         </div>
-
 
     </div>
     <div class="col-lg-3 col-md-4 col-sm-4">
