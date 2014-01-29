@@ -152,7 +152,7 @@ var mailer = {
 				global_merge_vars: [
 					{
 						name: 'LINK',
-						content: baseUrl + '/groups/' + group.key + member._hash ? ('/' + member._hash) : ''
+						content: baseUrl + '/groups/' + group.key + (member._hash ? ('/' + member._hash) : '')
 					},
 					{
 						name: 'MEETUP',
@@ -198,7 +198,7 @@ var mailer = {
 				global_merge_vars: [
 					{
 						name: 'LINK',
-						content: baseUrl + '/groups/' + group.key + member._hash ? ('/' + member._hash) : ''
+						content: baseUrl + '/groups/' + group.key + (member._hash ? ('/' + member._hash) : '')
 					},
 					{
 						name: 'MEETUP',
