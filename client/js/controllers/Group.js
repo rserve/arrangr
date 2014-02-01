@@ -15,6 +15,10 @@ define(function (require, exports, module) {
 
 		function updateGroup(data) {
 			$scope.group = data;
+			$rootScope.title = $scope.group.name;
+			if($scope.group.description) {
+				$rootScope.description = $scope.group.description.replace(/<[^>]+>/gm, '');
+			}
 		}
 
 		function getGroup() {

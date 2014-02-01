@@ -63,6 +63,8 @@ define(function (require, exports, module) {
 		//default action
 		getGroups();
 		getArchive();
+
+		$rootScope.title = 'meetups';
 	};
 
 	//inject dependencies
