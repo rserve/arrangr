@@ -22,7 +22,7 @@ var schema = new mongoose.Schema({
         status: {type: String, enum: ['Yes', 'No', 'Maybe', ''], default: '' },
         admin: { type: Boolean, default: false },
         createdAt: {type: Date, default: Date.now },
-		_hash: { type: String, default: hash.gen(10) }
+		_hash: { type: String, default: hash.gen }
     }],
 	comments: [{
 		user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },

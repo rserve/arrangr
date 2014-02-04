@@ -45,9 +45,9 @@ exports.find = function (req, res) {
 
 exports.create = function (req, res) {
 	var group = req.body;
-	group.createdBy = req.user;
+	group.createdBy = req.user.id;
 	group.members = [
-		{ user: req.user, admin: true, status: 'Yes' }
+		{ user: req.user.id, admin: true, status: 'Yes' }
 	];
 	Group.create(group, function (err, group) {
 		if (!e(err, res, 'Error creating group')) {
@@ -228,7 +228,7 @@ exports.addComment = function (req, res) {
 			$addToSet: {
 				comments: {
 					text: req.body.text,
-					user: user
+					user: user.id
 				}
 			}
 		}).

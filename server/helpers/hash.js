@@ -2,7 +2,7 @@ var crypto = require('crypto');
 
 exports.gen = function(len) {
     if (!len) {
-        len = 7;
+        len = 10;
     }
 
     var bytesNeeded = Math.ceil(len * 0.75);
