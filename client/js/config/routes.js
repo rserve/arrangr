@@ -123,6 +123,7 @@ define(function (require, exports, module) {
 
             $rootScope.$on("$stateChangeStart", function (event, to, toParam, from, fromParams) {
                 $rootScope.error = null;
+				$rootScope.title = to.name;
 
                 //If trying to access authenticated page not logged in, redirect to home
                 if (to.access === access.auth && !authState.isAuth()) {
