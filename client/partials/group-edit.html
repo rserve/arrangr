@@ -23,7 +23,7 @@
 
 
 <div class="row">
-    <div class="col-lg-5 col-md-5 col-sm-5">
+    <div class="col-lg-8 col-md-8 col-sm-8">
         <h2>Edit group</h2>
 
         <form novalidate class="form" role="form" name="groupForm" ng-submit="update()">
@@ -39,40 +39,56 @@
                           type="text"
                           ng-model="groupModel.description" name="description" placeholder=""/>
             </div>
-            <div class="form-group">
-                <label class="control-label" for="groupFormWeekday">Weekday</label>
-                <select id="groupFormWeekday" class="form-control"
-                        ng-model="groupModel.weekday" name="weekday">
-                    <option value="1">{{ '%WEEKDAY_1%' | phrase }}</option>
-                    <option value="2">{{ '%WEEKDAY_2%' | phrase }}</option>
-                    <option value="3">{{ '%WEEKDAY_3%' | phrase }}</option>
-                    <option value="4">{{ '%WEEKDAY_4%' | phrase }}</option>
-                    <option value="5">{{ '%WEEKDAY_5%' | phrase }}</option>
-                    <option value="6">{{ '%WEEKDAY_6%' | phrase }}</option>
-                    <option value="0">{{ '%WEEKDAY_0%' | phrase }}</option>
-                </select>
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label class="control-label" for="groupFormWeekday">Weekday</label>
+                    <select id="groupFormWeekday" class="form-control"
+                            ng-model="groupModel.weekday" name="weekday">
+                        <option value="1">{{ '%WEEKDAY_1%' | phrase }}</option>
+                        <option value="2">{{ '%WEEKDAY_2%' | phrase }}</option>
+                        <option value="3">{{ '%WEEKDAY_3%' | phrase }}</option>
+                        <option value="4">{{ '%WEEKDAY_4%' | phrase }}</option>
+                        <option value="5">{{ '%WEEKDAY_5%' | phrase }}</option>
+                        <option value="6">{{ '%WEEKDAY_6%' | phrase }}</option>
+                        <option value="0">{{ '%WEEKDAY_0%' | phrase }}</option>
+                    </select>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label class="control-label" for="groupFormTime">Time</label>
+                    <input class="form-control" id="groupFormTime" type="time"
+                           ng-model="groupModel.time" name="time" placeholder=""/>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="control-label" for="groupFormTime">Time</label>
-                <input class="form-control" id="groupFormTime" type="time"
-                       ng-model="groupModel.time" name="time" placeholder=""/>
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="groupFormPublic">Public</label>
+                    <input class="form-control" id="groupFormPublic" type="checkbox"
+                           ng-model="groupModel.public" name="public"/>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="groupFormMinParticipants">Min participants</label>
+                    <input class="form-control" id="groupFormMinParticipants" type="number"
+                           ng-model="groupModel.minParticipants" name="minParticipants" placeholder=""/>
+                </div>
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="groupFormMaxParticipants">Max participants</label>
+                    <input class="form-control" id="groupFormMaxParticipants" type="number"
+                           ng-model="groupModel.maxParticipants" name="maxParticipants" placeholder=""/>
+                </div>
             </div>
-            <div class="form-group">
-                <label class="control-label" for="groupFormPublic">Public</label>
-                <input class="form-control" id="groupFormPublic" type="checkbox"
-                       ng-model="groupModel.public" name="public"/>
-            </div>
+
+
             <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
         </form>
     </div>
 
-    <div class="col-lg-5 col-md-5 col-sm-5">
+    <div class="col-lg-4 col-md-4 col-sm-4">
         <h2>Actions</h2>
 
         <div>
-            <h3>Next week</h3>
+            <h3>Next meetup</h3>
 
-            <p>Update meetup to next week</p>
+            <p>Create next meetup</p>
             <a href="#" ng-click="increment()" class="btn btn-info">{{'%BUTTON_NEXT%' | phrase}}</a>
         </div>
     </div>

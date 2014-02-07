@@ -28,7 +28,9 @@ var schema = new mongoose.Schema({
 		user: { type: mongoose.Schema.ObjectId, ref: 'User', required: true },
 		text: {type: String, default: '' },
 		createdAt: {type: Date, default: Date.now }
-	}]
+	}],
+	minParticipants: { type: Number },
+	maxParticipants: { type: Number }
 });
 
 schema.pre('save', function (next) {

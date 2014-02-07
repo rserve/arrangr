@@ -35,6 +35,8 @@ define(function (require, exports, module) {
 			model.public = $scope.group.public;
 			model.time = $scope.group._time;
 			model.weekday = $scope.group._weekday;
+			model.minParticipants = $scope.group.minParticipants;
+			model.maxParticipants = $scope.group.maxParticipants;
 		}
 
 		function calculateStartDate() {
