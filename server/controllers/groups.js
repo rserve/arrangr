@@ -130,12 +130,12 @@ exports.join = function (req, res) {
 };
 
 var addUserToGroup = function (req, res, group, user, status) {
-	Group.find({ _id: group.id, 'members.user': user}, function (err, groups) {
+	Group.find({ _id: group.id, 'members.user': user.id}, function (err, groups) {
 		if (!e(err, res, 'Error finding group to join')) {
 			if (groups.length > 0) {
 				res.status(409).send({error: 'Error when joining group', message: 'Already a member of this group'});
 			} else {
-				Group.findOneAndUpdate({_id: group.id }, { $addToSet: { members: { user: user, status: status } } }).
+				Group.findOneAndUpdate({_id: group.id }, { $addToSet: { members: { user: user.id, status: status } } }).
 					populate('members.user', userFields).
 					populate('comments.user', userFields).
 					exec(function (err, group) {

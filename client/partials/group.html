@@ -29,8 +29,15 @@
         </small>
     </h2>
     <p ng-bind-html-unsafe="group.description"></p>
-
+    
     <div class="clearfix"></div>
+    
+    <div class="alert alert-info" ng-show="group.minParticipants > 0 && group.statusCount('Yes') < group.minParticipants">
+        This meetup requires that atleast <strong>{{ group.minParticipants }}</strong> people sign up, otherwise it's cancelled.
+    </div>
+    <div class="alert alert-info" ng-show="group.maxParticipants > 0 && group.statusCount('Yes') > group.maxParticipants">
+        This meetup maximum number of participants is <strong>{{ group.minParticipants }}</strong>.
+    </div>
 </div>
 
 <div class="row">
