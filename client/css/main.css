@@ -214,3 +214,42 @@ img.ribbon {
 .btn-toolbar {
     margin-top: 10px;
 }
+
+.flash-container.bottom-right {
+    right: 12px;
+    bottom: -10px;
+}
+
+.flash-container {
+    position: fixed;
+    z-index: 999999;
+
+}
+
+.flash-container.in{
+    opacity: 0.9;
+    -moz-box-shadow: 0 0 12px #999999;
+    -webkit-box-shadow: 0 0 12px #999999;
+    box-shadow: 0 0 12px #999999;
+}
+
+.flash-container.in:hover {
+    -moz-box-shadow: 0 0 12px #666666;
+    -webkit-box-shadow: 0 0 12px #666666;
+    box-shadow: 0 0 12px #666666;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.flash-container.alert-success > i.glyphicon:before {
+    content: "\e013";
+}
+
+.flash-container.alert-error > i.glyphicon:before {
+    content: "\e107";
+}
+
+
+
+
+

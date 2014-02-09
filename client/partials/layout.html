@@ -2,10 +2,12 @@
 
     <div ui-view="header"></div>
 
-    <div flash-alert active-class="in alert" class="fade" duration="15000">
-        <i class="icon-info-sign"></i>
-        <span class="alert-message" ng-bind-html-unsafe="flash.message | link"></span>
+
+    <div flash-alert active-class="in" class="fade alert flash-container bottom-right" ng-click="hide()">
+        <i class="glyphicon"></i>
+       <span class="alert-message" ng-bind-html-unsafe="flash.message | link"></span>
     </div>
+
 
     <div ui-view="content"></div>
 

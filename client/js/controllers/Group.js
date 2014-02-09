@@ -175,7 +175,7 @@ define(function (require, exports, module) {
 				client.addComment(key, data,
 					function (data) {
 						updateGroup(data);
-						flash.success = 'Comment added';
+						//flash.success = 'Comment added';
 						$scope.commentModel.text = "";
 					},
 					function (data) {
@@ -191,7 +191,7 @@ define(function (require, exports, module) {
 				function (data) {
 					updateGroup(data);
 
-					flash.success = 'Comment deleted';
+					//flash.success = 'Comment deleted';
 				},
 				function (data) {
 					flash.error = data.message;
