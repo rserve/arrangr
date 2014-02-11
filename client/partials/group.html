@@ -33,10 +33,10 @@
     <div class="clearfix"></div>
     
     <div class="alert alert-info" ng-show="group.minParticipants > 0 && group.statusCount('Yes') < group.minParticipants">
-        This meetup requires that atleast <strong>{{ group.minParticipants }}</strong> people sign up, otherwise it's cancelled.
+        This meetup's minimum number of paticipants is <strong>{{ group.minParticipants }}</strong>. So far only <strong>{{ group.statusCount('Yes') }}</strong> signed up.
     </div>
     <div class="alert alert-info" ng-show="group.maxParticipants > 0 && group.statusCount('Yes') > group.maxParticipants">
-        This meetup maximum number of participants is <strong>{{ group.minParticipants }}</strong>.
+        This meetup's maximum number of participants is <strong>{{ group.minParticipants }}</strong>.
     </div>
 </div>
 
