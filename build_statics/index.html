@@ -14,7 +14,7 @@
     </script>
 </head>
 
-<body>
+<body onload="checkBrowser();">
 
 <img src="/images/beta-ribbon.png" class="ribbon" border="0" width="130" height="130">
 
@@ -23,6 +23,67 @@
 <div class="clearfix"></div>
 
 <small class="bgbyline">Photo: <a href="https://www.facebook.com/FotoSander" target="_blank">FotoSander</a></small>
+
+<div id="update-browser-modal" class="modal" role="dialog">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button id="update-browser-close-button" type="button" class="close">×
+                </button>
+                <h4 class="modal-title">Browser is out of date</h4>
+            </div>
+            <div class="modal-body">
+                <p>Your browser seems to be out of date and may not be compatible with our
+                    website.</p>
+
+                <p>Here are four excellent, up-to-date and free browsers that we recommend:</p>
+
+                <div class="browser-container">
+                    <a href="http://www.google.com/chrome">
+                        <img src="/images/chrome_128x128.png"/>
+
+                        <div class="browser-text">
+                            CHROME
+                        </div>
+                    </a>
+
+                    <a href="http://www.firefox.com">
+                        <img src="/images/firefox_128x128.png"/>
+
+                        <div class="browser-text">
+                            FIREFOX
+                        </div>
+                    </a>
+
+                    <a href="http://www.apple.com/safari">
+                        <img src="/images/safari_128x128.png"/>
+
+                        <div class="browser-text">
+                            SAFARI
+                        </div>
+                    </a>
+                    <a href="http://windows.microsoft.com/ie">
+                        <img src="/images/internet-explorer_128x128.png"/>
+
+                        <div class="browser-text">
+                            INTERNET EXPLORER
+                        </div>
+                    </a>
+
+
+                </div>
+                <p> (click icon to go to download page)</p>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div id="backdrop" class="modal-backdrop fade in"></div>
+
+<script src="/js/browser-check.js"></script>
 
 <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.5/require.min.js"></script>
 

@@ -215,6 +215,9 @@ img.ribbon {
     margin-top: 10px;
 }
 
+/*
+ FLASH CONTAINER
+*/
 .flash-container.bottom-right {
     right: 12px;
     bottom: -10px;
@@ -226,7 +229,7 @@ img.ribbon {
 
 }
 
-.flash-container.in{
+.flash-container.in {
     opacity: 0.9;
     -moz-box-shadow: 0 0 12px #999999;
     -webkit-box-shadow: 0 0 12px #999999;
@@ -247,6 +250,38 @@ img.ribbon {
 
 .flash-container.alert-error > i.glyphicon:before {
     content: "\e107";
+}
+
+/*
+ UPDATE BROWSER MODAL
+*/
+
+#update-browser-modal .modal-content {
+    text-align: center;
+}
+
+#update-browser-modal .icon-container {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#update-browser-modal .browser-container > a {
+    display: inline-block;
+}
+
+#update-browser-modal .browser-text {
+    margin: 3px;
+    padding: 3px;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgba(173, 173, 173, 0.3);
+    border-radius: 3px;
+}
+
+#backdrop {
+    display: none;
 }
 
 
