@@ -40,77 +40,34 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-4 col-sm-push-8">
-        <div ng-show="group.upcoming()">
-            <div ng-show="group.isMember(user)">
-                <h3>Are you going?</h3>
+<div class="visible-xs" ng-show="group.upcoming()">
+    <div ng-show="group.isMember(user)">
+        <h3>Are you going?</h3>
 
-                <div class="btn-group btn-group-justified">
-                    <a ng-click="yes()" class="btn btn-default"
-                       ng-class="{'btn-success':currentMember.status == 'Yes'}">
-                        {{ '%BUTTON_YES%' | phrase }}
-                    </a>
-                    <a ng-click="maybe()" class="btn btn-default"
-                       ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
-                        {{ '%BUTTON_MAYBE%' | phrase }}
-                    </a>
-                    <a ng-click="no()" class="btn btn-default"
-                       ng-class="{'btn-danger':currentMember.status == 'No'}">
-                        {{ '%BUTTON_NO%' | phrase }}
-                    </a>
-                </div>
-            </div>
-            <form class="form hidden-xs" role="form" name="joinForm" novalidate ng-show="!user"
-                  ng-submit="join()">
-                <h3>Join meetup</h3>
-
-                <div class="form-group">
-                    <input class="form-control" ng-model="joinModel.email"
-                           placeholder="Enter your email"
-                           required type="text">
-
-                </div>
-
-                <button class="btn btn-success">{{'%BUTTON_JOIN%' | phrase}}</button>
-            </form>
-
-            <form class="form hidden-xs" novalidate name="inviteForm" role="form"
-                  ng-show="group.isAdmin(user) || group.public && group.isMember(user)"
-                  ng-submit="invite()">
-                <h3>Invite friends</h3>
-
-                <div class="form-group">
-                    <input required type="email" class="form-control" ng-model="inviteModel.email"
-                           placeholder="Enter email to invite" type="text">
-                </div>
-
-                <button class="btn btn-success">{{'%BUTTON_INVITE%' | phrase}}</button>
-            </form>
-
-            <div class="hidden-xs" ng-show="group.isAdmin(user)">
-                <div>
-                    <h3>Reminder</h3>
-
-                    <p>Send reminder to all members that hasn't answered yes or no yet.</p>
-                    <a href="#" ng-click="remind()" class="btn btn-info">{{'%BUTTON_SEND%' | phrase}}</a>
-                </div>
-
-                <div>
-                    <h3>Status</h3>
-
-                    <p>Send status update to everyone that has responded.</p>
-                    <a href="#" ng-click="status()" class="btn btn-info">{{'%BUTTON_SEND%' | phrase}}</a>
-                </div>
-            </div>
+        <div class="btn-group btn-group-justified">
+            <a ng-click="yes()" class="btn btn-default"
+               ng-class="{'btn-success':currentMember.status == 'Yes'}">
+                {{ '%BUTTON_YES%' | phrase }}
+            </a>
+            <a ng-click="maybe()" class="btn btn-default"
+               ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
+                {{ '%BUTTON_MAYBE%' | phrase }}
+            </a>
+            <a ng-click="no()" class="btn btn-default"
+               ng-class="{'btn-danger':currentMember.status == 'No'}">
+                {{ '%BUTTON_NO%' | phrase }}
+            </a>
         </div>
     </div>
-    <div class="col-sm-8 col-sm-pull-4">
+</div>
+
+<div class="row">
+    <div class="col-lg-9 col-md-8 col-sm-8">
         <h3>Members</h3>
 
-        <p><span class="badge">{{ group.statusCount('Yes') }}</span> yes, <span class="badge">{{ group.statusCount('Maybe') }}</span>
-            maybe and <span class="badge">{{ group.statusCount('No') }}</span> no out of <span
-                    class="badge">{{ group.members.length }}</span>
+        <p><span class="badge badge-success">{{ group.statusCount('Yes') }}</span> yes, <span class="badge badge-warning">{{ group.statusCount('Maybe') }}</span>
+            maybe and <span class="badge badge-error">{{ group.statusCount('No') }}</span> no out of <span
+                    class="badge badge-info">{{ group.members.length }}</span>
             total.</p>
         <table class="table table-striped">
             <tbody>
@@ -181,10 +138,30 @@
                 <a href="#" ng-click="commentHelper.showMore()">View {{commentHelper.more()}} more comments...</a>
             </div>
         </div>
+
     </div>
-    <div class="col-sm-4 col-sm-push-8 visible-xs">
+    <div class="col-lg-3 col-md-4 col-sm-4">
         <div ng-show="group.upcoming()">
-             <form class="form" role="form" name="joinForm" novalidate ng-show="!user"
+            <div class="hidden-xs" ng-show="group.isMember(user)">
+                <h3>Are you going?</h3>
+
+                <div class="btn-group btn-group-justified">
+                    <a ng-click="yes()" class="btn btn-default"
+                       ng-class="{'btn-success':currentMember.status == 'Yes'}">
+                        {{ '%BUTTON_YES%' | phrase }}
+                    </a>
+                    <a ng-click="maybe()" class="btn btn-default"
+                       ng-class="{'btn-warning':currentMember.status == 'Maybe'}">
+                        {{ '%BUTTON_MAYBE%' | phrase }}
+                    </a>
+                    <a ng-click="no()" class="btn btn-default"
+                       ng-class="{'btn-danger':currentMember.status == 'No'}">
+                        {{ '%BUTTON_NO%' | phrase }}
+                    </a>
+                </div>
+            </div>
+
+            <form class="form" role="form" name="joinForm" novalidate ng-show="!user"
                   ng-submit="join()">
                 <h3>Join meetup</h3>
 
