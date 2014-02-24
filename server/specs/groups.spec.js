@@ -220,6 +220,15 @@ describe(groupsEndpoint, function () {
                     });
                 });
             });
+
+			it('should not be able to update if not admin', function(done) {
+				var testGroup = testGroups[1];
+				request.put(groupsEndpoint + '/' + testGroup.key, {form: {name: 'new name' }}, function(err, resp, responseGroup) {
+					expect(err).toBeFalsy();
+					expect(resp.statusCode).toEqual(403);
+					done();
+				});
+			});
         });
 
         describe('delete /:key', function() {
@@ -264,6 +273,31 @@ describe(groupsEndpoint, function () {
 					expect(err).toBeFalsy();
 					expect(resp.statusCode).toEqual(403);
 					done();
+				});
+			});
+		});
+
+		describe('post /:key/join', function() {
+			it('should add the member to a public group', function(done) {
+				var testGroup = testGroups[2];
+				var memberCount = testGroup.members.length;
+				request.post(groupsEndpoint + '/' + testGroup.key + '/join', function(err, resp) {
+					expect(err).toBeFalsy();
+					expect(resp.statusCode).toEqual(200);
+					Group.findOne({_id:testGroup.id}, function(err, group){
+						expect(err).toBeFalsy();
+						expect(group.members.length).toEqual(memberCount + 1);
+						done();
+					});
+				});
+			});
+
+			it('should not add the member to a private group', function() {
+				var testGroup = testGroups[3];
+				var memberCount = testGroup.members.length;
+				request.post(groupsEndpoint + '/' + testGroup.key + '/join', function(err, resp) {
+					expect(err).toBeFalsy();
+					expect(resp.statusCode).toEqual(403);
 				});
 			});
 		});

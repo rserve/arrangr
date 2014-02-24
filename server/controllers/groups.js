@@ -113,6 +113,9 @@ exports.join = function (req, res) {
 	var group = req.group;
 
 	if (!req.user) {
+		if(!group.public) {
+			return res.status(403).send({error: 'Error joining group', message: 'Group is private'});
+		}
 		var email = req.body.email;
 		if (!email) {
 			return res.status(500).send({error: 'Error joining group', message: 'Email missing'});
