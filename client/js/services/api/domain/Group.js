@@ -76,7 +76,7 @@ define(function (require, exports, module) {
 
 	proto.isHappening = function() {
 		return !this.minParticipants || this.statusCount('Yes') >= this.minParticipants;
-	}
+	};
 
 	module.exports = Group;
 });
