@@ -74,5 +74,9 @@ define(function (require, exports, module) {
 		return moment(this.startDate).isAfter();
 	};
 
+	proto.isHappening = function() {
+		return !this.minParticipants || this.statusCount('Yes') >= this.minParticipants;
+	}
+
 	module.exports = Group;
 });
