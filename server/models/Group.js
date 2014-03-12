@@ -12,7 +12,12 @@ var schema = new mongoose.Schema({
       data: { type: String },
       size: { type: Number }
     },
-    startDate: { type: Date, default: moment().add('hours', 1).minute(0).second(0).toDate() },
+    startDate: {
+		type: Date,
+		default: function() {
+			return moment().add('hours', 2).minute(0).second(0).toDate();
+		}
+	},
     endDate: { type: Date },
     public: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
