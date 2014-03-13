@@ -88,15 +88,17 @@ module.exports = function (grunt) {
 		// squelch jshint warning
 		/* jshint camelcase: false */
 		jasmine_node: {
-			specNameMatcher: '.spec',
-			projectRoot: "server",
-			forceExit: true,
-			jUnit: {
-				report: false,
-				savePath: "./build/reports/jasmine/",
-				useDotNotation: true,
-				consolidate: true
-			}
+			options: {
+				specNameMatcher: '.spec',
+				forceExit: true,
+				jUnit: {
+					report: false,
+					savePath: "./build/reports/jasmine/",
+					useDotNotation: true,
+					consolidate: true
+				}
+			},
+			all: ['server/specs']
 		},
 
 		nodemon: {
