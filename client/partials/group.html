@@ -71,7 +71,7 @@
             total.</p>
         <table class="table table-striped">
             <tbody>
-            <tr ng-repeat="member in group.members | orderBy:'statusOrderValue'">
+            <tr ng-repeat="member in group.members | orderBy:'statusOrderValue()'">
                 <td>
                     <img ng-src="{{ member.user.thumbnailSrc() }}" width="25" height="25"/>
                     {{ member.user.displayName() }}
