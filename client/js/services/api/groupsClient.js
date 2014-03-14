@@ -5,6 +5,7 @@ define(function (require, exports, module) {
 	var RequestBuilder = require('./RequestBuilder'),
 		BaseClient = require('./BaseClient'),
 		Group = require('./domain/Group'),
+		Member = require('./domain/Member'),
 		User = require('./domain/User'),
 		Comment = require('./domain/Comment');
 
@@ -22,16 +23,19 @@ define(function (require, exports, module) {
 		};
 
 		var groupParser = function (data) {
+			data.members.forEach(function (member, i, members){
+				members[i] = memberParser(member);
+			});
             var group = new Group(data);
-            memberParser(group);
+
             commentParser(group);
 			return group;
 		};
 
-		var memberParser = function(group) {
-			group.members.forEach(function (member, i, members){
-				members[i].user = new User(member.user);
-			});
+		var memberParser = function(data) {
+			var member = new Member(data);
+			member.user = new User(data.user);
+			return member;
 		};
 
 		var commentParser = function(group) {
