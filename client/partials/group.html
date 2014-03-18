@@ -36,7 +36,7 @@
         This meetup's minimum number of paticipants is <strong>{{ group.minParticipants }}</strong>. So far only <strong>{{ group.statusCount('Yes') }}</strong> signed up.
     </div>
     <div class="alert alert-info" ng-show="group.maxParticipants > 0 && group.statusCount('Yes') > group.maxParticipants">
-        This meetup's maximum number of participants is <strong>{{ group.minParticipants }}</strong>.
+        This meetup's maximum number of participants is <strong>{{ group.maxParticipants }}</strong>.
     </div>
 </div>
 
@@ -71,7 +71,7 @@
             total.</p>
         <table class="table table-striped">
             <tbody>
-            <tr ng-repeat="member in group.members | orderBy:'statusOrderValue()'">
+            <tr ng-repeat="member in group.members | orderBy:'user.displayName()' | orderBy:'statusOrderValue()'">
                 <td>
                     <img ng-src="{{ member.user.thumbnailSrc() }}" width="25" height="25"/>
                     {{ member.user.displayName() }}

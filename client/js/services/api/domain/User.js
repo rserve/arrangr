@@ -12,7 +12,18 @@ define(function (require, exports, module) {
 	var proto = User.prototype;
 
 	proto.displayName = function () {
-		return this.name || this.email;
+		if(this.name) {
+			return this.name;
+		}
+
+		var s = this.email.substring(0, this.email.indexOf('@')).replace('.', ' ').split(' ');
+		var t = '';
+
+		for(var i = 0; i < s.length; i++) {
+			t += s[i][0].toUpperCase() + s[i].substring(1) + ' ';
+		}
+
+		return t.trim();
 	};
 
 	proto.thumbnailPath = function () {
