@@ -7,8 +7,8 @@ define(function (require, exports, module) {
 
 	var Group = function (data) {
 		_.extend(this, data);
-		this._weekday = this.weekday();
-		this._time = this.time();
+//		this._weekday = this.weekday();
+//		this._time = this.time();
 	};
 
 	var proto = Group.prototype;
@@ -52,18 +52,24 @@ define(function (require, exports, module) {
 		return moment().subtract('days', 3).isBefore(this.createdAt);
 	};
 
-	proto.weekday = function () {
-		if (this.startDate) {
-			return moment(this.startDate).format('d');
-		}
-		return null;
-	};
+//	proto.weekday = function () {
+//		if (this.startDate) {
+//			return moment(this.startDate).format('d');
+//		}
+//		return null;
+//	};
+//
+//	proto.time = function () {
+//		if (this.startDate) {
+//			return moment(this.startDate).format('HH:mm');
+//		}
+//		return null;
+//	};
 
-	proto.time = function () {
-		if (this.startDate) {
-			return moment(this.startDate).format('HH:mm');
+	proto.duration = function() {
+		if(this.startDate && this.endDate) {
+			return moment(this.endDate).diff(this.startDate);
 		}
-		return null;
 	};
 
 	proto.thumbnailPath = function () {

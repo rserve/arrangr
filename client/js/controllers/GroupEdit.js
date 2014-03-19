@@ -21,7 +21,6 @@ define(function (require, exports, module) {
 				function (group) {
 					updateGroup(group);
 					$scope.currentMember = group.member($scope.user);
-
 				},
 				function (data) {
 					flash.error = data.message;
@@ -33,27 +32,27 @@ define(function (require, exports, module) {
 			model.name = $scope.group.name;
 			model.description = $scope.group.description;
 			model.public = $scope.group.public;
-			model.time = $scope.group._time;
-			model.weekday = $scope.group._weekday;
+//			model.time = $scope.group._time;
+//			model.weekday = $scope.group._weekday;
+			var start = moment($scope.group.startDate);
+			model.startDate = start.format('YYYY-MM-DD');
+			model.startTime = start.format('HH:mm');
+			var end = moment($scope.group.endDate);
+			model.endDate = end.format('YYYY-MM-DD');
+			model.endTime = end.format('HH:mm');
 			model.minParticipants = $scope.group.minParticipants;
 			model.maxParticipants = $scope.group.maxParticipants;
 		}
 
-		function calculateStartDate() {
-			var startDate = moment($scope.group.startDate).day($scope.groupModel.weekday);
-
-			var time = $scope.groupModel.time;
+		function mergeDateAndTime(date, time) {
+			var d = moment(date);
 
 			if (time) {
 				var t = time.split(':');
-				startDate.hours(t[0]).minutes(t[1]);
+				d.hours(t[0]).minutes(t[1]);
 			}
 
-			if(startDate.isBefore()) {
-				startDate.add('days', 7);
-			}
-
-			return startDate;
+			return d;
 		}
 
 		$scope.update = function () {
@@ -66,7 +65,10 @@ define(function (require, exports, module) {
 
 			} else {
 
-				$scope.groupModel.startDate = calculateStartDate();
+				$scope.groupModel.startDate = mergeDateAndTime($scope.groupModel.startDate, $scope.groupModel.startTime);
+				delete $scope.groupModel.startTime;
+				$scope.groupModel.endDate = mergeDateAndTime($scope.groupModel.endDate, $scope.groupModel.endTime);
+				delete $scope.groupModel.endTime;
 
 				client.update(key, $scope.groupModel,
 					function (data) {

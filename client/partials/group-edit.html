@@ -39,7 +39,7 @@
                           type="text"
                           ng-model="groupModel.description" name="description" placeholder=""/>
             </div>
-            <div class="row">
+<!--            <div class="row">
                 <div class="col-sm-6 form-group">
                     <label class="control-label" for="groupFormWeekday">Weekday</label>
                     <select id="groupFormWeekday" class="form-control"
@@ -57,6 +57,30 @@
                     <label class="control-label" for="groupFormTime">Time</label>
                     <input class="form-control" id="groupFormTime" type="time"
                            ng-model="groupModel.time" name="time" placeholder=""/>
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-sm-6 form-group">
+                    <label class="control-label" for="groupFormStartDate">Starts</label>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input class="form-control" type="date" id="groupFormStartDate" name="startDate" ng-model="groupModel.startDate"/>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" type="time" id="groupFormStartTime" name="startTime" ng-model="groupModel.startTime"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                    <label class="control-label" for="groupFormEndDate">Ends</label>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input class="form-control" type="date" id="groupFormEndDate" name="endDate" ng-model="groupModel.endDate"/>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control" type="time" id="groupFormEndTime" name="endTime" ng-model="groupModel.endTime"/>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">

@@ -47,6 +47,10 @@ schema.pre('save', function (next) {
     next();
 });
 
+schema.path('endDate').validate(function (endDate) {
+	return !endDate || moment(endDate).isAfter(this.startDate);
+}, 'End date must be after start date');
+
 schema.set('toJSON', { virtuals: true });
 schema.options.toJSON.transform = function(doc, ret, options) {
     cleaner.removeHiddenProperties(ret);
