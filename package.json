@@ -50,6 +50,6 @@
     "karma-requirejs": "~0.2.1",
     "jasmine-node": "~1.13.0",
     "request": "~2.33.0",
-    "underscore": "^1.6.0"
+    "underscore": "~1.6.0"
   }
 }
