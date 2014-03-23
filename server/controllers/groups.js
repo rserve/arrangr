@@ -7,9 +7,15 @@ var mailer = require('../helpers/mailer');
 var image = require('../helpers/image');
 var socket = require('../socket');
 var moment = require('moment');
+var _ = require('underscore');
 
 //Fields from user to populate into member array
 var userFields = 'id name email verified hashedEmail gravatar image';
+var validBodyKeys = ['name', 'description', 'startDate', 'endDate', 'public', 'minParticipants', 'maxParticipants']; 
+
+var filterValidKeys = function(o) {
+	return _.pick(o, validBodyKeys);
+};
 
 exports.findAll = function (req, res) {
 	Group.find(function (err, groups) {
@@ -44,7 +50,7 @@ exports.find = function (req, res) {
 };
 
 exports.create = function (req, res) {
-	var group = req.body;
+	var group = filterValidKeys(req.body);
 	group.createdBy = req.user.id;
 	group.members = [
 		{ user: req.user.id, admin: true, status: 'Yes' }
@@ -58,18 +64,14 @@ exports.create = function (req, res) {
 	});
 };
 
-exports.update = function (req, res) {
-	var group = req.body;
-	Group.findOneAndUpdate({_id: req.group.id}, group).
-		populate('members.user', userFields).
-		populate('comments.user', userFields).
-		exec(function (err, group) {
-			if (!e(err, res, 'Error updating group')) {
-				socket.groupChanged(group);
-				res.send(group);
-			}
-
-		});
+exports.update = function (req, res) {	
+	_.extend(req.group, filterValidKeys(req.body));
+	req.group.save(function(err, group, numRows) {
+		if (!e(err, res, 'Error updating group')) {
+			socket.groupChanged(group);			
+			res.send(group);
+		}
+	});
 };
 
 exports.delete = function (req, res) {
@@ -266,6 +268,9 @@ exports.increment = function (req, res) {
 	delete group.id;
 	delete group.createdAt;
 	group.startDate = moment(group.startDate).add('days', 7).toDate();
+	if(group.endDate) {
+		group.endDate = moment(group.endDate).add('days', 7).toDate();
+	}
 	group.comments = [];
 	group.members.forEach(function (member) {
 		delete member.id;

@@ -212,7 +212,7 @@ describe(groupsEndpoint, function () {
                 request.put(groupsEndpoint + '/' + testGroup.key, {form: {name: expectedName }}, function(err, resp, responseGroup) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
-                    expect(responseGroup.name).toEqual(expectedName);
+                    expect(responseGroup.name).toEqual(expectedName);                    
                     Group.findOne({_id:testGroup.id}, function(err, group){
                         expect(err).toBeFalsy();
                         expect(group.name).toEqual(expectedName);
@@ -261,8 +261,8 @@ describe(groupsEndpoint, function () {
 				request.post(groupsEndpoint + '/' + testGroup.key + '/increment', function(err, resp, group) {
 					expect(err).toBeFalsy();
 					expect(resp.statusCode).toEqual(200);
-					expect(new Date(group.startDate)).toEqual(moment(testGroup.startDate).add('days', 7).toDate());
-					expect(group.comments.length).toBe(0);
+					expect(new Date(group.startDate)).toEqual(moment(testGroup.startDate).add('days', 7).toDate());                    
+					expect(group.comments.length).toBe(0);                    
 					done();
 				});
 			});

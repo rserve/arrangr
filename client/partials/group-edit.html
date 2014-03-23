@@ -12,9 +12,7 @@
 
     <h2>
         {{group.name}}
-        <small ng-show="group.startDate">{{ '%WEEKDAY_' + group.weekday() + '%' | phrase }} at
-            {{group.time()}} (<span am-time-ago="group.startDate"></span>)
-        </small>
+        <small ng-show="group.startDate">{{ group.startDate | amCalendar }}<span ng-show="group.endDate"> for {{ group.duration() | amDurationFormat }}</span></small>
     </h2>
     <p ng-bind-html-unsafe="group.description"></p>
 
