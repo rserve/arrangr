@@ -92,6 +92,18 @@ define(function (require, exports, module) {
 				});
 		};
 
+        $scope.removeMember = function (member) {
+            client.removeMember(key, member.id,
+                function (data) {
+                    updateGroup(data);
+                    flash.success = 'Member removed';
+                },
+                function (data) {
+                    flash.error = data.message;
+                }
+            );
+        };
+
 		getGroup();
 	};
 

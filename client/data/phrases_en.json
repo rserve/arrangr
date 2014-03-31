@@ -26,6 +26,8 @@
 	"BUTTON_NEXT": "Next",
 	"BUTTON_SEND": "Send",
 	"BUTTON_EDIT": "Edit",
+    "BUTTON_ADMIN": "Admin",
+    "BUTTON_BACK": "Back",
 	"BUTTON_STOP_EDITING": "Stop Editing",
     "PEOPLE_SIGNED": "Currently {0} people have signed!",
 	"ARGUMENTS": "arg1: {0}, arg2: {1}, arg3: {2}...",

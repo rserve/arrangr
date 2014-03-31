@@ -151,18 +151,6 @@ define(function (require, exports, module) {
 				});
 		};
 
-		$scope.removeMember = function (member) {
-			client.removeMember(key, member.id,
-				function (data) {
-					updateGroup(data);
-					flash.success = 'Member removed';
-				},
-				function (data) {
-					flash.error = data.message;
-				}
-			);
-		};
-
 		$scope.addComment = function () {
 			if ($scope.commentForm.comment.$invalid) {
 				flash.error = 'Comment cannot be empty.';
