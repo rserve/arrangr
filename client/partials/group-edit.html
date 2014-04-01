@@ -21,7 +21,7 @@
 
 
 <div class="row">
-    <div class="col-lg-4 col-md-8 col-sm-8">
+    <div class="col-lg-4 col-md-6 col-sm-6">
         <h2>Edit group</h2>
 
         <form novalidate class="form" role="form" name="groupForm" ng-submit="update()">
@@ -82,7 +82,7 @@
         </form>
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-lg-5 col-md-6 col-sm-6">
         <h2>Members</h2>
 
         <table class="table table-striped">
@@ -93,7 +93,7 @@
                     {{ member.user.displayName() }}
                 </td>
                 <td class="col-sm-2">
-                    <button href="#" class="btn btn-xs" ng-class="{'btn-success': member.admin}">Admin</button>
+                    <button href="#" class="btn btn-xs" ng-class="{'btn-success': member.admin}" ng-click="toggleAdmin(member)">Admin</button>
                 </td>
                 <td class="col-sm-1">
                     <a title="Remove member" class="text-danger" href="#"
@@ -108,7 +108,7 @@
         </table>
     </div>
 
-    <div class="col-lg-3 col-md-4 col-sm-4">
+    <div class="col-lg-3 col-md-6 col-sm-6">
         <h2>Actions</h2>
 
         <div>

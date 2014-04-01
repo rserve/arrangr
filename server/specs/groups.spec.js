@@ -114,6 +114,14 @@ describe(groupsEndpoint, function () {
     describe('authenticated', function () {
         var authenticatedUser = testData.user;
 
+        var getMember = function(group) {
+            for(var i in group.members) {
+                if(group.members[i].user == testUser.id) {
+                    return group.members[i];
+                }
+            }
+        };
+
         beforeEach(function () {
             var done = 0;
 
@@ -127,16 +135,18 @@ describe(groupsEndpoint, function () {
                             console.log(err);
                         }
                         testUser = user;
-                        testGroups[0].update({ $addToSet: { members: { user: user, admin: true } } }, function (err) {
+                        Group.findByIdAndUpdate(testGroups[0].id, { $addToSet: { members: { user: user.id, admin: true } } }, function (err, group) {
                             if (err) {
                                 console.log(err);
                             }
+                            testGroups[0] = group;
                             done++;
                         });
-                        testGroups[1].update({ $addToSet: { members: { user: user, admin: false } } }, function (err) {
+                        Group.findByIdAndUpdate(testGroups[1].id, { $addToSet: { members: { user: user.id, admin: false } } }, function (err, group) {
                             if (err) {
                                 console.log(err);
                             }
+                            testGroups[1] = group;
                             done++;
                         });
                         helper.login(authenticatedUser.email, authenticatedUser.password, function () {
@@ -292,14 +302,46 @@ describe(groupsEndpoint, function () {
 				});
 			});
 
-			it('should not add the member to a private group', function() {
+			it('should not add the member to a private group', function(done) {
 				var testGroup = testGroups[3];
-				var memberCount = testGroup.members.length;
 				request.post(groupsEndpoint + '/' + testGroup.key + '/join', function(err, resp) {
 					expect(err).toBeFalsy();
 					expect(resp.statusCode).toEqual(403);
+                    done();
 				});
 			});
 		});
+
+        describe('put /:key/members/:memberId', function() {
+            it('should be able to change own status', function(done) {
+                var testGroup = testGroups[0];
+                var member = getMember(testGroup);
+                request.put(groupsEndpoint + '/' + testGroup.key + '/members/' + member.id, { form: { status: 'Yes' } }, function(err, resp) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(200);
+                    Group.findOne({_id:testGroup.id}, function(err, group){
+                        expect(err).toBeFalsy();
+                        expect(group.members.length).toEqual(1);
+                        expect(group.members[0].status).toEqual('Yes');
+                        done();
+                    });
+                });
+            });
+
+            it('should not be able to set self as admin', function(done) {
+                var testGroup = testGroups[1];
+                var member = getMember(testGroup);
+                request.put(groupsEndpoint + '/' + testGroup.key + '/members/' + member.id, { form: { admin: true } }, function(err, resp) {
+                    expect(err).toBeFalsy();
+                    expect(resp.statusCode).toEqual(200);
+                    Group.findOne({_id:testGroup.id}, function(err, group){
+                        expect(err).toBeFalsy();
+                        expect(group.members.length).toEqual(1);
+                        expect(group.members[0].admin).toBeFalsy();
+                        done();
+                    });
+                });
+            });
+        });
     });
 });

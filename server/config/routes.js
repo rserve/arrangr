@@ -26,7 +26,7 @@ module.exports = function (app, passport, auth) {
 
 			app.get('/archive', auth.requiresLogin, groups.findByUserArchive);
 			app.get('/:key', auth.group.hasAccess, groups.find);
-			app.post('/:key/join', groups.join);
+			app.post('/:key/join', auth.group.hasAccess, groups.join);
 			app.get('', auth.requiresLogin, groups.findByUser);
 			app.post('', auth.requiresLogin, groups.create);
 			app.post('/:key/invite', auth.requiresLogin, groups.invite);

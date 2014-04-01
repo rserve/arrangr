@@ -104,6 +104,18 @@ define(function (require, exports, module) {
             );
         };
 
+        $scope.toggleAdmin = function (member) {
+            member.admin = !member.admin;
+            client.updateMember(key, member.id, { admin: member.admin },
+                function () {
+                    // do nothing since we already updated the client
+                },
+                function (data) {
+                    flash.error = data.message;
+                }
+            );
+        };
+
 		getGroup();
 	};
 

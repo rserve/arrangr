@@ -11,7 +11,9 @@ var _ = require('underscore');
 
 //Fields from user to populate into member array
 var userFields = 'id name email verified hashedEmail gravatar image';
-var validBodyKeys = ['name', 'description', 'startDate', 'endDate', 'public', 'minParticipants', 'maxParticipants']; 
+var validBodyKeys = ['name', 'description', 'startDate', 'endDate', 'public', 'minParticipants', 'maxParticipants'];
+var validMemberKeys = ['status'];
+var validAdminMemberKeys = ['admin'];
 
 var filterValidKeys = function(o) {
 	return _.pick(o, validBodyKeys);
@@ -81,8 +83,19 @@ exports.delete = function (req, res) {
 };
 
 exports.updateMember = function (req, res) {
-	var status = req.body.status;
-	Group.findOneAndUpdate({'members._id': req.params.memberId }, { 'members.$.status': status }).
+	var body = _.pick(req.body, validMemberKeys);
+    var data = {};
+
+    if(req.group.isAdmin(req.user)) {
+        _.extend(body, _.pick(req.body, validAdminMemberKeys));
+    }
+
+    _.each(body, function(value, key) {
+        key = 'members.$.' + key;
+        data[key] = value;
+    });
+
+	Group.findOneAndUpdate({'members._id': req.params.memberId }, data).
 		populate('members.user', userFields).
 		populate('comments.user', userFields).
 		exec(function (err, group) {
