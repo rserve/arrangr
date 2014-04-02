@@ -41,5 +41,6 @@
     "WEEKDAY_3": "Wednesday",
     "WEEKDAY_4": "Thursday",
     "WEEKDAY_5": "Friday",
-    "WEEKDAY_6": "Saturday"
+    "WEEKDAY_6": "Saturday",
+    "SHOW_ALL": "Show all"
 }

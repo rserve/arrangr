@@ -151,6 +151,25 @@ define(function (require, exports, module) {
 				});
 		};
 
+        $scope.visibleMembers = function() {
+            var n = 0;
+            if($scope.group) {
+                var group = $scope.group;
+                if ($scope.showAllMembers) {
+                    n = group.members.length;
+                } else {
+                    n = group.statusCount('Yes') + group.statusCount('Maybe') + group.statusCount('No');
+                }
+            }
+            return n;
+        };
+
+        $scope.showAllMembers = false;
+
+        $scope.toggleShowAllMembers = function() {
+            $scope.showAllMembers = true;
+        };
+
 		$scope.addComment = function () {
 			if ($scope.commentForm.comment.$invalid) {
 				flash.error = 'Comment cannot be empty.';

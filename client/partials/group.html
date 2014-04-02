@@ -69,7 +69,7 @@
             total.</p>
         <table class="table table-striped">
             <tbody>
-            <tr ng-repeat="member in group.members | orderBy:['statusOrderValue()','user.displayName()']">
+            <tr ng-repeat="member in group.members | orderBy:['statusOrderValue()','user.displayName()'] | limitTo: visibleMembers()">
                 <td>
                     <img ng-src="{{ member.user.thumbnailSrc() }}" width="25" height="25"/>
                     {{ member.user.displayName() }}
@@ -85,6 +85,16 @@
                 </td>
             </tr>
             </tbody>
+            <tfoot ng-hide="showAllMembers">
+            <tr>
+                <td colspan="2">
+                    <a href="#" ng-click="toggleShowAllMembers()">
+                        {{'%SHOW_ALL%' | phrase}}
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                </td>
+            </tr>
+            </tfoot>
         </table>
     </div>
     <div class="col-lg-5 col-md-6 col-sm-6">
