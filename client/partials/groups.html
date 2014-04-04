@@ -4,6 +4,9 @@
 
         <table class="table table-striped">
             <tbody>
+            <tr ng-show="loading">
+                <td colspan="3">Loading meetups...</td>
+            </tr>
             <tr ng-repeat="group in groups">
                 <td>
                     <a href="/groups/{{group.key}}">{{group.name}}</a>
@@ -13,30 +16,26 @@
                         {{ group.startDate | amCalendar }}
                     </span>
                 </td>
-                <td>
+                <td class="col-xs-1 text-center">
                     <span class="badge" ng-class="{ 'badge-success' : group.isHappening(), 'badge-error' : !group.isHappening() }">{{ group.statusCount('Yes') }}</span>
                 </td>
-                <td>
-                    <span ng-show="group.isNew" class="label label-info">new!</span>
-                    <span ng-show="group.public" class="label label-warning">public</span>
+                <td class="col-xs-2 text-center">
+                    <!--<span ng-show="group.isNew" class="label label-info">new!</span>-->
+                    <!--<span ng-show="group.public" class="label label-warning">public</span>-->
                     <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
                     <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
                     <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
-                    <span ng-show="group.isAdmin(user)" class="label label-default">{{ '%LABEL_ADMIN%' | phrase }}</span>
-                    <span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"
-                          class="label label-success">member</span>
+                    <!--<span ng-show="group.isAdmin(user)" class="label label-default">{{ '%LABEL_ADMIN%' | phrase }}</span>-->
+                    <!--<span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"-->
+                          <!--class="label label-success">member</span>-->
                 </td>
-                <td>
-
-                </td>
-                <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
-                <td>
+                <td class="col-xs-1 text-center">
                     <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)" ng-confirm-click="Are you sure?">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </td>
-            </tr>
-            <tr ng-hide="groups.length">
+            </tr><!---->
+            <tr ng-show="!loading && !groups.length">
                 <td colspan="3">No upcoming meetups found.</td>
             </tr>
             </tbody>
@@ -56,24 +55,15 @@
                         {{ group.startDate | amCalendar }}
                     </span>
                 </td>
-                <td>
+                <td class="col-xs-1 text-center">
                     <span class="badge" ng-class="{ 'badge-success' : group.isHappening(), 'badge-error' : !group.isHappening() }">{{ group.statusCount('Yes') }}</span>
                 </td>
-                <td>
-                    <span ng-show="group.isNew" class="label label-info">new!</span>
-                    <span ng-show="group.public" class="label label-warning">public</span>
+                <td class="col-xs-2 text-center">
                     <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
                     <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
                     <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
-                    <span ng-show="!member(group).status && group.isAdmin(user)" class="label label-danger">admin</span>
-                    <span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"
-                          class="label label-success">member</span>
                 </td>
-                <td>
-
-                </td>
-                <!--<td><a href="/groups/{{group.key}}"><i class="icon-cog"></i></a></td>-->
-                <td>
+                <td class="col-xs-1 text-center">
                     <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)" ng-confirm-click="Are you sure?">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>

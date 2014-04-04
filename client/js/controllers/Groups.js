@@ -6,6 +6,7 @@ define(function (require, exports, module) {
 
 	var Controller = function ($scope, groupsClient, $rootScope, flash) {
 		$scope.model = {};
+        $scope.loading = 0;
 
 		function createGroup() {
 
@@ -37,14 +38,18 @@ define(function (require, exports, module) {
 		}
 
 		function getGroups() {
+            $scope.loading++;
 			groupsClient.findAll(function (data) {
 				$scope.groups = data;
+                $scope.loading--;
 			});
 		}
 
 		function getArchive() {
+            $scope.loading++;
 			groupsClient.findArchive(function (data) {
 				$scope.archive = data;
+                $scope.loading--;
 			});
 		}
 
