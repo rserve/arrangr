@@ -35,7 +35,8 @@ var schema = new mongoose.Schema({
 		createdAt: {type: Date, default: Date.now }
 	}],
 	minParticipants: { type: Number },
-	maxParticipants: { type: Number }
+	maxParticipants: { type: Number },
+    incrementDays: { type: Number, default:  7 }
 });
 
 schema.pre('save', function (next) {
@@ -50,6 +51,10 @@ schema.pre('save', function (next) {
 schema.path('endDate').validate(function (endDate) {
 	return !endDate || moment(endDate).isAfter(this.startDate);
 }, 'End date must be after start date');
+
+schema.path('incrementDays').validate(function(incrementDays) {
+    return incrementDays > 0;
+}, 'Interval must be positive.');
 
 schema.set('toJSON', { virtuals: true });
 schema.options.toJSON.transform = function(doc, ret, options) {

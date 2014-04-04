@@ -11,7 +11,7 @@ var _ = require('underscore');
 
 //Fields from user to populate into member array
 var userFields = 'id name email verified hashedEmail gravatar image';
-var validBodyKeys = ['name', 'description', 'startDate', 'endDate', 'public', 'minParticipants', 'maxParticipants'];
+var validBodyKeys = ['name', 'description', 'startDate', 'endDate', 'public', 'minParticipants', 'maxParticipants', 'incrementDays'];
 var validMemberKeys = ['status'];
 var validAdminMemberKeys = ['admin'];
 
@@ -280,9 +280,9 @@ exports.increment = function (req, res) {
 	var group = req.group.toJSON();
 	delete group.id;
 	delete group.createdAt;
-	group.startDate = moment(group.startDate).add('days', 7).toDate();
+	group.startDate = moment(group.startDate).add('days', group.incrementDays || 7).toDate();
 	if(group.endDate) {
-		group.endDate = moment(group.endDate).add('days', 7).toDate();
+		group.endDate = moment(group.endDate).add('days', group.incrementDays || 7).toDate();
 	}
 	group.comments = [];
 	group.members.forEach(function (member) {

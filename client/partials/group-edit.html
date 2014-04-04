@@ -61,9 +61,9 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 form-group">
-                    <label class="control-label" for="groupFormPublic">Public</label>
-                    <input class="form-control" id="groupFormPublic" type="checkbox"
-                           ng-model="groupModel.public" name="public"/>
+                    <label class="control-label" for="groupFormIncrementDays">Interval in days</label>
+                    <input class="form-control" id="groupFormIncrementDays" type="number"
+                           ng-model="groupModel.incrementDays" name="incrementDays" placeholder=""/>
                 </div>
                 <div class="col-sm-4 form-group">
                     <label class="control-label" for="groupFormMinParticipants">Min participants</label>
@@ -77,6 +77,13 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-sm-4 form-group">
+                    <label class="control-label" for="groupFormPublic">Public</label>
+                    <input class="form-control" id="groupFormPublic" type="checkbox"
+                           ng-model="groupModel.public" name="public"/>
+                </div>
+            </div>
 
             <button type="submit" class="btn btn-success">{{'%BUTTON_UPDATE%' | phrase}}</button>
         </form>

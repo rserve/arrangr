@@ -32,8 +32,6 @@ define(function (require, exports, module) {
 			model.name = $scope.group.name;
 			model.description = $scope.group.description;
 			model.public = $scope.group.public;
-//			model.time = $scope.group._time;
-//			model.weekday = $scope.group._weekday;
 			var start = moment($scope.group.startDate);
 			model.startDate = start.format('YYYY-MM-DD');
 			model.startTime = start.format('HH:mm');
@@ -42,6 +40,7 @@ define(function (require, exports, module) {
 			model.endTime = end.format('HH:mm');
 			model.minParticipants = $scope.group.minParticipants;
 			model.maxParticipants = $scope.group.maxParticipants;
+            model.incrementDays = $scope.group.incrementDays;
 		}
 
 		function mergeDateAndTime(date, time) {
