@@ -100,6 +100,9 @@
                     {{ member.user.displayName() }}
                 </td>
                 <td class="col-sm-2">
+                    <button href="#" class="btn btn-xs" ng-class="{'btn-success': member.status == 'Yes', 'btn-warning': member.status == 'Maybe', 'btn-danger': member.status == 'No'}" ng-click="toggleStatus(member)">{{ member.status || 'None' }}</button>
+                </td>
+                <td class="col-sm-2">
                     <button href="#" class="btn btn-xs" ng-class="{'btn-success': member.admin}" ng-click="toggleAdmin(member)">Admin</button>
                 </td>
                 <td class="col-sm-1">

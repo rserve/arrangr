@@ -85,7 +85,7 @@
                 </td>
             </tr>
             </tbody>
-            <tfoot ng-hide="showAllMembers">
+            <tfoot ng-hide="showAllMembers || visibleMembers() == group.members.length">
             <tr>
                 <td colspan="2">
                     <a href="#" ng-click="toggleShowAllMembers()">

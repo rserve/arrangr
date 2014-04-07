@@ -115,6 +115,30 @@ define(function (require, exports, module) {
             );
         };
 
+        $scope.toggleStatus = function(member) {
+           switch(member.status) {
+               case 'Yes':
+                   member.status = 'Maybe';
+                   break;
+               case 'Maybe':
+                   member.status = 'No';
+                   break;
+               case 'No':
+                   member.status = '';
+                   break;
+               default:
+                   member.status = 'Yes';
+           }
+            client.updateMember(key, member.id, { status: member.status },
+                function () {
+                    // do nothing since we already updated the client
+                },
+                function (data) {
+                    flash.error = data.message;
+                }
+            );
+        };
+
 		getGroup();
 	};
 
