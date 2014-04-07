@@ -12,6 +12,7 @@ require([
     'socket',
 	'jquery',
 	'jquery-filedrop',
+    'bootstrap',
 	'app',
 	'services/services',
 	'controllers/controllers',

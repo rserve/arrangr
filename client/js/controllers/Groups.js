@@ -16,6 +16,7 @@ define(function (require, exports, module) {
 				groupsClient.create($scope.model,
 					function (data) {
 						$scope.model = angular.copy({});
+                        $('#createGroupModal').modal('hide');
 						flash.success = 'Meetup created';
 						getGroups();
 					},
@@ -54,6 +55,13 @@ define(function (require, exports, module) {
 		}
 
 		//expose methods to view
+        $scope.showCreateGroupModal = function() {
+            /* global $ */
+            // TODO: use a modal service for this
+            $('#createGroupModal').modal('show').on('shown.bs.modal', function () {
+                $('input:text:visible:first', this).focus();
+            });
+        };
 		$scope.create = createGroup;
 		$scope.delete = deleteGroup;
 

@@ -1,95 +1,114 @@
-<div class="row">
-    <div class="col-lg-9 col-md-8 col-sm-8">
-        <h2>{{'%TITLE_GROUPS%' | phrase}}</h2>
+<button class="pull-right btn btn-success" ng-click="showCreateGroupModal()">
+    <span class="glyphicon glyphicon-plus"></span>
+    {{'%BUTTON_CREATE_GROUP%' | phrase}}
+</button>
 
-        <table class="table table-striped">
-            <tbody>
-            <tr ng-show="loading">
-                <td colspan="3">Loading meetups...</td>
-            </tr>
-            <tr ng-repeat="group in groups">
-                <td>
-                    <a href="/groups/{{group.key}}">{{group.name}}</a>
-                 </td>
-                <td>
+<h2>{{'%TITLE_GROUPS%' | phrase}}</h2>
+
+<table class="table table-striped">
+    <tbody>
+    <tr ng-show="loading">
+        <td colspan="3">Loading meetups...</td>
+    </tr>
+    <tr ng-repeat="group in groups">
+        <td>
+            <a href="/groups/{{group.key}}">{{group.name}}</a>
+        </td>
+        <td>
+            <span ng-show="group.startDate">
+                {{ group.startDate | amCalendar }}
+            </span>
+        </td>
+        <td class="col-xs-1 text-center">
+            <span class="badge"
+                  ng-class="{ 'badge-success' : group.isHappening(), 'badge-error' : !group.isHappening() }">{{ group.statusCount('Yes') }}</span>
+        </td>
+        <td class="col-xs-2 text-center">
+            <!--<span ng-show="group.isNew" class="label label-info">new!</span>-->
+            <!--<span ng-show="group.public" class="label label-warning">public</span>-->
+            <span ng-show="member(group).status == 'Yes'"
+                  class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
+            <span ng-show="member(group).status == 'Maybe'"
+                  class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
+            <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
+            <!--<span ng-show="group.isAdmin(user)" class="label label-default">{{ '%LABEL_ADMIN%' | phrase }}</span>-->
+            <!--<span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"-->
+            <!--class="label label-success">member</span>-->
+        </td>
+        <td class="col-xs-1 text-center">
+            <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)"
+               ng-confirm-click="Are you sure?">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+        </td>
+    </tr>
+    <!---->
+    <tr ng-show="!loading && !groups.length">
+        <td colspan="3">No upcoming meetups found.</td>
+    </tr>
+    </tbody>
+</table>
+
+<div ng-show="archive.length">
+    <h2>Archive</h2>
+
+    <table class="table table-striped">
+        <tbody>
+        <tr ng-repeat="group in archive">
+            <td>
+                <a href="/groups/{{group.id}}">{{group.name}}</a>
+            </td>
+            <td>
                     <span ng-show="group.startDate">
                         {{ group.startDate | amCalendar }}
                     </span>
-                </td>
-                <td class="col-xs-1 text-center">
-                    <span class="badge" ng-class="{ 'badge-success' : group.isHappening(), 'badge-error' : !group.isHappening() }">{{ group.statusCount('Yes') }}</span>
-                </td>
-                <td class="col-xs-2 text-center">
-                    <!--<span ng-show="group.isNew" class="label label-info">new!</span>-->
-                    <!--<span ng-show="group.public" class="label label-warning">public</span>-->
-                    <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
-                    <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
-                    <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
-                    <!--<span ng-show="group.isAdmin(user)" class="label label-default">{{ '%LABEL_ADMIN%' | phrase }}</span>-->
-                    <!--<span ng-show="!member(group).status && group.isMember(user) && !group.isAdmin(user)"-->
-                          <!--class="label label-success">member</span>-->
-                </td>
-                <td class="col-xs-1 text-center">
-                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)" ng-confirm-click="Are you sure?">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                </td>
-            </tr><!---->
-            <tr ng-show="!loading && !groups.length">
-                <td colspan="3">No upcoming meetups found.</td>
-            </tr>
-            </tbody>
-        </table>
-
-        <div ng-show="archive.length">
-        <h2>Archive</h2>
-
-        <table class="table table-striped">
-            <tbody>
-            <tr ng-repeat="group in archive">
-                <td>
-                    <a href="/groups/{{group.id}}">{{group.name}}</a>
-                </td>
-                <td>
-                    <span ng-show="group.startDate">
-                        {{ group.startDate | amCalendar }}
-                    </span>
-                </td>
-                <td class="col-xs-1 text-center">
-                    <span class="badge" ng-class="{ 'badge-success' : group.isHappening(), 'badge-error' : !group.isHappening() }">{{ group.statusCount('Yes') }}</span>
-                </td>
-                <td class="col-xs-2 text-center">
-                    <span ng-show="member(group).status == 'Yes'" class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
-                    <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
-                    <span ng-show="member(group).status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
-                </td>
-                <td class="col-xs-1 text-center">
-                    <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)" ng-click="delete(group)" ng-confirm-click="Are you sure?">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-4 col-sm-4">
-        <form novalidate class="form" role="form" name="form" ng-submit="create()">
-            <h3>Create meetup</h3>
-            <div class="form-group">
-                <input required
-                       name="name"
-                       id="groupName"
-                       class="form-control"
-                       type="text"
-                       ng-model="model.name"
-                       placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
-            </div>
-            <button class="btn btn-success">{{'%BUTTON_CREATE%' | phrase}}</button>
-        </form>
-    </div>
+            </td>
+            <td class="col-xs-1 text-center">
+                <span class="badge"
+                      ng-class="{ 'badge-success' : group.isHappening(), 'badge-error' : !group.isHappening() }">{{ group.statusCount('Yes') }}</span>
+            </td>
+            <td class="col-xs-2 text-center">
+                <span ng-show="member(group).status == 'Yes'"
+                      class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
+                <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
+                <span ng-show="member(group).status == 'No'"
+                      class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
+            </td>
+            <td class="col-xs-1 text-center">
+                <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)"
+                   ng-click="delete(group)" ng-confirm-click="Are you sure?">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
+<div class="modal fade" id="createGroupModal" tabindex="-1" role="dialog" aria-labelledby="createGroupModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">New meetup</h4>
+            </div>
+            <div class="modal-body">
+                <form novalidate class="form" role="form" name="form" ng-submit=" create()">
+                        <input required
+                               name="name"
+                               id="groupName"
+                               class="form-control"
+                               type="text"
+                               ng-model="model.name"
+                               placeholder="{{'%PLACEHOLDER_GROUP_NAME%' | phrase}}">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="create()">{{'%BUTTON_CREATE%' | phrase}}</button>
+            </div>
+        </div> <!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 
