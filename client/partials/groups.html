@@ -63,13 +63,13 @@
         <tbody>
         <tr ng-repeat="group in archive">
             <td>
-                <a href="/groups/{{group.id}}">{{group.name}}</a>
+                {{group.name}}
             </td>
             <td class="text-center">
                  <span class="badge">{{ group.count }}</span>
             </td>
             <td class="text-center">
-                <span class="badge">{{ group.participants }}</span>
+                <span class="badge">{{ group.participants | number }}</span>
             </td>
         </tr>
         </tbody>
