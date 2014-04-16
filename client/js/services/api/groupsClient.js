@@ -72,7 +72,6 @@ define(function (require, exports, module) {
 				setUrl('/api/groups/archive').
 				setSuccessCb(success).
 				setErrorCb(error).
-				setResponseParser(groupsParser).
 				build();
 			this.sendRequest(req);
 

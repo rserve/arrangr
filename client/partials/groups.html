@@ -53,32 +53,23 @@
     <h2>Archive</h2>
 
     <table class="table table-striped">
+        <thead>
+        <tr>
+            <th></th>
+            <th class="text-center">Previous meetups</th>
+            <th class="text-center">Average participants</th>
+        </tr>
+        </thead>
         <tbody>
         <tr ng-repeat="group in archive">
             <td>
                 <a href="/groups/{{group.id}}">{{group.name}}</a>
             </td>
-            <td>
-                    <span ng-show="group.startDate">
-                        {{ group.startDate | amCalendar }}
-                    </span>
+            <td class="text-center">
+                 <span class="badge">{{ group.count }}</span>
             </td>
-            <td class="col-xs-1 text-center">
-                <span class="badge"
-                      ng-class="{ 'badge-success' : group.isHappening(), 'badge-error' : !group.isHappening() }">{{ group.statusCount('Yes') }}</span>
-            </td>
-            <td class="col-xs-2 text-center">
-                <span ng-show="member(group).status == 'Yes'"
-                      class="label label-success">{{ '%LABEL_YES%' | phrase }}</span>
-                <span ng-show="member(group).status == 'Maybe'" class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
-                <span ng-show="member(group).status == 'No'"
-                      class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
-            </td>
-            <td class="col-xs-1 text-center">
-                <a title="Remove group" class="text-danger" href="#" ng-show="group.isOwner(user)"
-                   ng-click="delete(group)" ng-confirm-click="Are you sure?">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </a>
+            <td class="text-center">
+                <span class="badge">{{ group.participants }}</span>
             </td>
         </tr>
         </tbody>

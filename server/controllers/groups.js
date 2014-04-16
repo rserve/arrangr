@@ -36,15 +36,46 @@ exports.findByUser = function (req, res) {
 		});
 };
 
-exports.findByUserArchive = function (req, res) {
-	var user = req.user;
-	var now = new Date();
-	Group.find({startDate: { $lt: now } }).or([
-			{'members.user': user},
-			{ public: true }
-		]).sort({ startDate: 'desc'}).exec(function (err, groups) {
-			e(err, res, 'Error finding groups archive by user') || res.send(groups);
-		});
+exports.archive = function (req, res) {
+    Group.aggregate({
+      $match: {
+          startDate: { $lt: new Date() }
+      }
+    }, {
+        $project: {
+            key: 1,
+            name: 1,
+            members: 1
+        }
+    }, {
+        $unwind: "$members"
+    }, {
+        $group: {
+            _id: { id: "$_id", key: "$key" },
+            name: {
+                $last: "$name"
+            },
+            participants: {
+                $sum: 1
+            }
+        }
+    }, {
+        $group: {
+            _id: "$_id.key",
+            name: {
+                $last: "$name"
+            },
+            count: {
+                $sum: 1
+            },
+            participants: {
+                $avg: "$participants"
+            }
+        }
+    })
+    .exec(function(err, results) {
+        e(err, res, 'Error creating group archive') || res.send(results);
+    });
 };
 
 exports.find = function (req, res) {

@@ -24,7 +24,7 @@ module.exports = function (app, passport, auth) {
         app.namespace('/groups', function() {
             var groups = require('../controllers/groups');
 
-			app.get('/archive', auth.requiresLogin, groups.findByUserArchive);
+			app.get('/archive', auth.requiresLogin, groups.archive);
 			app.get('/:key', auth.group.hasAccess, groups.find);
 			app.post('/:key/join', auth.group.hasAccess, groups.join);
 			app.get('', auth.requiresLogin, groups.findByUser);

@@ -3,9 +3,7 @@ var express = require('express');
 var namespace = require('express-namespace');
 var fs = require('fs');
 var passport = require('passport');
-
 var http = require('http');
-
 var socket = require('./socket');
 
 // Load configurations
