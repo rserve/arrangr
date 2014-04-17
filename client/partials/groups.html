@@ -50,26 +50,15 @@
 </table>
 
 <div ng-show="archive.length">
-    <h2>Archive</h2>
+    <h2>History</h2>
 
     <table class="table table-striped">
-        <thead>
-        <tr>
-            <th></th>
-            <th class="text-center">Previous meetups</th>
-            <th class="text-center">Average participants</th>
-        </tr>
-        </thead>
         <tbody>
         <tr ng-repeat="group in archive">
             <td>
-                {{group.name}}
-            </td>
-            <td class="text-center">
-                 <span class="badge">{{ group.count }}</span>
-            </td>
-            <td class="text-center">
-                <span class="badge">{{ group.participants | number }}</span>
+                <a href="/groups/{{group.id}}">{{group.name}}</a>
+                 has happened <strong>{{ group.count }}</strong> time, and at average
+                <strong>{{ group.participants | number }}</strong> members are participating.
             </td>
         </tr>
         </tbody>

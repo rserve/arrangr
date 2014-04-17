@@ -46,6 +46,7 @@ exports.archive = function (req, res) {
         $project: {
             key: 1,
             name: 1,
+            startDate: 1,
             members: 1
         }
     }, {
@@ -55,6 +56,9 @@ exports.archive = function (req, res) {
             _id: { id: "$_id", key: "$key" },
             name: {
                 $last: "$name"
+            },
+            startDate: {
+                $last: "$startDate"
             },
             participants: {
                 $sum: {
@@ -69,8 +73,14 @@ exports.archive = function (req, res) {
     }, {
         $group: {
             _id: "$_id.key",
+            id: {
+                $last: "$_id.id"
+            },
             name: {
                 $last: "$name"
+            },
+            startDate: {
+                $last: "$startDate"
             },
             count: {
                 $sum: 1
@@ -78,6 +88,10 @@ exports.archive = function (req, res) {
             participants: {
                 $avg: "$participants"
             }
+        }
+    }, {
+        $sort: {
+            startDate: -1
         }
     })
     .exec(function (err, results) {
