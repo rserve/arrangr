@@ -52,6 +52,10 @@ exports.archive = function (req, res) {
     }, {
         $unwind: "$members"
     }, {
+        $sort: {
+            startDate: -1
+        }
+    }, {
         $group: {
             _id: { id: "$_id", key: "$key" },
             name: {
