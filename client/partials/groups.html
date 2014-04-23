@@ -54,11 +54,12 @@
 
     <table class="table table-striped">
         <tbody>
-        <tr ng-repeat="group in archive">
+        <tr ng-repeat="group in archive | orderBy: '-startDate'">
             <td>
                 <a href="/groups/{{group.id}}">{{group.name}}</a>
-                 has happened <strong>{{ group.count }}</strong> time, and at average
-                <strong>{{ group.participants | number }}</strong> members are participating.
+                 has happened <strong><ng-pluralize count="group.count" when="{'one': 'one time', 'other': '{} times'}"></ng-pluralize></strong> before, and at average
+                <strong><ng-pluralize count="group.participants" when="{'0': 'no members are', 'one': 'one member is', 'other': '{} members are'}"></ng-pluralize></strong> participating.
+                Last meetup was {{ group.startDate | amCalendar }}.
             </td>
         </tr>
         </tbody>
