@@ -98,12 +98,12 @@ exports.archive = function (req, res) {
             startDate: -1
         }
     })
-    .exec(function (err, results) {
-        for(var i=0; i<results.length;i++) {
-            results[0].participants = Math.round(results[0].participants);
-        }
-        e(err, res, 'Error creating group archive') || res.send(results);
-    });
+        .exec(function (err, results) {
+            for (var i = 0; i < results.length; i++) {
+                results[i].participants = Math.round(results[i].participants);
+            }
+            e(err, res, 'Error creating group archive') || res.send(results);
+        });
 };
 
 exports.find = function (req, res) {
