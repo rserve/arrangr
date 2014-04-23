@@ -99,6 +99,9 @@ exports.archive = function (req, res) {
         }
     })
     .exec(function (err, results) {
+        for(var i=0; i<results.length;i++) {
+            results[0].participants = Math.round(results[0].participants);
+        }
         e(err, res, 'Error creating group archive') || res.send(results);
     });
 };
