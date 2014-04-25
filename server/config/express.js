@@ -3,7 +3,9 @@
  */
 
 var express = require('express');
-var mongoStore = require('connect-mongo')(express);
+var session = require('express-session');
+var mongoStore = require('connect-mongo')(({session: session}));
+var auth = require('./middlewares/authorization');
 
 module.exports = function (app, config, passport) {
 
@@ -12,11 +14,13 @@ module.exports = function (app, config, passport) {
     app.set('showStackError', true);
 
     if (config.logger) {
-        app.use(express.logger(config.logger));
+        app.use(require('morgan')(config.logger));
     }
 
+    app.use(require('static-favicon')());
+
     // should be placed before express.static
-    app.use(express.compress({
+    app.use(require('compression')({
         filter: function (req, res) {
             return (/json|text|javascript|css/).test(res.getHeader('Content-Type'));
         },
@@ -31,53 +35,50 @@ module.exports = function (app, config, passport) {
         next();
     });
 
-    app.use(express.favicon());
-
     app.use(express.static(config.static));
 
-    app.configure(function () {
-        // cookieParser should be above session
-        app.use(express.cookieParser());
+    // cookieParser should be above session
+    app.use(require('cookie-parser')());
 
-        // bodyParser should be above methodOverride
-        app.use(express.bodyParser());
-        app.use(express.methodOverride());
+    // bodyParser should be above methodOverride
+    app.use(require('body-parser')());
+    app.use(require('method-override')());
 
-        // express/mongo session storage
-        app.use(express.session({
-            secret: 'rserve',
-            store: new mongoStore({
-                url: config.db,
-                collection : 'sessions'
-            })
-        }));
+    // express/mongo session storage
+    app.use(session({
+        secret: 'rserve',
+        store: new mongoStore({
+            url: config.db,
+            collection : 'sessions'
+        })
+    }));
 
-        // use passport session
-        app.use(passport.initialize());
-        app.use(passport.session());
+    // use passport session
+    app.use(passport.initialize());
+    app.use(passport.session());
 
-        // routes should be at the last
-        app.use(app.router);
+    // Bootstrap routes
+    app.use('/api/users', require('./routes/users')(passport, auth));
+    app.use('/api/groups', require('./routes/groups')(auth));
 
-        // assume "not found" in the error msgs
-        // is a 404. this is somewhat silly, but
-        // valid, you can do whatever you like, set
-        // properties, use instanceof etc.
-        app.use(function(err, req, res, next){
-            // treat as 404
-            if (~err.message.indexOf('not found')) return next();
+    // assume "not found" in the error msgs
+    // is a 404. this is somewhat silly, but
+    // valid, you can do whatever you like, set
+    // properties, use instanceof etc.
+    app.use(function(err, req, res, next){
+        // treat as 404
+        if (~err.message.indexOf('not found')) return next();
 
-            // log it
-            console.error(err.stack);
+        // log it
+        console.error(err.stack);
 
-            // error page
-            res.status(500).send({ error: err.stack });
-        });
-
-        // assume 404 since no middleware responded
-        app.use(function(req, res, next){
-            res.status(404).send({ url: req.originalUrl, error: 'Not found' });
-        });
-
+        // error page
+        res.status(500).send({ error: err.stack });
     });
+
+    // assume 404 since no middleware responded
+    app.use(function(req, res, next){
+        res.status(404).send({ url: req.originalUrl, error: 'Not found' });
+    });
+
 };

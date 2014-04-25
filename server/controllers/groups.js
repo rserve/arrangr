@@ -434,7 +434,3 @@ exports.fromKey = function (req, res, next, key) {
     }
     fromParam(req, res, next, q);
 };
-
-exports.fromId = function (req, res, next, id) {
-    fromParam(req, res, next, { _id: id });
-};

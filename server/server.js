@@ -1,6 +1,5 @@
 // Module dependencies
 var express = require('express');
-var namespace = require('express-namespace');
 var fs = require('fs');
 var passport = require('passport');
 var http = require('http');
@@ -10,7 +9,6 @@ var socket = require('./socket');
 // if test env, load example file
 var env = process.env.NODE_ENV || 'development';
 var config = require('./config/config')[env];
-var auth = require('./config/middlewares/authorization');
 var mongoose = require('mongoose');
 
 if(config.mandrill) {
@@ -35,9 +33,6 @@ var server = http.createServer(app);
 
 // express settings
 require('./config/express')(app, config, passport);
-
-// Bootstrap routes
-require('./config/routes')(app, passport, auth);
 
 var port = process.env.PORT || config.port;
 console.log('Express app started on port ' + port);
