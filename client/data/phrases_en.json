@@ -36,6 +36,7 @@
     "LABEL_MAYBE": "maybe",
     "LABEL_NO": "not going",
 	"LABEL_ADMIN": "admin",
+    "LABEL_REMIND": "remind",
     "WEEKDAY_0": "Sunday",
     "WEEKDAY_1": "Monday",
     "WEEKDAY_2": "Tuesday",

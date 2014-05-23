@@ -84,5 +84,9 @@ define(function (require, exports, module) {
 		return !this.minParticipants || this.statusCount('Yes') >= this.minParticipants;
 	};
 
+    proto.showReminder = function(member) {
+        return this.upcoming() && !member.status.match('(Yes|No)');
+    };
+
 	module.exports = Group;
 });

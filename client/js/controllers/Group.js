@@ -131,8 +131,8 @@ define(function (require, exports, module) {
 			);
 		};
 
-		$scope.remind = function () {
-			client.remind(key,
+		$scope.remindAll = function () {
+			client.remindAll(key,
 				function () {
 					flash.success = 'Reminder sent';
 				},
@@ -140,6 +140,16 @@ define(function (require, exports, module) {
 					flash.error = data.message;
 				});
 		};
+
+        $scope.remindMember = function (member) {
+            client.remindMember(key, member.id,
+                function () {
+                    flash.success = 'Reminder sent';
+                },
+                function (data) {
+                    flash.error = data.message;
+                });
+        };
 
 		$scope.status = function () {
 			client.status(key,

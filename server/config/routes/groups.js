@@ -22,7 +22,8 @@ module.exports = function (auth) {
     router.post('/:key/thumbnail', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.uploadThumbnail);
 
     router.post('/:key/increment', [auth.requiresLogin, auth.group.hasAuthorization], groups.increment);
-    router.get('/:key/remind', [auth.requiresLogin, auth.group.hasAuthorization], groups.remind);
+    router.get('/:key/remind', [auth.requiresLogin, auth.group.hasAuthorization], groups.remindAll);
+    router.get('/:key/remind/:memberId', [auth.requiresLogin], groups.remindMember);
     router.get('/:key/status', [auth.requiresLogin, auth.group.hasAuthorization], groups.status);
 
     router.post('/:key/login', groups.autoLogin);

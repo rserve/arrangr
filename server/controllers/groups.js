@@ -360,11 +360,23 @@ exports.increment = function (req, res) {
     });
 };
 
-exports.remind = function (req, res) {
+exports.remindAll = function (req, res) {
     req.group.members.forEach(function (member) {
         if (!member.status.match('(Yes|No)')) {
             mailer.sendReminderMail(member, req.group);
         }
+    });
+    res.send();
+};
+
+exports.remindMember = function (req, res) {
+    var memberId = req.params.memberId;
+    req.group.members.some(function (member) {
+        if (member.id == memberId && !member.status.match('(Yes|No)')) {
+            mailer.sendReminderMail(member, req.group);
+            return true;
+        }
+        return false;
     });
     res.send();
 };

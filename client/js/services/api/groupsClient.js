@@ -234,7 +234,7 @@ define(function (require, exports, module) {
 			this.sendRequest(req);
 		};
 
-		client.remind = function(key, success, error) {
+		client.remindAll = function(key, success, error) {
 			var req = new RequestBuilder().
 				setMethod('get').
 				setUrl('/api/groups').
@@ -246,6 +246,20 @@ define(function (require, exports, module) {
 
 			this.sendRequest(req);
 		};
+
+        client.remindMember = function(key, member, success, error) {
+            var req = new RequestBuilder().
+                setMethod('get').
+                setUrl('/api/groups').
+                addPath(key).
+                addPath('remind').
+                addPath(member).
+                setSuccessCb(success).
+                setErrorCb(error).
+                build();
+
+            this.sendRequest(req);
+        };
 
 		client.status = function(key, success, error) {
 			var req = new RequestBuilder().

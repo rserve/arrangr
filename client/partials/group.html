@@ -82,6 +82,7 @@
                     <span ng-show="member.status == 'Maybe'"
                           class="label label-warning">{{ '%LABEL_MAYBE%' | phrase }}</span>
                     <span ng-show="member.status == 'No'" class="label label-danger">{{ '%LABEL_NO%' | phrase }}</span>
+                    <button href="#" class="btn btn-xs" ng-show="group.showReminder(member) && group.isAdmin(user) && member.user.id != user.id" ng-click="remindMember(member)">{{ '%LABEL_REMIND%' | phrase }}</button>
                 </td>
             </tr>
             </tbody>
