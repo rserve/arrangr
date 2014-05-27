@@ -59,10 +59,10 @@ exports.archive = function (req, res) {
         $group: {
             _id: { id: "$_id", key: "$key" },
             name: {
-                $last: "$name"
+                $first: "$name"
             },
             startDate: {
-                $last: "$startDate"
+                $first: "$startDate"
             },
             participants: {
                 $sum: {
@@ -75,16 +75,20 @@ exports.archive = function (req, res) {
             }
         }
     }, {
+        $sort: {
+            startDate: -1
+        }
+    }, {
         $group: {
             _id: "$_id.key",
             id: {
-                $last: "$_id.id"
+                $first: "$_id.id"
             },
             name: {
-                $last: "$name"
+                $first: "$name"
             },
             startDate: {
-                $last: "$startDate"
+                $first: "$startDate"
             },
             count: {
                 $sum: 1
