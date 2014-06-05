@@ -8,7 +8,7 @@ var User = helper.mongoose.model('User');
 var testData = {
     user: { email: 'test@test.com', password: 'password' },
     groups: [
-        { name: "innebandy!" },
+        { name: "innebandy!", startDate: moment().add('days', -1).toDate() },
         { name: "ostprovning" },
         { name: "coding jam", public: true },
         { name: "spelkväll" }
@@ -32,6 +32,14 @@ describe(groupsEndpoint, function () {
     var getPrivateGroup = function() {
         for(var i in testGroups) {
             if(!testGroups[i].public) {
+                return testGroups[i];
+            }
+        }
+    };
+
+    var getHappenedGroup = function() {
+        for(var i in testGroups) {
+            if(moment(testGroups[i].startDate).isBefore()) {
                 return testGroups[i];
             }
         }
@@ -162,11 +170,11 @@ describe(groupsEndpoint, function () {
         });
 
         describe('get', function () {
-            it('should return users and public groups', function (done) {
+            it('should return public groups or groups that user is member of, thats in the future', function (done) {
                 request(groupsEndpoint, function (err, resp, actualGroups) {
                     expect(err).toBeFalsy();
                     expect(resp.statusCode).toEqual(200);
-                    expect(actualGroups.length).toEqual(3);
+                    expect(actualGroups.length).toEqual(2);
                     done();
                 });
             });
@@ -267,12 +275,13 @@ describe(groupsEndpoint, function () {
 
 		describe('post /:key/increment', function() {
 			it('should increment group to the next cycle', function(done) {
-				var testGroup = testGroups[0];
+				var testGroup = getHappenedGroup();
 				request.post(groupsEndpoint + '/' + testGroup.key + '/increment', function(err, resp, group) {
 					expect(err).toBeFalsy();
 					expect(resp.statusCode).toEqual(200);
-					expect(new Date(group.startDate)).toEqual(moment(testGroup.startDate).add('days', 7).toDate());                    
-					expect(group.comments.length).toBe(0);                    
+					expect(new Date(group.startDate)).toEqual(moment(testGroup.startDate).add('days', 7).toDate());
+                    expect(group.comments).toBeDefined();
+					expect(group.comments.length).toBe(0);
 					done();
 				});
 			});

@@ -10,11 +10,14 @@ define(function (require, exports, module) {
 
 	var Controller = function ($scope, $rootScope, $state, $stateParams, groupsClient, authState, flash, socket) {
 
-		var key = $stateParams.groupId,
+		var id = $stateParams.groupId,
+		    key = $stateParams.groupId,
 			client = groupsClient;
 
 		function updateGroup(data) {
 			$scope.group = data;
+            id = $scope.group.id;
+            key = $scope.group.key;
 			$rootScope.title = $scope.group.name;
 			if($scope.group.description) {
 				$rootScope.description = $scope.group.description.replace(/<[^>]+>/gm, '');
@@ -39,7 +42,7 @@ define(function (require, exports, module) {
 		}
 
 		function changeMemberStatus(status) {
-			client.updateMember(key, $scope.currentMember.id, { status: status },
+			client.updateMember(id, $scope.currentMember.id, { status: status },
 				function () {
 					// do nothing since we already updated the client
 				},
@@ -200,7 +203,7 @@ define(function (require, exports, module) {
 					userRefId: user.id
 				});
 
-				client.addComment(key, data,
+				client.addComment(id, data,
 					function (data) {
 						updateGroup(data);
 						//flash.success = 'Comment added';
@@ -215,7 +218,7 @@ define(function (require, exports, module) {
 
 		$scope.deleteComment = function (comment) {
 
-			client.deleteComment(key, comment.id,
+			client.deleteComment(id, comment.id,
 				function (data) {
 					updateGroup(data);
 
@@ -227,7 +230,6 @@ define(function (require, exports, module) {
 			);
 
 		};
-
 
 		$scope.commentHelper = {
 			increase: 10,
@@ -248,7 +250,7 @@ define(function (require, exports, module) {
 		$scope.$on('socket:groupChanged', function (ev, message) {
 
 			// Should not replace group only update, breaks bindings when some relations are missing
-			if (message.id === $scope.group.id) {
+			if (message.id === id) {
 				updateGroup(groupsClient.parse(message.data));
 			}
 

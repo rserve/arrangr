@@ -340,12 +340,11 @@ exports.deleteComment = function (req, res) {
 };
 
 exports.increment = function (req, res) {
-    var group = req.group.toJSON();
-
-    if(moment(group.startDate).isAfter()) {
+    if(moment(req.group.startDate).isAfter()) {
         return res.status(403).send({ error: 'Error incrementing group', message: 'Group has not happened yet' });
     }
 
+    var group = req.group.toJSON();
     delete group.id;
     delete group.createdAt;
     while(moment(group.startDate).isBefore()) {
@@ -369,7 +368,6 @@ exports.increment = function (req, res) {
             socket.groupChanged(group);
             res.send(group);
         }
-
     });
 };
 
