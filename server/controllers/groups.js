@@ -341,11 +341,20 @@ exports.deleteComment = function (req, res) {
 
 exports.increment = function (req, res) {
     var group = req.group.toJSON();
+
+    if(moment(group.startDate).isAfter()) {
+        return res.status(403).send({ error: 'Error incrementing group', message: 'Group has not happened yet' });
+    }
+
     delete group.id;
     delete group.createdAt;
-    group.startDate = moment(group.startDate).add('days', group.incrementDays || 7).toDate();
+    while(moment(group.startDate).isBefore()) {
+        group.startDate = moment(group.startDate).add('days', group.incrementDays || 7).toDate();
+    }
     if (group.endDate) {
-        group.endDate = moment(group.endDate).add('days', group.incrementDays || 7).toDate();
+        while(moment(group.endDate).isBefore()) {
+            group.endDate = moment(group.endDate).add('days', group.incrementDays || 7).toDate();
+        }
     }
     group.comments = [];
     group.members.forEach(function (member) {

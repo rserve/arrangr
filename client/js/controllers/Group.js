@@ -151,6 +151,17 @@ define(function (require, exports, module) {
                 });
         };
 
+        $scope.increment = function () {
+            client.increment(key,
+                function (data) {
+                    $state.transitionTo("group", { groupId: data.key });
+                    flash.success = 'Meetup updated to next cycle';
+                },
+                function (data) {
+                    flash.error = data.message;
+                });
+        };
+
 		$scope.status = function () {
 			client.status(key,
 				function () {
