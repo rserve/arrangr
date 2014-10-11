@@ -409,7 +409,7 @@ exports.autoLogin = function (req, res) {
                 found = true;
                 req.logIn(member.user, function (err) {
                     if (!e(err, res, 'Error auto logging in user')) {
-                        res.send(req.user);
+                        res.send(member);
                     }
                 });
             }

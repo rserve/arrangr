@@ -2,6 +2,18 @@ var Mandrill = require('mandrill-api').Mandrill;
 var mandrill = new Mandrill();
 var env = process.env.NODE_ENV || 'development';
 var config = require('../config/config')[env];
+var moment = require('moment');
+
+moment.lang('en', {
+    calendar : {
+        lastDay : '[Yesterday at] HH:mm',
+        sameDay : '[Today at] HH:mm',
+        nextDay : '[Tomorrow at] HH:mm',
+        lastWeek : '[last] dddd [at] HH:mm',
+        nextWeek : 'dddd [at] HH:mm',
+        sameElse : 'D/M YYYY'
+    }
+});
 
 var baseUrl = 'http://' + config.host;
 if(config.port != 80) {
@@ -157,7 +169,11 @@ var mailer = {
 					{
 						name: 'MEETUP',
 						content: group.name
-					}
+					},
+                    {
+                        name: 'DATE',
+                        content: moment(group.startDate).calendar() + ' for ' + moment.duration(moment(group.endDate).diff(group.startDate)).humanize()
+                    }
 				]
 			}
 		}, function (res) {

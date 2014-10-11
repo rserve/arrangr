@@ -256,6 +256,8 @@ define(function (require, exports, module) {
 
 		});
 
+        console.log($stateParams.response);
+
 		getGroup();
 	};
 

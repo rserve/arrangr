@@ -79,6 +79,11 @@ define(function (require, exports, module) {
 					controller: 'GroupAutoLogin',
 					access: access.public
 				})
+                .state('group-user-response', {
+                    url: '/groups/:groupId/:userHash/:response',
+                    controller: 'GroupAutoLogin',
+                    access: access.public
+                })
                 .state('404', {
                     url: '/404',
                     parent: 'default',
