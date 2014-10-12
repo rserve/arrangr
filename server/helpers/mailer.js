@@ -32,10 +32,7 @@ function getInvitationICal(user, group, groupCreator) {
 	var timezoneOffset = -60; // hack to work with server timezone (to get it to swedish times)
 	event.set('offset', timezoneOffset);
 	event.set('start', group.startDate.toString());
-
-	var endDate = new Date(group.startDate);
-	endDate.setHours(endDate.getHours() + 1);
-	event.set('end', endDate.toString());
+	event.set('end', group.endDate.toString());
 
 	event.set('url', baseUrl + '/groups/' + group.key);
 

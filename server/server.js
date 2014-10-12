@@ -5,6 +5,8 @@ var passport = require('passport');
 var http = require('http');
 var socket = require('./socket');
 
+process.env.TZ = 'Europe/Stockholm';
+
 // Load configurations
 // if test env, load example file
 var env = process.env.NODE_ENV || 'development';

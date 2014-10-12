@@ -1,7 +1,7 @@
 {
-  "name": "rserve",
-  "version": "0.0.1",
-  "description": "Making booking easy",
+  "name": "arrangr",
+  "version": "1.0.1",
+  "description": "",
   "repository": {
     "type": "git",
     "url": "https://github.com/rserve/rserve.git"
