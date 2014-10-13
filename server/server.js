@@ -3,7 +3,7 @@ var express = require('express');
 var fs = require('fs');
 var passport = require('passport');
 var http = require('http');
-var socket = require('./socket');;
+var socket = require('./socket');
 
 // Load configurations
 // if test env, load example file
