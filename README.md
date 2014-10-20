@@ -10,17 +10,13 @@
 
 MongoDB must be started for application to work.
 
+### Grunt
+
+Install grunt globally with ``npm install -g grunt-cli``
+
 ### Node modules
 
 Install all node modules and dependencies with ``npm install``
-
-More information [https://npmjs.org/]
-
-### Grunt
-
-Install grunt with ``npm install -g grunt-cli``
-
-More information [http://gruntjs.com/getting-started]
 
 ## Starting server
 
@@ -39,3 +35,7 @@ Note: Default port 3000, to change:
 ``grunt build``
 
 Will create a build bundle in ``/build/client``
+
+## Credits
+
+Thanks to JetBrains for providing us with a license for the great IDE [WebStorm](https://www.jetbrains.com/webstorm/).
