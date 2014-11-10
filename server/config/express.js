@@ -36,6 +36,7 @@ module.exports = function (app, config, passport) {
     });
 
     app.use(express.static(config.static));
+    app.use('/node_modules', express.static('node_modules'));
 
     // cookieParser should be above session
     app.use(require('cookie-parser')());

@@ -8,7 +8,7 @@ define(function (require, exports, module) {
 
 	var Group = require('../services/api/domain/Group');
 
-	var Controller = function ($scope, $rootScope, $state, $stateParams, groupsClient, authState, flash, socket) {
+	var Controller = function ($scope, $rootScope, $state, $stateParams, groupsClient, authState, flash) {
 
 		var id = $stateParams.groupId,
 		    key = $stateParams.groupId,
@@ -247,22 +247,20 @@ define(function (require, exports, module) {
 
 		};
 
-		$scope.$on('socket:groupChanged', function (ev, message) {
+		/*socket.on('groupChanged', function (message) {
 
 			// Should not replace group only update, breaks bindings when some relations are missing
 			if (message.id === id) {
 				updateGroup(groupsClient.parse(message.data));
 			}
 
-		});
-
-        console.log($stateParams.response);
+		});*/
 
 		getGroup();
 	};
 
 	//inject dependencies
-	Controller.$inject = ['$scope', '$rootScope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash', 'socket'];
+	Controller.$inject = ['$scope', '$rootScope', '$state', '$stateParams', 'groupsClient', 'authState', 'flash'];
 
 	module.exports = Controller;
 

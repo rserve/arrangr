@@ -134,8 +134,8 @@ module.exports = function (grunt) {
 						'emoji': 'empty:',
 						'socketio': 'empty:',
 						'socket': 'empty:',
-						json: '../lib/require/json',
-						text: '../lib/require/text',
+						json: '../../node_modules/requirejs-plugins/src/json',
+						text: '../../node_modules/requirejs-text/text',
 						data: '../data'
 
 					},
@@ -202,8 +202,58 @@ module.exports = function (grunt) {
 		copy: {
 			build: {
 				files: [
-					{expand: true, cwd: 'build_statics//', src: ['**'], dest: 'build/client/'}
-				]
+                    {
+                        expand: true,
+                        cwd: 'build_statics/',
+                        src: ['**'],
+                        dest: 'build/client/'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        cwd: 'node_modules',
+                        src: [
+                            'angular-emoji-filter/dist/emoji.min.css',
+                            'bootstrap/dist/css/bootstrap.min.css'
+                        ],
+                        dest: 'build/client/css/'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        cwd: 'node_modules',
+                        src: [
+                            'bootstrap/dist/fonts/*'
+                        ],
+                        dest: 'build/client/fonts/'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        cwd: 'node_modules',
+                        src: [
+                            'requirejs/require.js',
+                            'jquery/dist/jquery*',
+                            'underscore/underscore-min.js',
+                            'bootstrap/dist/js/bootstrap.min.js',
+                            'angular-emoji-filter/dist/emoji.min.js',
+                            'angular/angular.min.js',
+                            'angular/angular.min.js.map',
+                            'angular/angular.js',
+                            'angular-flash/dist/angular-flash.min.js',
+                            'angular-moment/angular-moment.min.js',
+                            'angular-moment/angular-moment.min.js.map',
+                            'angular-ui-router/release/angular-ui-router.min.js',
+                            'angular-sanitize/angular-sanitize.min.js',
+                            'angular-sanitize/angular-sanitize.min.js.map',
+                            'es5-shim/es5-shim.min.js',
+                            'es5-shim/es5-shim.map',
+                            'jquery-filedrop/jquery.filedrop.js',
+                            'moment/min/moment.min.js'
+                        ],
+                        dest: 'build/client/lib'
+                    }
+                ]
 			}
 		},
 		clean: {
@@ -224,7 +274,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('build', ['clean:build', 'requirejs', 'copy:build']);
 
 	// default tasks
-	grunt.registerTask('test', ['jshint:client', 'jshint:node', 'karma:continuous', 'jasmine_node']);
+	grunt.registerTask('test', ['jshint:client', 'jshint:node', 'jasmine_node']);
 
 	grunt.registerTask('default', ['test']);
 

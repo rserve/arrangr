@@ -5,7 +5,7 @@ var User = mongoose.model('User');
 var hash = require('../helpers/hash');
 var mailer = require('../helpers/mailer');
 var image = require('../helpers/image');
-var socket = require('../socket');
+//var socket = require('../socket');
 var moment = require('moment');
 var _ = require('underscore');
 
@@ -122,7 +122,7 @@ exports.create = function (req, res) {
     ];
     Group.create(group, function (err, group) {
         if (!e(err, res, 'Error creating group')) {
-            socket.groupChanged(group);
+//            socket.groupChanged(group);
             res.send(group);
         }
 
@@ -133,7 +133,7 @@ exports.update = function (req, res) {
     _.extend(req.group, filterValidKeys(req.body));
     req.group.save(function (err, group, numRows) {
         if (!e(err, res, 'Error updating group')) {
-            socket.groupChanged(group);
+//            socket.groupChanged(group);
             res.send(group);
         }
     });
@@ -166,7 +166,7 @@ exports.updateMember = function (req, res) {
                 if (!group) {
                     res.status(404).send({error: 'Error updating groupmember', message: 'Groupmember not found'});
                 } else {
-                    socket.groupChanged(group);
+//                    socket.groupChanged(group);
                     res.send(group);
                 }
             }
@@ -180,7 +180,7 @@ exports.deleteMember = function (req, res) {
         populate('comments.user', userFields).
         exec(function (err, group) {
             if (!e(err, res, 'Error removing member from group')) {
-                socket.groupChanged(group);
+//                socket.groupChanged(group);
                 res.send(group);
             }
         }
@@ -221,7 +221,7 @@ var addUserToGroup = function (req, res, group, user, status) {
                     populate('comments.user', userFields).
                     exec(function (err, group) {
                         if (!e(err, res, 'Error joining group')) {
-                            socket.groupChanged(group);
+//                            socket.groupChanged(group);
                             res.send(group);
 
                             if (req.user && req.user.id != user.id) {
@@ -293,7 +293,7 @@ exports.uploadThumbnail = function (req, res) {
                 populate('comments.user', userFields).
                 exec(function (err, group) {
                     if (!e(err, res, 'Error uploading thumbnail')) {
-                        socket.groupChanged(group);
+//                        socket.groupChanged(group);
                         res.send(group);
                     }
                 });
@@ -317,7 +317,7 @@ exports.addComment = function (req, res) {
             populate('comments.user', userFields).
             exec(function (err, group) {
                 if (!e(err, res, 'Error adding comment')) {
-                    socket.groupChanged(group);
+//                    socket.groupChanged(group);
                     res.send(group);
                 }
             }
@@ -332,7 +332,7 @@ exports.deleteComment = function (req, res) {
         populate('members.user', userFields).
         exec(function (err, group) {
             if (!e(err, res, 'Error removing comment from group')) {
-                socket.groupChanged(group);
+//                socket.groupChanged(group);
                 res.send(group);
             }
         }
@@ -365,7 +365,7 @@ exports.increment = function (req, res) {
     });
     Group.create(group, function (err, group) {
         if (!e(err, res, 'Error creating next group cycle')) {
-            socket.groupChanged(group);
+//            socket.groupChanged(group);
             res.send(group);
         }
     });

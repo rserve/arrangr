@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <base href="/">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="fragment" content="!">
     <title ng-bind="'Arran.gr - ' + title">Arran.gr - Arrange your meetups!</title>
     <meta name="description"
           content="{{ description || 'Simple tool for managing your regular meetups.'}}">
-    <link rel="stylesheet" href="/css/emoji.min.css">
-    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/node_modules/angular-emoji-filter/dist/emoji.min.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="/css/main.css"/>
 
     <script>
@@ -100,7 +101,7 @@
 
 <script src="/js/browser-check.js"></script>
 
-<script src="/lib/require.js"></script>
+<script src="/node_modules/requirejs/require.js"></script>
 
 <script>
     //configure require
@@ -108,22 +109,20 @@
 
         baseUrl: '/js',
         paths: {
-            'es5shim': '../lib/es5-shim',
-            jquery: '../lib/jquery-1.8.3',
-            'jquery-filedrop': '../lib/jquery.filedrop',
-            bootstrap: '../lib/bootstrap/js/bootstrap',
-            underscore: '../lib/underscore',
-            moment: '../lib/moment',
-            angular: '../lib/angular-1.0.8',
-            'angular-ui-router': '../lib/angular-ui-router',
-            'angular-flash': '../lib/angular-flash',
-            'angular-moment': '../lib/angular-moment',
-            'angular-sanitize': '../lib/angular-sanitize',
-            'emoji': '../lib/emoji.min',
-            'socketio': '../lib/socket.io',
-            socket: '../lib/socket',
-            json: '../lib/require/json',
-            text: '../lib/require/text',
+            'es5shim': '/node_modules/es5-shim/es5-shim',
+            jquery: '/node_modules/jquery/dist/jquery',
+            'jquery-filedrop': '/node_modules/jquery-filedrop/jquery.filedrop',
+            bootstrap: '/node_modules/bootstrap/dist/js/bootstrap',
+            underscore: '/node_modules/underscore/underscore',
+            moment: '/node_modules/moment/moment',
+            angular: '/node_modules/angular/angular',
+            'angular-ui-router': '/node_modules/angular-ui-router/release/angular-ui-router',
+            'angular-flash': '/node_modules/angular-flash/dist/angular-flash',
+            'angular-moment': '/node_modules/angular-moment/angular-moment',
+            'angular-sanitize': '/node_modules/angular-sanitize/angular-sanitize',
+            'emoji': '/node_modules/angular-emoji-filter/dist/emoji.min',
+            json: '/node_modules/requirejs-plugins/src/json',
+            text: '/node_modules/requirejs-text/text',
             data: '../data'
 
         },
@@ -158,14 +157,7 @@
             },
             'emoji': {
                 deps: ['angular']
-            },
-            'socket': {
-                deps: ['angular']
-            },
-            'socketio': {
-                exports: ['io']
             }
-
         },
         priority: [
             "angular"

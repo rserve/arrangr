@@ -11,7 +11,6 @@ define(function (require, exports, module) {
 			'angular-flash.service',
 			'angular-flash.flash-alert-directive',
 			'angularMoment',
-			'btford.socket-io',
 			'ngSanitize',
 			'emoji' ]).
 

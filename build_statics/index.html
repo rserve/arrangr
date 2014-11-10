@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <base href="/">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="fragment" content="!">
     <title ng-bind="'Arran.gr - ' + title">Arran.gr - Arrange your meetups!</title>
     <meta name="description" content="{{ description || 'Simple tool for managing your regular meetups.'}}">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/emoji.min.css">
     <link rel="stylesheet" href="/css/main.css"/>
     <script>
@@ -94,7 +95,7 @@
 
 <script src="/js/browser-check.js"></script>
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.5/require.min.js"></script>
+<script src="/lib/require.js"></script>
 
 <script>
     //configure require
@@ -103,19 +104,17 @@
         baseUrl: '/js',
         paths: {
             'es5shim': '../lib/es5-shim.min',
-            jquery: 'http://code.jquery.com/jquery-1.8.3.min',
+            jquery: '../lib/jquery.min',
             'jquery-filedrop': '../lib/jquery.filedrop',
-            bootstrap: 'http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min',
-            underscore: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min',
+            bootstrap: '../lib/bootstrap.min',
+            underscore: '../lib/underscore-min',
             moment: '../lib/moment.min',
-            angular: 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min',
+            angular: '../lib/angular.min',
             'angular-ui-router': '../lib/angular-ui-router.min',
             'angular-flash': '../lib/angular-flash.min',
             'angular-moment': '../lib/angular-moment.min',
-            'angular-sanitize': 'https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular-sanitize.min',
+            'angular-sanitize': '../lib/angular-sanitize.min',
             'emoji': '../lib/emoji.min',
-            'socketio': 'http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min',
-            socket: '../lib/socket',
             json: '../lib/require/json',
             text: '../lib/require/text',
             data: '../data'
@@ -152,14 +151,7 @@
             },
             'emoji': {
                 deps: ['angular']
-            },
-            'socket': {
-                deps: ['angular']
-            },
-            'socketio': {
-                exports: ['io']
             }
-
         },
         priority: [
             "angular"

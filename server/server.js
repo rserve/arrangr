@@ -3,7 +3,7 @@ var express = require('express');
 var fs = require('fs');
 var passport = require('passport');
 var http = require('http');
-var socket = require('./socket');
+//var socket = require('./socket');
 
 // Load configurations
 // if test env, load example file
@@ -37,6 +37,6 @@ require('./config/express')(app, config, passport);
 var port = process.env.PORT || config.port;
 console.log('Express app started on port ' + port);
 server.listen(port);
-socket.listen(server);
+//socket.listen(server);
 /*global exports:true*/
 exports = module.exports = app;
