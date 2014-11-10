@@ -2,6 +2,8 @@
 
 [![Build Status](https://drone.io/github.com/rserve/rserve/status.png)](https://drone.io/github.com/rserve/rserve/latest)
 
+[ ![Codeship Status for rserve/arrangr](https://codeship.com/projects/79ab7e80-4af3-0132-5fa4-06322762c3b0/status)](https://codeship.com/projects/46539)
+
 ## Installing
 
 ### MongoDB
