@@ -29,7 +29,7 @@
         {{group.name}}
         <small ng-show="group.startDate">{{ group.startDate | amCalendar }}<span ng-show="group.endDate"> for {{ group.duration() | amDurationFormat }}</span></small>
     </h2>
-    <p ng-bind-html-unsafe="group.description"></p>
+    <p ng-bind-html="group.description"></p>
     
     <div class="clearfix"></div>
     

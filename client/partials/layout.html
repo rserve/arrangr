@@ -5,7 +5,7 @@
 
     <div flash-alert active-class="in" class="fade alert flash-container bottom-right" ng-click="hide()">
         <i class="glyphicon"></i>
-       <span class="alert-message" ng-bind-html-unsafe="flash.message | link"></span>
+       <span class="alert-message" ng-bind-html="flash.message | link"></span>
     </div>
 
 

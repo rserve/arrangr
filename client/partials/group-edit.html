@@ -14,7 +14,7 @@
         {{group.name}}
         <small ng-show="group.startDate">{{ group.startDate | amCalendar }}<span ng-show="group.endDate"> for {{ group.duration() | amDurationFormat }}</span></small>
     </h2>
-    <p ng-bind-html-unsafe="group.description"></p>
+    <p ng-bind-html="group.description"></p>
 
     <div class="clearfix"></div>
 </div>
@@ -44,7 +44,7 @@
                         <input class="form-control" type="date" id="groupFormStartDate" name="startDate" ng-model="groupModel.startDate"/>
                     </div>
                     <div class="col-md-5">
-                        <input class="form-control" type="time" id="groupFormStartTime" name="startTime" ng-model="groupModel.startTime"/>
+                        <input class="form-control" type="time" id="groupFormStartTime" name="startTime" ng-model="groupModel.startDate"/>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                         <input class="form-control" type="date" id="groupFormEndDate" name="endDate" ng-model="groupModel.endDate"/>
                     </div>
                     <div class="col-md-5">
-                        <input class="form-control" type="time" id="groupFormEndTime" name="endTime" ng-model="groupModel.endTime"/>
+                        <input class="form-control" type="time" id="groupFormEndTime" name="endTime" ng-model="groupModel.endDate"/>
                     </div>
                 </div>
             </div>

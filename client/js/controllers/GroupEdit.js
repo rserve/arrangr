@@ -32,26 +32,11 @@ define(function (require, exports, module) {
 			model.name = $scope.group.name;
 			model.description = $scope.group.description;
 			model.public = $scope.group.public;
-			var start = moment($scope.group.startDate);
-			model.startDate = start.format('YYYY-MM-DD');
-			model.startTime = start.format('HH:mm');
-			var end = moment($scope.group.endDate);
-			model.endDate = end.format('YYYY-MM-DD');
-			model.endTime = end.format('HH:mm');
+			model.startDate = new Date($scope.group.startDate);
+			model.endDate = new Date($scope.group.endDate);
 			model.minParticipants = $scope.group.minParticipants;
 			model.maxParticipants = $scope.group.maxParticipants;
             model.incrementDays = $scope.group.incrementDays;
-		}
-
-		function mergeDateAndTime(date, time) {
-			var d = moment(date);
-
-			if (time) {
-				var t = time.split(':');
-				d.hours(t[0]).minutes(t[1]);
-			}
-
-			return d;
 		}
 
 		$scope.update = function () {
@@ -61,14 +46,7 @@ define(function (require, exports, module) {
 				} else {
 					flash.error = 'Please check form.';
 				}
-
 			} else {
-
-				$scope.groupModel.startDate = mergeDateAndTime($scope.groupModel.startDate, $scope.groupModel.startTime);
-				delete $scope.groupModel.startTime;
-				$scope.groupModel.endDate = mergeDateAndTime($scope.groupModel.endDate, $scope.groupModel.endTime);
-				delete $scope.groupModel.endTime;
-
 				client.update(key, $scope.groupModel,
 					function (data) {
 						updateGroup(data);
