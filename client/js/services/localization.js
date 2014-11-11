@@ -7,7 +7,7 @@ define(function (require, exports, module) {
 	var factory = ['$window', function ($window) {
 
 		// Display 24 hours time instead of moment default AM/PM
-		$window.moment.lang('en', {
+		$window.moment.locale('en', {
 			calendar : {
 				lastDay : '[Yesterday at] HH:mm',
 				sameDay : '[Today at] HH:mm',

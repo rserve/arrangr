@@ -4,7 +4,7 @@ var env = process.env.NODE_ENV || 'development';
 var config = require('../config/config')[env];
 var moment = require('moment');
 
-moment.lang('en', {
+moment.locale('en', {
     calendar : {
         lastDay : '[Yesterday at] HH:mm',
         sameDay : '[Today at] HH:mm',

@@ -8,7 +8,7 @@ var User = helper.mongoose.model('User');
 var testData = {
     user: { email: 'test@test.com', password: 'password' },
     groups: [
-        { name: "innebandy!", startDate: moment().add('days', -1).toDate() },
+        { name: "innebandy!", startDate: moment().add(-1, 'days').toDate() },
         { name: "ostprovning" },
         { name: "coding jam", public: true },
         { name: "spelkväll" }
@@ -279,7 +279,7 @@ describe(groupsEndpoint, function () {
 				request.post(groupsEndpoint + '/' + testGroup.key + '/increment', function(err, resp, group) {
 					expect(err).toBeFalsy();
 					expect(resp.statusCode).toEqual(200);
-					expect(new Date(group.startDate)).toEqual(moment(testGroup.startDate).add('days', 7).toDate());
+					expect(new Date(group.startDate)).toEqual(moment(testGroup.startDate).add(7, 'days').toDate());
                     expect(group.comments).toBeDefined();
 					expect(group.comments.length).toBe(0);
 					done();

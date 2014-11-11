@@ -4,6 +4,7 @@
 
 var express = require('express');
 var session = require('express-session');
+var bodyParser = require('body-parser');
 var mongoStore = require('connect-mongo')(({session: session}));
 var auth = require('./middlewares/authorization');
 
@@ -17,7 +18,7 @@ module.exports = function (app, config, passport) {
         app.use(require('morgan')(config.logger));
     }
 
-    app.use(require('static-favicon')());
+    app.use(require('serve-favicon')(config.root + '/client/favicon.ico'));
 
     // should be placed before express.static
     app.use(require('compression')({
@@ -42,13 +43,20 @@ module.exports = function (app, config, passport) {
     app.use(require('cookie-parser')());
 
     // bodyParser should be above methodOverride
-    app.use(require('body-parser')());
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({
+        extended: true
+    }));
+
     app.use(require('method-override')());
 
     // express/mongo session storage
     app.use(session({
         secret: 'rserve',
-        store: new mongoStore({
+        resave: true,
+        saveUninitialized: false,
+            store: new mongoStore({
             url: config.db,
             collection : 'sessions'
         })

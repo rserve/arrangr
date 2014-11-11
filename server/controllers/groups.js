@@ -348,11 +348,11 @@ exports.increment = function (req, res) {
     delete group.id;
     delete group.createdAt;
     while(moment(group.startDate).isBefore()) {
-        group.startDate = moment(group.startDate).add('days', group.incrementDays || 7).toDate();
+        group.startDate = moment(group.startDate).add(group.incrementDays || 7, 'days').toDate();
     }
     if (group.endDate) {
         while(moment(group.endDate).isBefore()) {
-            group.endDate = moment(group.endDate).add('days', group.incrementDays || 7).toDate();
+            group.endDate = moment(group.endDate).add(group.incrementDays || 7, 'days').toDate();
         }
     }
     group.comments = [];

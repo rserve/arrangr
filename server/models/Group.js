@@ -15,7 +15,7 @@ var schema = new mongoose.Schema({
     startDate: {
 		type: Date,
 		default: function() {
-			return moment().add('hours', 2).minute(0).second(0).toDate();
+			return moment().add(2, 'hours').minute(0).second(0).toDate();
 		}
 	},
     endDate: { type: Date },
