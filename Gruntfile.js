@@ -223,7 +223,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-concat');
 
 	grunt.registerTask('build', ['clean', 'requirejs', 'copy', 'cssmin']);
 
