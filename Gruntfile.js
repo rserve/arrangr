@@ -115,73 +115,34 @@ module.exports = function (grunt) {
 		requirejs: {
 			build: {
 				options: {
-					appDir: "client",
-					baseUrl: "js",
-					dir: "build/client",
+					//appDir: "client",
+					baseUrl: "client/js",
+					dir: "build/js",
 
 					paths: {
-						'es5shim': 'empty:',
 						jquery: 'empty:',
-						'jquery-filedrop': 'empty:',
+						angular: 'empty:',
 						bootstrap: 'empty:',
 						underscore: 'empty:',
-						moment: 'empty:',
-						angular: 'empty:',
-						'angular-ui-router': 'empty:',
-						'angular-flash': 'empty:',
-						'angular-moment': 'empty:',
-						'angular-sanitize': 'empty:',
-						'emoji': 'empty:',
-						'socketio': 'empty:',
-						'socket': 'empty:',
+						'es5shim': '../../node_modules/es5-shim/es5-shim.min',
+						'jquery-filedrop': '../../node_modules/jquery-filedrop/jquery.filedrop',
+						moment: '../../node_modules/moment/moment',
+						'angular-ui-router': '../../node_modules/angular-ui-router/release/angular-ui-router',
+						'angular-flash': '../../node_modules/angular-flash/dist/angular-flash',
+						'angular-moment': '../../node_modules/angular-moment/angular-moment',
+						'angular-sanitize': '../../node_modules/angular-sanitize/angular-sanitize',
+						'emoji': '../../node_modules/angular-emoji-filter/dist/emoji.min',
 						json: '../../node_modules/requirejs-plugins/src/json',
 						text: '../../node_modules/requirejs-text/text',
 						data: '../data'
 
 					},
 					shim: {
-						jquery: {
-							exports: 'jQuery'
-						},
-						angular: {
-							deps: ['jquery'], // for angular.element
-							exports: 'angular'
-						},
-						'bootstrap': {
-							deps: ['jquery']
-						},
-						'underscore': {
-							exports: '_'
-						},
-						'angular-ui-router': {
-							deps: ['angular']
-						},
-						'angular-flash': {
-							deps: ['angular']
-						},
 						'angular-moment': {
-							deps: ['moment', 'angular']
-						},
-						'angular-sanitize': {
-							deps: ['angular']
-						},
-						'jquery-filedrop': {
-							deps: ['jquery']
-						},
-						'emoji': {
-							deps: ['angular']
-						},
-						'socket': {
-							deps: ['angular']
-						},
-						'socketio': {
-							exports: ['io']
+							deps: ['moment']
 						}
 					},
-					// skip specs, "hidden" folders and libraries except text & json
-					// TODO regexp could be simplified
-					fileExclusionRegExp: /^(specs|angular|jquery|require\.js|underscore|bootstrap|\.)/,
-					optimizeCss: 'standard',
+					preserveLicenseComments: false,
 					//optimize:'none',
 					removeCombined: true,
 					modules: [
@@ -206,58 +167,49 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'build_statics/',
                         src: ['**'],
-                        dest: 'build/client/'
+                        dest: 'build/'
                     },
-                    {
-                        expand: true,
+					{
+						expand: true,
                         flatten: true,
-                        cwd: 'node_modules',
                         src: [
-                            'angular-emoji-filter/dist/emoji.min.css',
-                            'bootstrap/dist/css/bootstrap.min.css'
+							'client/css/*.woff'
                         ],
-                        dest: 'build/client/css/'
+                        dest: 'build/css/'
                     },
-                    {
-                        expand: true,
-                        flatten: true,
-                        cwd: 'node_modules',
-                        src: [
-                            'bootstrap/dist/fonts/*'
-                        ],
-                        dest: 'build/client/fonts/'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        cwd: 'node_modules',
-                        src: [
-                            'requirejs/require.js',
-                            'jquery/dist/jquery*',
-                            'underscore/underscore-min.js',
-                            'bootstrap/dist/js/bootstrap.min.js',
-                            'angular-emoji-filter/dist/emoji.min.js',
-                            'angular/angular.min.js',
-                            'angular/angular.min.js.map',
-                            'angular/angular.js',
-                            'angular-flash/dist/angular-flash.min.js',
-                            'angular-moment/angular-moment.min.js',
-                            'angular-moment/angular-moment.min.js.map',
-                            'angular-ui-router/release/angular-ui-router.min.js',
-                            'angular-sanitize/angular-sanitize.min.js',
-                            'angular-sanitize/angular-sanitize.min.js.map',
-                            'es5-shim/es5-shim.min.js',
-                            'es5-shim/es5-shim.map',
-                            'jquery-filedrop/jquery.filedrop.js',
-                            'moment/min/moment.min.js'
-                        ],
-                        dest: 'build/client/lib'
-                    }
+					{
+						expand: true,
+						flatten: true,
+						src: [
+							'node_modules/bootstrap/dist/fonts/*',
+						],
+						dest: 'build/fonts/'
+					},
+					{
+						expand: true,
+						cwd: 'client/',
+						src: ['images/*', 'partials/*'],
+						dest: 'build/'
+					}
                 ]
 			}
 		},
 		clean: {
 			build: ["build"]
+		},
+		cssmin: {
+			build: {
+				options: {
+					keepSpecialComments: 0
+				},
+				files: {
+					'build/css/main.min.css': [
+						'node_modules/bootstrap/dist/css/bootstrap.min.css',
+						'node_modules/angular-emoji-filter/dist/emoji.min.css',
+						'client/css/*.css'
+					]
+				}
+			}
 		}
 	});
 
@@ -269,9 +221,11 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-karma');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-contrib-concat');
 
-	grunt.registerTask('build', ['clean:build', 'requirejs', 'copy:build']);
+	grunt.registerTask('build', ['clean', 'requirejs', 'copy', 'cssmin']);
 
 	// default tasks
 	grunt.registerTask('test', ['jshint:client', 'jshint:node', 'jasmine_node']);

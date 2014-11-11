@@ -7,9 +7,8 @@
     <meta name="fragment" content="!">
     <title ng-bind="'Arran.gr - ' + title">Arran.gr - Arrange your meetups!</title>
     <meta name="description" content="{{ description || 'Simple tool for managing your regular meetups.'}}">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/emoji.min.css">
-    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/main.min.css"/>
+    <script src="/js/browser-check.js"></script>
     <script>
         var w = window,
                 d = document,
@@ -93,9 +92,7 @@
 
 <div id="backdrop" class="modal-backdrop fade in"></div>
 
-<script src="/js/browser-check.js"></script>
-
-<script src="/lib/require.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js"></script>
 
 <script>
     //configure require
@@ -103,27 +100,13 @@
 
         baseUrl: '/js',
         paths: {
-            'es5shim': '../lib/es5-shim.min',
-            jquery: '../lib/jquery.min',
-            'jquery-filedrop': '../lib/jquery.filedrop',
-            bootstrap: '../lib/bootstrap.min',
-            underscore: '../lib/underscore-min',
-            moment: '../lib/moment.min',
-            angular: '../lib/angular.min',
-            'angular-ui-router': '../lib/angular-ui-router.min',
-            'angular-flash': '../lib/angular-flash.min',
-            'angular-moment': '../lib/angular-moment.min',
-            'angular-sanitize': '../lib/angular-sanitize.min',
-            'emoji': '../lib/emoji.min',
-            json: '../lib/require/json',
-            text: '../lib/require/text',
-            data: '../data'
-
+            jquery: '//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min',
+            bootstrap: '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/js/bootstrap.min',
+            underscore: '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min',
+            angular: '//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.0/angular.min',
+            data: 'data'
         },
         shim: {
-            jquery: {
-                exports: 'jQuery'
-            },
             angular: {
                 deps: ['jquery'], // for angular.element
                 exports: 'angular'
@@ -131,26 +114,8 @@
             'bootstrap': {
                 deps: ['jquery']
             },
-            'underscore': {
-                exports: '_'
-            },
-            'angular-ui-router': {
-                deps: ['angular']
-            },
-            'angular-flash': {
-                deps: ['angular']
-            },
-            'angular-moment': {
-                deps: ['moment', 'angular']
-            },
-            'angular-sanitize': {
-                deps: ['angular']
-            },
-            'jquery-filedrop': {
-                deps: ['jquery']
-            },
-            'emoji': {
-                deps: ['angular']
+            'main': {
+                deps: ['jquery', 'angular', 'bootstrap', 'underscore']
             }
         },
         priority: [

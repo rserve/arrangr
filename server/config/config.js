@@ -23,7 +23,7 @@ module.exports = {
 		port: 80,
 		db: process.env.MONGOLAB_URI || 'mongodb://localhost/rserve',
 		root: rootPath,
-		static: 'build/client',
-        logger: 'default'
+		static: 'build',
+        logger: 'combined'
     }
 };

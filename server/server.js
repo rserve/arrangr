@@ -35,8 +35,8 @@ var server = http.createServer(app);
 require('./config/express')(app, config, passport);
 
 var port = process.env.PORT || config.port;
-console.log('Express app started on port ' + port);
 server.listen(port);
-//socket.listen(server);
 /*global exports:true*/
+//socket.listen(server);
+console.log('App started on port ' + port);
 exports = module.exports = app;
