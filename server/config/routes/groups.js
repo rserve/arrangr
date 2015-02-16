@@ -7,6 +7,7 @@ module.exports = function (auth) {
     router.get('', auth.requiresLogin, groups.findByUser);
     router.post('', auth.requiresLogin, groups.create);
     router.get('/archive', auth.requiresLogin, groups.archive);
+    router.get('/cron', groups.cron);
     router.get('/:key', auth.group.hasAccess, groups.find);
     router.put('/:key', [auth.requiresLogin, auth.group.hasAuthorization], groups.update);
     router.delete('/:key', [auth.requiresLogin, auth.group.hasAuthorization], groups.delete);

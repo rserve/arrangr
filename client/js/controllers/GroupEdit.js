@@ -37,6 +37,7 @@ define(function (require, exports, module) {
 			model.minParticipants = $scope.group.minParticipants;
 			model.maxParticipants = $scope.group.maxParticipants;
             model.incrementDays = $scope.group.incrementDays;
+            model.autoCycle = $scope.group.autoCycle;
 		}
 
 		$scope.update = function () {

@@ -20,6 +20,7 @@ var schema = new mongoose.Schema({
 	},
     endDate: { type: Date },
     public: { type: Boolean, default: false },
+    autoCycle: { type: Boolean, default: true },
     createdAt: { type: Date, default: Date.now },
     createdBy: { type: mongoose.Schema.ObjectId, ref: 'User' },
     members: [{

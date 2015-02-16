@@ -11,7 +11,7 @@ var _ = require('underscore');
 
 //Fields from user to populate into member array
 var userFields = 'id name email verified hashedEmail gravatar image';
-var validBodyKeys = ['name', 'description', 'startDate', 'endDate', 'public', 'minParticipants', 'maxParticipants', 'incrementDays'];
+var validBodyKeys = ['name', 'description', 'startDate', 'endDate', 'public', 'minParticipants', 'maxParticipants', 'incrementDays', 'autoCycle'];
 var validMemberKeys = ['status'];
 var validAdminMemberKeys = ['admin'];
 
@@ -418,6 +418,66 @@ exports.autoLogin = function (req, res) {
             res.status(404).send({error: 'Error auto logging in user', message: 'Invalid hash'});
         }
     }
+};
+
+exports.cron = function(req, res) {
+    Group.aggregate({
+        $project: {
+            key: 1,
+            startDate: 1,
+            autoCycle: 1
+        }
+    }, {
+        $sort: {
+            startDate: -1
+        }
+    }, {
+        $group: {
+            _id: { key: "$key" },
+            id: {
+                $first: "$_id"
+            },
+            startDate: {
+                $first: "$startDate"
+            },
+            autoCycle: {
+                $first: "$autoCycle"
+            }
+        }
+    }, {
+        $match: {
+            startDate: { $lt: new Date() },
+            autoCycle: true
+        }
+    })
+        .exec(function (err, results) {
+            if(err) {
+                e(err, res, 'Error getting groups for auto cycle.');
+                return;
+            }
+
+            if(!results || results.length == 0) {
+                res.send({message: 'No groups to update.'});
+                return;
+            }
+
+            var done = 0;
+            for (var i = 0; i < results.length; i++) {
+
+                fromParam(req, res, function(err) {
+                    if(err) {
+                        e(err, res, 'Error getting group to updated');
+                        return;
+                    }
+
+                    return exports.increment(req, { send: function(group) {
+                        if(++done == results.length) {
+                            res.send({message: done + ' groups updated.'});
+                        }
+                    }, status: function() { return res }});
+                }, { _id: results[i].id });
+            }
+        });
 };
 
 // param parsing
