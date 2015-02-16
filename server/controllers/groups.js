@@ -456,26 +456,28 @@ exports.cron = function(req, res) {
                 return;
             }
 
-            if(!results || results.length == 0) {
+            if(!results || results.length === 0) {
                 res.send({message: 'No groups to update.'});
                 return;
             }
 
             var done = 0;
-            for (var i = 0; i < results.length; i++) {
+            var cb =  function(err) {
+                if(err) {
+                    e(err, res, 'Error getting group to updated');
+                    return;
+                }
 
-                fromParam(req, res, function(err) {
-                    if(err) {
-                        e(err, res, 'Error getting group to updated');
-                        return;
-                    }
-
-                    return exports.increment(req, { send: function(group) {
-                        if(++done == results.length) {
+                return exports.increment(req, { status: function() { return res; },
+                    send: function (group) {
+                        if (++done == results.length) {
                             res.send({message: done + ' groups updated.'});
                         }
-                    }, status: function() { return res }});
-                }, { _id: results[i].id });
+                    }});
+            };
+
+            for (var i = 0; i < results.length; i++) {
+                fromParam(req, res, cb, { _id: results[i].id });
             }
         });
 };
