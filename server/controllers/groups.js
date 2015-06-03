@@ -262,7 +262,7 @@ exports.uploadThumbnail = function (req, res) {
 
     var thumbnail = req.files.thumbnail;
 
-    var format = thumbnail.headers['content-type'];
+    var format = thumbnail.mimetype;
 
     if (format.indexOf('image') == -1) {
         res.status(500).send('Only images allowed');

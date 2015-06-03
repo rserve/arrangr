@@ -1,5 +1,7 @@
 var express = require('express');
 var groups = require('../../controllers/groups');
+var multer  = require('multer');
+var os = require('os');
 
 module.exports = function (auth) {
     var router = express.Router();
@@ -20,7 +22,7 @@ module.exports = function (auth) {
     router.put('/:key/members/:memberId', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.updateMember);
     router.delete('/:key/members/:memberId', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.deleteMember);
 
-    router.post('/:key/thumbnail', [auth.requiresLogin, auth.group.member.hasAuthorization], groups.uploadThumbnail);
+    router.post('/:key/thumbnail', [auth.requiresLogin, auth.group.member.hasAuthorization, multer({ dest: os.tmpDir() }) ], groups.uploadThumbnail);
 
     router.post('/:key/increment', [auth.requiresLogin, auth.group.hasAuthorization], groups.increment);
     router.get('/:key/remind', [auth.requiresLogin, auth.group.hasAuthorization], groups.remindAll);
