@@ -1,16 +1,15 @@
-exports.removeHiddenProperties = function (toDelete, ret) {
-    if(!(toDelete instanceof Array)) {
-        ret = toDelete;
-        toDelete = [];
-    }
-
-    for(var prop in ret) {
-        if(prop.indexOf('_') === 0) {
-            toDelete.push(prop);
+function deleteRecursive(data) {
+    for (var property in data) {
+        if (data.hasOwnProperty(property)) {
+            if (property.indexOf('_') === 0) {
+                delete data[property];
+            } else {
+                if (typeof data[property] === "object") {
+                    deleteRecursive(data[property]);
+                }
+            }
         }
     }
+}
 
-    toDelete.forEach(function (prop) {
-        delete ret[prop];
-    });
-};
+exports.removeHiddenProperties = deleteRecursive;
