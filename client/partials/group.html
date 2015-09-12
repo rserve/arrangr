@@ -1,6 +1,6 @@
 
 <span class="pull-right" ng-show="group.isAdmin(user)">
-<a href="#" ng-show="!group.upcoming()" ng-click="increment()" class="btn btn-info">
+<a href="#" ng-show="!group.upcoming() && group.current" ng-click="increment()" class="btn btn-info">
     {{'%BUTTON_NEXT%' | phrase}}
 </a>
 <a class="btn btn-danger" href="/groups/{{group.key}}/edit">

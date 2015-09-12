@@ -405,7 +405,7 @@ exports.autoLogin = function (req, res) {
     if (req.body.hash) {
         var found = false;
         req.group.members.forEach(function (member) {
-            if (req.body.hash == member._hash) {
+            if (!found && req.body.hash == member._hash) {
                 found = true;
                 req.logIn(member.user, function (err) {
                     if (!e(err, res, 'Error auto logging in user')) {
@@ -503,7 +503,17 @@ var fromParam = function (req, res, next, q) {
                     next(new Error('Group not found'));
                 } else {
                     req.group = group;
-                    next();
+                    if(q._id) {
+                        Group.findOne({key: group.key}).sort({ startDate: 'desc'}).exec(function(err, currentGroup) {
+                            if(currentGroup && currentGroup._id.equals(group._id) ) {
+                                group.current = true;
+                            }
+                            next(err);
+                        });
+                    } else {
+                        group.current = true;
+                        next();
+                    }
                 }
             }
         });

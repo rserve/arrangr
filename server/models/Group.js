@@ -52,6 +52,15 @@ schema.pre('save', function (next) {
     next();
 });
 
+schema
+    .virtual('current')
+    .get(function() {
+        return this._current || false;
+    })
+    .set(function(current) {
+        this._current = current;
+    });
+
 schema.path('endDate').validate(function (endDate) {
     return !endDate || moment(endDate).isAfter(this.startDate);
 }, 'End date must be after start date');
