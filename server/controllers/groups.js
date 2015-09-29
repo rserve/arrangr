@@ -351,7 +351,7 @@ exports.increment = function (req, res) {
         group.startDate = moment(group.startDate).add(group.incrementDays || 7, 'days').toDate();
     }
     if (group.endDate) {
-        while(moment(group.endDate).isBefore()) {
+        while(moment(group.endDate).isBefore(group.startDate)) {
             group.endDate = moment(group.endDate).add(group.incrementDays || 7, 'days').toDate();
         }
     }
