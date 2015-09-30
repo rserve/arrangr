@@ -8,7 +8,7 @@ define(function (require, exports, module) {
 		Member = require('./domain/Member'),
 		User = require('./domain/User'),
 		Comment = require('./domain/Comment'),
-		LogEntry = require('./domain/Logentry');
+		LogEntry = require('./domain/LogEntry');
 
 	var service = ['$http', function ($http) {
 
