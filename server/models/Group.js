@@ -40,7 +40,12 @@ var schema = new mongoose.Schema({
     }],
     minParticipants: {type: Number},
     maxParticipants: {type: Number},
-    incrementDays: {type: Number, default: 7}
+    incrementDays: {type: Number, default: 7},
+    log: [{
+        user: {type: mongoose.Schema.ObjectId, ref: 'User', required: true},
+        action: {type: String, enum: ['reminder', 'status', 'update'], required: true},
+        createdAt: {type: Date, default: Date.now}
+    }]
 });
 
 schema.pre('save', function (next) {

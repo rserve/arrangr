@@ -143,6 +143,16 @@
             </div>
         </div>
 
+        <div ng-show="group.isAdmin(user)">
+            <h3>Log</h3>
+
+            <table class="table">
+                <tr ng-repeat="logEntry in group.log">
+                    <td><span am-time-ago="logEntry.createdAt"></span></td>
+                    <td>{{logEntry.user.displayName()}} sent {{logEntry.action}}</td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div ng-show="group.upcoming()">

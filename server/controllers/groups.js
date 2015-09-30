@@ -377,7 +377,7 @@ exports.remindAll = function (req, res) {
             mailer.sendReminderMail(member, req.group);
         }
     });
-    res.send();
+    logAction(req, res, 'reminder');
 };
 
 exports.remindMember = function (req, res) {
@@ -392,13 +392,32 @@ exports.remindMember = function (req, res) {
     res.send();
 };
 
+var logAction = function(req, res, action) {
+    Group.findOneAndUpdate({ _id: req.group.id }, {
+        $addToSet: {
+            log: {
+                action: action,
+                user: req.user.id
+            }
+        }
+    }).
+        populate('members.user', userFields).
+        populate('comments.user', userFields).
+        exec(function (err, group) {
+            if (!e(err, res, 'Error logging action')) {
+                res.send(group);
+            }
+        });
+};
+
 exports.status = function (req, res) {
     req.group.members.forEach(function (member) {
         if (member.status.match('(Yes|No|Maybe)')) {
             mailer.sendStatusMail(member, req.group);
         }
     });
-    res.send();
+
+    logAction(req, res, 'status');
 };
 
 exports.autoLogin = function (req, res) {
@@ -497,6 +516,7 @@ var fromParam = function (req, res, next, q) {
     query.
         populate('members.user', userFields).
         populate('comments.user', userFields).
+        populate('log.user', userFields).
         exec(function (err, group) {
             if (!e(err, res, 'Error finding group')) {
                 if (!group) {

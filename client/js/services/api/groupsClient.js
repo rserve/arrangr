@@ -7,7 +7,8 @@ define(function (require, exports, module) {
 		Group = require('./domain/Group'),
 		Member = require('./domain/Member'),
 		User = require('./domain/User'),
-		Comment = require('./domain/Comment');
+		Comment = require('./domain/Comment'),
+		LogEntry = require('./domain/Logentry');
 
 	var service = ['$http', function ($http) {
 
@@ -29,6 +30,7 @@ define(function (require, exports, module) {
             var group = new Group(data);
 
             commentParser(group);
+			logParser(group);
 			return group;
 		};
 
@@ -41,6 +43,12 @@ define(function (require, exports, module) {
 		var commentParser = function(group) {
 			group.comments.forEach(function (comment, i, comments){
 				comments[i] = new Comment(comment);
+			});
+		};
+
+		var logParser = function(group) {
+			group.log.forEach(function (logEntry, i, logEntries){
+				logEntries[i] = new LogEntry(logEntry);
 			});
 		};
 
