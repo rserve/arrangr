@@ -356,6 +356,7 @@ exports.increment = function (req, res) {
         }
     }
     group.comments = [];
+    group.log = [];
     group.members.forEach(function (member) {
         delete member.id;
         delete member.createdAt;
