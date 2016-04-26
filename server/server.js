@@ -11,10 +11,6 @@ var env = process.env.NODE_ENV || 'development';
 var config = require('./config/config')[env];
 var mongoose = require('mongoose');
 
-if(config.mandrill) {
-	process.env['MANDRILL_APIKEY'] = config.mandrill;
-}
-
 // Connect to DB
 mongoose.connect(config.db);
 

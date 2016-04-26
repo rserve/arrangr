@@ -5,11 +5,10 @@ module.exports = {
     development: {
 		host: 'localhost',
 		port: 3000,
-        db: 'mongodb://localhost/rserve',
+        db: 'mongodb://heroku_app20594163_A:prSWacetlfvBsUiRplWblepKLtHBqTUu@ds063178.mongolab.com:63178/heroku_app20594163',
         root: rootPath,
 		static: 'client',
-        logger: 'dev',
-		mandrill: 'pB_BN80OtE1oUBvda0Xtkg'
+        logger: 'dev'
     },
     test: {
 		host: 'localhost',

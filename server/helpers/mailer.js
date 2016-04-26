@@ -1,8 +1,13 @@
-var Mandrill = require('mandrill-api').Mandrill;
-var mandrill = new Mandrill();
+var SparkPost = require('sparkpost');
+var sp = new SparkPost();
 var env = process.env.NODE_ENV || 'development';
 var config = require('../config/config')[env];
 var moment = require('moment');
+var EmailTemplate = require('email-templates').EmailTemplate;
+var path = require('path');
+var templateDir = path.join(__dirname, '..', 'mail-templates');
+
+var defaultFrom = { "name" : "Arran.gr", "email" : "no-reply@arran.gr" };
 
 moment.locale('en', {
     calendar : {
@@ -45,138 +50,144 @@ function getInvitationICal(user, group, groupCreator) {
 	return event.toFile();
 }
 var mailer = {
-	sendMail: function (message) {
-		mandrill.messages.send({ message: message }, function (res) {
-			//        console.log(res);
-		}, function (err) {
-			console.log('Error sending mail', err);
-		});
-	},
-
 	/* jshint camelcase: false */
 	sendRegistrationMail: function (user) {
-		mandrill.messages.sendTemplate({
-			template_name: 'registration',
-			template_content: [],
-			message: {
-				to: [
-					{
-						email: user.email
-					}
-				],
-				global_merge_vars: [
-					{
-						name: 'LINK',
-						content: baseUrl + '/password/' + user.verificationHash
-					}
-				]
+		var data = {
+			link: baseUrl + '/password/' + user.verificationHash
+		};
+
+		var mail = new EmailTemplate(path.join(templateDir, 'registration'));
+
+		mail.render(data, function (err, result) {
+			if(err) {
+				console.log('Error rendering email', err);
+				return;
 			}
-		}, function (res) {
-//            console.log(res);
-		}, function (err) {
-			console.log('Error sending registration mail', err);
+
+			sp.transmissions.send({
+				transmissionBody: {
+					content: {
+						from : defaultFrom,
+						subject: 'Welcome to Arran.gr',
+						html: result.html,
+						text: result.text
+					},
+					recipients: [
+						{address: user.email}
+					]
+				}
+			}, function(err, res) {
+				if (err) {
+					console.log('Error sending registration mail', err);
+				}
+			});
 		});
 	},
 
 	sendInvitationMail: function (user, group, inviter) {
 
-		var iCalString = getInvitationICal(user, group, inviter);
-		var inviteEncoded = new Buffer(iCalString, 'utf8').toString('base64');
+		//var iCalString = getInvitationICal(user, group, inviter);
+		//var inviteEncoded = new Buffer(iCalString, 'utf8').toString('base64');
 
-		mandrill.messages.sendTemplate({
-			template_name: 'invite',
-			template_content: [],
-			message: {
-				to: [
-					{
-						email: user.email
-					}
-				],
-				subject: group.name,
-				global_merge_vars: [
-					{
-						name: 'LINK',
-						content: user.verified? baseUrl + '/groups/' + group.key : baseUrl + '/password/' + user.verificationHash
-					},
-					{
-						name: 'INVITER',
-						content: inviter.name || inviter.email
-					},
-					{
-						name: 'MEETUP',
-						content: group.name
-					}
-				],
-				"attachments": [
-					{
-						"type": "text/calendar",
-						"name": "invite.ics",
-						"content": inviteEncoded
-					}
-				]
+		var data = {
+			link: user.verified? baseUrl + '/groups/' + group.key : baseUrl + '/password/' + user.verificationHash,
+			inviter: inviter.name || inviter.email,
+			meetup: group.name
+		};
 
+		var mail = new EmailTemplate(path.join(templateDir, 'invitation'));
+
+		mail.render(data, function (err, result) {
+			if(err) {
+				console.log('Error rendering email', err);
+				return;
 			}
-		}, function (res) {
-//            console.log(res);
-		}, function (err) {
-			console.log('Error sending invitation mail', err);
+
+			sp.transmissions.send({
+				transmissionBody: {
+					content: {
+						from : defaultFrom,
+						subject: group.name,
+						html: result.html,
+						text: result.text
+					},
+					recipients: [
+						{address: user.email}
+					]
+				}
+			}, function(err, res) {
+				if (err) {
+					console.log('Error sending invitation mail', err);
+				}
+			});
 		});
     },
 
 	sendLostPasswordMail: function(user) {
-		mandrill.messages.sendTemplate({
-			template_name: 'password-reset',
-			template_content: [],
-			message: {
-				to: [
-					{
-						email: user.email
-					}
-				],
-				global_merge_vars: [
-					{
-						name: 'LINK',
-						content: 'http://arran.gr/password/' + user.verificationHash
-					}
-				]
+		var data = {
+			link: 'http://arran.gr/password/' + user.verificationHash
+		};
+
+		var mail = new EmailTemplate(path.join(templateDir, 'password-reset'));
+
+		mail.render(data, function (err, result) {
+			if(err) {
+				console.log('Error rendering email', err);
+				return;
 			}
-		}, function (res) {
-//            console.log(res);
-		}, function (err) {
-			console.log('Error sending registration mail', err);
+
+			sp.transmissions.send({
+				transmissionBody: {
+					content: {
+						from : defaultFrom,
+						subject: 'Password reset',
+						html: result.html,
+						text: result.text
+					},
+					recipients: [
+						{address: user.email}
+					]
+				}
+			}, function(err, res) {
+				if (err) {
+					console.log('Error sending password reset mail', err);
+				}
+			});
 		});
 	},
 
 	sendReminderMail: function(member, group) {
-		mandrill.messages.sendTemplate({
-			template_name: 'reminder',
-			template_content: [],
-			message: {
-				to: [
-					{
-						email: member.user.email
-					}
-				],
-				subject: group.name,
-				global_merge_vars: [
-					{
-						name: 'LINK',
-						content: baseUrl + '/groups/' + group.key + (member._hash ? ('/' + member._hash) : '')
-					},
-					{
-						name: 'MEETUP',
-						content: group.name
-					},
-                    {
-                        name: 'DATE',
-                        content: moment(group.startDate).calendar() + ' for ' + moment.duration(moment(group.endDate).diff(group.startDate)).humanize()
-                    }
-				]
+		var data = {
+			link: baseUrl + '/groups/' + group.key + (member._hash ? ('/' + member._hash) : ''),
+			date: moment(group.startDate).calendar() + ' for ' + moment.duration(moment(group.endDate).diff(group.startDate)).humanize(),
+			meetup: group.name
+		};
+
+		var mail = new EmailTemplate(path.join(templateDir, 'reminder'));
+
+		mail.render(data, function (err, result) {
+			if(err) {
+				console.log('Error rendering email', err);
+				return;
 			}
-		}, function (res) {
-//            console.log(res);
-		}, function (err) {
-			console.log('Error sending reminder mail', err);
+
+			sp.transmissions.send({
+				transmissionBody: {
+					content: {
+						from : defaultFrom,
+						subject: group.name,
+						html: result.html,
+						text: result.text
+					},
+					recipients: [
+						{address: member.user.email}
+					]
+				}
+			}, function(err, res) {
+				if (err) {
+					console.log('Error sending reminder mail', err);
+				}
+			});
 		});
 	},
 
@@ -189,52 +200,42 @@ var mailer = {
 			}
 		});
 
-		mandrill.messages.sendTemplate({
-			template_name: 'status',
-			template_content: [{
-				name: "yesParticipants",
-				content: participants['Yes'].join(', ') || 'None'
-			},{
-				name: "maybeParticipants",
-				content: participants['Maybe'].join(', ') || 'None'
-			},{
-				name: "noParticipants",
-				content: participants['No'].join(', ') || 'None'
-			}],
-			message: {
-				to: [
-					{
-						email: member.user.email
-					}
-				],
-				subject: group.name,
-				global_merge_vars: [
-					{
-						name: 'LINK',
-						content: baseUrl + '/groups/' + group.key + (member._hash ? ('/' + member._hash) : '')
-					},
-					{
-						name: 'MEETUP',
-						content: group.name
-					},
-					{
-						name: 'TOTAL',
-						content: group.members.length
-					},
-					{
-						name: 'YES',
-						content: group.statusCount('Yes')
-					},
-					{
-						name: 'MAYBE',
-						content: group.statusCount('Maybe')
-					}
-				]
+		var data = {
+			yesParticipants: participants['Yes'].join(', ') || 'None',
+			maybeParticipants: participants['Maybe'].join(', ') || 'None',
+			noParticipants: participants['No'].join(', ') || 'None',
+			link: baseUrl + '/groups/' + group.key + (member._hash ? ('/' + member._hash) : ''),
+			meetup: group.name,
+			total: group.members.length,
+			yes: group.statusCount('Yes'),
+			maybe: group.statusCount('Maybe')
+		};
+
+		var mail = new EmailTemplate(path.join(templateDir, 'status'));
+
+		mail.render(data, function (err, result) {
+			if(err) {
+				console.log('Error rendering email', err);
+				return;
 			}
-		}, function (res) {
-//            console.log(res);
-		}, function (err) {
-			console.log('Error sending status mail', err);
+
+			sp.transmissions.send({
+				transmissionBody: {
+					content: {
+						from : defaultFrom,
+						subject: group.name,
+						html: result.html,
+						text: result.text
+					},
+					recipients: [
+						{address: member.user.email}
+					]
+				}
+			}, function(err, res) {
+				if (err) {
+					console.log('Error sending status mail', err);
+				}
+			});
 		});
 	}
 };
